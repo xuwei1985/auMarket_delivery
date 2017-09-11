@@ -125,7 +125,7 @@
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker{
     
-    [self showToastWithText:[NSString stringWithFormat:@"点击了Mark:%@",marker.position]];
+    [self showToastWithText:[NSString stringWithFormat:@"点击了Mark:%f",marker.position.longitude]];
     return YES;
 }
 
