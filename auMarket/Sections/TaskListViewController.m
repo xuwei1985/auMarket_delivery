@@ -56,7 +56,9 @@
     [btn_waitDelivery setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_waitDelivery.titleLabel.font=FONT_SIZE_MIDDLE;
     btn_waitDelivery.titleLabel.textAlignment=NSTextAlignmentCenter;
+    btn_waitDelivery.tag=1001;
     [taskCategoeryBar addSubview:btn_waitDelivery];
+    [btn_waitDelivery addTarget:self action:@selector(taskCategoryTap:) forControlEvents:UIControlEventTouchUpInside];
     
     btn_failedDelivery=[[UIButton alloc] initWithFrame:CGRectMake(TASK_CATEGORY_EDGE+TASK_CATEGORY_GAP*1+TASK_CATEGORY_WIDTH*1, 0, TASK_CATEGORY_WIDTH, SEGMENTVIEW_HEIGHT)];
     [btn_failedDelivery setTitle:@"配送失败(6)" forState:UIControlStateNormal];
@@ -64,7 +66,9 @@
     [btn_failedDelivery setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_failedDelivery.titleLabel.font=FONT_SIZE_MIDDLE;
     btn_failedDelivery.titleLabel.textAlignment=NSTextAlignmentCenter;
+    btn_failedDelivery.tag=1002;
     [taskCategoeryBar addSubview:btn_failedDelivery];
+    [btn_failedDelivery addTarget:self action:@selector(taskCategoryTap:) forControlEvents:UIControlEventTouchUpInside];
     
     btn_successDelivery=[[UIButton alloc] initWithFrame:CGRectMake(TASK_CATEGORY_EDGE+TASK_CATEGORY_GAP*2+TASK_CATEGORY_WIDTH*2, 0, TASK_CATEGORY_WIDTH, SEGMENTVIEW_HEIGHT)];
     [btn_successDelivery setTitle:@"配送完成(15)" forState:UIControlStateNormal];
@@ -72,7 +76,9 @@
     [btn_successDelivery setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_successDelivery.titleLabel.font=FONT_SIZE_MIDDLE;
     btn_successDelivery.titleLabel.textAlignment=NSTextAlignmentCenter;
+    btn_successDelivery.tag=1002;
     [taskCategoeryBar addSubview:btn_successDelivery];
+    [btn_successDelivery addTarget:self action:@selector(taskCategoryTap:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void)setUpTableView{
@@ -86,6 +92,15 @@
     [self.tableView setTableFooterView:view];
     [self.view addSubview:self.tableView];
 }
+
+
+-(void)taskCategoryTap:(UIButton *)sender{
+    btn_waitDelivery.selected=NO;
+    btn_failedDelivery.selected=NO;
+    btn_successDelivery.selected=NO;
+    sender.selected=YES;
+}
+
 
 -(void)loadTaskList{
     [self startLoadingActivityIndicator];
@@ -113,7 +128,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 48;
+    return 50;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -130,11 +145,19 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self gotoOrderDetailView:nil];
+}
+
 -(void)toggleWorkState:(UIButton *)sender{
     sender.selected=!sender.selected;
     [APP_DELEGATE.booter handlerWorkingState:sender.selected];
 }
 
+-(void)gotoOrderDetailView:(TaskEntity *)entity{
+    OrderDetailViewController *ovc=[[OrderDetailViewController alloc] init];
+    [self.navigationController pushViewController:ovc animated:YES];
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

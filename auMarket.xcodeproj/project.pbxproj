@@ -24,9 +24,6 @@
 		A9187C301DF9B6B900A3E902 /* category_s@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9187C2C1DF9B6B900A3E902 /* category_s@3x.png */; };
 		A91D539D1DFE99E600A6BB37 /* AdPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A91D539C1DFE99E600A6BB37 /* AdPageViewController.m */; };
 		A91D842F1F665B5300DF69EF /* 1_04@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A91D842E1F665B5300DF69EF /* 1_04@2x.png */; };
-		A91D84331F665CDE00DF69EF /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91D84301F665CDE00DF69EF /* GoogleMaps.framework */; };
-		A91D84341F665CDE00DF69EF /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91D84311F665CDE00DF69EF /* GoogleMapsBase.framework */; };
-		A91D84351F665CDE00DF69EF /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A91D84321F665CDE00DF69EF /* GoogleMapsCore.framework */; };
 		A91D84371F665D0300DF69EF /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A91D84361F665D0300DF69EF /* GoogleMaps.bundle */; };
 		A91D843A1F665EC600DF69EF /* TaskListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A91D84391F665EC600DF69EF /* TaskListViewController.m */; };
 		A91FAC011E026F4300D6FACC /* c1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A91FABFF1E026F4300D6FACC /* c1@2x.png */; };
@@ -119,7 +116,7 @@
 		A9F4DA881F658AFE00D71774 /* 1_12.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA761F658AFE00D71774 /* 1_12.png */; };
 		A9F4DA891F658AFE00D71774 /* 1_19.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA771F658AFE00D71774 /* 1_19.png */; };
 		A9F4DA8A1F658AFE00D71774 /* 1_21@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA781F658AFE00D71774 /* 1_21@2x.png */; };
-		A9F4DA8B1F658AFE00D71774 /* 1_24.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA791F658AFE00D71774 /* 1_24.png */; };
+		A9F4DA8B1F658AFE00D71774 /* 1_24@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA791F658AFE00D71774 /* 1_24@2x.png */; };
 		A9F4DA8C1F658AFE00D71774 /* 1_29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA7A1F658AFE00D71774 /* 1_29@2x.png */; };
 		A9F4DA8D1F658AFE00D71774 /* 1_32.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA7B1F658AFE00D71774 /* 1_32.png */; };
 		A9F4DA8E1F658AFE00D71774 /* 1_41.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA7C1F658AFE00D71774 /* 1_41.png */; };
@@ -132,6 +129,11 @@
 		A9F4DA951F658AFE00D71774 /* 1_69@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA831F658AFE00D71774 /* 1_69@2x.png */; };
 		A9F4DA961F658AFE00D71774 /* 1_72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA841F658AFE00D71774 /* 1_72@2x.png */; };
 		A9F4DA991F65965200D71774 /* MapMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DA981F65965200D71774 /* MapMaker.m */; };
+		A9F4DAA51F66CA6400D71774 /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAA31F66CA6400D71774 /* OrderDetailViewController.m */; };
+		A9F4DAB71F66D4A800D71774 /* OrderDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAB51F66D4A800D71774 /* OrderDetailCell.m */; };
+		A9F4DABB1F66D4D700D71774 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4DAB81F66D4D700D71774 /* GoogleMaps.framework */; };
+		A9F4DABC1F66D4D700D71774 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4DAB91F66D4D700D71774 /* GoogleMapsBase.framework */; };
+		A9F4DABD1F66D4D700D71774 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4DABA1F66D4D700D71774 /* GoogleMapsCore.framework */; };
 		A9FBC1BD1DF868F4005ECDDE /* CommonCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FBC1BC1DF868F4005ECDDE /* CommonCache.m */; };
 		A9FBC1C91DF93854005ECDDE /* btn_back_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FBC1C71DF93854005ECDDE /* btn_back_black@3x.png */; };
 		A9FBC1CA1DF93854005ECDDE /* btn_back_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FBC1C81DF93854005ECDDE /* btn_back_black@2x.png */; };
@@ -177,9 +179,6 @@
 		A91D539B1DFE99E600A6BB37 /* AdPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdPageViewController.h; sourceTree = "<group>"; };
 		A91D539C1DFE99E600A6BB37 /* AdPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdPageViewController.m; sourceTree = "<group>"; };
 		A91D842E1F665B5300DF69EF /* 1_04@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_04@2x.png"; sourceTree = "<group>"; };
-		A91D84301F665CDE00DF69EF /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = auMarket/GoogleMaps.framework; sourceTree = "<group>"; };
-		A91D84311F665CDE00DF69EF /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = auMarket/GoogleMapsBase.framework; sourceTree = "<group>"; };
-		A91D84321F665CDE00DF69EF /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = auMarket/GoogleMapsCore.framework; sourceTree = "<group>"; };
 		A91D84361F665D0300DF69EF /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMaps.bundle; sourceTree = "<group>"; };
 		A91D84381F665EC600DF69EF /* TaskListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskListViewController.h; sourceTree = "<group>"; };
 		A91D84391F665EC600DF69EF /* TaskListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskListViewController.m; sourceTree = "<group>"; };
@@ -326,7 +325,7 @@
 		A9F4DA761F658AFE00D71774 /* 1_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1_12.png; sourceTree = "<group>"; };
 		A9F4DA771F658AFE00D71774 /* 1_19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1_19.png; sourceTree = "<group>"; };
 		A9F4DA781F658AFE00D71774 /* 1_21@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_21@2x.png"; sourceTree = "<group>"; };
-		A9F4DA791F658AFE00D71774 /* 1_24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1_24.png; sourceTree = "<group>"; };
+		A9F4DA791F658AFE00D71774 /* 1_24@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_24@2x.png"; sourceTree = "<group>"; };
 		A9F4DA7A1F658AFE00D71774 /* 1_29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_29@2x.png"; sourceTree = "<group>"; };
 		A9F4DA7B1F658AFE00D71774 /* 1_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1_32.png; sourceTree = "<group>"; };
 		A9F4DA7C1F658AFE00D71774 /* 1_41.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1_41.png; sourceTree = "<group>"; };
@@ -340,6 +339,13 @@
 		A9F4DA841F658AFE00D71774 /* 1_72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_72@2x.png"; sourceTree = "<group>"; };
 		A9F4DA971F65965200D71774 /* MapMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapMaker.h; sourceTree = "<group>"; };
 		A9F4DA981F65965200D71774 /* MapMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapMaker.m; sourceTree = "<group>"; };
+		A9F4DAA31F66CA6400D71774 /* OrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController.m; sourceTree = "<group>"; };
+		A9F4DAA41F66CA6400D71774 /* OrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController.h; sourceTree = "<group>"; };
+		A9F4DAB51F66D4A800D71774 /* OrderDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailCell.m; sourceTree = "<group>"; };
+		A9F4DAB61F66D4A800D71774 /* OrderDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailCell.h; sourceTree = "<group>"; };
+		A9F4DAB81F66D4D700D71774 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = auMarket/GoogleMaps.framework; sourceTree = "<group>"; };
+		A9F4DAB91F66D4D700D71774 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = auMarket/GoogleMapsBase.framework; sourceTree = "<group>"; };
+		A9F4DABA1F66D4D700D71774 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = auMarket/GoogleMapsCore.framework; sourceTree = "<group>"; };
 		A9FBC1BB1DF868F4005ECDDE /* CommonCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonCache.h; sourceTree = "<group>"; };
 		A9FBC1BC1DF868F4005ECDDE /* CommonCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonCache.m; sourceTree = "<group>"; };
 		A9FBC1BE1DF9023D005ECDDE /* SizeMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SizeMacro.h; sourceTree = "<group>"; };
@@ -383,8 +389,8 @@
 				A9B2D8AF1F63A0B600D1AE2D /* OpenGLES.framework in Frameworks */,
 				A9B2D8AD1F63A0AF00D1AE2D /* libz.tbd in Frameworks */,
 				A9B2D8AB1F63A0A800D1AE2D /* libc++.tbd in Frameworks */,
-				A91D84341F665CDE00DF69EF /* GoogleMapsBase.framework in Frameworks */,
-				A91D84351F665CDE00DF69EF /* GoogleMapsCore.framework in Frameworks */,
+				A9F4DABC1F66D4D700D71774 /* GoogleMapsBase.framework in Frameworks */,
+				A9F4DABD1F66D4D700D71774 /* GoogleMapsCore.framework in Frameworks */,
 				A9B2D8A91F63A0A100D1AE2D /* ImageIO.framework in Frameworks */,
 				A9B2D8A61F63A03100D1AE2D /* GLKit.framework in Frameworks */,
 				A9B2D8A41F63A02400D1AE2D /* CoreText.framework in Frameworks */,
@@ -393,7 +399,7 @@
 				A9B2D89E1F63A00E00D1AE2D /* CoreData.framework in Frameworks */,
 				A9B2D89C1F63A00600D1AE2D /* Accelerate.framework in Frameworks */,
 				A964742C1E11205500A5A39B /* CoreTelephony.framework in Frameworks */,
-				A91D84331F665CDE00DF69EF /* GoogleMaps.framework in Frameworks */,
+				A9F4DABB1F66D4D700D71774 /* GoogleMaps.framework in Frameworks */,
 				A9D354741E0A3139006D265D /* libPods-auMarket.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,9 +410,9 @@
 		587F95023A7DB0FB072F1520 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A91D84301F665CDE00DF69EF /* GoogleMaps.framework */,
-				A91D84311F665CDE00DF69EF /* GoogleMapsBase.framework */,
-				A91D84321F665CDE00DF69EF /* GoogleMapsCore.framework */,
+				A9F4DAB81F66D4D700D71774 /* GoogleMaps.framework */,
+				A9F4DAB91F66D4D700D71774 /* GoogleMapsBase.framework */,
+				A9F4DABA1F66D4D700D71774 /* GoogleMapsCore.framework */,
 				A9B2D8B41F63A0D100D1AE2D /* UIKit.framework */,
 				A9B2D8B21F63A0C700D1AE2D /* SystemConfiguration.framework */,
 				A9B2D8B01F63A0C000D1AE2D /* QuartzCore.framework */,
@@ -460,6 +466,8 @@
 		A9187C041DF9AB4900A3E902 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A9F4DAB61F66D4A800D71774 /* OrderDetailCell.h */,
+				A9F4DAB51F66D4A800D71774 /* OrderDetailCell.m */,
 				A91357711F668BB4000186B0 /* TaskItemCell.h */,
 				A91357721F668BB4000186B0 /* TaskItemCell.m */,
 			);
@@ -469,6 +477,8 @@
 		A9187C051DF9AB4D00A3E902 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A9F4DAA41F66CA6400D71774 /* OrderDetailViewController.h */,
+				A9F4DAA31F66CA6400D71774 /* OrderDetailViewController.m */,
 				A95DCCC61E0299AE006E7649 /* GoodsListViewController.h */,
 				A95DCCC71E0299AE006E7649 /* GoodsListViewController.m */,
 				A91D84381F665EC600DF69EF /* TaskListViewController.h */,
@@ -813,7 +823,7 @@
 				A9F4DA761F658AFE00D71774 /* 1_12.png */,
 				A9F4DA771F658AFE00D71774 /* 1_19.png */,
 				A9F4DA781F658AFE00D71774 /* 1_21@2x.png */,
-				A9F4DA791F658AFE00D71774 /* 1_24.png */,
+				A9F4DA791F658AFE00D71774 /* 1_24@2x.png */,
 				A9F4DA7A1F658AFE00D71774 /* 1_29@2x.png */,
 				A9F4DA7B1F658AFE00D71774 /* 1_32.png */,
 				A9F4DA7C1F658AFE00D71774 /* 1_41.png */,
@@ -981,7 +991,7 @@
 				A91D842F1F665B5300DF69EF /* 1_04@2x.png in Resources */,
 				A964742A1E1117DB00A5A39B /* mark@2x.png in Resources */,
 				A95E109C1DF80ED000660E42 /* Assets.xcassets in Resources */,
-				A9F4DA8B1F658AFE00D71774 /* 1_24.png in Resources */,
+				A9F4DA8B1F658AFE00D71774 /* 1_24@2x.png in Resources */,
 				A9FBC1DD1DF94973005ECDDE /* category@2x.png in Resources */,
 				A9187C2F1DF9B6B900A3E902 /* category@3x.png in Resources */,
 				A9187C2E1DF9B6B900A3E902 /* member_s@3x.png in Resources */,
@@ -1125,6 +1135,7 @@
 				A91357761F668BFF000186B0 /* TaskEntity.m in Sources */,
 				A95E11571DF84E1A00660E42 /* UIView+Toast.m in Sources */,
 				A95E11431DF8491600660E42 /* NSString+YP.m in Sources */,
+				A9F4DAA51F66CA6400D71774 /* OrderDetailViewController.m in Sources */,
 				A9AD42BD1E13B6DC00A4B131 /* ImageRotatorView.m in Sources */,
 				A95E11641DF850A200660E42 /* SPNavigationController.m in Sources */,
 				A9FBC1F41DF96E9A005ECDDE /* Booter.m in Sources */,
@@ -1144,6 +1155,7 @@
 				A95E11611DF8505C00660E42 /* BadgeManager.m in Sources */,
 				A9AD42B41E13673500A4B131 /* BannerEntity.m in Sources */,
 				A95E10911DF80ED000660E42 /* main.m in Sources */,
+				A9F4DAB71F66D4A800D71774 /* OrderDetailCell.m in Sources */,
 				A95E11401DF8491600660E42 /* NSDate+IDPExtension.m in Sources */,
 				A9F4DA991F65965200D71774 /* MapMaker.m in Sources */,
 			);
@@ -1256,6 +1268,7 @@
 			baseConfigurationReference = 91897BA25E21E5EFC131B7DE /* Pods-auMarket.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = auMarket/auMarket.entitlements;
 				DEVELOPMENT_TEAM = K44WC33LW2;
 				ENABLE_BITCODE = NO;
@@ -1278,6 +1291,7 @@
 			baseConfigurationReference = EA1D502A0B8C0306E8512EBD /* Pods-auMarket.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = auMarket/auMarket.entitlements;
 				DEVELOPMENT_TEAM = K44WC33LW2;
 				ENABLE_BITCODE = NO;

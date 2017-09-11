@@ -80,6 +80,9 @@
     mv.markTip=@"8";
     [mv loadData];
     
+    MapMaker *mv2=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 34)];
+    mv2.image=[UIImage imageNamed:@"1_45"];
+    [mv2 loadData];
     
     GMSMarker *marker = [[GMSMarker alloc] init];
     marker.position = CLLocationCoordinate2DMake(-37.819575, 144.945466);
@@ -94,7 +97,7 @@
     marker.title = @"Sydney2";
     marker.snippet = @"Australia";
     marker.appearAnimation = kGMSMarkerAnimationPop;
-    marker.iconView=mv;
+    marker.iconView=mv2;
     marker.map = mapView;
     
     marker = [[GMSMarker alloc] init];
@@ -148,8 +151,14 @@
 
 - (void)showMaskMenu
 {
-    UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单", nil,nil];
-    // 显示
+    UIActionSheet *actionsheet;
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
+        actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单", nil,nil];
+    }
+    else{
+        actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看订单", nil,nil];
+    }
+    
     [actionsheet showInView:self.view];
 }
 
@@ -159,7 +168,7 @@
 
     if (0 == buttonIndex)
     {
-        [self runNabigationByGoogle];
+        [self runNavigationByGoogle];
     }
     else if (1 == buttonIndex)
     {
@@ -167,9 +176,14 @@
     }
 }
 
--(void)runNabigationByGoogle{
-    NSString *urlString = [[NSString stringWithFormat:@"comgooglemaps://?x-source=%@&x-success=%@&saddr=&daddr=%f,%f&directionsmode=driving",APP_NAME,APP_SCHEME,sel_coordinate.latitude, sel_coordinate.longitude] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+-(void)runNavigationByGoogle{
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
+        NSString *urlString = [[NSString stringWithFormat:@"comgooglemaps://?x-source=%@&x-success=%@&saddr=&daddr=%f,%f&directionsmode=driving",APP_NAME,APP_SCHEME,sel_coordinate.latitude, sel_coordinate.longitude] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+    }
+    else{
+        [self showToastBottomWithText:@"您未安装Google Maps"];
+    }
 }
 
 -(void)gotoOrderDetail{
