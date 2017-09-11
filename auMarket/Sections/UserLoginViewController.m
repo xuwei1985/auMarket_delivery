@@ -90,7 +90,7 @@
     
     _passwordText = [[CustomTextField alloc]initWithFrame:CGRectMake(33, (IOS7?0:-5), WIDTH_SCREEN-70, 30)];
     _passwordText.delegate=self;
-    _passwordText.text=@"wilson.1990";
+    _passwordText.text=@"";
     _passwordText.font=DEFAULT_FONT(16);
     _passwordText.placeholder = @"请在此输入密码";
     _passwordText.textColor=RGBCOLOR(45, 45, 45);
@@ -103,7 +103,7 @@
     [inputView2 addSubview:_passwordText];
     
     UIButton *login_btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    login_btn.frame = CGRectMake((WIDTH_SCREEN-40-15)/2+35, (IOS7?160:140)+offset, (WIDTH_SCREEN-40-15)/2, 38);
+    login_btn.frame = CGRectMake(20, (IOS7?160:140)+offset, (WIDTH_SCREEN-40), 38);
     login_btn.titleLabel.font=DEFAULT_FONT(14);;
     [login_btn setTitle:@"登  录" forState:UIControlStateNormal];
     login_btn.backgroundColor=COLOR_MAIN;
@@ -114,17 +114,17 @@
     [login_btn addTarget:self action:@selector(postPersonLogin) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview: login_btn];
     
-    UIButton *regist_btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    regist_btn.frame = CGRectMake(20, (IOS7?160:140)+offset, (WIDTH_SCREEN-40-15)/2, 38);
-    regist_btn.titleLabel.font=DEFAULT_FONT(14);;
-    [regist_btn setTitle:@"注  册" forState:UIControlStateNormal];
-    regist_btn.backgroundColor=RGBCOLOR(230, 230, 230);
-    regist_btn.layer.cornerRadius=4;
-    regist_btn.clipsToBounds=YES;
-    regist_btn.titleEdgeInsets=UIEdgeInsetsMake(2,5, 0, 0);
-    [regist_btn setTitleColor:RGBCOLOR(99, 99, 99) forState:UIControlStateNormal];
-    [regist_btn addTarget:self action:@selector(gotoRegist) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview: regist_btn];
+//    UIButton *regist_btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    regist_btn.frame = CGRectMake(20, (IOS7?160:140)+offset, (WIDTH_SCREEN-40-15)/2, 38);
+//    regist_btn.titleLabel.font=DEFAULT_FONT(14);;
+//    [regist_btn setTitle:@"注  册" forState:UIControlStateNormal];
+//    regist_btn.backgroundColor=RGBCOLOR(230, 230, 230);
+//    regist_btn.layer.cornerRadius=4;
+//    regist_btn.clipsToBounds=YES;
+//    regist_btn.titleEdgeInsets=UIEdgeInsetsMake(2,5, 0, 0);
+//    [regist_btn setTitleColor:RGBCOLOR(99, 99, 99) forState:UIControlStateNormal];
+//    [regist_btn addTarget:self action:@selector(gotoRegist) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview: regist_btn];
 
     
     int loginButtonOffsetY=100;

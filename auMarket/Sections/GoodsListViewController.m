@@ -58,7 +58,6 @@
 
 -(void)loadGoodsList{
     [self startLoadingActivityIndicator];
-
 }
 
 

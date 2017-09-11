@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A91357731F668BB4000186B0 /* TaskItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A91357721F668BB4000186B0 /* TaskItemCell.m */; };
+		A91357761F668BFF000186B0 /* TaskEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A91357751F668BFF000186B0 /* TaskEntity.m */; };
 		A9187C111DF9ABB200A3E902 /* UserCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9187C101DF9ABB200A3E902 /* UserCenterViewController.m */; };
 		A9187C1C1DF9B42400A3E902 /* home_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9187C181DF9B42400A3E902 /* home_s@2x.png */; };
 		A9187C1D1DF9B42400A3E902 /* home_s@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9187C191DF9B42400A3E902 /* home_s@3x.png */; };
@@ -121,7 +123,7 @@
 		A9F4DA8C1F658AFE00D71774 /* 1_29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA7A1F658AFE00D71774 /* 1_29@2x.png */; };
 		A9F4DA8D1F658AFE00D71774 /* 1_32.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA7B1F658AFE00D71774 /* 1_32.png */; };
 		A9F4DA8E1F658AFE00D71774 /* 1_41.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA7C1F658AFE00D71774 /* 1_41.png */; };
-		A9F4DA8F1F658AFE00D71774 /* 1_45.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA7D1F658AFE00D71774 /* 1_45.png */; };
+		A9F4DA8F1F658AFE00D71774 /* 1_45@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA7D1F658AFE00D71774 /* 1_45@2x.png */; };
 		A9F4DA901F658AFE00D71774 /* 1_49.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA7E1F658AFE00D71774 /* 1_49.png */; };
 		A9F4DA911F658AFE00D71774 /* 1_53@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA7F1F658AFE00D71774 /* 1_53@2x.png */; };
 		A9F4DA921F658AFE00D71774 /* 1_56@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA801F658AFE00D71774 /* 1_56@2x.png */; };
@@ -154,6 +156,10 @@
 
 /* Begin PBXFileReference section */
 		91897BA25E21E5EFC131B7DE /* Pods-auMarket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-auMarket.debug.xcconfig"; path = "Pods/Target Support Files/Pods-auMarket/Pods-auMarket.debug.xcconfig"; sourceTree = "<group>"; };
+		A91357711F668BB4000186B0 /* TaskItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskItemCell.h; sourceTree = "<group>"; };
+		A91357721F668BB4000186B0 /* TaskItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskItemCell.m; sourceTree = "<group>"; };
+		A91357741F668BFF000186B0 /* TaskEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskEntity.h; sourceTree = "<group>"; };
+		A91357751F668BFF000186B0 /* TaskEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskEntity.m; sourceTree = "<group>"; };
 		A9187C101DF9ABB200A3E902 /* UserCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCenterViewController.m; sourceTree = "<group>"; };
 		A9187C181DF9B42400A3E902 /* home_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_s@2x.png"; sourceTree = "<group>"; };
 		A9187C191DF9B42400A3E902 /* home_s@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_s@3x.png"; sourceTree = "<group>"; };
@@ -324,7 +330,7 @@
 		A9F4DA7A1F658AFE00D71774 /* 1_29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_29@2x.png"; sourceTree = "<group>"; };
 		A9F4DA7B1F658AFE00D71774 /* 1_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1_32.png; sourceTree = "<group>"; };
 		A9F4DA7C1F658AFE00D71774 /* 1_41.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1_41.png; sourceTree = "<group>"; };
-		A9F4DA7D1F658AFE00D71774 /* 1_45.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1_45.png; sourceTree = "<group>"; };
+		A9F4DA7D1F658AFE00D71774 /* 1_45@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_45@2x.png"; sourceTree = "<group>"; };
 		A9F4DA7E1F658AFE00D71774 /* 1_49.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1_49.png; sourceTree = "<group>"; };
 		A9F4DA7F1F658AFE00D71774 /* 1_53@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_53@2x.png"; sourceTree = "<group>"; };
 		A9F4DA801F658AFE00D71774 /* 1_56@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_56@2x.png"; sourceTree = "<group>"; };
@@ -445,6 +451,8 @@
 		A9187C031DF9AB4600A3E902 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A91357741F668BFF000186B0 /* TaskEntity.h */,
+				A91357751F668BFF000186B0 /* TaskEntity.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -452,6 +460,8 @@
 		A9187C041DF9AB4900A3E902 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A91357711F668BB4000186B0 /* TaskItemCell.h */,
+				A91357721F668BB4000186B0 /* TaskItemCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -807,7 +817,7 @@
 				A9F4DA7A1F658AFE00D71774 /* 1_29@2x.png */,
 				A9F4DA7B1F658AFE00D71774 /* 1_32.png */,
 				A9F4DA7C1F658AFE00D71774 /* 1_41.png */,
-				A9F4DA7D1F658AFE00D71774 /* 1_45.png */,
+				A9F4DA7D1F658AFE00D71774 /* 1_45@2x.png */,
 				A9F4DA7E1F658AFE00D71774 /* 1_49.png */,
 				A9F4DA7F1F658AFE00D71774 /* 1_53@2x.png */,
 				A9F4DA801F658AFE00D71774 /* 1_56@2x.png */,
@@ -992,7 +1002,7 @@
 				A9F4DA951F658AFE00D71774 /* 1_69@2x.png in Resources */,
 				A9F4DA921F658AFE00D71774 /* 1_56@2x.png in Resources */,
 				A9D3546B1E0976CB006D265D /* icon_mail@2x.png in Resources */,
-				A9F4DA8F1F658AFE00D71774 /* 1_45.png in Resources */,
+				A9F4DA8F1F658AFE00D71774 /* 1_45@2x.png in Resources */,
 				A9FBC2001DF973CC005ECDDE /* app_guide_pass@2x.png in Resources */,
 				A91FAC021E026F4300D6FACC /* c2@2x.png in Resources */,
 				A9F4DA961F658AFE00D71774 /* 1_72@2x.png in Resources */,
@@ -1095,6 +1105,7 @@
 				A95E11461DF8491600660E42 /* UIImage+IDPExtension.m in Sources */,
 				A95E11441DF8491600660E42 /* UIDevice-Hardware.m in Sources */,
 				A96474281E1111FB00A5A39B /* UserLoginViewController.m in Sources */,
+				A91357731F668BB4000186B0 /* TaskItemCell.m in Sources */,
 				A95E10F01DF8104800660E42 /* KMActivityIndicator.m in Sources */,
 				A9FBC1BD1DF868F4005ECDDE /* CommonCache.m in Sources */,
 				A96474321E112BEA00A5A39B /* CustomTextField.m in Sources */,
@@ -1111,6 +1122,7 @@
 				A95E11411DF8491600660E42 /* NSDateFormatter+IDPExtension.m in Sources */,
 				A95E10F41DF8104800660E42 /* SPBaseEntity.m in Sources */,
 				A9FBC1FA1DF97299005ECDDE /* IntroViewController.m in Sources */,
+				A91357761F668BFF000186B0 /* TaskEntity.m in Sources */,
 				A95E11571DF84E1A00660E42 /* UIView+Toast.m in Sources */,
 				A95E11431DF8491600660E42 /* NSString+YP.m in Sources */,
 				A9AD42BD1E13B6DC00A4B131 /* ImageRotatorView.m in Sources */,

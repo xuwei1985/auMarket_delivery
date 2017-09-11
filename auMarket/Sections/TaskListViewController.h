@@ -7,7 +7,13 @@
 //
 
 #import "SPBaseViewController.h"
+#import "TaskItemCell.h"
 
-@interface TaskListViewController : SPBaseViewController
-
+@interface TaskListViewController : SPBaseViewController{
+    UIButton *btn_workState;
+    NSArray *taskCategory;
+    UIButton *btn_waitDelivery;
+    UIButton *btn_failedDelivery;
+    UIButton *btn_successDelivery;
+}
 @end

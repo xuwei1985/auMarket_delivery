@@ -34,7 +34,7 @@
     self = [super init];
     if (self) {
         fg=n;
-        receivedData= [[NSMutableData alloc]initWithData:nil];
+        receivedData= [[NSMutableData alloc] initWithData:nil];
         [self createLoginUI];
         self.view.backgroundColor=COLOR_BG_VIEW;
     }

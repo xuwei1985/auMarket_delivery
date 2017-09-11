@@ -67,7 +67,8 @@
     [_userInfoView addSubview:_headView];
     
     [_headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.mas_equalTo(_userInfoView);
+        make.centerX.mas_equalTo(_userInfoView.mas_centerX).offset(-5);
+        make.centerY.mas_equalTo(_userInfoView.mas_centerY);
         make.size.mas_equalTo(CGSizeMake(76, 76));
     }];
     
