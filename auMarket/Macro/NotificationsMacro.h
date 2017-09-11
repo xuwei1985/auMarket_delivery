@@ -1,0 +1,98 @@
+//
+//  YPNotifications.h
+//  Youpin
+//
+//  Created by zhanghe on 15/5/5.
+//  Copyright (c) 2015年 youpin. All rights reserved.
+//
+
+#define YPOrderChangedNotification          @"YPOrderChangedNotification"
+#define YPCreateOrderSuccessNotification    @"YPCreateOrderSuccessNotification"
+#define YPPaymentSuccessNotification        @"YPPaymentSuccessNotification"
+#define YPRechargeSuccessNotification       @"YPRechargeSuccessNotification"
+#define YPBalanceChangedNotification        @"YPBalanceChangedNotification"
+#define YPChooseTeacherNotification         @"YPChooseTeacherNotification"
+#define ChangeCurrentTabNotification      @"ChangeCurrentTabNotification"
+
+//定位成功、失败通知
+#define NOTIFACTION_LOCATION_SUCCESS    @"NOTIFACTION_LOCATION_SUCCESS"
+#define NOTIFACTION_LOCATION_FAIL       @"NOTIFACTION_LOCATION_FAIL"
+
+//App进入后台通知
+#define  APP_DID_ENTER_BACKGROUND    @"APP_DID_ENTER_BACKGROUND"
+//App将要进入前台通知
+#define  APP_WILL_ENTER_FOREGROUND    @"APP_WILL_ENTER_FOREGROUND"
+
+//账号更新通知
+#define  ACCOUNT_UPDATE_NOTIFICATION    @"ACCOUNT_UPDATE_NOTIFICATION"
+
+//领取优惠券成功通知
+#define  COUPON_EXCHANGE_NOTIFICATION    @"COUPON_EXCHANGE_NOTIFICATION"
+
+
+//sync更新通知
+#define SYNC_UPDATE_NOTIFICATION @"SYNC_UPDATE_NOTIFICATION"
+
+
+#define USERNAME_UPDATE_NOTIFICATION @"USERNAME_UPDATE_NOTIFICATION"
+
+// 分享成功通知
+#define SHARE_SUCCESS_NOTIFICATION @"SHARE_SUCCESS_NOTIFICATION"
+// 分享失败通知
+#define SHARE_FAILURE_NOTIFICATION @"SHARE_FAILURE_NOTIFICATION"
+
+//将要赞通知
+#define YPMOMENTS_WILL_LIKE_NOTIFICATION @"YPMOMENTS_WILL_LIKE_NOTIFICATION"
+
+//赞成功通知
+#define YPMOMENTS_LIKE_SUCCESS @"YPMOMENTS_LIKE_SUCCESS"
+
+//赞失败通知
+#define YPMOMENTS_LIKE_FAIL @"YPMOMENTS_LIKE_FAIL"
+
+//将要取消赞通知
+#define YPMOMENTS_WILL_UNLIKE_NOTIFICATION @"YPMOMENTS_WILL_UNLIKE_NOTIFICATION"
+
+//取消赞成功通知
+#define YPMOMENTS_UNLIKE_SUCCESS @"YPMOMENTS_UNLIKE_SUCCESS"
+
+//取消赞失败通知
+#define YPMOMENTS_UNLIKE_FAIL @"YPMOMENTS_UNLIKE_FAIL"
+
+
+//删除动态通知
+#define YPMOMENTS_DELETE_FEED_SUCCESS   @"YPMOMENTS_DELETE_FEED_SUCCESS"
+
+//发送学习圈通知
+#define YPMOMENTS_SEND_BEGIN @"YPMOMENTS_SEND_BEGIN"
+//发送学习圈成功通知
+#define YPMOMENTS_SEND_SUCCESS @"YPMOMENTS_SEND_SUCCESS"
+//发送草稿更新通知
+#define YPMOMENTS_DRAFT_CHANGE @"YPMOMENTS_DRAFT_CHANGE"
+//发送学习圈失败通知
+#define YPMOMENTS_SEND_FAILURE @"YPMOMENTS_SEND_FAILURE"
+//学习圈评论成功通知
+#define YPMOMENTS_REPLY_SUCCESSS @"YPMOMENTS_REPLY_SUCCESSS"
+//评价课程成功通知
+#define YPMOMENTS_RATE_SUCCESS @"YPMOMENTS_RATE_SUCCESS"
+
+//学习圈关联课程成功通知
+#define YPMOMENTS_RELATE_SUCCESS @"YPMOMENTS_RELATE_SUCCESS"
+
+//学习圈关联课程成功通知
+#define YPMOMENTS_DELETE_COMMENT_SUCCESS @"YPMOMENTS_DELETE_COMMENT_SUCCESS"
+
+//删除topfeed成功
+#define YPMOMENTS_DELETE_TOP_FEED_SUCCESS @"YPMOMENTS_DELETE_TOP_FEED_SUCCESS"
+
+#define YPMOMENTS_PULL_MESSAGE  @"YPMOMENTS_PULL_MESSAGE"
+//用户头像改变
+#define YPUSER_PORTRAIT_CHANGED  @"YPUSER_PORTRAIT_CHANGED"
+//关注列表改变
+#define YPMOMENTS_FOLLOWLIST_CHANGED @"YPMOMENTS_FOLLOWLIST_CHANGED"
+//跟读报名成功
+#define YPREADING_CLASSLIST_CHANGED @"YPREADING_CLASSLIST_CHANGED"
+
+//用户信息修改
+#define SP_UPDATE_USER_INFO_NOTIFICATION @"SP_UPDATE_USER_INFO_NOTIFICATION"
+
