@@ -34,7 +34,8 @@
                                                                  zoom:13];
     GMSMapView *mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     mapView.myLocationEnabled = YES;
-    [mapView show]
+    mapView.delegate=self;
+    [[mapView settings] setMyLocationButton:YES];
     self.view = mapView;
     
     // Creates a marker in the center of the map.
@@ -119,8 +120,15 @@
 }
 
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker{
-    
+    NSLog(@"didTapInfoWindowOfMarker");
 }
+
+- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker{
+    
+    [self showToastWithText:[NSString stringWithFormat:@"点击了Mark:%@",marker.position]];
+    return YES;
+}
+
 -(void)unusualList:(UIButton *)sender{
     
 }
