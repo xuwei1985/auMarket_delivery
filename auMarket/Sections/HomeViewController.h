@@ -9,7 +9,7 @@
 #import "SPBaseViewController.h"
 #import "MapMaker.h"
 
-@interface HomeViewController : SPBaseViewController
+@interface HomeViewController : SPBaseViewController<GMSMapViewDelegate>
 {
 }
 @end

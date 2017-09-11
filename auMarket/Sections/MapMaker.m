@@ -29,6 +29,7 @@
     lbl_markTip.font=FONT_SIZE_MIDDLE;
     lbl_markTip.textAlignment=NSTextAlignmentCenter;
     lbl_markTip.textColor=COLOR_WHITE;
+    lbl_markTip.hidden=YES;
     [self addSubview:lbl_markTip];
     
     [lbl_markTip mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -38,7 +39,13 @@
 }
 
 -(void)loadData{
-    lbl_markTip.text=self.markTip;
+    if(self.markTip!=nil&&self.markTip.length>0){
+        lbl_markTip.hidden=NO;
+        lbl_markTip.text=self.markTip;
+    }
+    else{
+        lbl_markTip.hidden=YES;
+    }
 }
 /*
 // Only override drawRect: if you perform custom drawing.

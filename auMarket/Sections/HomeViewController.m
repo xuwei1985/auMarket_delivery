@@ -31,9 +31,10 @@
     // coordinate -33.86,151.20 at zoom level 6.
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-37.819575
                                                             longitude:144.945466
-                                                                 zoom:17];
+                                                                 zoom:13];
     GMSMapView *mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     mapView.myLocationEnabled = YES;
+    [mapView show]
     self.view = mapView;
     
     // Creates a marker in the center of the map.
@@ -42,9 +43,50 @@
     mv.markTip=@"8";
     [mv loadData];
     
+    
     GMSMarker *marker = [[GMSMarker alloc] init];
     marker.position = CLLocationCoordinate2DMake(-37.819575, 144.945466);
     marker.title = @"Sydney";
+    marker.snippet = @"Australia";
+    marker.appearAnimation = kGMSMarkerAnimationPop;
+    marker.iconView=mv;
+    marker.map = mapView;
+    
+    marker = [[GMSMarker alloc] init];
+    marker.position = CLLocationCoordinate2DMake(-37.729575, 144.947466);
+    marker.title = @"Sydney2";
+    marker.snippet = @"Australia";
+    marker.appearAnimation = kGMSMarkerAnimationPop;
+    marker.iconView=mv;
+    marker.map = mapView;
+    
+    marker = [[GMSMarker alloc] init];
+    marker.position = CLLocationCoordinate2DMake(-37.229575, 144.947466);
+    marker.title = @"Sydney3";
+    marker.snippet = @"Australia";
+    marker.appearAnimation = kGMSMarkerAnimationPop;
+    marker.iconView=mv;
+    marker.map = mapView;
+    
+    marker = [[GMSMarker alloc] init];
+    marker.position = CLLocationCoordinate2DMake(-37.529575, 144.947466);
+    marker.title = @"Sydney4";
+    marker.snippet = @"Australia";
+    marker.appearAnimation = kGMSMarkerAnimationPop;
+    marker.iconView=mv;
+    marker.map = mapView;
+    
+    marker = [[GMSMarker alloc] init];
+    marker.position = CLLocationCoordinate2DMake(-37.829575, 144.957466);
+    marker.title = @"Sydney5";
+    marker.snippet = @"Australia";
+    marker.appearAnimation = kGMSMarkerAnimationPop;
+    marker.iconView=mv;
+    marker.map = mapView;
+    
+    marker = [[GMSMarker alloc] init];
+    marker.position = CLLocationCoordinate2DMake(-37.829575, 144.147466);
+    marker.title = @"Sydney6";
     marker.snippet = @"Australia";
     marker.appearAnimation = kGMSMarkerAnimationPop;
     marker.iconView=mv;
@@ -70,6 +112,15 @@
     self.navigationItem.rightBarButtonItem =btn_right;
 }
 
+#pragma mark - GMSMapViewDelegate
+
+- (void)mapView:(GMSMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
+    NSLog(@"You tapped at %f,%f", coordinate.latitude, coordinate.longitude);
+}
+
+- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker{
+    
+}
 -(void)unusualList:(UIButton *)sender{
     
 }
