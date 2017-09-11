@@ -9,7 +9,9 @@
 #import "SPBaseViewController.h"
 #import "MapMaker.h"
 
-@interface HomeViewController : SPBaseViewController<GMSMapViewDelegate>
+@interface HomeViewController : SPBaseViewController<GMSMapViewDelegate,UIActionSheetDelegate>
 {
+    CLLocationCoordinate2D sel_coordinate;
+    UIButton *btn_workState;
 }
 @end

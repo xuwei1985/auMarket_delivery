@@ -33,7 +33,6 @@
 }
 
 -(void)resetData{
-    _goodsList=[[NSMutableArray alloc] init];
     _tid=@"0";
     _sortType=@"1";
 }
@@ -59,29 +58,20 @@
 
 -(void)loadGoodsList{
     [self startLoadingActivityIndicator];
-    self.model.tid=_tid;
-    self.model.catid=self.categoryId;
-    self.model.sort=_sortType;
-    self.model.keyword=self.keyword;
-    [self.model loadGoodsList];
+
 }
 
--(void)handlerListPage:(GoodsListEntity *)entity{
-    if(entity!=nil){
-        [_goodsList addObjectsFromArray:entity.list];
-    }
-}
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
     if(isSuccess){
-        if(self.model.entity!=nil){
-            [self handlerListPage:self.model.entity];
-            [self.tableView reloadData];
-        }
-        else{
-            NSLog(@"未获取到有效商品数据");
-        }
+//        if(self.model.entity!=nil){
+//            [self handlerListPage:self.model.entity];
+//            [self.tableView reloadData];
+//        }
+//        else{
+//            NSLog(@"未获取到有效商品数据");
+//        }
     }
 }
 
@@ -91,7 +81,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _goodsList.count;
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -100,30 +90,30 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *reuseIdetify = @"GoodsListItemCell";
-    GoodsListItemCell *cell = [[GoodsListItemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
-    if (cell == nil) {
-        cell.opaque=YES;
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-    
-    GoodsListItemEntity *obj=(GoodsListItemEntity *)[_goodsList objectAtIndex:indexPath.row];
-    cell.entity=obj;
+//    GoodsListItemCell *cell = [[GoodsListItemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
+//    if (cell == nil) {
+//        cell.opaque=YES;
+//        cell.accessoryType = UITableViewCellAccessoryNone;
+//    }
+//    
+//    GoodsListItemEntity *obj=(GoodsListItemEntity *)[_goodsList objectAtIndex:indexPath.row];
+//    cell.entity=obj;
 
-    return cell;
+    return nil;
 }
 
 -(void)gotoMyCartView{
     [[AppDelegate getTabbarController] setSelectedIndex:2];
 }
 
--(GoodsListModel *)model{
-    if(!_model){
-        _model=[[GoodsListModel alloc] init];
-        _model.delegate=self;
-    }
-    
-    return _model;
-}
+//-(GoodsListModel *)model{
+//    if(!_model){
+//        _model=[[GoodsListModel alloc] init];
+//        _model.delegate=self;
+//    }
+//    
+//    return _model;
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

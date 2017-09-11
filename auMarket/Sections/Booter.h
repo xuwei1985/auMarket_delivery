@@ -19,18 +19,12 @@
 #import <AdSupport/AdSupport.h>
 #import "SPTabBarController.h"
 #import "IntroViewController.h"
-#import "GoodsCategoryModel.h"
-#import "WXApi.h"
-#import <ShareSDK/ShareSDK.h>
-#import <ShareSDKConnector/ShareSDKConnector.h>
-#import <ShareSDKExtension/SSEThirdPartyLoginHelper.h>
 #import <GoogleMaps/GoogleMaps.h>
 
 @interface Booter : NSObject<UIGestureRecognizerDelegate,UITabBarControllerDelegate,SPBaseModelProtocol>
 
 @property (nonatomic,strong) UINavigationController* navigationController;
 @property (nonatomic,strong) UITabBarController* tabBarController;
-@property (nonatomic,retain) GoodsCategoryModel *categoryModel;
 
 // 获取引导页
 -(UIViewController*)getIntroViewController;
@@ -39,16 +33,14 @@
 // 初始化启动广告页
 -(UIViewController*)bootStartPage;
 -(void)registRemoteNotification;
-//获取商品分类
--(void)loadGoodsCategory;
 //初始化UMeng统计
 -(void)bootUMeng;
 //初始化极光推送
 -(void)bootJPush:(NSDictionary *)launchOptions;
-////启动ShareSDK，第三方登录和分享
--(void)bootShareSDK;
 //远程消息处理
 -(void)handleRemoteNotifacation:(NSDictionary *)userInfo;
+//处理工作状态
+-(void)handlerWorkingState:(BOOL)isWorking;
 //sync接口
 -(void)sync;
 //外部回调

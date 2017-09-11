@@ -12,6 +12,8 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (assign, nonatomic) BOOL isWorking;
+@property (strong,nonatomic) Booter* booter;
 
 + (UINavigationController *)getNavigationController;
 + (UITabBarController *)getTabbarController;

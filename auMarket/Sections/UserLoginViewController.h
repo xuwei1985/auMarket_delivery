@@ -15,7 +15,6 @@
 {
     CustomTextField *_accountText;
     CustomTextField *_passwordText;
-    SSDKUser *_userInfo;
 }
 @property (nonatomic, retain) MemberLoginModel *model;
 @property (nonatomic, assign) BOOL isModalState;

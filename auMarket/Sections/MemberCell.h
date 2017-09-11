@@ -12,8 +12,10 @@
 {
     UIImageView *_iconImageView;
     UILabel *_itemLbl;
+    UISwitch* _mySwitch;
 }
 
 @property(nonatomic,retain) UIImage *iconImage;
 @property(nonatomic,retain) NSString *itemName;
+@property(nonatomic,retain) NSString *itemPrice;
 @end

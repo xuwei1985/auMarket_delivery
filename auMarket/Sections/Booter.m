@@ -9,15 +9,13 @@
 #import "Booter.h"
 #import "HomeViewController.h"
 #import "UserCenterViewController.h"
-#import "GoodsCategoryViewController.h"
-#import "CartViewController.h"
 #import "AdPageViewController.h"
+#import "TaskListViewController.h"
 
 @interface Booter() 
 {
     HomeViewController* homeViewController;
-    GoodsCategoryViewController* goodsCategoryViewController;
-    CartViewController* cartViewController;
+    TaskListViewController* taskListViewController;
     UserCenterViewController* userCenterViewController;
 }
 @end
@@ -29,7 +27,7 @@
     self = [super init];
     if (self) {
         [self checkIfLoginAccountIsValid];
-        
+        APP_DELEGATE.isWorking=[USER_DEFAULT boolForKey:@"isWorking"];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAccountUpdate:) name:ACCOUNT_UPDATE_NOTIFICATION object:nil];
     }
     return self;
@@ -53,23 +51,23 @@
     homeViewController.hidesBottomBarWhenPushed = NO;
     homeViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"地图模式" image:[UIImage imageNamed:@"1_53"] selectedImage:[UIImage imageNamed:@"1_72"]];
     
-    goodsCategoryViewController = [[GoodsCategoryViewController alloc] init];
-    goodsCategoryViewController.hidesBottomBarWhenPushed = NO;
-    goodsCategoryViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"列表模式" image:[UIImage imageNamed:@"1_56"] selectedImage:[UIImage imageNamed:@"1_65"]];
+    taskListViewController = [[TaskListViewController alloc] init];
+    taskListViewController.hidesBottomBarWhenPushed = NO;
+    taskListViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"列表模式" image:[UIImage imageNamed:@"1_56"] selectedImage:[UIImage imageNamed:@"1_65"]];
     
     userCenterViewController = [[UserCenterViewController alloc] init];
     userCenterViewController.hidesBottomBarWhenPushed = NO;
     userCenterViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"1_69"] selectedImage:[UIImage imageNamed:@"1_59"]];
     
     SPNavigationController *navHomeViewController = [[SPNavigationController alloc] initWithRootViewController:homeViewController];
-    SPNavigationController *navCategoryViewController = [[SPNavigationController alloc] initWithRootViewController:goodsCategoryViewController];
+    SPNavigationController *navTaskListViewController = [[SPNavigationController alloc] initWithRootViewController:taskListViewController];
     SPNavigationController *navUserCenterViewController = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
 
   
     self.tabBarController = [[SPTabBarController alloc] init];
     self.tabBarController.tabBar.translucent = NO;
     self.tabBarController.tabBar.tintColor = COLOR_FONT_MAIN;
-    [self.tabBarController setViewControllers:@[navHomeViewController,navCategoryViewController,navUserCenterViewController]];
+    [self.tabBarController setViewControllers:@[navHomeViewController,navTaskListViewController,navUserCenterViewController]];
     self.tabBarController.selectedIndex = 0;
     self.tabBarController.delegate = self;
     
@@ -142,11 +140,6 @@
     return nil;
 }
 
-//获取商品分类
--(void)loadGoodsCategory{
-    self.categoryModel.requestTag=1111;
-    [self.categoryModel loadGoodsCategory];
-}
 
 -(void)bootGoogleMap{
     [GMSServices provideAPIKey:GOOGLE_APPKEY];
@@ -199,52 +192,6 @@
 }
 
 
-//启动ShareSDK，第三方登录和分享
--(void)bootShareSDK{
-    
-    /**
-     *  设置ShareSDK的appKey，如果尚未在ShareSDK官网注册过App，请移步到http://mob.com/login 登录后台进行应用注册
-     *  在将生成的AppKey传入到此方法中。
-     *  方法中的第二个第三个参数为需要连接社交平台SDK时触发，
-     *  在此事件中写入连接代码。第四个参数则为配置本地社交平台时触发，根据返回的平台类型来配置平台信息。
-     *  如果您使用的时服务端托管平台信息时，第二、四项参数可以传入nil，第三项参数则根据服务端托管平台来决定要连接的社交SDK。
-     */
-    [ShareSDK registerApp:SHARESDK_APP_KEY
-          activePlatforms:@[
-                            @(SSDKPlatformTypeWechat),
-                            @(SSDKPlatformSubTypeWechatSession),
-                            @(SSDKPlatformSubTypeWechatTimeline)]
-                 onImport:^(SSDKPlatformType platformType)
-     {
-         switch (platformType)
-         {
-             case SSDKPlatformTypeWechat:
-                 [ShareSDKConnector connectWeChat:[WXApi class]];
-                 break;
-             default:
-                 break;
-         }
-     }
-          onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo)
-     {
-         
-         switch (platformType)
-         {
-            case SSDKPlatformTypeWechat:
-                 [appInfo SSDKSetupWeChatByAppId:WXAPPID
-                                       appSecret:WXAPPSECRET];
-                 break;
-            
-             default:
-                 break;
-         }
-     }];
-    
-    //(注意：每一个case对应一个break不要忘记填写，不然很可能有不必要的错误，新浪微博的外部库如果不要客户端分享或者不需要加关注微博的功能可以不添加，否则要添加，QQ，微信，google＋这些外部库文件必须要加)
-    
-    
-}
-
 
 //启动网络监测
 - (void)bootReachability{
@@ -287,6 +234,13 @@
     }
 }
 
+//处理工作状态
+-(void)handlerWorkingState:(BOOL)isWorking{
+    APP_DELEGATE.isWorking=isWorking;
+    [USER_DEFAULT setBool:isWorking forKey:@"isWorking"];
+    [USER_DEFAULT synchronize];
+}
+
 //远程消息的注册
 -(void)registRemoteNotification{
     if (SYSTEM_VERSION_GREATER_THAN(@"8.0"))
@@ -303,11 +257,9 @@
     }
 }
 
-
 - (void)handleRemoteNotifacation:(NSDictionary *)userInfo
 {
-    
-    
+
 //    if(userInfo!=nil){
 //        //处理滑动消息通知过来的情况，如果是评论，则显示图片详情页面
 //        if (application.applicationState != UIApplicationStateActive&&![[userInfo objectForKey:@"id"] isEqualToString:@""]) {//
@@ -360,58 +312,14 @@
    return nav;
 }
 
-
-//- (void)onResp:(BaseResp *)resp {
-//    if ([resp isKindOfClass:[PayResp class]]) {
-//        //支付返回结果，实际支付结果需要去微信服务器端查询
-//        NSString *strMsg,*strTitle = [NSString stringWithFormat:@"支付结果"];
-//        
-//        switch (resp.errCode) {
-//            case WXSuccess:
-////                strMsg = @"支付结果：成功！";
-//                NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
-//                 [[NSNotificationCenter defaultCenter] postNotificationName:@"PaymentComplete" object:nil];
-//                break;
-//                
-//            default:
-//                strMsg = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
-//                NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
-//                [ViewCommon showAlertWithTitle:strTitle andMessage:strMsg];
-//                break;
-//        }
-//        
-//        
-//    }
-//}
-
-
 -(void)hank{
     //AudioServicesPlaySystemSound ( kSystemSoundID_Vibrate) ;
     AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL,NULL,NULL);
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 }
 
--(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
-    if(model.requestTag==1111){
-        if(isSuccess){
-            if(self.categoryModel.entity!=nil){
-                [self.categoryModel setCategoryCache:self.categoryModel.entity];
-            }
-            else{
-                NSLog(@"未获取到有效分类数据");
-            }
-        }
-    }
-    
-}
+-(void)onResponse:(SPBaseModel*)model isSuccess:(BOOL)isSuccess{
 
--(GoodsCategoryModel *)categoryModel{
-    if(!_categoryModel){
-        _categoryModel=[[GoodsCategoryModel alloc] init];
-        _categoryModel.delegate=self;
-    }
-    return _categoryModel;
 }
-
 
 @end

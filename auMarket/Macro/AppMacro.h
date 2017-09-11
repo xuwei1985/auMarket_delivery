@@ -38,8 +38,8 @@ return __singleton__; \
 #endif
 
 //系统相关
-#define APP_NAME @"大澳华人超市"
-#define APP_SCHEME  @"auMarket"
+#define APP_NAME @"配送员-大澳华人超市"
+#define APP_SCHEME  @"auMarket_delivery://"
 #define APP_PRIVATE_KEY @"_auMarket@2016"
 #define APP_INTRO_VER @"APP_INTRO_VER"
 
@@ -58,6 +58,7 @@ return __singleton__; \
 #define IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0?YES:NO)
 #define IOS9 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0?YES:NO)
 #define IOS10 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0?YES:NO)
+#define IOS11 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 11.0?YES:NO)
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 #define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)

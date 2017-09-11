@@ -34,46 +34,30 @@
 }
 
 -(void)initData{
-    NSDictionary *dic1,*dic2,*dic3,*dic4,*dic5,*dic6,*dic7;
+    NSDictionary *dic1,*dic2,*dic3;
     _itemArr=[[NSMutableArray alloc] init];
     
-    dic1=[[NSDictionary alloc] initWithObjectsAndKeys:@"icon_order",@"item_icon",@"我的订单",@"item_name",@"我的订单",@"item_controller", nil];
-    [_itemArr addObject:[NSArray arrayWithObjects:dic1, nil]];
+    dic1=[[NSDictionary alloc] initWithObjectsAndKeys:@"待结算现金",@"item_name", nil];
+    dic2=[[NSDictionary alloc] initWithObjectsAndKeys:@"待结算转账",@"item_name", nil];
+    [_itemArr addObject:[NSArray arrayWithObjects:dic1,dic2, nil]];
 
-    dic2=[[NSDictionary alloc] initWithObjectsAndKeys:@"icon_favorite",@"item_icon",@"我的收藏",@"item_name",@"我的收藏",@"item_controller", nil];
-    dic3=[[NSDictionary alloc] initWithObjectsAndKeys:@"icon_setting",@"item_icon",@"地址管理",@"item_name",@"地址管理",@"item_controller", nil];
-    dic4=[[NSDictionary alloc] initWithObjectsAndKeys:@"icon_user",@"item_icon",@"账户设置",@"item_name",@"账户设置",@"item_controller", nil];
-    dic5=[[NSDictionary alloc] initWithObjectsAndKeys:@"icon_cache",@"item_icon",@"清除缓存",@"item_name",@"清除缓存",@"item_controller", nil];
-    dic6=[[NSDictionary alloc] initWithObjectsAndKeys:@"icon_mail",@"item_icon",@"联系大澳网",@"item_name",@"联系大澳网",@"item_controller", nil];
-    dic7=[[NSDictionary alloc] initWithObjectsAndKeys:@"icon_comment",@"item_icon",@"常见问题",@"item_name",@"常见问题",@"item_controller", nil];
-    [_itemArr addObject:[NSArray arrayWithObjects:dic2,dic3,dic4,dic5,dic6,dic7, nil]];
+    dic3=[[NSDictionary alloc] initWithObjectsAndKeys:@"是否开启接单",@"item_name", nil];
+    [_itemArr addObject:[NSArray arrayWithObjects:dic3,nil]];
 }
 
 
 -(void)setNavigation{
-    UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"cart_white"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoMyCartView)];
-    
-    
-    self.navigationItem.rightBarButtonItem=right_Item_cart;
-}
-
--(UIImage *)createImageWithColor: (UIColor *) color
-{
-    CGRect rect=CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    
-    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return theImage;
+    self.title=@"我的";
+//    UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"cart_white"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoMyCartView)];
+//    
+//    
+//    self.navigationItem.rightBarButtonItem=right_Item_cart;
 }
 
 -(void)createMemberInfoView{
-    _userInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, WIDTH_SCREEN*0.6)];
-    _userInfoView.image=[UIImage imageNamed:@"memberBg.jpg"];
+    _userInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, WIDTH_SCREEN*0.5)];
     _userInfoView.userInteractionEnabled=YES;
+    _userInfoView.backgroundColor=COLOR_CLEAR;
     
     _headView=[[UIImageView alloc] init];
     _headView.image=[UIImage imageNamed:@"default_head.jpg"];
@@ -106,7 +90,7 @@
     [_nicknameLbl addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoMemberLogin)]];
     
     _loginLbl=[[UILabel alloc] init];
-    _loginLbl.textColor=COLOR_WHITE;
+    _loginLbl.textColor=COLOR_MAIN;
     _loginLbl.font=FONT_SIZE_BIG;
     _loginLbl.text=@"立即登录>>";
     _loginLbl.hidden=NO;
@@ -164,7 +148,7 @@
     if (cell == nil) {
         cell = [[MemberCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
         cell.showsReorderControl = NO;
-        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        cell.accessoryType=UITableViewCellAccessoryNone;
         cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.textLabel.font=DEFAULT_FONT(16.0);
@@ -172,8 +156,13 @@
     }
     
     cell.itemName =[[[_itemArr objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"item_name"];
-    cell.iconImage=[UIImage imageNamed:[[[_itemArr objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"item_icon"]];
-
+    
+    if(indexPath.section==1&&indexPath.row==[[_itemArr objectAtIndex:indexPath.section] count]-1){
+        cell.itemPrice=@"";
+    }
+    else{
+        cell.itemPrice=@"$123.82";
+    }
     return cell;
 }
 
@@ -214,9 +203,8 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [self.navigationController.navigationBar  setBackgroundImage:[self createImageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar  setShadowImage:[self createImageWithColor:[UIColor clearColor]]];
-    [self.navigationController.navigationBar  setTranslucent:YES];
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

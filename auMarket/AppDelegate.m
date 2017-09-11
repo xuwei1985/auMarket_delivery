@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
-@property (strong,nonatomic) Booter* booter;
+
 @end
 
 @implementation AppDelegate
@@ -33,8 +33,6 @@
     self.booter = [[Booter alloc] init];
     [self.booter bootReachability];
     [self.booter bootGoogleMap];
-//    [self.booter bootShareSDK];
-//    [self.booter loadGoodsCategory];
 //    [self.booter bootJPush:launchOptions];
 //    [self.booter bootUMeng];
     

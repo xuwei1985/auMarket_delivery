@@ -131,28 +131,7 @@
     int loginButtonWidth=WIDTH_SCREEN-100;
     
    
-    if(![WXApi isWXAppInstalled]){
-        UIButton *wxLoginBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-        wxLoginBtn.frame=CGRectMake(50, CGRectGetMaxY(regist_btn.frame)+loginButtonOffsetY+20, loginButtonWidth, 38);
-        wxLoginBtn.backgroundColor=RGBCOLOR(255,255,255);
-        wxLoginBtn.layer.borderWidth=1;
-        wxLoginBtn.layer.cornerRadius=4;
-        wxLoginBtn.layer.borderColor=RGBCOLOR(255, 255, 255).CGColor;
-        [wxLoginBtn setImage:[UIImage imageNamed:@"sign_weixin"] forState:UIControlStateNormal];//给button添加image
-        [wxLoginBtn setImage:[UIImage imageNamed:@"sign_weixin"] forState:UIControlStateSelected];//给button添加image
-        wxLoginBtn.imageEdgeInsets = UIEdgeInsetsMake(0,-3,0,0);//设置image在button上的位置（上top，左left，下bottom，右right）这里可以写负值，对上写－5，那么image就象上移动5个像素
-        [wxLoginBtn setTitle:@"使用微信账号登录" forState:UIControlStateNormal];//设置button的title
-        wxLoginBtn.titleLabel.font = [UIFont systemFontOfSize:14];//title字体大小
-        wxLoginBtn.titleLabel.backgroundColor=[UIColor clearColor];
-        wxLoginBtn.titleLabel.textAlignment = NSTextAlignmentLeft;//设置title的字体居中
-        [wxLoginBtn setTitleColor:RGBCOLOR(55, 55, 55) forState:UIControlStateNormal];//设置title在一般情况下为白色字体
-        [wxLoginBtn setTitleColor:RGBCOLOR(55, 55, 55) forState:UIControlStateSelected];//设置title在button被选中情况下为灰色字体
-        wxLoginBtn.titleEdgeInsets = UIEdgeInsetsMake(2, 10, 0, 0);//设置title在button上的位置（上top，左left，下bottom，右right）
-        wxLoginBtn.tag=60003;
-        [wxLoginBtn addTarget:self action:@selector(loginWithThird:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:wxLoginBtn];
-    }
-
+    
     self.view.backgroundColor=COLOR_BG_VIEW;
 }
 
@@ -417,54 +396,6 @@
 //    }
 //}
 
--(void)loginWithThird:(UIButton *)sender{
-    SSDKPlatformType sType;
-    switch (sender.tag) {
-        case 60001:
-            sType=SSDKPlatformTypeSinaWeibo;
-            break;
-        
-        case 60002:
-            sType=SSDKPlatformTypeQQ;
-            break;
-            
-        case 60003:
-            sType=SSDKPlatformTypeWechat;
-            break;
-            
-        default:
-            break;
-    }
-
-    [ShareSDK getUserInfo:sType onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
-     {
-         if (state == SSDKResponseStateSuccess)
-         {
-             //授权成功
-             NSLog(@"user:%@",user);
-
-             _userInfo=user;
-//             if(sType==SSDKPlatformTypeWechat){
-//                 [UserDefault setValue:@"" forKey:@"userid_wb"];
-//                 [UserDefault setValue:@"" forKey:@"access_token_wb"];
-//                 [UserDefault setValue:@"" forKey:@"accessToken_qq"];
-//                 [UserDefault setValue:@"" forKey:@"openId_qq"];
-//                 [UserDefault setValue:[user.rawData objectForKey:@"unionid"] forKey:@"wx_unionid"];
-//                 [UserDefault setValue:[user.rawData objectForKey:@"openid"] forKey:@"wx_openid"];
-//                 
-//                 [self bindLoginForWX:user];
-//             }
-//             [UserDefault synchronize];
-             
-         }
-         
-         else
-         {
-             NSLog(@"%@",error);
-         }
-         
-     }];
-}
 
 -(void)gotoRegist{
     UserRegistViewController *rvc=[[UserRegistViewController alloc] init:0];

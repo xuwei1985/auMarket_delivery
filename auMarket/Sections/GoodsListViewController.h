@@ -7,18 +7,14 @@
 //
 
 #import "SPBaseViewController.h"
-#import "GoodsListModel.h"
-#import "GoodsListItemCell.h"
 
 @interface GoodsListViewController : SPBaseViewController
 {
     NSString *_tid;
     NSString *_sortType;
     NSString *_keyword;
-    NSMutableArray<GoodsListItemEntity *> *_goodsList;
 }
 
-@property(nonatomic,retain) GoodsListModel *model;
 @property(nonatomic,retain) NSString *categoryId;
 @property(nonatomic,retain) NSString *categoryName;
 @property(nonatomic,retain) NSString *keyword;
