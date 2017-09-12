@@ -7,8 +7,9 @@
 //
 
 #import "SPBaseViewController.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
-@interface PaymentViewController : SPBaseViewController<UIActionSheetDelegate>
+@interface PaymentViewController : SPBaseViewController<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     UIImageView *orderInfoView;
     UIImageView *previewView;
