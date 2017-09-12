@@ -104,7 +104,7 @@
     
     lbl_packagenote=[[UILabel alloc] init];
     lbl_packagenote.textColor=COLOR_DARKGRAY;
-    lbl_packagenote.font=FONT_SIZE_MIDDLE;
+    lbl_packagenote.font=FONT_SIZE_SMALL;
     lbl_packagenote.numberOfLines=0;
     lbl_packagenote.text=@"转账必须拍转账截图哦，然后上传，会计需要审核的，谢谢配合！";
     lbl_packagenote.textAlignment=NSTextAlignmentLeft;
@@ -132,6 +132,17 @@
         make.top.mas_equalTo(blockView_2.mas_bottom).offset(20);
         make.size.mas_equalTo(CGSizeMake((WIDTH_SCREEN-40), 38));
         make.left.mas_equalTo(20);
+    }];
+    
+    previewView=[[UIImageView alloc] init];
+    previewView.hidden=YES;
+    previewView.backgroundColor=COLOR_GRAY;
+    [self.view addSubview: previewView];
+    
+    [previewView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(upload_btn.mas_bottom).offset(35);
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN*0.35, WIDTH_SCREEN*0.35));
+        make.centerX.mas_equalTo(self.view.mas_centerX);
     }];
 }
 

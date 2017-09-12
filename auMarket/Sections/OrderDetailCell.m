@@ -24,7 +24,12 @@
             _itemLbl=[[UILabel alloc] init];
             _itemLbl.textAlignment=NSTextAlignmentLeft;
             _itemLbl.textColor=COLOR_BLACK;
-            _itemLbl.font=FONT_SIZE_MIDDLE;
+            if(WIDTH_SCREEN<=320){
+                _itemLbl.font=DEFAULT_FONT(13.0);
+            }
+            else{
+                _itemLbl.font=DEFAULT_FONT(14.0);
+            }
             _itemLbl.numberOfLines=0;
             _itemLbl.lineBreakMode=NSLineBreakByWordWrapping;
             [self.contentView addSubview:_itemLbl];

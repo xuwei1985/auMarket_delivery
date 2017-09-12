@@ -325,7 +325,7 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 6;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -369,6 +369,31 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    UITableView *tableview = (UITableView *)scrollView;
+    CGFloat sectionHeaderHeight = 40;
+    CGFloat sectionFooterHeight = 0;
+    
+    
+    CGFloat offsetY = tableview.contentOffset.y;
+    NSLog(@"offsetY:%f",offsetY);
+    
+    if (offsetY >= 0 && offsetY <= sectionHeaderHeight)
+    {
+        tableview.contentInset = UIEdgeInsetsMake(-offsetY, 0, -sectionFooterHeight, 0);
+    }else if (offsetY >= sectionHeaderHeight && offsetY <= tableview.contentSize.height - tableview.frame.size.height - sectionFooterHeight)
+    {
+        tableview.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, -sectionFooterHeight, 0);
+    }else if (offsetY >= tableview.contentSize.height - tableview.frame.size.height - sectionFooterHeight && offsetY <= tableview.contentSize.height - tableview.frame.size.height)
+    {
+        if(offsetY>0){
+            tableview.contentInset = UIEdgeInsetsMake(-offsetY, 0, -(tableview.contentSize.height - tableview.frame.size.height - sectionFooterHeight), 0);
+        }
+    }
+    
 }
 
 -(void)deliveryFinish{

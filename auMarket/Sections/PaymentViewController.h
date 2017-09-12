@@ -11,13 +11,7 @@
 @interface PaymentViewController : SPBaseViewController<UIActionSheetDelegate>
 {
     UIImageView *orderInfoView;
-    UILabel *lbl_payType;
-    UILabel *lbl_orderSum;
-    UILabel *lbl_orderNo;
-    UILabel *lbl_contact;
-    UILabel *lbl_mobile;
-    UILabel *lbl_address;
-    UILabel *lbl_deliverytime;
+    UIImageView *previewView;
     UILabel *lbl_packagenote;
     UIButton *_btn_doneAction;
 }
