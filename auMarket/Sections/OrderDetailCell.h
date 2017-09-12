@@ -12,9 +12,10 @@
 {
     UIImageView *_iconImageView;
     UILabel *_itemLbl;
+    UILabel *_numLbl;
 }
 
 @property(nonatomic,retain) UIImage *iconImage;
 @property(nonatomic,retain) NSString *itemName;
-@property(nonatomic,retain) NSString *itemPrice;
+@property(nonatomic,retain) NSString *itemNum;
 @end

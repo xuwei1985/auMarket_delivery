@@ -7,11 +7,8 @@
 //
 
 #import "SPBaseViewController.h"
-#import "UserLoginViewController.h"
-#import "OrderDetailCell.h"
-#import "PaymentViewController.h"
 
-@interface OrderDetailViewController : SPBaseViewController<UIActionSheetDelegate>
+@interface PaymentViewController : SPBaseViewController<UIActionSheetDelegate>
 {
     UIImageView *orderInfoView;
     UILabel *lbl_payType;
@@ -23,7 +20,5 @@
     UILabel *lbl_deliverytime;
     UILabel *lbl_packagenote;
     UIButton *_btn_doneAction;
-    
-    CLLocationCoordinate2D coordinate;
 }
 @end
