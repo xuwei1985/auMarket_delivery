@@ -9,8 +9,9 @@
 #import "SPBaseViewController.h"
 #import "UserLoginViewController.h"
 #import "OrderDetailCell.h"
+#import "PaymentViewController.h"
 
-@interface OrderDetailViewController : SPBaseViewController
+@interface OrderDetailViewController : SPBaseViewController<UIActionSheetDelegate>
 {
     UIImageView *orderInfoView;
     UILabel *lbl_payType;

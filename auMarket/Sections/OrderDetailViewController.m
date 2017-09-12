@@ -302,7 +302,7 @@
     [_btn_doneAction setBackgroundColor:COLOR_MAIN];
     _btn_doneAction.tintColor=COLOR_WHITE;
     _btn_doneAction.titleLabel.font=FONT_SIZE_BIG;
-    [_btn_doneAction addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
+    [_btn_doneAction addTarget:self action:@selector(showFinishMenu) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn_doneAction];
     
     
@@ -325,11 +325,24 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 6;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 40;
+    return 38;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UILabel *packageCategory=[[UILabel alloc] initWithFrame:CGRectMake(0, 10, 150, 20)];
+    packageCategory.font=FONT_SIZE_MIDDLE;
+    packageCategory.textColor=COLOR_BLACK;
+    if(section==0){
+        packageCategory.text=@"  通用打包商品";
+    }
+    else if(section==1){
+        packageCategory.text=@"  单独打包商品";
+    }
+    return packageCategory;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -356,6 +369,64 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    UITableView *tableview = (UITableView *)scrollView;
+    CGFloat sectionHeaderHeight = 40;
+    CGFloat sectionFooterHeight = 0;
+    
+    
+    CGFloat offsetY = tableview.contentOffset.y;
+    NSLog(@"offsetY:%f",offsetY);
+    
+    if (offsetY >= 0 && offsetY <= sectionHeaderHeight)
+    {
+        tableview.contentInset = UIEdgeInsetsMake(-offsetY, 0, -sectionFooterHeight, 0);
+    }else if (offsetY >= sectionHeaderHeight && offsetY <= tableview.contentSize.height - tableview.frame.size.height - sectionFooterHeight)
+    {
+        tableview.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, -sectionFooterHeight, 0);
+    }else if (offsetY >= tableview.contentSize.height - tableview.frame.size.height - sectionFooterHeight && offsetY <= tableview.contentSize.height - tableview.frame.size.height)
+    {
+        if(offsetY>0){
+            tableview.contentInset = UIEdgeInsetsMake(-offsetY, 0, -(tableview.contentSize.height - tableview.frame.size.height - sectionFooterHeight), 0);
+        }
+    }
+    
+}
+
+-(void)deliveryFinish{
+    //如果是线上支付，直接调用配送完成接口
+    //如果是货到付款，则须先选择结算方式
+    [self showFinishMenu];
+}
+
+- (void)showFinishMenu
+{
+    UIActionSheet *actionsheet;
+    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"现金结算", @"转账结算",@"无法配送", nil,nil];
+    
+    [actionsheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"buttonIndex=%ld", buttonIndex);
+    
+    if (0 == buttonIndex)//现金结算
+    {
+        
+    }
+    else if (1 == buttonIndex)//转账结算
+    {
+        PaymentViewController *pvc=[[PaymentViewController alloc] init];
+        [self.navigationController pushViewController:pvc animated:YES];
+    }
+    else if (3 == buttonIndex)//无法配送
+    {
+        
+    }
 }
 
 -(void)runNavigationByGoogle{
