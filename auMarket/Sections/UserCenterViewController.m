@@ -48,10 +48,6 @@
 
 -(void)setNavigation{
     self.title=@"我的";
-//    UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"cart_white"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoMyCartView)];
-//    
-//    
-//    self.navigationItem.rightBarButtonItem=right_Item_cart;
 }
 
 -(void)createMemberInfoView{
@@ -67,8 +63,8 @@
     [_userInfoView addSubview:_headView];
     
     [_headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(_userInfoView.mas_centerX).offset(-5);
-        make.centerY.mas_equalTo(_userInfoView.mas_centerY);
+        make.centerX.mas_equalTo(_userInfoView.mas_centerX);
+        make.centerY.mas_equalTo(_userInfoView.mas_centerY).offset(-15);
         make.size.mas_equalTo(CGSizeMake(76, 76));
     }];
     

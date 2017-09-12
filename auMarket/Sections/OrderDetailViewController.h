@@ -21,6 +21,7 @@
     UILabel *lbl_address;
     UILabel *lbl_deliverytime;
     UILabel *lbl_packagenote;
+    UIButton *_btn_doneAction;
     
     CLLocationCoordinate2D coordinate;
 }
