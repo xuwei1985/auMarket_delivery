@@ -137,6 +137,7 @@
     previewView=[[UIImageView alloc] init];
     previewView.hidden=YES;
     previewView.backgroundColor=COLOR_GRAY;
+    previewView.contentMode=UIViewContentModeScaleAspectFill;
     [self.view addSubview: previewView];
     
     [previewView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -211,8 +212,29 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(__bridge NSString *)kUTTypeImage]) {
-        UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
-        [self performSelector:@selector(saveImage:) withObject:img afterDelay:0.3];
+        UIImage *hdImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        //[self performSelector:@selector(saveImage:) withObject:img afterDelay:0.3];
+
+        //    [userPhotoButton setImage:selfPhoto forState:UIControlStateNormal];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            float imgMinLenght=MIN(hdImage.size.width, hdImage.size.height);
+            float imgScacle=hdImage.size.width/hdImage.size.height;
+            CGSize newSize;
+            if (imgMinLenght==hdImage.size.width) {
+                newSize=CGSizeMake(800, 800/imgScacle);
+            }
+            else{
+                newSize=CGSizeMake(800*imgScacle,800);
+            }
+
+            UIImage *newImg= [self thumbnailWithImageWithoutScale:hdImage size:newSize];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                previewView.hidden=NO;
+                previewView.image = newImg;
+            });
+        });
+        
     }
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
