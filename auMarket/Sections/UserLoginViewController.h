@@ -7,15 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomTextField.h"
 #import "UserRegistViewController.h"
 #import "MemberLoginModel.h"
+#import "HomeViewController.h"
 
 @interface UserLoginViewController : SPBaseViewController<UITextFieldDelegate,UIScrollViewDelegate,UITabBarControllerDelegate>
 {
-    CustomTextField *_accountText;
-    CustomTextField *_passwordText;
+    UITextField *_accountText;
+    UITextField *_passwordText;
 }
 @property (nonatomic, retain) MemberLoginModel *model;
-@property (nonatomic, assign) BOOL isModalState;
 @end

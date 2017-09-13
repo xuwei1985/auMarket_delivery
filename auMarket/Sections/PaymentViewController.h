@@ -8,6 +8,8 @@
 
 #import "SPBaseViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "MJPhotoBrowser.h"
+#import "MJPhoto.h"
 
 @interface PaymentViewController : SPBaseViewController<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {

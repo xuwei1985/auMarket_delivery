@@ -63,6 +63,7 @@ DEC_SINGLETON(AccountManager)
 @property (retain,nonatomic) NSString *user_token;
 @property (nonatomic,retain) NSString *user_openID;
 @property (nonatomic,retain) NSString *user_status;
+@property (nonatomic,retain) NSString *user_pwd;
 @property (retain,nonatomic) NSString *isNewUser;
 
 

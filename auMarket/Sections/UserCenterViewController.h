@@ -17,5 +17,6 @@
     UIImageView *_headView;
     UILabel *_nicknameLbl;
     UILabel *_loginLbl;
+    UIButton *_btn_exit;
 }
 @end

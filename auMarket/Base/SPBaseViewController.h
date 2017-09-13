@@ -58,6 +58,7 @@
 -(void)reloadTableViewDataFadeAnimation:(BOOL)animation;
 
 - (BOOL)checkLoginStatus;
+-(void)onUserNotLogin;
 
 - (void)showMaskView;
 - (void)hideMaskView;

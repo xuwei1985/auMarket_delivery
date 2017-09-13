@@ -162,6 +162,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     btn_workState.selected=APP_DELEGATE.isWorking;
+    
+    [self checkLoginStatus];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -17,13 +17,10 @@
 
 @interface MemberEntity : SPBaseEntity
 
-@property (nonatomic, copy) NSString *openid;//微信
-@property (nonatomic, copy) NSString *utoken;//微信
-@property (nonatomic, copy) NSString *user_id;
+@property (nonatomic, copy) NSString *userid;
+@property (nonatomic, copy) NSString *account;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *userheader;
-@property (nonatomic, copy) NSString *shopping_cart_item_count;
-@property (nonatomic, copy) NSString *is_new_user;
-@property (nonatomic, copy) NSString *user_status;
-
+@property (nonatomic, copy) NSString *mobile;
+@property (nonatomic, copy) NSString *password;
 @end

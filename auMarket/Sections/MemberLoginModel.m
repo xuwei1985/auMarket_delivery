@@ -14,32 +14,16 @@
     self = [super init];
     if (self) {
         self.parseDataClassType = [MemberLoginEntity class];
-        self.entity.err_msg=@"未获取到有效的购物车数据";
     }
     return self;
 }
 
 //普通登录
 -(void)loginWithUsername:(NSString *)uname andPassword:(NSString *)upass{
-    self.shortRequestAddress=@"apiv1.php?act=user_login";
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delivery_login&username=%@&password=%@",uname,upass];
     self.params = @{
-        @"username":uname,
-        @"password":upass
     };
     self.requestTag=1001;
-    [self loadInner];
-}
-
-//微信登录
--(void)loginWithWithUsername:(NSString *)uname andNickname:(NSString *)nickname andAvatar:(NSString *)avatar andGender:(NSString *)gender{
-    self.shortRequestAddress=@"apiv1.php?act=login_register";
-    self.params = @{
-                    @"username":uname,
-                    @"nickname":nickname,
-                    @"userheader":avatar,
-                    @"gender":gender
-                    };
-    self.requestTag=1002;
     [self loadInner];
 }
 
@@ -51,9 +35,11 @@
 
 -(SPAccount *)convertToSpAccount:(MemberEntity*)mEntity{
     SPAccount *_account=[[SPAccount alloc] init];
-    _account.user_id=mEntity.user_id;
+    _account.user_id=mEntity.userid;
+    _account.user_account=mEntity.account;
     _account.user_nickname=mEntity.nickname;
-    _account.user_avatar=mEntity.userheader;
+    _account.user_mobile=mEntity.mobile;
+    _account.user_pwd=mEntity.password;
     return _account;
 }
 

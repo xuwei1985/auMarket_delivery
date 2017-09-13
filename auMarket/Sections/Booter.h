@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "AppDelegate.h"
+#import "AlertBlockView.h"
 #import "SyncManager.h"
 #import "BadgeManager.h"
 #import "AccountManager.h"

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "UserLoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -46,14 +47,15 @@
 //    else{//显示正常的页面
 //        [self.window setRootViewController:[self.booter bootUIViewController]];
 //    }
-//    
-    [self.window setRootViewController:[self.booter bootUIViewController]];
+//
+    SPNavigationController *navController = [[SPNavigationController alloc] initWithRootViewController:[[UserLoginViewController alloc] init]];
+    [self.window setRootViewController:navController];
     
     //启动的弹出界面
-    UIViewController *startPageViewController = [self.booter bootStartPage];
-    if (startPageViewController) {
-        [self.window.rootViewController presentViewController:startPageViewController animated:NO completion:nil];
-    }
+//    UIViewController *startPageViewController = [self.booter bootStartPage];
+//    if (startPageViewController) {
+//        [self.window.rootViewController presentViewController:startPageViewController animated:NO completion:nil];
+//    }
     
     self.window.backgroundColor=COLOR_WHITE;
     [self.window makeKeyAndVisible];

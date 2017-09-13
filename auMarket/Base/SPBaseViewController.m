@@ -26,8 +26,6 @@
     self = [super init];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
-        
-        
     }
     return self;
 }
@@ -49,12 +47,10 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     [self.navigationController setNavigationBarHidden:[self prefersNaviagtionBarHidden] animated:YES];
-    [self.navigationController.navigationBar  setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar  setShadowImage:nil];
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:nil];
     [self.navigationController.navigationBar setBarTintColor:COLOR_BG_NAVIGATION];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:COLOR_WHITE,NSFontAttributeName:FONT_SIZE_NAVIGATION}];
-    
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -538,8 +534,7 @@
 
 -(void)onUserNotLogin
 {
-//    LoginViewController* vc = [[LoginViewController alloc] init];
-//    [[AppDelegate getNavigationController] presentViewController:vc animated:YES completion:NULL];
+    [self.tabBarController.navigationController popToRootViewControllerAnimated:YES];
 }
 
 /*

@@ -206,7 +206,10 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    NSLog(@"isWorking:%d",APP_DELEGATE.isWorking);
     btn_workState.selected=APP_DELEGATE.isWorking;
+    
+    [self checkLoginStatus];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
