@@ -34,6 +34,7 @@
     self.booter = [[Booter alloc] init];
     [self.booter bootReachability];
     [self.booter bootGoogleMap];
+    [self.booter loadTaskList];
 //    [self.booter bootJPush:launchOptions];
 //    [self.booter bootUMeng];
     
@@ -120,7 +121,7 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
+    //[JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
 }
 
 
@@ -134,7 +135,7 @@
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
     
-    [self.booter handleRemoteNotifacation:userInfo];
+//    [self.booter handleRemoteNotifacation:userInfo];
 }
 
 @end

@@ -50,14 +50,11 @@
     }];
 }
 
--(void)loadData:(BOOL)isRefresh{
-    
-}
 
 -(void)layoutSubviews{
     [super layoutSubviews];
     
-    _taskTitleLbl.text=@"1/22 Oakleigh Road, Carnegie, Melbourne, Australia";
+    _taskTitleLbl.text=self.entity.address;
     [_taskTitleLbl sizeToFit];
 }
 

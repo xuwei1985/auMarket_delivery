@@ -15,6 +15,6 @@
     UIImageView *_iconView;
 }
 
-@property(nonatomic,retain)TaskEntity *entity;
+@property(nonatomic,retain)TaskItemEntity *entity;
 @property(nonatomic,retain)NSIndexPath *indexPath;
 @end
