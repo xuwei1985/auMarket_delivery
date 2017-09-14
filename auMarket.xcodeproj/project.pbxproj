@@ -78,6 +78,7 @@
 		A976B7151F697EBC00B85C1C /* TaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A976B7141F697EBC00B85C1C /* TaskModel.m */; };
 		A982F78F1E0FA87E00DB4C13 /* sign_weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */; };
 		A982F79A1E1107DA00DB4C13 /* grayline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F7991E1107DA00DB4C13 /* grayline@2x.png */; };
+		A9A85E321F6A84EB00443E6F /* GMSMarker+MyGMSMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A85E311F6A84EB00443E6F /* GMSMarker+MyGMSMarker.m */; };
 		A9AD42AD1E12B0CF00A4B131 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD42AB1E12B0CF00A4B131 /* search@2x.png */; };
 		A9AD42AE1E12B0CF00A4B131 /* search@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD42AC1E12B0CF00A4B131 /* search@3x.png */; };
 		A9AD42B11E1364D800A4B131 /* ScrollImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AD42AF1E1364D800A4B131 /* ScrollImageView.m */; };
@@ -295,6 +296,8 @@
 		A976B7141F697EBC00B85C1C /* TaskModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskModel.m; sourceTree = "<group>"; };
 		A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign_weixin@2x.png"; sourceTree = "<group>"; };
 		A982F7991E1107DA00DB4C13 /* grayline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayline@2x.png"; sourceTree = "<group>"; };
+		A9A85E301F6A84EB00443E6F /* GMSMarker+MyGMSMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GMSMarker+MyGMSMarker.h"; sourceTree = "<group>"; };
+		A9A85E311F6A84EB00443E6F /* GMSMarker+MyGMSMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GMSMarker+MyGMSMarker.m"; sourceTree = "<group>"; };
 		A9AD42AB1E12B0CF00A4B131 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
 		A9AD42AC1E12B0CF00A4B131 /* search@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@3x.png"; sourceTree = "<group>"; };
 		A9AD42AF1E1364D800A4B131 /* ScrollImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollImageView.m; sourceTree = "<group>"; };
@@ -472,6 +475,8 @@
 				A9AD42B01E1364D800A4B131 /* ScrollImageView.h */,
 				A9F4DA971F65965200D71774 /* MapMaker.h */,
 				A9F4DA981F65965200D71774 /* MapMaker.m */,
+				A9A85E301F6A84EB00443E6F /* GMSMarker+MyGMSMarker.h */,
+				A9A85E311F6A84EB00443E6F /* GMSMarker+MyGMSMarker.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1170,6 +1175,7 @@
 				A9DA916E1F67915E002033AA /* PaymentViewController.m in Sources */,
 				A95E113B1DF8491600660E42 /* b64.m in Sources */,
 				A964741F1E110D5B00A5A39B /* MemberLoginEntity.m in Sources */,
+				A9A85E321F6A84EB00443E6F /* GMSMarker+MyGMSMarker.m in Sources */,
 				A9FBC1FD1DF97314005ECDDE /* PunchScrollView.m in Sources */,
 				A95E10F71DF8104800660E42 /* SPBaseTableViewCell.m in Sources */,
 				A96474251E1111F000A5A39B /* UserRegistViewController.m in Sources */,
