@@ -23,7 +23,7 @@
 }
 
 -(void)initData{
-
+    markerArr=[[NSMutableArray alloc] init];
 }
 
 -(void)initUI{
@@ -65,52 +65,88 @@
     [[mapView settings] setMyLocationButton:YES];
     self.view = mapView;
     
-    mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
-    mapMaker.image=[UIImage imageNamed:@"1_29"];
+    
 }
 
 -(void)loadTaskMask{
+    CLLocationCoordinate2D coordinate;
+    TaskItemEntity *itemEntity;
+    GMSMarker *marker;
     [mapView clear];//清除所有的maker
+    if(markerArr){
+        [markerArr removeAllObjects];
+    }
+    else{
+        markerArr=[[NSMutableArray alloc] init];
+    }
+    
+    
     //等待配送的
     for(int i=0;i<[APP_DELEGATE.booter.tasklist_delivering count];i++){
-        mapMaker.markTip=@"1";
-        [mapMaker loadData];
+        itemEntity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i];
+        coordinate=CLLocationCoordinate2DMake([self reviseDoubleValue:[itemEntity.latitude doubleValue]], [self reviseDoubleValue:[itemEntity.longitude doubleValue]]);
+        itemEntity.coordinate=coordinate;//设置配送项目的坐标
         
-        GMSMarker *marker = [[GMSMarker alloc] init];
-        marker.position = CLLocationCoordinate2DMake([[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].longitude doubleValue], [[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].latitude doubleValue]);
-        marker.title = [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].consignee;
-        marker.snippet = [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].address;
-        marker.appearAnimation = kGMSMarkerAnimationPop;
-        marker.iconView=mapMaker;
-        marker.map = mapView;
+        //判断某个coordinate的marker是否存在
+        marker=[self isExistMarker:itemEntity.coordinate];
+        if(marker==nil){
+            mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
+            mapMaker.image=[UIImage imageNamed:@"1_29"];
+            mapMaker.markTip=@"1";
+            [mapMaker loadData];
+            
+            marker = [[GMSMarker alloc] init];
+            marker.position = CLLocationCoordinate2DMake(itemEntity.coordinate.latitude, itemEntity.coordinate.longitude);
+            marker.title = itemEntity.consignee;
+            marker.snippet = itemEntity.address;
+            marker.appearAnimation = kGMSMarkerAnimationPop;
+            marker.iconView=mapMaker;
+            marker.map = mapView;
+            marker.latitude=[self reviseDoubleValue:itemEntity.coordinate.latitude];
+            marker.longitude=[self reviseDoubleValue:itemEntity.coordinate.longitude];
+            NSLog(@"marker.latitude:%f",marker.latitude);
+            [markerArr addObject:marker];
+        }
+        else{
+            ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%d",[((MapMaker *)marker.iconView).markTip intValue]+1];
+            [((MapMaker *)marker.iconView) loadData];
+        }
+        
     }
     
     //配送失败的
-    for(int i=0;i<[APP_DELEGATE.booter.tasklist_failed count];i++){
-        mapMaker.markTip=@"1";
-        [mapMaker loadData];
-        
-        GMSMarker *marker = [[GMSMarker alloc] init];
-        marker.position = CLLocationCoordinate2DMake([[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].longitude doubleValue], [[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].latitude doubleValue]);
-        marker.title = [APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].consignee;
-        marker.snippet = [APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].address;
-        marker.appearAnimation = kGMSMarkerAnimationPop;
-        marker.iconView=mapMaker;
-        marker.map = mapView;
-    }
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        // 耗时的操作
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // 更新界面
-            
-        });
-    });
+//    for(int i=0;i<[APP_DELEGATE.booter.tasklist_failed count];i++){
+//        mapMaker.markTip=@"1";
+//        [mapMaker loadData];
+//        
+//        GMSMarker *marker = [[GMSMarker alloc] init];
+//        marker.position = CLLocationCoordinate2DMake([[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].longitude doubleValue], [[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].latitude doubleValue]);
+//        marker.title = [APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].consignee;
+//        marker.snippet = [APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].address;
+//        marker.appearAnimation = kGMSMarkerAnimationPop;
+//        marker.iconView=mapMaker;
+//        marker.map = mapView;
+//    }
 }
 
--(void)getSameMakerByLocation{
-    
+-(GMSMarker *)isExistMarker:(CLLocationCoordinate2D)coordinate{
+    NSArray<GMSMarker *> *mArr=[[NSMutableArray alloc] init];
+    if(markerArr){
+        NSString *filterStr=[NSString stringWithFormat:@"latitude==%f AND longitude==%f",coordinate.latitude,coordinate.longitude];
+        NSPredicate *predicate=[NSPredicate predicateWithFormat:filterStr];
+        mArr=[markerArr filteredArrayUsingPredicate:predicate];
+        return [mArr firstObject];
+    }
+
+    return nil;
+}
+
+-(double)reviseDoubleValue:(double)conversionValue{
+    /* 直接传入精度丢失有问题的Double类型*/
+    NSString *doubleString        = [NSString stringWithFormat:@"%lf", conversionValue];
+    NSDecimalNumber *decNumber    = [NSDecimalNumber decimalNumberWithString:doubleString];
+    double d=[decNumber doubleValue];
+    return d;
 }
 
 #pragma mark - GMSMapViewDelegate
@@ -127,6 +163,10 @@
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker{
     return NO;
+}
+
+- (void)mapViewDidFinishTileRendering:(GMSMapView *)mapView{
+    NSLog(@"mapViewDidFinishTileRendering");
 }
 
 - (void)showMaskMenu
