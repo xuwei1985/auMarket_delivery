@@ -16,5 +16,6 @@
     UIButton *btn_waitDelivery;
     UIButton *btn_failedDelivery;
     UIButton *btn_successDelivery;
+    Delivery_Status list_status_modal;//列表模式
 }
 @end

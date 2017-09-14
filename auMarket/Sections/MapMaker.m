@@ -25,7 +25,7 @@
 
 -(void)initUI{
     lbl_markTip=[[UILabel alloc] init];
-    lbl_markTip.text=@"12";
+    lbl_markTip.text=@"";
     lbl_markTip.font=FONT_SIZE_MIDDLE;
     lbl_markTip.textAlignment=NSTextAlignmentCenter;
     lbl_markTip.textColor=COLOR_WHITE;
@@ -35,6 +35,7 @@
     [lbl_markTip mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.mas_centerX);
         make.centerY.mas_equalTo(self.mas_centerY).offset(-9);
+        make.size.mas_equalTo(CGSizeMake(25, 25));
     }];
 }
 

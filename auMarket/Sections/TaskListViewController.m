@@ -19,7 +19,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initData];
     [self initUI];
+    [self addNotification];
+}
+
+
+-(void)initData{
+    list_status_modal=Delivery_Status_Delivering;
 }
 
 -(void)initUI{
@@ -27,6 +34,10 @@
     [self setUpTableView];
     [self createTaskCategoryButtons];
     [self.tableView reloadData];
+}
+
+-(void)addNotification{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
 }
 
 -(void)setNavigation{
@@ -51,17 +62,21 @@
     [self.view addSubview:taskCategoeryBar];
     
     btn_waitDelivery=[[UIButton alloc] initWithFrame:CGRectMake(TASK_CATEGORY_EDGE+TASK_CATEGORY_GAP*0+TASK_CATEGORY_WIDTH*0, 0, TASK_CATEGORY_WIDTH, SEGMENTVIEW_HEIGHT)];
-    [btn_waitDelivery setTitle:@"待配送(11)" forState:UIControlStateNormal];
+    [btn_waitDelivery setTitle:@"待配送(0)" forState:UIControlStateNormal];
     [btn_waitDelivery setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
     [btn_waitDelivery setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_waitDelivery.titleLabel.font=FONT_SIZE_MIDDLE;
     btn_waitDelivery.titleLabel.textAlignment=NSTextAlignmentCenter;
-    btn_waitDelivery.tag=1001;
+    btn_waitDelivery.tag=1000;
     [taskCategoeryBar addSubview:btn_waitDelivery];
     [btn_waitDelivery addTarget:self action:@selector(taskCategoryTap:) forControlEvents:UIControlEventTouchUpInside];
     
+    if(list_status_modal==Delivery_Status_Delivering){
+        btn_waitDelivery.selected=YES;
+    }
+    
     btn_failedDelivery=[[UIButton alloc] initWithFrame:CGRectMake(TASK_CATEGORY_EDGE+TASK_CATEGORY_GAP*1+TASK_CATEGORY_WIDTH*1, 0, TASK_CATEGORY_WIDTH, SEGMENTVIEW_HEIGHT)];
-    [btn_failedDelivery setTitle:@"配送失败(6)" forState:UIControlStateNormal];
+    [btn_failedDelivery setTitle:@"配送失败(0)" forState:UIControlStateNormal];
     [btn_failedDelivery setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
     [btn_failedDelivery setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_failedDelivery.titleLabel.font=FONT_SIZE_MIDDLE;
@@ -70,15 +85,25 @@
     [taskCategoeryBar addSubview:btn_failedDelivery];
     [btn_failedDelivery addTarget:self action:@selector(taskCategoryTap:) forControlEvents:UIControlEventTouchUpInside];
     
+    if(list_status_modal==Delivery_Status_Failed){
+        btn_failedDelivery.selected=YES;
+    }
+    
     btn_successDelivery=[[UIButton alloc] initWithFrame:CGRectMake(TASK_CATEGORY_EDGE+TASK_CATEGORY_GAP*2+TASK_CATEGORY_WIDTH*2, 0, TASK_CATEGORY_WIDTH, SEGMENTVIEW_HEIGHT)];
-    [btn_successDelivery setTitle:@"配送完成(15)" forState:UIControlStateNormal];
+    [btn_successDelivery setTitle:@"配送完成(0)" forState:UIControlStateNormal];
     [btn_successDelivery setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
     [btn_successDelivery setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_successDelivery.titleLabel.font=FONT_SIZE_MIDDLE;
     btn_successDelivery.titleLabel.textAlignment=NSTextAlignmentCenter;
-    btn_successDelivery.tag=1002;
+    btn_successDelivery.tag=1001;
     [taskCategoeryBar addSubview:btn_successDelivery];
     [btn_successDelivery addTarget:self action:@selector(taskCategoryTap:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if(list_status_modal==Delivery_Status_Finished){
+        btn_successDelivery.selected=YES;
+    }
+    
+    [self refreshCategoryBtn];
 }
 
 -(void)setUpTableView{
@@ -99,6 +124,9 @@
     btn_failedDelivery.selected=NO;
     btn_successDelivery.selected=NO;
     sender.selected=YES;
+    
+    list_status_modal=(int)sender.tag-1000;
+    [self.tableView reloadData];
 }
 
 
@@ -124,7 +152,16 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 8;
+    if(list_status_modal==Delivery_Status_Delivering){
+        return [APP_DELEGATE.booter.tasklist_delivering count];
+    }
+    else if(list_status_modal==Delivery_Status_Finished){
+        return [APP_DELEGATE.booter.tasklist_finished count];
+    }
+    else if(list_status_modal==Delivery_Status_Failed){
+        return [APP_DELEGATE.booter.tasklist_failed count];
+    }
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -140,13 +177,24 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
-    cell.entity=nil;
-    
+    cell.entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self gotoOrderDetailView:nil];
+}
+
+-(void)refreshCategoryBtn{
+    [btn_waitDelivery setTitle:[NSString stringWithFormat:@"待配送(%d)",(int)[APP_DELEGATE.booter.tasklist_delivering count]] forState:UIControlStateNormal];
+    [btn_successDelivery setTitle:[NSString stringWithFormat:@"配送完成(%d)",(int)[APP_DELEGATE.booter.tasklist_finished count]] forState:UIControlStateNormal];
+    [btn_failedDelivery setTitle:[NSString stringWithFormat:@"配送失败(%d)",(int)[APP_DELEGATE.booter.tasklist_failed count]] forState:UIControlStateNormal];
+}
+
+//配送数据更新
+- (void)onTaskUpdate:(NSNotification*)aNotitification{
+    [self refreshCategoryBtn];
+    [self.tableView reloadData];
 }
 
 -(void)toggleWorkState:(UIButton *)sender{
@@ -162,6 +210,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     btn_workState.selected=APP_DELEGATE.isWorking;
+    
+    [self checkLoginStatus];
 }
 
 - (void)didReceiveMemoryWarning {

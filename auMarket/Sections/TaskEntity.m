@@ -12,7 +12,7 @@
 -(id)init{
     self = [super init];
     if (self) {
-        [self addMappingRuleArrayProperty:@"tasklist" class:[TaskItemEntity class]];
+        [self addMappingRuleArrayProperty:@"list" class:[TaskItemEntity class]];
     }
     return self;
 }

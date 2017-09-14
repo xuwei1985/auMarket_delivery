@@ -75,6 +75,7 @@
 		A964742A1E1117DB00A5A39B /* mark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A96474291E1117DB00A5A39B /* mark@2x.png */; };
 		A964742C1E11205500A5A39B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A964742B1E11205500A5A39B /* CoreTelephony.framework */; };
 		A96474321E112BEA00A5A39B /* CustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = A96474311E112BEA00A5A39B /* CustomTextField.m */; };
+		A976B7151F697EBC00B85C1C /* TaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A976B7141F697EBC00B85C1C /* TaskModel.m */; };
 		A982F78F1E0FA87E00DB4C13 /* sign_weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */; };
 		A982F79A1E1107DA00DB4C13 /* grayline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F7991E1107DA00DB4C13 /* grayline@2x.png */; };
 		A9AD42AD1E12B0CF00A4B131 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD42AB1E12B0CF00A4B131 /* search@2x.png */; };
@@ -136,6 +137,15 @@
 		A9F4DABB1F66D4D700D71774 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4DAB81F66D4D700D71774 /* GoogleMaps.framework */; };
 		A9F4DABC1F66D4D700D71774 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4DAB91F66D4D700D71774 /* GoogleMapsBase.framework */; };
 		A9F4DABD1F66D4D700D71774 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4DABA1F66D4D700D71774 /* GoogleMapsCore.framework */; };
+		A9F4DACE1F68390F00D71774 /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAC01F68390F00D71774 /* MJPhoto.m */; };
+		A9F4DACF1F68390F00D71774 /* MJPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DAC11F68390F00D71774 /* MJPhotoBrowser.bundle */; };
+		A9F4DAD01F68390F00D71774 /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAC31F68390F00D71774 /* MJPhotoBrowser.m */; };
+		A9F4DAD11F68390F00D71774 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAC51F68390F00D71774 /* MJPhotoLoadingView.m */; };
+		A9F4DAD21F68390F00D71774 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAC71F68390F00D71774 /* MJPhotoProgressView.m */; };
+		A9F4DAD31F68390F00D71774 /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAC91F68390F00D71774 /* MJPhotoToolbar.m */; };
+		A9F4DAD41F68390F00D71774 /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DACB1F68390F00D71774 /* MJPhotoView.m */; };
+		A9F4DAD51F68390F00D71774 /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DACD1F68390F00D71774 /* SDWebImageManager+MJ.m */; };
+		A9F4DAD81F69099100D71774 /* AlertBlockView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAD71F69099100D71774 /* AlertBlockView.m */; };
 		A9FBC1BD1DF868F4005ECDDE /* CommonCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FBC1BC1DF868F4005ECDDE /* CommonCache.m */; };
 		A9FBC1C91DF93854005ECDDE /* btn_back_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FBC1C71DF93854005ECDDE /* btn_back_black@3x.png */; };
 		A9FBC1CA1DF93854005ECDDE /* btn_back_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FBC1C81DF93854005ECDDE /* btn_back_black@2x.png */; };
@@ -281,6 +291,8 @@
 		A964742B1E11205500A5A39B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		A96474301E112BEA00A5A39B /* CustomTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTextField.h; sourceTree = "<group>"; };
 		A96474311E112BEA00A5A39B /* CustomTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTextField.m; sourceTree = "<group>"; };
+		A976B7131F697EBC00B85C1C /* TaskModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskModel.h; sourceTree = "<group>"; };
+		A976B7141F697EBC00B85C1C /* TaskModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskModel.m; sourceTree = "<group>"; };
 		A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign_weixin@2x.png"; sourceTree = "<group>"; };
 		A982F7991E1107DA00DB4C13 /* grayline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayline@2x.png"; sourceTree = "<group>"; };
 		A9AD42AB1E12B0CF00A4B131 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
@@ -350,6 +362,23 @@
 		A9F4DAB81F66D4D700D71774 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = auMarket/GoogleMaps.framework; sourceTree = "<group>"; };
 		A9F4DAB91F66D4D700D71774 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = auMarket/GoogleMapsBase.framework; sourceTree = "<group>"; };
 		A9F4DABA1F66D4D700D71774 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = auMarket/GoogleMapsCore.framework; sourceTree = "<group>"; };
+		A9F4DABF1F68390F00D71774 /* MJPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhoto.h; sourceTree = "<group>"; };
+		A9F4DAC01F68390F00D71774 /* MJPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhoto.m; sourceTree = "<group>"; };
+		A9F4DAC11F68390F00D71774 /* MJPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJPhotoBrowser.bundle; sourceTree = "<group>"; };
+		A9F4DAC21F68390F00D71774 /* MJPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoBrowser.h; sourceTree = "<group>"; };
+		A9F4DAC31F68390F00D71774 /* MJPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoBrowser.m; sourceTree = "<group>"; };
+		A9F4DAC41F68390F00D71774 /* MJPhotoLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoLoadingView.h; sourceTree = "<group>"; };
+		A9F4DAC51F68390F00D71774 /* MJPhotoLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoLoadingView.m; sourceTree = "<group>"; };
+		A9F4DAC61F68390F00D71774 /* MJPhotoProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoProgressView.h; sourceTree = "<group>"; };
+		A9F4DAC71F68390F00D71774 /* MJPhotoProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoProgressView.m; sourceTree = "<group>"; };
+		A9F4DAC81F68390F00D71774 /* MJPhotoToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoToolbar.h; sourceTree = "<group>"; };
+		A9F4DAC91F68390F00D71774 /* MJPhotoToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoToolbar.m; sourceTree = "<group>"; };
+		A9F4DACA1F68390F00D71774 /* MJPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoView.h; sourceTree = "<group>"; };
+		A9F4DACB1F68390F00D71774 /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoView.m; sourceTree = "<group>"; };
+		A9F4DACC1F68390F00D71774 /* SDWebImageManager+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SDWebImageManager+MJ.h"; sourceTree = "<group>"; };
+		A9F4DACD1F68390F00D71774 /* SDWebImageManager+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SDWebImageManager+MJ.m"; sourceTree = "<group>"; };
+		A9F4DAD61F69099100D71774 /* AlertBlockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertBlockView.h; sourceTree = "<group>"; };
+		A9F4DAD71F69099100D71774 /* AlertBlockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertBlockView.m; sourceTree = "<group>"; };
 		A9FBC1BB1DF868F4005ECDDE /* CommonCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonCache.h; sourceTree = "<group>"; };
 		A9FBC1BC1DF868F4005ECDDE /* CommonCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonCache.m; sourceTree = "<group>"; };
 		A9FBC1BE1DF9023D005ECDDE /* SizeMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SizeMacro.h; sourceTree = "<group>"; };
@@ -463,6 +492,8 @@
 			children = (
 				A91357741F668BFF000186B0 /* TaskEntity.h */,
 				A91357751F668BFF000186B0 /* TaskEntity.m */,
+				A976B7131F697EBC00B85C1C /* TaskModel.h */,
+				A976B7141F697EBC00B85C1C /* TaskModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -649,6 +680,7 @@
 		A95E11491DF8491E00660E42 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				A9F4DABE1F68390F00D71774 /* MJPhotoBrowser */,
 				A95E11381DF8491600660E42 /* AccountManager.h */,
 				A95E11391DF8491600660E42 /* AccountManager.m */,
 				A95E111E1DF8491600660E42 /* b64.h */,
@@ -676,6 +708,8 @@
 		A95E114A1DF8492400660E42 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A9F4DAD61F69099100D71774 /* AlertBlockView.h */,
+				A9F4DAD71F69099100D71774 /* AlertBlockView.m */,
 				A9AD42BB1E13B6DC00A4B131 /* ImageRotatorView.h */,
 				A9AD42BC1E13B6DC00A4B131 /* ImageRotatorView.m */,
 				A96474301E112BEA00A5A39B /* CustomTextField.h */,
@@ -767,6 +801,28 @@
 				A9FBC1F61DF97192005ECDDE /* HomeViewController.m */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		A9F4DABE1F68390F00D71774 /* MJPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				A9F4DABF1F68390F00D71774 /* MJPhoto.h */,
+				A9F4DAC01F68390F00D71774 /* MJPhoto.m */,
+				A9F4DAC11F68390F00D71774 /* MJPhotoBrowser.bundle */,
+				A9F4DAC21F68390F00D71774 /* MJPhotoBrowser.h */,
+				A9F4DAC31F68390F00D71774 /* MJPhotoBrowser.m */,
+				A9F4DAC41F68390F00D71774 /* MJPhotoLoadingView.h */,
+				A9F4DAC51F68390F00D71774 /* MJPhotoLoadingView.m */,
+				A9F4DAC61F68390F00D71774 /* MJPhotoProgressView.h */,
+				A9F4DAC71F68390F00D71774 /* MJPhotoProgressView.m */,
+				A9F4DAC81F68390F00D71774 /* MJPhotoToolbar.h */,
+				A9F4DAC91F68390F00D71774 /* MJPhotoToolbar.m */,
+				A9F4DACA1F68390F00D71774 /* MJPhotoView.h */,
+				A9F4DACB1F68390F00D71774 /* MJPhotoView.m */,
+				A9F4DACC1F68390F00D71774 /* SDWebImageManager+MJ.h */,
+				A9F4DACD1F68390F00D71774 /* SDWebImageManager+MJ.m */,
+			);
+			path = MJPhotoBrowser;
 			sourceTree = "<group>";
 		};
 		A9FBC1BF1DF92DF6005ECDDE /* Models */ = {
@@ -1043,6 +1099,7 @@
 				A9F4DA8E1F658AFE00D71774 /* 1_41.png in Resources */,
 				A9F4DA901F658AFE00D71774 /* 1_49.png in Resources */,
 				A9187C1E1DF9B42400A3E902 /* home@3x.png in Resources */,
+				A9F4DACF1F68390F00D71774 /* MJPhotoBrowser.bundle in Resources */,
 				A9D3546F1E0976E6006D265D /* icon_infomation@2x.png in Resources */,
 				A9187C2D1DF9B6B900A3E902 /* member@3x.png in Resources */,
 				A9187C1F1DF9B42400A3E902 /* home@2x.png in Resources */,
@@ -1107,6 +1164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A95E116E1DF851EA00660E42 /* SPTabBarItem.m in Sources */,
+				A9F4DAD21F68390F00D71774 /* MJPhotoProgressView.m in Sources */,
 				A95E113F1DF8491600660E42 /* NSData+IDPExtension.m in Sources */,
 				A95E11671DF850D000660E42 /* SPRedirect.m in Sources */,
 				A9DA916E1F67915E002033AA /* PaymentViewController.m in Sources */,
@@ -1116,6 +1174,7 @@
 				A95E10F71DF8104800660E42 /* SPBaseTableViewCell.m in Sources */,
 				A96474251E1111F000A5A39B /* UserRegistViewController.m in Sources */,
 				A95E10F21DF8104800660E42 /* SPUploadFileEntity.m in Sources */,
+				A976B7151F697EBC00B85C1C /* TaskModel.m in Sources */,
 				A9D354451E08FD6C006D265D /* MemberCell.m in Sources */,
 				A95E11481DF8491600660E42 /* AccountManager.m in Sources */,
 				A95E11541DF84DDE00660E42 /* SeqIDGenerator.m in Sources */,
@@ -1131,21 +1190,27 @@
 				A95E10F61DF8104800660E42 /* SPBaseTableView.m in Sources */,
 				A95E11421DF8491600660E42 /* NSDictionary+IDPExtension.m in Sources */,
 				A95E11711DF8520A00660E42 /* SPTabBarController.m in Sources */,
+				A9F4DAD11F68390F00D71774 /* MJPhotoLoadingView.m in Sources */,
 				A9FBC1F71DF97192005ECDDE /* HomeViewController.m in Sources */,
 				A96474221E1111E500A5A39B /* MemberLoginModel.m in Sources */,
 				A95E113E1DF8491600660E42 /* NSArray+IDPExtension.m in Sources */,
+				A9F4DAD51F68390F00D71774 /* SDWebImageManager+MJ.m in Sources */,
 				A95DCCC81E0299AE006E7649 /* GoodsListViewController.m in Sources */,
 				A91D539D1DFE99E600A6BB37 /* AdPageViewController.m in Sources */,
 				A95E113D1DF8491600660E42 /* IDPLog.m in Sources */,
 				A95E11411DF8491600660E42 /* NSDateFormatter+IDPExtension.m in Sources */,
+				A9F4DAD41F68390F00D71774 /* MJPhotoView.m in Sources */,
 				A95E10F41DF8104800660E42 /* SPBaseEntity.m in Sources */,
+				A9F4DAD81F69099100D71774 /* AlertBlockView.m in Sources */,
 				A9FBC1FA1DF97299005ECDDE /* IntroViewController.m in Sources */,
 				A91357761F668BFF000186B0 /* TaskEntity.m in Sources */,
+				A9F4DAD31F68390F00D71774 /* MJPhotoToolbar.m in Sources */,
 				A95E11571DF84E1A00660E42 /* UIView+Toast.m in Sources */,
 				A95E11431DF8491600660E42 /* NSString+YP.m in Sources */,
 				A9F4DAA51F66CA6400D71774 /* OrderDetailViewController.m in Sources */,
 				A9AD42BD1E13B6DC00A4B131 /* ImageRotatorView.m in Sources */,
 				A95E11641DF850A200660E42 /* SPNavigationController.m in Sources */,
+				A9F4DAD01F68390F00D71774 /* MJPhotoBrowser.m in Sources */,
 				A9FBC1F41DF96E9A005ECDDE /* Booter.m in Sources */,
 				A95E10F51DF8104800660E42 /* SPBaseModel.m in Sources */,
 				A9AD42B11E1364D800A4B131 /* ScrollImageView.m in Sources */,
@@ -1158,6 +1223,7 @@
 				A95E10941DF80ED000660E42 /* AppDelegate.m in Sources */,
 				A95E11511DF84DA700660E42 /* SyncManager.m in Sources */,
 				A95E10F31DF8104800660E42 /* SPUploadFileModel.m in Sources */,
+				A9F4DACE1F68390F00D71774 /* MJPhoto.m in Sources */,
 				A91D843A1F665EC600DF69EF /* TaskListViewController.m in Sources */,
 				A9AD42B71E13698D00A4B131 /* BannerModel.m in Sources */,
 				A95E11611DF8505C00660E42 /* BadgeManager.m in Sources */,

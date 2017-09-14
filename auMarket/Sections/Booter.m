@@ -43,7 +43,6 @@
     return [[IntroViewController alloc] init];
 }
 
-
 //主视图控制器
 -(UIViewController*)bootUIViewController
 {
@@ -91,7 +90,6 @@
     
     NSString *index = [NSString stringWithFormat:@"%ld",tabBarController.selectedIndex];
     [[NSNotificationCenter defaultCenter] postNotificationName:ChangeCurrentTabNotification object:index];
-    //[MobClick event:@"tab" attributes:@{@"category":index}];
 }
 
 - (void)pullMessageManagerDidReceiveMessage:(NSNotification*)aNotification{
@@ -257,46 +255,17 @@
     }
 }
 
-- (void)handleRemoteNotifacation:(NSDictionary *)userInfo
-{
-
-//    if(userInfo!=nil){
-//        //处理滑动消息通知过来的情况，如果是评论，则显示图片详情页面
-//        if (application.applicationState != UIApplicationStateActive&&![[userInfo objectForKey:@"id"] isEqualToString:@""]) {//
-//            self.isPushNews=YES;
-//            [self gotoNewsDetail:userInfo];
-//        }
-//        //praise
-//    }
-//    //在AppDelegate的didReceiveRemoteNotification中可以通过判断isLaunchedByNotification来通知不同的展示方法。
-//    if (application.applicationState == UIApplicationStateActive) {//App处于打开状态的时候，处理方法为打开一个本地消息通知
-//        
-//        AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, SoundFinished,NULL);
-//        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-//        
-//        //        // 转换成一个本地通知，显示到通知栏，你也可以直接显示出一个alertView，只是那样稍显aggressive：）
-//        //        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-//        //        localNotification.userInfo = userInfo;
-//        //        //NSLog(@"userInfo:%@",userInfo);
-//        //        localNotification.soundName = UILocalNotificationDefaultSoundName;
-//        //        localNotification.alertBody =[[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
-//        //        localNotification.alertAction = @"查看";  //提示框按钮
-//        //        //localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:2];
-//        //        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-//        
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"查看", nil];
-//        [alert show];
-//        
-//        [self hank];
-//    }
-}
-
 -(void)sync
 {
     //同步sync接口
     [[YPSyncManager sharedInstance] load];
     //检查更新
     //[YPUpdateChecker sharedInstance];
+}
+
+-(void)loadTaskList
+{
+    [self.taskModel loadTaskList];
 }
 
 - (BOOL)onHandleOpenURL:(NSURL *)url {
@@ -312,14 +281,29 @@
    return nav;
 }
 
--(void)hank{
-    //AudioServicesPlaySystemSound ( kSystemSoundID_Vibrate) ;
-    AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL,NULL,NULL);
-    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+-(void)onResponse:(SPBaseModel*)model isSuccess:(BOOL)isSuccess{
+    if(model==self.taskModel){
+        if(isSuccess){
+            self.tasklist_delivering= [self.taskModel getTasksByStatus:Delivery_Status_Delivering];
+            self.tasklist_finished= [self.taskModel getTasksByStatus:Delivery_Status_Finished];
+            self.tasklist_failed= [self.taskModel getTasksByStatus:Delivery_Status_Failed];
+            self.tasklist_unknown= [self.taskModel getTasksByStatus:Delivery_Status_Unknow];
+        }
+        else{
+            self.tasklist_delivering= [[NSArray alloc] init];
+            self.tasklist_finished= [[NSArray alloc] init];
+            self.tasklist_failed= [[NSArray alloc] init];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
+    }
 }
 
--(void)onResponse:(SPBaseModel*)model isSuccess:(BOOL)isSuccess{
-
+-(TaskModel *)taskModel{
+    if(!_taskModel){
+        _taskModel=[[TaskModel alloc] init];
+        _taskModel.delegate=self;
+    }
+    return _taskModel;
 }
 
 @end

@@ -70,7 +70,7 @@
     
     
     _nicknameLbl=[[UILabel alloc] init];
-    _nicknameLbl.textColor=COLOR_WHITE;
+    _nicknameLbl.textColor=COLOR_MAIN;
     _nicknameLbl.font=FONT_SIZE_BIG;
     _nicknameLbl.text=@"";
     _nicknameLbl.hidden=YES;
@@ -112,10 +112,38 @@
     
     UIView *view = [UIView new];
     view.backgroundColor = COLOR_CLEAR;
-    
     [self.tableView setTableHeaderView:_userInfoView];
-    [self.tableView setTableFooterView:view];
+    
+    Boolean isLogin=[[AccountManager sharedInstance] isLogin];
+    UIView *exitView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 108)];
+    exitView.backgroundColor = COLOR_CLEAR;
+    
+    _btn_exit=[UIButton buttonWithType:UIButtonTypeCustom];
+    [_btn_exit setTitle:@"退出登录" forState:UIControlStateNormal];
+    [_btn_exit setBackgroundColor:COLOR_MAIN];
+    [_btn_exit setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+    _btn_exit.frame=CGRectMake(15, IPHONE6PLUS?60:64, WIDTH_SCREEN-30, 40);
+    _btn_exit.titleLabel.font=FONT_SIZE_MIDDLE;
+    [_btn_exit addTarget:self action:@selector(exitLogin:) forControlEvents:UIControlEventTouchUpInside];
+    [_btn_exit.layer setCornerRadius:4];
+    _btn_exit.hidden=isLogin;
+    [exitView addSubview:_btn_exit];
+    [self.tableView setTableFooterView:exitView];
+    
     [self.view addSubview:self.tableView];
+}
+
+//注销
+-(void)exitLogin:(id)sender{
+    [[AlertBlockView sharedInstance] showChoiceAlert:@"您确定要退出登录吗？" button1Title:@"确认" button2Title:@"取消" completion:^(int index) {
+        if(index==0){
+            [[AccountManager sharedInstance] unRegisterLoginUser];
+            [SVProgressHUD showSuccessWithStatus:@"您已成功退出登录。"];
+            _btn_exit.hidden=YES;
+            [self onUserNotLogin];
+        }
+    }];
+    
 }
 
 #pragma mark - Table view delegate
@@ -180,15 +208,18 @@
     if (login) {
         _loginLbl.hidden=YES;
         _nicknameLbl.hidden=NO;
-        
+
         SPAccount *_account = [AccountManager sharedInstance].getCurrentUser;
         _nicknameLbl.text=_account.user_nickname;
         [_headView sd_setImageWithURL:[NSURL URLWithString:_account.user_avatar] placeholderImage:[UIImage imageNamed:@"default_head.jpg"]];
+        
     }
     else{
         _loginLbl.hidden=NO;
         _nicknameLbl.hidden=YES;
+        _headView.image=[UIImage imageNamed:@"default_head.jpg"];
     }
+    _btn_exit.hidden=!login;
 }
 
 -(void)gotoMyCartView{
@@ -202,6 +233,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.tableView reloadData];
+    
+    [self checkLoginStatus];
 }
 
 - (void)didReceiveMemoryWarning {

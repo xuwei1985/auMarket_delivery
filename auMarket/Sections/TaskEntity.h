@@ -10,10 +10,19 @@
 @class TaskItemEntity;
 
 @interface TaskEntity : SPBaseEntity
-@property(nonatomic,retain)NSMutableArray <TaskItemEntity*> *tasklist;
+@property(nonatomic,retain)NSMutableArray <TaskItemEntity*> *list;
 @end
 
 @interface TaskItemEntity : SPBaseEntity
-@property(nonatomic,retain)NSString *task_id;
-@property(nonatomic,retain)NSString *task_address;
+@property(nonatomic,retain)NSString *sid;
+@property(nonatomic,retain)NSString *address;
+@property(nonatomic,retain)NSString *order_id;
+@property(nonatomic,retain)NSString *order_sn;
+@property(nonatomic,retain)NSString *delivery_id;
+@property(nonatomic,retain)NSString *add_time;
+@property(nonatomic,retain)NSString *consignee;
+@property(nonatomic,retain)NSString *longitude;
+@property(nonatomic,retain)NSString *latitude;
+@property(nonatomic,assign)CLLocationCoordinate2D location;
+@property(nonatomic,retain)NSString *status;
 @end

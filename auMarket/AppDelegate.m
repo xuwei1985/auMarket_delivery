@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "UserLoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -33,6 +34,7 @@
     self.booter = [[Booter alloc] init];
     [self.booter bootReachability];
     [self.booter bootGoogleMap];
+    [self.booter loadTaskList];
 //    [self.booter bootJPush:launchOptions];
 //    [self.booter bootUMeng];
     
@@ -46,20 +48,24 @@
 //    else{//显示正常的页面
 //        [self.window setRootViewController:[self.booter bootUIViewController]];
 //    }
-//    
-    [self.window setRootViewController:[self.booter bootUIViewController]];
+//
+    SPNavigationController *navController = [[SPNavigationController alloc] initWithRootViewController:[[UserLoginViewController alloc] init]];
+    [self.window setRootViewController:navController];
     
     //启动的弹出界面
-    UIViewController *startPageViewController = [self.booter bootStartPage];
-    if (startPageViewController) {
-        [self.window.rootViewController presentViewController:startPageViewController animated:NO completion:nil];
-    }
+//    UIViewController *startPageViewController = [self.booter bootStartPage];
+//    if (startPageViewController) {
+//        [self.window.rootViewController presentViewController:startPageViewController animated:NO completion:nil];
+//    }
     
     self.window.backgroundColor=COLOR_WHITE;
     [self.window makeKeyAndVisible];
     return YES;
 }
 
+-(void)logObj:(id)sender{
+    NSLog(@"%@",sender);
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -118,7 +124,7 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
+    //[JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
 }
 
 
@@ -132,7 +138,7 @@
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
     
-    [self.booter handleRemoteNotifacation:userInfo];
+//    [self.booter handleRemoteNotifacation:userInfo];
 }
 
 @end

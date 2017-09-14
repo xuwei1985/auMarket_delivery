@@ -37,9 +37,9 @@
 }
 
 -(void)createPaymentInfoView{
-    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 10, WIDTH_SCREEN, 123)];
+    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 10, WIDTH_SCREEN, 125)];
     blockView_1.backgroundColor=COLOR_WHITE;
-    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 140, WIDTH_SCREEN, 85)];
+    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 142, WIDTH_SCREEN, 80)];
     blockView_2.backgroundColor=COLOR_WHITE;
     
     [self.view addSubview:blockView_1];
@@ -138,7 +138,11 @@
     previewView.hidden=YES;
     previewView.backgroundColor=COLOR_GRAY;
     previewView.contentMode=UIViewContentModeScaleAspectFill;
+    previewView.clipsToBounds=YES;
+    previewView.userInteractionEnabled=YES;
     [self.view addSubview: previewView];
+    
+    [previewView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(browserPhoto)]];
     
     [previewView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(upload_btn.mas_bottom).offset(35);
@@ -213,9 +217,7 @@
 {
     if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(__bridge NSString *)kUTTypeImage]) {
         UIImage *hdImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-        //[self performSelector:@selector(saveImage:) withObject:img afterDelay:0.3];
 
-        //    [userPhotoButton setImage:selfPhoto forState:UIControlStateNormal];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             float imgMinLenght=MIN(hdImage.size.width, hdImage.size.height);
             float imgScacle=hdImage.size.width/hdImage.size.height;
@@ -318,6 +320,22 @@
     }
 }
 
+
+-(void)browserPhoto{
+    // 1.封装图片数据
+    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:1];
+
+    MJPhoto *photo = [[MJPhoto alloc] init];
+    photo.srcImageView = previewView; // 来源于哪个UIImageView
+    photo.image=previewView.image;
+    [photos addObject:photo];
+    
+    // 2.显示相册
+    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
+    browser.photos = photos; // 设置所有的图片
+    [browser show];
+}
 
 -(void)requestFinishDelivery{
     

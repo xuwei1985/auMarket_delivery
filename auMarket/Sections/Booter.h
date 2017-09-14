@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "AppDelegate.h"
+#import "AlertBlockView.h"
 #import "SyncManager.h"
 #import "BadgeManager.h"
 #import "AccountManager.h"
@@ -20,11 +21,17 @@
 #import "SPTabBarController.h"
 #import "IntroViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import "TaskModel.h"
 
 @interface Booter : NSObject<UIGestureRecognizerDelegate,UITabBarControllerDelegate,SPBaseModelProtocol>
 
 @property (nonatomic,strong) UINavigationController* navigationController;
 @property (nonatomic,strong) UITabBarController* tabBarController;
+@property (nonatomic,strong) TaskModel *taskModel;
+@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_delivering;//配送中的订单
+@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_finished;//配送完成的订单
+@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_failed;//配送失败的订单
+@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_unknown;//没有配送坐标的订单
 
 // 获取引导页
 -(UIViewController*)getIntroViewController;
@@ -37,8 +44,6 @@
 -(void)bootUMeng;
 //初始化极光推送
 -(void)bootJPush:(NSDictionary *)launchOptions;
-//远程消息处理
--(void)handleRemoteNotifacation:(NSDictionary *)userInfo;
 //处理工作状态
 -(void)handlerWorkingState:(BOOL)isWorking;
 //sync接口
@@ -48,6 +53,5 @@
 //网络检测
 - (void)bootReachability;
 -(void)bootGoogleMap;
-//震动提示
--(void)hank;
+-(void)loadTaskList;
 @end
