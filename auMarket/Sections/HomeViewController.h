@@ -11,7 +11,10 @@
 
 @interface HomeViewController : SPBaseViewController<GMSMapViewDelegate,UIActionSheetDelegate>
 {
+    GMSMapView *mapView;
+    MapMaker *mapMaker;
     CLLocationCoordinate2D sel_coordinate;
     UIButton *btn_workState;
+    
 }
 @end

@@ -28,9 +28,10 @@
 @property (nonatomic,strong) UINavigationController* navigationController;
 @property (nonatomic,strong) UITabBarController* tabBarController;
 @property (nonatomic,strong) TaskModel *taskModel;
-@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_delivering;
-@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_finished;
-@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_failed;
+@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_delivering;//配送中的订单
+@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_finished;//配送完成的订单
+@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_failed;//配送失败的订单
+@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_unknown;//没有配送坐标的订单
 
 // 获取引导页
 -(UIViewController*)getIntroViewController;

@@ -81,7 +81,7 @@
     [btn_failedDelivery setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_failedDelivery.titleLabel.font=FONT_SIZE_MIDDLE;
     btn_failedDelivery.titleLabel.textAlignment=NSTextAlignmentCenter;
-    btn_failedDelivery.tag=1001;
+    btn_failedDelivery.tag=1002;
     [taskCategoeryBar addSubview:btn_failedDelivery];
     [btn_failedDelivery addTarget:self action:@selector(taskCategoryTap:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -95,7 +95,7 @@
     [btn_successDelivery setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_successDelivery.titleLabel.font=FONT_SIZE_MIDDLE;
     btn_successDelivery.titleLabel.textAlignment=NSTextAlignmentCenter;
-    btn_successDelivery.tag=1002;
+    btn_successDelivery.tag=1001;
     [taskCategoeryBar addSubview:btn_successDelivery];
     [btn_successDelivery addTarget:self action:@selector(taskCategoryTap:) forControlEvents:UIControlEventTouchUpInside];
     

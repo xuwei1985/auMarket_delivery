@@ -36,9 +36,16 @@
 -(NSArray<TaskItemEntity *> *)getTasksByStatus:(Delivery_Status)status{
     NSArray<TaskItemEntity *> *mArr=[[NSMutableArray alloc] init];
     if(self.entity.list){
-        NSString *filterStr=[NSString stringWithFormat:@"status=='%d'",status];
-        NSPredicate *predicate=[NSPredicate predicateWithFormat:filterStr];
-        mArr=[self.entity.list filteredArrayUsingPredicate:predicate];
+        if(status==Delivery_Status_Unknow){
+            NSString *filterStr=[NSString stringWithFormat:@"longitude=='' or latitude==''"];
+            NSPredicate *predicate=[NSPredicate predicateWithFormat:filterStr];
+            mArr=[self.entity.list filteredArrayUsingPredicate:predicate];
+        }
+        else{
+            NSString *filterStr=[NSString stringWithFormat:@"status=='%d'",status];
+            NSPredicate *predicate=[NSPredicate predicateWithFormat:filterStr];
+            mArr=[self.entity.list filteredArrayUsingPredicate:predicate];
+        }
     }
     return mArr;
 }

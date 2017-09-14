@@ -19,6 +19,7 @@
     
     [self initData];
     [self initUI];
+    [self loadTaskMask];
 }
 
 -(void)initData{
@@ -31,14 +32,6 @@
 }
 
 -(void)setNavigation{
-    UIButton *btn_l = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_l.frame= CGRectMake(0, 0, 32, 32);
-    [btn_l setImage:[UIImage imageNamed:@"1_06"] forState:UIControlStateNormal];
-    [btn_l addTarget:self action:@selector(unusualList:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *btn_left = [[UIBarButtonItem alloc] initWithCustomView:btn_l];
-    self.navigationItem.leftBarButtonItem =btn_left;
-    
     UIButton *btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_r.frame= CGRectMake(0, 0, 32, 32);
     [btn_r setImage:[UIImage imageNamed:@"1_09"] forState:UIControlStateNormal];
@@ -63,74 +56,61 @@
 }
 
 -(void)createMapView{
-    // Create a GMSCameraPosition that tells the map to display the
-    // coordinate -33.86,151.20 at zoom level 6.
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-37.819575
-                                                            longitude:144.945466
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-37.8274851
+                                                            longitude:144.9527565
                                                                  zoom:13];
-    GMSMapView *mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
+    mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     mapView.myLocationEnabled = YES;
     mapView.delegate=self;
     [[mapView settings] setMyLocationButton:YES];
     self.view = mapView;
     
-    // Creates a marker in the center of the map.
-    MapMaker *mv=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
-    mv.image=[UIImage imageNamed:@"1_29"];
-    mv.markTip=@"8";
-    [mv loadData];
+    mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
+    mapMaker.image=[UIImage imageNamed:@"1_29"];
+}
+
+-(void)loadTaskMask{
+    [mapView clear];//清除所有的maker
+    //等待配送的
+    for(int i=0;i<[APP_DELEGATE.booter.tasklist_delivering count];i++){
+        mapMaker.markTip=@"1";
+        [mapMaker loadData];
+        
+        GMSMarker *marker = [[GMSMarker alloc] init];
+        marker.position = CLLocationCoordinate2DMake([[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].longitude doubleValue], [[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].latitude doubleValue]);
+        marker.title = [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].consignee;
+        marker.snippet = [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].address;
+        marker.appearAnimation = kGMSMarkerAnimationPop;
+        marker.iconView=mapMaker;
+        marker.map = mapView;
+    }
     
-    MapMaker *mv2=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 34)];
-    mv2.image=[UIImage imageNamed:@"1_45"];
-    [mv2 loadData];
+    //配送失败的
+    for(int i=0;i<[APP_DELEGATE.booter.tasklist_failed count];i++){
+        mapMaker.markTip=@"1";
+        [mapMaker loadData];
+        
+        GMSMarker *marker = [[GMSMarker alloc] init];
+        marker.position = CLLocationCoordinate2DMake([[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].longitude doubleValue], [[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].latitude doubleValue]);
+        marker.title = [APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].consignee;
+        marker.snippet = [APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].address;
+        marker.appearAnimation = kGMSMarkerAnimationPop;
+        marker.iconView=mapMaker;
+        marker.map = mapView;
+    }
     
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(-37.819575, 144.945466);
-    marker.title = @"Sydney";
-    marker.snippet = @"Australia";
-    marker.appearAnimation = kGMSMarkerAnimationPop;
-    marker.iconView=mv;
-    marker.map = mapView;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // 耗时的操作
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // 更新界面
+            
+        });
+    });
+}
+
+-(void)getSameMakerByLocation{
     
-    marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(-37.729575, 144.947466);
-    marker.title = @"Sydney2";
-    marker.snippet = @"Australia";
-    marker.appearAnimation = kGMSMarkerAnimationPop;
-    marker.iconView=mv2;
-    marker.map = mapView;
-    
-    marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(-37.229575, 144.947466);
-    marker.title = @"Sydney3";
-    marker.snippet = @"Australia";
-    marker.appearAnimation = kGMSMarkerAnimationPop;
-    marker.iconView=mv;
-    marker.map = mapView;
-    
-    marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(-37.529575, 144.947466);
-    marker.title = @"Sydney4";
-    marker.snippet = @"Australia";
-    marker.appearAnimation = kGMSMarkerAnimationPop;
-    marker.iconView=mv;
-    marker.map = mapView;
-    
-    marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(-37.829575, 144.957466);
-    marker.title = @"Sydney5";
-    marker.snippet = @"Australia";
-    marker.appearAnimation = kGMSMarkerAnimationPop;
-    marker.iconView=mv;
-    marker.map = mapView;
-    
-    marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(-37.829575, 144.147466);
-    marker.title = @"Sydney6";
-    marker.snippet = @"Australia";
-    marker.appearAnimation = kGMSMarkerAnimationPop;
-    marker.iconView=mv;
-    marker.map = mapView;
 }
 
 #pragma mark - GMSMapViewDelegate
@@ -141,12 +121,12 @@
 
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker{
     NSLog(@"didTapInfoWindowOfMarker");
+    sel_coordinate=marker.position;
+    [self showMaskMenu];
 }
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker{
-    sel_coordinate=marker.position;
-    [self showMaskMenu];
-    return YES;
+    return NO;
 }
 
 - (void)showMaskMenu

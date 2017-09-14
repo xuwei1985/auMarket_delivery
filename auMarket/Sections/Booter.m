@@ -287,6 +287,7 @@
             self.tasklist_delivering= [self.taskModel getTasksByStatus:Delivery_Status_Delivering];
             self.tasklist_finished= [self.taskModel getTasksByStatus:Delivery_Status_Finished];
             self.tasklist_failed= [self.taskModel getTasksByStatus:Delivery_Status_Failed];
+            self.tasklist_unknown= [self.taskModel getTasksByStatus:Delivery_Status_Unknow];
         }
         else{
             self.tasklist_delivering= [[NSArray alloc] init];

@@ -12,7 +12,8 @@
 typedef enum {
     Delivery_Status_Delivering = 0,
     Delivery_Status_Finished = 1,
-    Delivery_Status_Failed = 2
+    Delivery_Status_Failed = 2,
+    Delivery_Status_Unknow = 3
 } Delivery_Status;
 
 @interface TaskModel : SPBaseModel

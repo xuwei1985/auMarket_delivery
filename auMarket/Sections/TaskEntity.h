@@ -23,5 +23,6 @@
 @property(nonatomic,retain)NSString *consignee;
 @property(nonatomic,retain)NSString *longitude;
 @property(nonatomic,retain)NSString *latitude;
+@property(nonatomic,assign)CLLocationCoordinate2D location;
 @property(nonatomic,retain)NSString *status;
 @end
