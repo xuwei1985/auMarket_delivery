@@ -9,6 +9,7 @@
 #import "GMSMarker+MyGMSMarker.h"
 static const void *latitudeKey = &latitudeKey;
 static const void *longitudeKey = &longitudeKey;
+static const void *taskArrKey = &taskArrKey;
 
 @implementation GMSMarker (MyGMSMarker)
 - (double)latitude {
@@ -25,5 +26,13 @@ static const void *longitudeKey = &longitudeKey;
 
 - (void)setLongitude:(double)longitude {
     objc_setAssociatedObject(self, longitudeKey, [NSNumber numberWithDouble:longitude], OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (NSMutableArray<TaskItemEntity *>*)taskArr {
+    return objc_getAssociatedObject(self, taskArrKey);
+}
+
+- (void)setTaskArr:(NSMutableArray<TaskItemEntity *>*)taskArr {
+    objc_setAssociatedObject(self, taskArrKey, taskArr, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 @end

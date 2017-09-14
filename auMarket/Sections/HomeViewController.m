@@ -19,10 +19,10 @@
     
     [self initData];
     [self initUI];
-    [self loadTaskMask];
 }
 
 -(void)initData{
+    isLoadedMaker=NO;
     markerArr=[[NSMutableArray alloc] init];
 }
 
@@ -64,8 +64,6 @@
     mapView.delegate=self;
     [[mapView settings] setMyLocationButton:YES];
     self.view = mapView;
-    
-    
 }
 
 -(void)loadTaskMask{
@@ -104,29 +102,57 @@
             marker.map = mapView;
             marker.latitude=[self reviseDoubleValue:itemEntity.coordinate.latitude];
             marker.longitude=[self reviseDoubleValue:itemEntity.coordinate.longitude];
+            marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithObjects:itemEntity, nil];
+
+            NSLog(@"marker.taskArr.count:%lu",(unsigned long)marker.taskArr.count);
+            [markerArr addObject:marker];
+        }
+        else{
+            ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%d",[((MapMaker *)marker.iconView).markTip intValue]+1];
+            [((MapMaker *)marker.iconView) loadData];
+
+            NSMutableArray *arr=[NSMutableArray arrayWithArray:marker.taskArr];
+            [arr addObject:itemEntity];
+            marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithArray:arr];
+        }
+    }
+    
+    //配送失败的
+    for(int i=0;i<[APP_DELEGATE.booter.tasklist_failed count];i++){
+        itemEntity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i];
+        coordinate=CLLocationCoordinate2DMake([self reviseDoubleValue:[itemEntity.latitude doubleValue]], [self reviseDoubleValue:[itemEntity.longitude doubleValue]]);
+        itemEntity.coordinate=coordinate;//设置配送项目的坐标
+        
+        //判断某个coordinate的marker是否存在
+        marker=[self isExistMarker:itemEntity.coordinate];
+        if(marker==nil){
+            mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
+            mapMaker.image=[UIImage imageNamed:@"1_29_gray"];
+            mapMaker.markTip=@"1";
+            [mapMaker loadData];
+            
+            marker = [[GMSMarker alloc] init];
+            marker.position = CLLocationCoordinate2DMake(itemEntity.coordinate.latitude, itemEntity.coordinate.longitude);
+            marker.title = itemEntity.consignee;
+            marker.snippet = itemEntity.address;
+            marker.appearAnimation = kGMSMarkerAnimationPop;
+            marker.iconView=mapMaker;
+            marker.map = mapView;
+            marker.latitude=[self reviseDoubleValue:itemEntity.coordinate.latitude];
+            marker.longitude=[self reviseDoubleValue:itemEntity.coordinate.longitude];
+            marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithObjects:itemEntity, nil];
             NSLog(@"marker.latitude:%f",marker.latitude);
             [markerArr addObject:marker];
         }
         else{
             ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%d",[((MapMaker *)marker.iconView).markTip intValue]+1];
             [((MapMaker *)marker.iconView) loadData];
+            
+            NSMutableArray *arr=[NSMutableArray arrayWithArray:marker.taskArr];
+            [arr addObject:itemEntity];
+            marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithArray:arr];
         }
-        
     }
-    
-    //配送失败的
-//    for(int i=0;i<[APP_DELEGATE.booter.tasklist_failed count];i++){
-//        mapMaker.markTip=@"1";
-//        [mapMaker loadData];
-//        
-//        GMSMarker *marker = [[GMSMarker alloc] init];
-//        marker.position = CLLocationCoordinate2DMake([[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].longitude doubleValue], [[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].latitude doubleValue]);
-//        marker.title = [APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].consignee;
-//        marker.snippet = [APP_DELEGATE.booter.tasklist_failed objectAtIndex:i].address;
-//        marker.appearAnimation = kGMSMarkerAnimationPop;
-//        marker.iconView=mapMaker;
-//        marker.map = mapView;
-//    }
 }
 
 -(GMSMarker *)isExistMarker:(CLLocationCoordinate2D)coordinate{
@@ -157,26 +183,45 @@
 
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker{
     NSLog(@"didTapInfoWindowOfMarker");
-    sel_coordinate=marker.position;
-    [self showMaskMenu];
 }
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker{
-    return NO;
+    sel_coordinate=marker.position;
+    [self showMaskMenu:marker];
+    return YES;
 }
 
 - (void)mapViewDidFinishTileRendering:(GMSMapView *)mapView{
     NSLog(@"mapViewDidFinishTileRendering");
 }
 
-- (void)showMaskMenu
+-(void)mapViewDidStartTileRendering:(GMSMapView *)mapView{
+    if(!isLoadedMaker){
+        isLoadedMaker=YES;
+        [self loadTaskMask];
+    }
+}
+
+- (void)showMaskMenu:(GMSMarker *)marker
 {
+    selectedMarker=marker;
     UIActionSheet *actionsheet;
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
-        actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单", nil,nil];
+        
+        if(marker.taskArr.count<=1){
+            actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单", nil,nil];
+        }
+        else{
+            actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看多个订单", nil,nil];
+        }
     }
     else{
-        actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看订单", nil,nil];
+        if(marker.taskArr.count<=1){
+            actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看订单", nil,nil];
+        }
+        else{
+            actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看多个订单", nil,nil];
+        }
     }
     
     [actionsheet showInView:self.view];
@@ -207,7 +252,15 @@
 }
 
 -(void)gotoOrderDetail{
-    
+    if(selectedMarker.taskArr.count>1){
+        TaskListViewController *tvc=[[TaskListViewController alloc] init];
+        tvc.taskArr=selectedMarker.taskArr;
+        [self.navigationController pushViewController:tvc animated:YES];
+    }
+    else{
+        OrderDetailViewController *ovc=[[OrderDetailViewController alloc] init];
+        [self.navigationController pushViewController:ovc animated:YES];
+    }
 }
 
 -(void)unusualList:(UIButton *)sender{

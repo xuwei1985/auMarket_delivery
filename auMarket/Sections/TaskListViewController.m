@@ -26,13 +26,21 @@
 
 
 -(void)initData{
-    list_status_modal=Delivery_Status_Delivering;
+    if(self.taskArr){
+        list_status_modal=Delivery_Status_Multi;
+    }
+    else{
+        list_status_modal=Delivery_Status_Delivering;
+    }
 }
 
 -(void)initUI{
     [self setNavigation];
     [self setUpTableView];
-    [self createTaskCategoryButtons];
+    if(!self.taskArr){
+        [self createTaskCategoryButtons];
+    }
+    
     [self.tableView reloadData];
 }
 
@@ -107,7 +115,13 @@
 }
 
 -(void)setUpTableView{
-    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, SEGMENTVIEW_HEIGHT, WIDTH_SCREEN, HEIGHT_SCREEN-64-SEGMENTVIEW_HEIGHT) style:UITableViewStylePlain];
+    if(!self.taskArr){
+        self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, SEGMENTVIEW_HEIGHT, WIDTH_SCREEN, HEIGHT_SCREEN-64-SEGMENTVIEW_HEIGHT) style:UITableViewStylePlain];
+    }
+    else{
+        self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64) style:UITableViewStylePlain];
+    }
+    
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
     self.tableView.backgroundColor=COLOR_BG_TABLEVIEW;
@@ -161,11 +175,14 @@
     else if(list_status_modal==Delivery_Status_Failed){
         return [APP_DELEGATE.booter.tasklist_failed count];
     }
+    else if(list_status_modal==Delivery_Status_Multi){
+        return [self.taskArr count];
+    }
     return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    return 56;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -177,7 +194,19 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
-    cell.entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
+    if(list_status_modal==Delivery_Status_Delivering){
+        cell.entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
+    }
+    else if(list_status_modal==Delivery_Status_Finished){
+        cell.entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.row];
+    }
+    else if(list_status_modal==Delivery_Status_Failed){
+        cell.entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.row];
+    }
+    else if(list_status_modal==Delivery_Status_Multi){
+         cell.entity=[self.taskArr objectAtIndex:indexPath.row];
+    }
+    
     return cell;
 }
 

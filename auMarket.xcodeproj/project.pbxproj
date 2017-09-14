@@ -29,6 +29,7 @@
 		A91D843A1F665EC600DF69EF /* TaskListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A91D84391F665EC600DF69EF /* TaskListViewController.m */; };
 		A91FAC011E026F4300D6FACC /* c1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A91FABFF1E026F4300D6FACC /* c1@2x.png */; };
 		A91FAC021E026F4300D6FACC /* c2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A91FAC001E026F4300D6FACC /* c2@2x.png */; };
+		A94692FA1F6AB367007537DC /* 1_29_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A94692F91F6AB367007537DC /* 1_29_gray@2x.png */; };
 		A95DCCC81E0299AE006E7649 /* GoodsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95DCCC71E0299AE006E7649 /* GoodsListViewController.m */; };
 		A95E10911DF80ED000660E42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10901DF80ED000660E42 /* main.m */; };
 		A95E10941DF80ED000660E42 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10931DF80ED000660E42 /* AppDelegate.m */; };
@@ -198,6 +199,7 @@
 		A91D84391F665EC600DF69EF /* TaskListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskListViewController.m; sourceTree = "<group>"; };
 		A91FABFF1E026F4300D6FACC /* c1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c1@2x.png"; sourceTree = "<group>"; };
 		A91FAC001E026F4300D6FACC /* c2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c2@2x.png"; sourceTree = "<group>"; };
+		A94692F91F6AB367007537DC /* 1_29_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_29_gray@2x.png"; sourceTree = "<group>"; };
 		A95DCCC61E0299AE006E7649 /* GoodsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsListViewController.h; sourceTree = "<group>"; };
 		A95DCCC71E0299AE006E7649 /* GoodsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsListViewController.m; sourceTree = "<group>"; };
 		A95E108C1DF80ED000660E42 /* auMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = auMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -883,6 +885,7 @@
 		A9FBC1C61DF93838005ECDDE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A94692F91F6AB367007537DC /* 1_29_gray@2x.png */,
 				A91357771F6783EF000186B0 /* defaut_list@2x.png */,
 				A91D842E1F665B5300DF69EF /* 1_04@2x.png */,
 				A9F4DA731F658AFE00D71774 /* 1_03@2x.png */,
@@ -1085,6 +1088,7 @@
 				A91FAC021E026F4300D6FACC /* c2@2x.png in Resources */,
 				A9F4DA961F658AFE00D71774 /* 1_72@2x.png in Resources */,
 				A9D354671E0976CB006D265D /* icon_favorite@2x.png in Resources */,
+				A94692FA1F6AB367007537DC /* 1_29_gray@2x.png in Resources */,
 				A9187C301DF9B6B900A3E902 /* category_s@3x.png in Resources */,
 				A982F78F1E0FA87E00DB4C13 /* sign_weixin@2x.png in Resources */,
 				A9F4DA8C1F658AFE00D71774 /* 1_29@2x.png in Resources */,
