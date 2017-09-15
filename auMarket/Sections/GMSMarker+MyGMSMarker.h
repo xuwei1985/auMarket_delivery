@@ -11,4 +11,5 @@
 @interface GMSMarker (MyGMSMarker)
 @property (nonatomic, assign) double latitude;
 @property (nonatomic, assign) double longitude;
+@property (nonatomic, retain) NSMutableArray<TaskItemEntity *> *taskArr;
 @end

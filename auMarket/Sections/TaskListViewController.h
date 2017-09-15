@@ -18,4 +18,5 @@
     UIButton *btn_successDelivery;
     Delivery_Status list_status_modal;//列表模式
 }
+@property(nonatomic,retain) NSMutableArray<TaskItemEntity *>* taskArr;
 @end

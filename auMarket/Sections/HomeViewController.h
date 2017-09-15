@@ -9,6 +9,7 @@
 #import "SPBaseViewController.h"
 #import "MapMaker.h"
 #import "GMSMarker+MyGMSMarker.h"
+#import "TaskListViewController.h"
 
 @interface HomeViewController : SPBaseViewController<GMSMapViewDelegate,UIActionSheetDelegate>
 {
@@ -17,6 +18,7 @@
     CLLocationCoordinate2D sel_coordinate;
     UIButton *btn_workState;
     NSMutableArray<GMSMarker *> *markerArr;
-    //Boolean isLoadedMaker;
+    Boolean isLoadedMaker;
+    GMSMarker *selectedMarker;
 }
 @end
