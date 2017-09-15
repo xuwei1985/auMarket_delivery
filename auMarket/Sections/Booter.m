@@ -88,8 +88,9 @@
 //主视图控制器的代理事件
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     
-    NSString *index = [NSString stringWithFormat:@"%ld",tabBarController.selectedIndex];
+    NSString *index = [NSString stringWithFormat:@"%d",(int)tabBarController.selectedIndex];
     [[NSNotificationCenter defaultCenter] postNotificationName:ChangeCurrentTabNotification object:index];
+    //[MobClick event:@"tab" attributes:@{@"category":index}];
 }
 
 - (void)pullMessageManagerDidReceiveMessage:(NSNotification*)aNotification{

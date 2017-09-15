@@ -14,6 +14,7 @@
 #import "KMActivityIndicator.h"
 #import "AccountManager.h"
 
+
 @interface SPBaseViewController : UIViewController <SPBaseModelProtocol,UITableViewDataSource,UITableViewDelegate>
 {
     CALayer *_maskLayer;

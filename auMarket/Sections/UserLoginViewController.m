@@ -267,8 +267,8 @@
 
 -(void)gotoHomeView{
     Booter *booter=[[Booter alloc] init];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-    [self.navigationController pushViewController:[booter bootUIViewController] animated:YES];
+
+    [APP_DELEGATE.window setRootViewController:[booter bootUIViewController]];
 }
 
 -(void)checkLoginState{

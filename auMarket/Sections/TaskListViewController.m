@@ -37,7 +37,7 @@
 -(void)initUI{
     [self setNavigation];
     [self setUpTableView];
-    if(!self.taskArr){
+    if(!self.taskArr){//不是从首页的一个坐标多个订单过来的
         [self createTaskCategoryButtons];
     }
     
@@ -222,8 +222,11 @@
 
 //配送数据更新
 - (void)onTaskUpdate:(NSNotification*)aNotitification{
-    [self refreshCategoryBtn];
-    [self.tableView reloadData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self refreshCategoryBtn];
+        [self.tableView reloadData];
+    });
+    
 }
 
 -(void)toggleWorkState:(UIButton *)sender{
@@ -239,7 +242,9 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     btn_workState.selected=APP_DELEGATE.isWorking;
-    
+    if(!self.taskArr){
+        [APP_DELEGATE.booter loadTaskList];
+    }
     [self checkLoginStatus];
 }
 

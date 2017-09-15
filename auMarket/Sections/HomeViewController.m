@@ -19,6 +19,7 @@
     
     [self initData];
     [self initUI];
+    [self addNotification];
 }
 
 -(void)initData{
@@ -53,6 +54,10 @@
     [btn_workState addTarget:self action:@selector(toggleWorkState:) forControlEvents:UIControlEventTouchUpInside];
     btn_workState.selected=APP_DELEGATE.isWorking;
     self.navigationItem.titleView=btn_workState;
+}
+
+-(void)addNotification{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
 }
 
 -(void)createMapView{
@@ -277,16 +282,25 @@
     [APP_DELEGATE.booter handlerWorkingState:sender.selected];
 }
 
+//配送数据更新
+- (void)onTaskUpdate:(NSNotification*)aNotitification{
+    if(isShowing){
+        [self loadTaskMask];
+    }
+}
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    NSLog(@"isWorking:%d",APP_DELEGATE.isWorking);
+    isShowing=YES;
     btn_workState.selected=APP_DELEGATE.isWorking;
-    
+    [APP_DELEGATE.booter loadTaskList];
     [self checkLoginStatus];
 }
 
+
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
+    isShowing=NO;
 }
 
 

@@ -18,6 +18,7 @@
 }
 
 -(void)loadTaskList{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
     self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delivery_list&delivery_id=%@",user.user_id];
     self.parseDataClassType = [TaskEntity class];
@@ -27,6 +28,7 @@
 
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if ([parsedData isKindOfClass:[TaskEntity class]]) {
         self.entity = (TaskEntity*)parsedData;
     }

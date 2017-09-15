@@ -8,7 +8,7 @@
 
 
 #import "SPBaseViewController.h"
-
+#import "UserLoginViewController.h"
 
 @interface SPBaseViewController ()
 
@@ -534,7 +534,7 @@
 
 -(void)onUserNotLogin
 {
-    [self.tabBarController.navigationController popToRootViewControllerAnimated:YES];
+    [APP_DELEGATE.window setRootViewController:[[SPNavigationController alloc] initWithRootViewController:[[UserLoginViewController alloc] init]]];
 }
 
 /*

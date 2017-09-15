@@ -20,5 +20,6 @@
     NSMutableArray<GMSMarker *> *markerArr;
     Boolean isLoadedMaker;
     GMSMarker *selectedMarker;
+    Boolean isShowing;
 }
 @end
