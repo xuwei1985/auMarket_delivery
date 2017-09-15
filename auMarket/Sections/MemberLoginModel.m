@@ -20,10 +20,19 @@
 
 //普通登录
 -(void)loginWithUsername:(NSString *)uname andPassword:(NSString *)upass{
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delivery_login&username=%@&password=%@",uname,upass];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=deliver_login&username=%@&password=%@",uname,upass];
     self.params = @{
     };
     self.requestTag=1001;
+    [self loadInner];
+}
+
+//设置工作状态
+-(void)setDeliverStatus:(NSString *)status{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=set_deliver_status&status=%@&deliver_id=%@",status,user.user_id];
+    self.params = @{};
+    self.requestTag=1002;
     [self loadInner];
 }
 

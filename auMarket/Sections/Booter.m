@@ -235,9 +235,11 @@
 
 //处理工作状态
 -(void)handlerWorkingState:(BOOL)isWorking{
+    [self.loginModel setDeliverStatus:(isWorking?@"1":@"0")];
     APP_DELEGATE.isWorking=isWorking;
     [USER_DEFAULT setBool:isWorking forKey:@"isWorking"];
     [USER_DEFAULT synchronize];
+    
 }
 
 //远程消息的注册
@@ -308,5 +310,14 @@
     }
     return _taskModel;
 }
+
+-(MemberLoginModel *)loginModel{
+    if(!_loginModel){
+        _loginModel=[[MemberLoginModel alloc] init];
+        _loginModel.delegate=self;
+    }
+    return _loginModel;
+}
+
 
 @end

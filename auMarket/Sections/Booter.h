@@ -22,12 +22,14 @@
 #import "IntroViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "TaskModel.h"
+#import "MemberLoginModel.h"
 
 @interface Booter : NSObject<UIGestureRecognizerDelegate,UITabBarControllerDelegate,SPBaseModelProtocol>
 
 @property (nonatomic,strong) UINavigationController* navigationController;
 @property (nonatomic,strong) UITabBarController* tabBarController;
 @property (nonatomic,strong) TaskModel *taskModel;
+@property (nonatomic,strong) MemberLoginModel *loginModel;
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_delivering;//配送中的订单
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_finished;//配送完成的订单
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_failed;//配送失败的订单
