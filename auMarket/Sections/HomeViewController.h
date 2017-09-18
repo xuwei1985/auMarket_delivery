@@ -18,6 +18,7 @@
     CLLocationCoordinate2D sel_coordinate;
     UIButton *btn_workState;
     NSMutableArray<GMSMarker *> *markerArr;
+    NSMutableArray<GMSMarker *> *parkingMarkerArr;
     Boolean isLoadedMaker;
     GMSMarker *selectedMarker;
     Boolean isShowing;

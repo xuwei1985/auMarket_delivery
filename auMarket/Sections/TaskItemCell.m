@@ -44,8 +44,8 @@
     
     [_taskTitleLbl mas_makeConstraints:^(MASConstraintMaker *make) {
         @strongify(self);
-        make.top.mas_equalTo(self.mas_top).offset(13);
-        make.left.mas_equalTo(_iconView.mas_right).offset(15);
+        make.top.mas_equalTo(self.mas_top).offset(18);
+        make.left.mas_equalTo(_iconView.mas_right).offset(10);
         make.right.mas_equalTo(self.mas_right).offset(-40);
     }];
 }

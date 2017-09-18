@@ -15,10 +15,15 @@
 
 @interface TaskItemEntity : SPBaseEntity
 @property(nonatomic,retain)NSString *sid;
+@property(nonatomic,retain)NSString *order_amount;
+@property(nonatomic,retain)NSString *pay_name;
 @property(nonatomic,retain)NSString *address;
 @property(nonatomic,retain)NSString *order_id;
 @property(nonatomic,retain)NSString *order_sn;
 @property(nonatomic,retain)NSString *delivery_id;
+@property(nonatomic,retain)NSString *delivery_time;
+@property(nonatomic,retain)NSString *package_note;
+@property(nonatomic,retain)NSString *mobile;
 @property(nonatomic,retain)NSString *add_time;
 @property(nonatomic,retain)NSString *consignee;
 @property(nonatomic,retain)NSString *longitude;

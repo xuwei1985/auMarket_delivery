@@ -211,7 +211,20 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self gotoOrderDetailView:nil];
+    TaskItemEntity *entity;
+    if(list_status_modal==Delivery_Status_Delivering){
+        entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
+    }
+    else if(list_status_modal==Delivery_Status_Finished){
+        entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.row];
+    }
+    else if(list_status_modal==Delivery_Status_Failed){
+        entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.row];
+    }
+    else if(list_status_modal==Delivery_Status_Multi){
+        entity=[self.taskArr objectAtIndex:indexPath.row];
+    }
+    [self gotoOrderDetailView:entity];
 }
 
 -(void)refreshCategoryBtn{
@@ -234,8 +247,9 @@
     [APP_DELEGATE.booter handlerWorkingState:sender.selected];
 }
 
--(void)gotoOrderDetailView:(TaskEntity *)entity{
+-(void)gotoOrderDetailView:(TaskItemEntity *)entity{
     OrderDetailViewController *ovc=[[OrderDetailViewController alloc] init];
+    ovc.task_entity=entity;
     [self.navigationController pushViewController:ovc animated:YES];
 }
 

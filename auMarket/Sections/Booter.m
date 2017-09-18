@@ -266,9 +266,16 @@
     //[YPUpdateChecker sharedInstance];
 }
 
+//获取派送任务列表
 -(void)loadTaskList
 {
     [self.taskModel loadTaskList];
+}
+
+//获取停车位数据
+-(void)loadParkingList
+{
+    [self.model loadParkingList];
 }
 
 - (BOOL)onHandleOpenURL:(NSURL *)url {
@@ -301,6 +308,14 @@
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
     }
+    else if(model==self.model){
+        if(isSuccess){
+            self.parkinglist=self.model.parking_entity.list;
+        }
+        else{
+            self.parkinglist= [[NSArray alloc] init];
+        }
+    }
 }
 
 -(TaskModel *)taskModel{
@@ -319,5 +334,12 @@
     return _loginModel;
 }
 
+-(BooterModel *)model{
+    if(!_model){
+        _model=[[BooterModel alloc] init];
+        _model.delegate=self;
+    }
+    return _model;
+}
 
 @end

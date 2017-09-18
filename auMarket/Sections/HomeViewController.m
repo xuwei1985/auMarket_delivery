@@ -25,11 +25,13 @@
 -(void)initData{
     isLoadedMaker=NO;
     markerArr=[[NSMutableArray alloc] init];
+    parkingMarkerArr=[[NSMutableArray alloc] init];
 }
 
 -(void)initUI{
     [self setNavigation];
     [self createMapView];
+    [self createParkingMask];
 }
 
 -(void)setNavigation{
@@ -75,8 +77,11 @@
     CLLocationCoordinate2D coordinate;
     TaskItemEntity *itemEntity;
     GMSMarker *marker;
-    [mapView clear];//清除所有的maker
+
     if(markerArr){
+        for(int i=0;i<markerArr.count;i++){
+            [markerArr objectAtIndex:i].map=nil;
+        }
         [markerArr removeAllObjects];
     }
     else{
@@ -102,14 +107,13 @@
             marker.position = CLLocationCoordinate2DMake(itemEntity.coordinate.latitude, itemEntity.coordinate.longitude);
             marker.title = itemEntity.consignee;
             marker.snippet = itemEntity.address;
-            marker.appearAnimation = kGMSMarkerAnimationPop;
+            marker.appearAnimation = kGMSMarkerAnimationNone;
             marker.iconView=mapMaker;
             marker.map = mapView;
             marker.latitude=[self reviseDoubleValue:itemEntity.coordinate.latitude];
             marker.longitude=[self reviseDoubleValue:itemEntity.coordinate.longitude];
             marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithObjects:itemEntity, nil];
 
-            NSLog(@"marker.taskArr.count:%lu",(unsigned long)marker.taskArr.count);
             [markerArr addObject:marker];
         }
         else{
@@ -140,13 +144,13 @@
             marker.position = CLLocationCoordinate2DMake(itemEntity.coordinate.latitude, itemEntity.coordinate.longitude);
             marker.title = itemEntity.consignee;
             marker.snippet = itemEntity.address;
-            marker.appearAnimation = kGMSMarkerAnimationPop;
+            marker.appearAnimation = kGMSMarkerAnimationNone;
             marker.iconView=mapMaker;
             marker.map = mapView;
             marker.latitude=[self reviseDoubleValue:itemEntity.coordinate.latitude];
             marker.longitude=[self reviseDoubleValue:itemEntity.coordinate.longitude];
             marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithObjects:itemEntity, nil];
-            NSLog(@"marker.latitude:%f",marker.latitude);
+
             [markerArr addObject:marker];
         }
         else{
@@ -159,6 +163,45 @@
         }
     }
 }
+
+//创建停车场的Marker
+-(void)createParkingMask{
+    CLLocationCoordinate2D coordinate;
+    ParkingItemEntity *itemEntity;
+    GMSMarker *marker;
+    
+    if(parkingMarkerArr){
+        [parkingMarkerArr removeAllObjects];
+    }
+    else{
+        parkingMarkerArr=[[NSMutableArray alloc] init];
+    }
+
+    for(int i=0;i<[APP_DELEGATE.booter.parkinglist count];i++){
+        itemEntity=[APP_DELEGATE.booter.parkinglist objectAtIndex:i];
+        coordinate=CLLocationCoordinate2DMake([self reviseDoubleValue:[itemEntity.latitude doubleValue]], [self reviseDoubleValue:[itemEntity.longitude doubleValue]]);
+        marker = [[GMSMarker alloc] init];
+        marker.position = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude);
+        marker.appearAnimation = kGMSMarkerAnimationPop;
+        marker.icon=[UIImage imageNamed:@"1_32"];
+        marker.map = nil;
+        
+        [parkingMarkerArr addObject:marker];
+    }
+}
+
+-(void)showParkingMarkers{
+    for (GMSMarker *mk in parkingMarkerArr) {
+        mk.map=mapView;
+    }
+}
+
+-(void)hideParkingMarkers{
+    for (GMSMarker *mk in parkingMarkerArr) {
+        mk.map= nil;
+    }
+}
+
 
 -(GMSMarker *)isExistMarker:(CLLocationCoordinate2D)coordinate{
     NSArray<GMSMarker *> *mArr=[[NSMutableArray alloc] init];
@@ -191,9 +234,15 @@
 }
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker{
-    sel_coordinate=marker.position;
-    [self showMaskMenu:marker];
-    return YES;
+    if(marker.appearAnimation==kGMSMarkerAnimationNone){
+        sel_coordinate=marker.position;
+        [self showMaskMenu:marker];
+        return YES;
+    }
+    else{
+        return NO;
+    }
+    
 }
 
 - (void)mapViewDidFinishTileRendering:(GMSMapView *)mapView{
@@ -264,6 +313,7 @@
     }
     else{
         OrderDetailViewController *ovc=[[OrderDetailViewController alloc] init];
+        ovc.task_entity=[selectedMarker.taskArr firstObject];
         [self.navigationController pushViewController:ovc animated:YES];
     }
 }
@@ -274,7 +324,12 @@
 
 -(void)toggleParkMaker:(UIButton *)sender{
     sender.selected=!sender.selected;
-    [APP_DELEGATE.booter handlerWorkingState:sender.selected];
+    if(sender.selected){
+        [self showParkingMarkers];
+    }
+    else{
+        [self hideParkingMarkers];
+    }
 }
 
 -(void)toggleWorkState:(UIButton *)sender{

@@ -31,7 +31,7 @@
 }
 
 -(void)initData{
-    
+    [self loadDeliveryInfo];
 }
 
 -(void)setNavigation{
@@ -76,7 +76,7 @@
     lbl_payType=[[UILabel alloc] init];
     lbl_payType.textColor=COLOR_MAIN;
     lbl_payType.font=FONT_SIZE_MIDDLE;
-    lbl_payType.text=@"货到付款";
+    lbl_payType.text=@"";
     lbl_payType.textAlignment=NSTextAlignmentRight;
     [blockView_1 addSubview:lbl_payType];
     
@@ -102,7 +102,7 @@
     lbl_orderSum=[[UILabel alloc] init];
     lbl_orderSum.textColor=COLOR_MAIN;
     lbl_orderSum.font=FONT_SIZE_MIDDLE;
-    lbl_orderSum.text=@"$119.2";
+    lbl_orderSum.text=@"";
     lbl_orderSum.textAlignment=NSTextAlignmentRight;
     [blockView_1 addSubview:lbl_orderSum];
     
@@ -316,6 +316,19 @@
     }];
 }
 
+-(void)loadDeliveryInfo{
+    if(self.task_entity){
+        lbl_payType.text=self.task_entity.pay_name;
+        lbl_orderSum.text=[NSString stringWithFormat:@"$%@",self.task_entity.order_amount];
+        lbl_orderNo.text=self.task_entity.order_sn;
+        lbl_contact.text=self.task_entity.consignee;
+        lbl_mobile.text=self.task_entity.mobile;
+        lbl_address.text=self.task_entity.address;
+        lbl_deliverytime.text=self.task_entity.delivery_time;
+        lbl_packagenote.text=self.task_entity.package_note.length>0?self.task_entity.package_note:@"无备注信息";
+    }
+}
+
 #pragma mark - Table view delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -431,7 +444,7 @@
 
 -(void)runNavigationByGoogle{
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
-        NSString *urlString = [[NSString stringWithFormat:@"comgooglemaps://?x-source=%@&x-success=%@&saddr=&daddr=%f,%f&directionsmode=driving",APP_NAME,APP_SCHEME,coordinate.latitude, coordinate.longitude] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *urlString = [[NSString stringWithFormat:@"comgooglemaps://?x-source=%@&x-success=%@&saddr=&daddr=%@,%@&directionsmode=driving",APP_NAME,APP_SCHEME,self.task_entity.latitude, self.task_entity.longitude] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
     }
     else{

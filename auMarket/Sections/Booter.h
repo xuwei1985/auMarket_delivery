@@ -22,6 +22,7 @@
 #import "IntroViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "TaskModel.h"
+#import "BooterModel.h"
 #import "MemberLoginModel.h"
 
 @interface Booter : NSObject<UIGestureRecognizerDelegate,UITabBarControllerDelegate,SPBaseModelProtocol>
@@ -29,11 +30,13 @@
 @property (nonatomic,strong) UINavigationController* navigationController;
 @property (nonatomic,strong) UITabBarController* tabBarController;
 @property (nonatomic,strong) TaskModel *taskModel;
+@property (nonatomic,strong) BooterModel *model;
 @property (nonatomic,strong) MemberLoginModel *loginModel;
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_delivering;//配送中的订单
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_finished;//配送完成的订单
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_failed;//配送失败的订单
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_unknown;//没有配送坐标的订单
+@property (nonatomic,strong) NSArray<ParkingItemEntity *> *parkinglist;
 
 // 获取引导页
 -(UIViewController*)getIntroViewController;
@@ -56,4 +59,5 @@
 - (void)bootReachability;
 -(void)bootGoogleMap;
 -(void)loadTaskList;
+-(void)loadParkingList;
 @end

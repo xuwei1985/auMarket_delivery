@@ -26,4 +26,5 @@
     
     CLLocationCoordinate2D coordinate;
 }
+@property(nonatomic,retain) TaskItemEntity *task_entity;
 @end
