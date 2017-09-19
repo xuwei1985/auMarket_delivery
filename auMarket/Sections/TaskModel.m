@@ -35,6 +35,14 @@
 }
 
 
+-(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(NSString *)pay_type{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=order_delivery_done&delivery_id=%@&status=%@&pay_type=%@",delivery_id,status,pay_type];
+    self.parseDataClassType = [TaskEntity class];
+    self.params = @{};
+    self.requestTag=3003;
+    [self loadInner];
+}
+
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[TaskEntity class]]) {
         self.entity = (TaskEntity*)parsedData;
