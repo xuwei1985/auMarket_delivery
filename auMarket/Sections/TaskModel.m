@@ -18,20 +18,31 @@
 }
 
 -(void)loadTaskList{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
     self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delivery_list&delivery_id=%@",user.user_id];
     self.parseDataClassType = [TaskEntity class];
     self.params = @{};
+    self.requestTag=3001;
+    [self loadInner];
+}
+
+-(void)loadGoodsListForOrder:(NSString *)order_id{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=order_goods_list&order_id=%@",order_id];
+    self.parseDataClassType = [OrderGoodsEntity class];
+    self.params = @{};
+    self.requestTag=3002;
     [self loadInner];
 }
 
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if ([parsedData isKindOfClass:[TaskEntity class]]) {
         self.entity = (TaskEntity*)parsedData;
     }
+    else if ([parsedData isKindOfClass:[OrderGoodsEntity class]]) {
+        self.goods_entity = (OrderGoodsEntity*)parsedData;
+    }
+
 }
 
 //根据配送状态抽取配送列表

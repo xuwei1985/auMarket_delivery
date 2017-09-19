@@ -15,7 +15,7 @@
     UILabel *_numLbl;
 }
 
-@property(nonatomic,retain) UIImage *iconImage;
+@property(nonatomic,retain) NSString *itemImage;
 @property(nonatomic,retain) NSString *itemName;
 @property(nonatomic,retain) NSString *itemNum;
 @end

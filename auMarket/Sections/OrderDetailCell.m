@@ -52,6 +52,7 @@
             [_numLbl mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(45);
                 make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
+                make.size.mas_equalTo(CGSizeMake(40, 20));
             }];
         }
     }
@@ -60,9 +61,9 @@
 
 -(void)layoutSubviews{
     [super layoutSubviews];
-    [_iconImageView sd_setImageWithURL:[NSURL URLWithString:@"http://www.kouzibuy.com/images/201702/thumb_img/34_thumb_G_1488235308203.jpg"] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
-    _itemLbl.text=@"山药五谷粥420g 营养香浓咸口味 即食冲饮";
-    _numLbl.text=@"3件";
+    [_iconImageView sd_setImageWithURL:[NSURL URLWithString:self.itemImage] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
+    _itemLbl.text=self.itemName;
+    _numLbl.text=[NSString stringWithFormat:@"%@件",self.itemNum];
 }
 
 

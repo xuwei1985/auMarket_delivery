@@ -30,4 +30,5 @@
 @property(nonatomic,retain)NSString *latitude;
 @property(nonatomic,assign)CLLocationCoordinate2D coordinate;
 @property(nonatomic,retain)NSString *status;
+
 @end

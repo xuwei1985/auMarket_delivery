@@ -8,6 +8,7 @@
 
 #import "SPBaseModel.h"
 #import "TaskEntity.h"
+#import "OrderGoodsEntity.h"
 
 typedef enum {
     Delivery_Status_Delivering = 0,
@@ -19,8 +20,10 @@ typedef enum {
 
 @interface TaskModel : SPBaseModel
 @property (nonatomic,retain) TaskEntity *entity;
+@property (nonatomic,retain) OrderGoodsEntity *goods_entity;
 
 -(void)loadTaskList;
+-(void)loadGoodsListForOrder:(NSString *)order_id;
 //根据配送状态抽取配送列表
 -(NSArray<TaskItemEntity *> *)getTasksByStatus:(Delivery_Status)status;
 @end

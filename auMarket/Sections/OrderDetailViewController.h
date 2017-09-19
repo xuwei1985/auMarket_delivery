@@ -10,6 +10,7 @@
 #import "UserLoginViewController.h"
 #import "OrderDetailCell.h"
 #import "PaymentViewController.h"
+#import "TaskModel.h"
 
 @interface OrderDetailViewController : SPBaseViewController<UIActionSheetDelegate>
 {
@@ -27,4 +28,5 @@
     CLLocationCoordinate2D coordinate;
 }
 @property(nonatomic,retain) TaskItemEntity *task_entity;
+@property(nonatomic,retain) TaskModel *model;
 @end

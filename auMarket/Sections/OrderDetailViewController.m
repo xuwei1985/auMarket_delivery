@@ -22,7 +22,6 @@
     [self initData];
 }
 
-
 -(void)initUI{
     [self setNavigation];
     [self createOrderInfoView];
@@ -31,6 +30,7 @@
 }
 
 -(void)initData{
+    [self loadGoodsForOrder];
     [self loadDeliveryInfo];
 }
 
@@ -316,6 +316,20 @@
     }];
 }
 
+-(void)loadGoodsForOrder{
+    [self startLoadingActivityIndicator];
+    [self.model loadGoodsListForOrder:self.task_entity.order_id];
+}
+
+-(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
+    [self stopLoadingActivityIndicator];
+    if(model==self.model){
+        if(isSuccess){
+            [self.tableView reloadData];
+        }
+    }
+}
+
 -(void)loadDeliveryInfo{
     if(self.task_entity){
         lbl_payType.text=self.task_entity.pay_name;
@@ -338,12 +352,19 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    if(section==0){
+        return [self.model.goods_entity.goods_list_normal count];
+    }
+    else if(section==1){
+        return [self.model.goods_entity.goods_list_alone count];
+    }
+    return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 38;
 }
+
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UILabel *packageCategory=[[UILabel alloc] initWithFrame:CGRectMake(0, 10, 150, 20)];
@@ -370,6 +391,16 @@
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.textLabel.font=FONT_SIZE_MIDDLE;
         cell.textLabel.textColor=COLOR_DARKGRAY;
+    }
+    if(indexPath.section==0){
+        cell.itemName=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].goods_name;
+        cell.itemNum=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].goods_number;
+        cell.itemImage=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].thumb_url;
+    }
+    else if(indexPath.section==1){
+        cell.itemName=[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].goods_name;
+        cell.itemNum=[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].goods_number;
+        cell.itemImage=[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].thumb_url;
     }
     
     return cell;
@@ -458,6 +489,14 @@
         NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"tel:%@",lbl_sender.text];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
     }
+}
+
+-(TaskModel *)model{
+    if(!_model){
+        _model=[[TaskModel alloc] init];
+        _model.delegate=self;
+    }
+    return _model;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
