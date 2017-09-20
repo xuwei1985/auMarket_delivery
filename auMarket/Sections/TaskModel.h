@@ -24,7 +24,7 @@ typedef enum {
 
 -(void)loadTaskList;
 -(void)loadGoodsListForOrder:(NSString *)order_id;
--(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(NSString *)pay_type;
+-(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(NSString *)pay_type andImgPath:(NSString *)img_path;
 //根据配送状态抽取配送列表
 -(NSArray<TaskItemEntity *> *)getTasksByStatus:(Delivery_Status)status;
 @end

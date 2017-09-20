@@ -36,9 +36,23 @@
     [self loadInner];
 }
 
+//获取结算信息
+-(void)getChargeInfo{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.parseDataClassType = [MemberChargeEntity class];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=get_deliver_charge&deliver_id=%@",user.user_id];
+    self.params = @{};
+    self.requestTag=1003;
+    [self loadInner];
+}
+
+
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[MemberLoginEntity class]]) {
         self.entity = (MemberLoginEntity*)parsedData;
+    }
+    else if ([parsedData isKindOfClass:[MemberChargeEntity class]]) {
+        self.charge_entity = (MemberChargeEntity*)parsedData;
     }
 }
 
@@ -59,4 +73,13 @@
     
     return _entity;
 }
+
+-(MemberChargeEntity *)charge_entity{
+    if(!_charge_entity){
+        _charge_entity=[[MemberChargeEntity alloc] init];
+    }
+    
+    return _charge_entity;
+}
+
 @end

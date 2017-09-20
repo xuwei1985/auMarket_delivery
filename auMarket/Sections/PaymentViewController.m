@@ -29,7 +29,7 @@
 }
 
 -(void)initData{
-    
+    imageData=nil;
 }
 
 -(void)setNavigation{
@@ -140,6 +140,8 @@
     previewView.contentMode=UIViewContentModeScaleAspectFill;
     previewView.clipsToBounds=YES;
     previewView.userInteractionEnabled=YES;
+    [previewView.layer setCornerRadius:6];
+    previewView.clipsToBounds=YES;
     [self.view addSubview: previewView];
     
     [previewView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(browserPhoto)]];
@@ -149,6 +151,21 @@
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN*0.35, WIDTH_SCREEN*0.35));
         make.centerX.mas_equalTo(self.view.mas_centerX);
     }];
+    
+    btn_deletePreview=[UIButton buttonWithType:UIButtonTypeCustom];
+    [btn_deletePreview setTitle:@"删除图片" forState:UIControlStateNormal];
+    [btn_deletePreview setTitleColor:COLOR_DARKGRAY forState:UIControlStateNormal];
+    btn_deletePreview.titleLabel.font=FONT_SIZE_MIDDLE;
+    btn_deletePreview.hidden=YES;
+    [btn_deletePreview addTarget:self action:@selector(clearPreviewImage:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview: btn_deletePreview];
+    
+    [btn_deletePreview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(previewView.mas_bottom).offset(10);
+        make.size.mas_equalTo(CGSizeMake(80, 28));
+        make.centerX.mas_equalTo(self.view.mas_centerX);
+    }];
+    
 }
 
 -(void)createDoneActionBar{
@@ -174,6 +191,13 @@
     UIView *line=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 0.5)];
     line.backgroundColor=RGBCOLOR(230, 230, 230);
     [_btn_doneAction addSubview:line];
+}
+
+-(void)clearPreviewImage:(id)sender{
+    previewView.image=nil;
+    imageData=nil;
+    previewView.hidden=YES;
+    btn_deletePreview.hidden=YES;
 }
 
 - (void)showPictureInputMenu
@@ -230,9 +254,10 @@
             }
 
             UIImage *newImg= [self thumbnailWithImageWithoutScale:hdImage size:newSize];
-
+            imageData = UIImageJPEGRepresentation(newImg, 0.8);
             dispatch_async(dispatch_get_main_queue(), ^{
                 previewView.hidden=NO;
+                btn_deletePreview.hidden=NO;
                 previewView.image = newImg;
             });
         });
@@ -265,6 +290,7 @@
     UIImage *selfPhoto = [UIImage imageWithContentsOfFile:imageFilePath];//读取图片文件
     //    [userPhotoButton setImage:selfPhoto forState:UIControlStateNormal];
     previewView.hidden=NO;
+    btn_deletePreview.hidden=NO;
     previewView.image = selfPhoto;
 }
 
@@ -320,7 +346,6 @@
     }
 }
 
-
 -(void)browserPhoto{
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray arrayWithCapacity:1];
@@ -338,9 +363,52 @@
 }
 
 -(void)requestFinishDelivery{
-    
+    [[AlertBlockView sharedInstance] showChoiceAlert:@"确认完成订单配送吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
+        if(index==0){
+            [self startLoadingActivityIndicator];
+            if(imageData){
+                [self.upload_model uploadImages:imageData andResourceType:@"proof"];
+            }
+            else{
+                [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2" andImgPath:@""];
+            }
+        }
+    }];
 }
 
+-(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
+    if(model==self.upload_model){
+        if(isSuccess){
+           [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2"  andImgPath:self.upload_model.uploadEntity.filepath];
+        }
+        else{
+            [self stopLoadingActivityIndicator];
+        }
+    }
+    else if(model==self.model&&self.model.requestTag==3003){
+        [self stopLoadingActivityIndicator];
+        if(isSuccess){
+            [self showSuccesWithText:@"操作成功"];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    }
+}
+
+-(TaskModel *)model{
+    if(!_model){
+        _model=[[TaskModel alloc] init];
+        _model.delegate=self;
+    }
+    return _model;
+}
+
+-(SPUploadFileModel *)upload_model{
+    if(!_upload_model){
+        _upload_model=[[SPUploadFileModel alloc] init];
+        _upload_model.delegate=self;
+    }
+    return _upload_model;
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

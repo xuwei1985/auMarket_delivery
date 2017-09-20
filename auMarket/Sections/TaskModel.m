@@ -34,9 +34,12 @@
     [self loadInner];
 }
 
-
--(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(NSString *)pay_type{
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=order_delivery_done&delivery_id=%@&status=%@&pay_type=%@",delivery_id,status,pay_type];
+/**
+ 请求订单配送完成操作
+ */
+-(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(NSString *)pay_type andImgPath:(NSString *)img_path{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=order_delivery_done&delivery_id=%@&status=%@&pay_type=%@&user_id=%@&img_path=%@",delivery_id,status,pay_type,user.user_id,img_path];
     self.parseDataClassType = [TaskEntity class];
     self.params = @{};
     self.requestTag=3003;
@@ -50,10 +53,11 @@
     else if ([parsedData isKindOfClass:[OrderGoodsEntity class]]) {
         self.goods_entity = (OrderGoodsEntity*)parsedData;
     }
-
 }
 
-//根据配送状态抽取配送列表
+/**
+ 根据配送状态抽取配送列表
+ */
 -(NSArray<TaskItemEntity *> *)getTasksByStatus:(Delivery_Status)status{
     NSArray<TaskItemEntity *> *mArr=[[NSMutableArray alloc] init];
     if(self.entity.list){
