@@ -199,10 +199,10 @@
     }
     else{
         if(indexPath.row==0){
-            cell.itemPrice=[NSString stringWithFormat:@"$%f",[self.model.charge_entity.cash_charge floatValue]];
+            cell.itemPrice=[NSString stringWithFormat:@"$%.2f",[self.model.charge_entity.cash_charge floatValue]];
         }
         else if(indexPath.row==1){
-            cell.itemPrice=[NSString stringWithFormat:@"$%f",[self.model.charge_entity.transfer_charge floatValue]];;
+            cell.itemPrice=[NSString stringWithFormat:@"$%.2f",[self.model.charge_entity.transfer_charge floatValue]];;
         }
     }
     return cell;

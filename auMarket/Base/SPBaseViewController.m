@@ -238,7 +238,7 @@
     }
     
     if (self.noContentView == nil) {
-        CGFloat top = [self prefersNaviagtionBarHidden]?64:0;
+        CGFloat top = [self prefersNaviagtionBarHidden]?64:0+48;
         self.noContentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, top, WIDTH_SCREEN, CGRectGetHeight(self.view.bounds)-top)];
         self.noContentView.backgroundColor = [UIColor clearColor];
         self.noContentView.showsVerticalScrollIndicator = NO;
@@ -347,7 +347,7 @@
 
 -(void)showNoContentView
 {
-    [self showNoContentViewWithTitle:@"当前没有任何内容，去别的地方看看吧！" icon:nil button:nil];
+    [self showNoContentViewWithTitle:@"当前没有任何内容" icon:nil button:nil];
 }
 
 -(void)hideNoContentView

@@ -140,9 +140,40 @@
     sender.selected=YES;
     
     list_status_modal=(int)sender.tag-1000;
+    if(list_status_modal==Delivery_Status_Delivering){
+        if([APP_DELEGATE.booter.tasklist_delivering count]<=0){
+            [self showNoContentView];
+        }
+        else{
+            [self hideNoContentView];
+        }
+    }
+    else if(list_status_modal==Delivery_Status_Finished){
+        if([APP_DELEGATE.booter.tasklist_finished count]<=0){
+            [self showNoContentView];
+        }
+        else{
+            [self hideNoContentView];
+        }
+    }
+    else if(list_status_modal==Delivery_Status_Failed){
+        if([APP_DELEGATE.booter.tasklist_failed count]<=0){
+            [self showNoContentView];
+        }
+        else{
+            [self hideNoContentView];
+        }
+    }
+    else if(list_status_modal==Delivery_Status_Multi){
+        if([self.taskArr count]<=0){
+            [self showNoContentView];
+        }
+        else{
+            [self hideNoContentView];
+        }
+    }
     [self.tableView reloadData];
 }
-
 
 -(void)loadTaskList{
     [self startLoadingActivityIndicator];
