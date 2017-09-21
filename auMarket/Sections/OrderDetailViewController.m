@@ -283,7 +283,7 @@
 
 -(void)setUpTableView{
     float table_height=HEIGHT_SCREEN-64-DONE_ACTION_BAR;
-    if([self.task_entity.status intValue]==1){
+    if([self.task_entity.status intValue]==1||[self.task_entity.status intValue]==2){
         table_height=HEIGHT_SCREEN-64;
     }
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
@@ -303,7 +303,7 @@
  创建完成操作条
  */
 -(void)createDoneActionBar{
-    if([self.task_entity.status intValue]!=1){
+    if([self.task_entity.status intValue]!=1&&[self.task_entity.status intValue]!=2){
         _btn_doneAction=[UIButton buttonWithType:UIButtonTypeCustom];
         [_btn_doneAction setTitle:@"完成配送" forState:UIControlStateNormal];
         _btn_doneAction.titleLabel.textAlignment=NSTextAlignmentCenter;
