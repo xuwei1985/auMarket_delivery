@@ -282,7 +282,11 @@
 }
 
 -(void)setUpTableView{
-    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64-DONE_ACTION_BAR) style:UITableViewStylePlain];
+    float table_height=HEIGHT_SCREEN-64-DONE_ACTION_BAR;
+    if([self.task_entity.status intValue]==1||[self.task_entity.status intValue]==2){
+        table_height=HEIGHT_SCREEN-64;
+    }
+    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
     self.tableView.backgroundColor=COLOR_BG_TABLEVIEW;
@@ -295,37 +299,54 @@
     [self.view addSubview:self.tableView];
 }
 
+/**
+ 创建完成操作条
+ */
 -(void)createDoneActionBar{
-    _btn_doneAction=[UIButton buttonWithType:UIButtonTypeCustom];
-    [_btn_doneAction setTitle:@"完成配送" forState:UIControlStateNormal];
-    _btn_doneAction.titleLabel.textAlignment=NSTextAlignmentCenter;
-    [_btn_doneAction setBackgroundColor:COLOR_MAIN];
-    _btn_doneAction.tintColor=COLOR_WHITE;
-    _btn_doneAction.titleLabel.font=FONT_SIZE_BIG;
-    [_btn_doneAction addTarget:self action:@selector(showFinishMenu) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_btn_doneAction];
-    
-    
-    @weakify(self);
-    [_btn_doneAction mas_makeConstraints:^(MASConstraintMaker *make) {
-        @strongify(self);
-        make.top.mas_equalTo(self.view.mas_bottom).offset(-48);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(WIDTH_SCREEN);
-        make.height.mas_equalTo(DONE_ACTION_BAR);
-    }];
+    if([self.task_entity.status intValue]!=1&&[self.task_entity.status intValue]!=2){
+        _btn_doneAction=[UIButton buttonWithType:UIButtonTypeCustom];
+        [_btn_doneAction setTitle:@"完成配送" forState:UIControlStateNormal];
+        _btn_doneAction.titleLabel.textAlignment=NSTextAlignmentCenter;
+        [_btn_doneAction setBackgroundColor:COLOR_MAIN];
+        _btn_doneAction.tintColor=COLOR_WHITE;
+        _btn_doneAction.titleLabel.font=FONT_SIZE_BIG;
+        [_btn_doneAction addTarget:self action:@selector(deliveryFinish) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_btn_doneAction];
+        
+        
+        @weakify(self);
+        [_btn_doneAction mas_makeConstraints:^(MASConstraintMaker *make) {
+            @strongify(self);
+            make.top.mas_equalTo(self.view.mas_bottom).offset(-48);
+            make.left.mas_equalTo(0);
+            make.width.mas_equalTo(WIDTH_SCREEN);
+            make.height.mas_equalTo(DONE_ACTION_BAR);
+        }];
+    }
 }
 
+//请求订单下的商品信息
 -(void)loadGoodsForOrder{
     [self startLoadingActivityIndicator];
     [self.model loadGoodsListForOrder:self.task_entity.order_id];
 }
 
+-(void)setDeliveryDone:(NSString *)status andPayType:(NSString *)pay_type{
+    [self startLoadingActivityIndicator];
+    [self.model order_delivery_done:self.task_entity.delivery_id andStatus:status andPayType:pay_type andImgPath:@""];
+}
+
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
-    if(model==self.model){
+    if(model==self.model&&self.model.requestTag==3002){
         if(isSuccess){
             [self.tableView reloadData];
+        }
+    }
+    else if(model==self.model&&self.model.requestTag==3003){
+        if(isSuccess){
+            [self showSuccesWithText:@"操作成功"];
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }
@@ -362,7 +383,13 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 38;
+    if(section==0&&[self.model.goods_entity.goods_list_normal count]>0){
+        return 38;
+    }
+    else if(section==1&&[self.model.goods_entity.goods_list_alone count]>0){
+        return 38;
+    }
+    return 0;
 }
 
 
@@ -441,9 +468,16 @@
 }
 
 -(void)deliveryFinish{
-    //如果是线上支付，直接调用配送完成接口
-    //如果是货到付款，则须先选择结算方式
-    [self showFinishMenu];
+    if([self.task_entity.pay_type intValue]==4){//如果是货到付款，则须先选择结算方式
+        [self showFinishMenu];
+    }
+    else{//如果是线上支付，直接调用配送完成接口
+        [[AlertBlockView sharedInstance] showChoiceAlert:@"确认完成订单配送吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
+            if(index==0){
+                [self setDeliveryDone:@"1" andPayType:@"0"];//0代表线上支付 1现金 2转账
+            }
+        }];
+    }
 }
 
 - (void)showFinishMenu
@@ -456,20 +490,23 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"buttonIndex=%ld", buttonIndex);
-    
     if (0 == buttonIndex)//现金结算
     {
-        
+        [[AlertBlockView sharedInstance] showChoiceAlert:@"确认完成订单配送吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
+            if(index==0){
+                [self setDeliveryDone:@"1" andPayType:@"1"];//0代表线上支付 1现金 2转账
+            }
+        }];
     }
     else if (1 == buttonIndex)//转账结算
     {
         PaymentViewController *pvc=[[PaymentViewController alloc] init];
+        pvc.task_entity=self.task_entity;
         [self.navigationController pushViewController:pvc animated:YES];
     }
-    else if (3 == buttonIndex)//无法配送
+    else if (2 == buttonIndex)//无法配送
     {
-        
+        [self setDeliveryDone:@"2" andPayType:@"-1"];//0代表线上支付 1现金 2转账 -1未配送结算
     }
 }
 

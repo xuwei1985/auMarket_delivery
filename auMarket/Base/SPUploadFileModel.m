@@ -9,8 +9,22 @@
 #import "SPUploadFileModel.h"
 
 @implementation SPUploadFileModel
+/**
+ 上传图片
+ */
+-(void)uploadImages:(NSData *)data andResourceType:(NSString *)resourceType{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress = [NSString stringWithFormat:@"apiv1.php?act=uploadImages&user_id=%@&resource_type=%@",user.user_id,resourceType];
+    self.params = @{@"file_content": data};
+    self.contentTypes = @{@"file_content": @"image/jpg"};
+    self.parseDataClassType = [SPUploadFileEntity class];
+    [self loadInner];
+    
+}
 
-//上传图片
+/**
+分片上传图片
+ */
 - (void)upload:(NSString *)resourceId data:(NSData *)data sliceNums:(NSInteger)sliceNums sliceIndex:(NSInteger)sliceIndex isFinish:(BOOL)isFinish fileType:(NSInteger)fileType {
     self.sliceIndex = sliceIndex;
     self.isFinish = isFinish;

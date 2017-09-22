@@ -17,6 +17,7 @@
 @property(nonatomic,retain)NSString *sid;
 @property(nonatomic,retain)NSString *order_amount;
 @property(nonatomic,retain)NSString *pay_name;
+@property(nonatomic,retain)NSString *pay_type;
 @property(nonatomic,retain)NSString *address;
 @property(nonatomic,retain)NSString *order_id;
 @property(nonatomic,retain)NSString *order_sn;

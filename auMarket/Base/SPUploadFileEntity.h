@@ -12,5 +12,5 @@
 
 @property (nonatomic, strong) NSString *url; //上传图片的url
 @property (nonatomic, strong) NSString *key; //上传图片的key
-
+@property (nonatomic, strong) NSString *filepath; //上传图片的key
 @end

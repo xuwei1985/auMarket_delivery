@@ -9,6 +9,7 @@
 #import "SPBaseViewController.h"
 #import "UserLoginViewController.h"
 #import "MemberCell.h"
+#import "MemberLoginModel.h"
 
 @interface UserCenterViewController : SPBaseViewController
 {
@@ -19,4 +20,5 @@
     UILabel *_loginLbl;
     UIButton *_btn_exit;
 }
+@property (nonatomic, retain) MemberLoginModel *model;
 @end

@@ -133,6 +133,18 @@
     [self.view addSubview:self.tableView];
 }
 
+-(void)loadMyChargeInfo{
+    [self.model getChargeInfo];
+}
+
+-(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
+    if(model==self.model){
+        if(isSuccess){
+            [self.tableView reloadData];
+        }
+    }
+}
+
 //注销
 -(void)exitLogin:(id)sender{
     [[AlertBlockView sharedInstance] showChoiceAlert:@"您确定要退出登录吗？" button1Title:@"确认" button2Title:@"取消" completion:^(int index) {
@@ -186,7 +198,12 @@
         cell.itemPrice=@"";
     }
     else{
-        cell.itemPrice=@"$123.82";
+        if(indexPath.row==0){
+            cell.itemPrice=[NSString stringWithFormat:@"$%.2f",[self.model.charge_entity.cash_charge floatValue]];
+        }
+        else if(indexPath.row==1){
+            cell.itemPrice=[NSString stringWithFormat:@"$%.2f",[self.model.charge_entity.transfer_charge floatValue]];;
+        }
     }
     return cell;
 }
@@ -233,9 +250,18 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.tableView reloadData];
-    
+    [self loadMyChargeInfo];
     [self checkLoginStatus];
 }
+
+-(MemberLoginModel *)model{
+    if(!_model){
+        _model=[[MemberLoginModel alloc] init];
+        _model.delegate=self;
+    }
+    return _model;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

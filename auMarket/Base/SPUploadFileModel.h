@@ -21,5 +21,5 @@
 @property (nonatomic, assign) NSInteger fileType;
 
 - (void)upload:(NSString *)resourceId data:(NSData *)data sliceNums:(NSInteger)sliceNums sliceIndex:(NSInteger)sliceIndex isFinish:(BOOL)isFinish fileType:(NSInteger)fileType;
-
+-(void)uploadImages:(NSData *)data andResourceType:(NSString *)resourceType;
 @end
