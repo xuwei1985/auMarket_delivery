@@ -151,7 +151,7 @@
     #else
     [UMAnalyticsConfig sharedInstance].ePolicy=BATCH;
     //加密
-    [UMAnalyticsConfig sharedInstance] setEncryptEnabled:YES];
+    [[UMAnalyticsConfig sharedInstance] setEncryptEnabled:YES];
     #endif
     
     [MobClick setCrashReportEnabled:YES];
