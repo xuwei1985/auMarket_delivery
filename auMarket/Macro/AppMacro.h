@@ -31,9 +31,8 @@ return __singleton__; \
     #define SERVER_HTTP_ADDRESS   @"http://www.kouzibuy.com"
 
 #else//正式
-
-    #define SERVER_ADDRESS          @"http://api.kouzibuy.com"
-    #define SERVER_HTTP_ADDRESS     @"http://api.kouzibuy.com"
+    #define SERVER_ADDRESS          @"http://www.kouzibuy.com"
+    #define SERVER_HTTP_ADDRESS     @"http://www.kouzibuy.com"
 
 #endif
 

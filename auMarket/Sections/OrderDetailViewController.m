@@ -36,9 +36,10 @@
 
 -(void)setNavigation{
     self.title=@"订单详情";
-    UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"1_24"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(runNavigationByGoogle)];
-
-    self.navigationItem.rightBarButtonItem=right_Item_cart;
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
+        UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"1_24"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(runNavigationByGoogle)];
+        self.navigationItem.rightBarButtonItem=right_Item_cart;
+    }
 }
 
 -(void)createOrderInfoView{
