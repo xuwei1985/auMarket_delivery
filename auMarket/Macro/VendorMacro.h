@@ -17,5 +17,5 @@
 #define WXAPPID             @"wxa52164e9734bddc0"
 #define WXAPPSECRET         @"976dc354ea48c1db58242a45f2ea5497"
 #define SHARESDK_APP_KEY    @"1a3a10190ba90"
-#define GOOGLE_APPKEY @"AIzaSyDCJ3XYi11xGKn11IYBn1yUudBgfM7sHos"
+#define GOOGLE_APPKEY @"AIzaSyCiOiAFKpz8cNU-d8E6iEZ9mUl3UxX4Vo8"
 #endif /* VendorMacro_h */
