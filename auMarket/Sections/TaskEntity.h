@@ -19,6 +19,7 @@
 @property(nonatomic,retain)NSString *pay_name;
 @property(nonatomic,retain)NSString *pay_type;
 @property(nonatomic,retain)NSString *address;
+@property(nonatomic,retain)NSString *address_replenish;
 @property(nonatomic,retain)NSString *order_id;
 @property(nonatomic,retain)NSString *order_sn;
 @property(nonatomic,retain)NSString *delivery_id;

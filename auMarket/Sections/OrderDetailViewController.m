@@ -45,10 +45,10 @@
 -(void)createOrderInfoView{
     UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 10, WIDTH_SCREEN, 70)];
     blockView_1.backgroundColor=COLOR_WHITE;
-    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 92, WIDTH_SCREEN, 146)];
+    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 92, WIDTH_SCREEN, 182)];
     blockView_2.backgroundColor=COLOR_WHITE;
     blockView_2.userInteractionEnabled=YES;
-    UIView *blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 250, WIDTH_SCREEN, 95)];
+    UIView *blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 280, WIDTH_SCREEN, 95)];
     blockView_3.backgroundColor=COLOR_WHITE;
     
     orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, ORDER_INFO_PANEL_HEIGHT)];
@@ -150,7 +150,7 @@
     [blockView_2 addSubview:lbl_tip_4];
     
     [lbl_tip_4 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(35);
+        make.top.mas_equalTo(blockView_2.top).offset(38);
         make.size.mas_equalTo(CGSizeMake(60, 20));
         make.left.mas_equalTo(10);
     }];
@@ -163,7 +163,7 @@
     [blockView_2 addSubview:lbl_contact];
     
     [lbl_contact mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(35);
+        make.top.mas_equalTo(blockView_2.top).offset(38);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-70, 20));
         make.left.mas_equalTo(lbl_tip_4.mas_left).offset(60);
     }];
@@ -176,7 +176,7 @@
     [blockView_2 addSubview:lbl_tip_5];
     
     [lbl_tip_5 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(60);
+        make.top.mas_equalTo(blockView_2.top).offset(66);
         make.size.mas_equalTo(CGSizeMake(45, 20));
         make.left.mas_equalTo(10);
     }];
@@ -191,7 +191,7 @@
     [lbl_mobile addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(makeCall:)]];
     
     [lbl_mobile mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(60);
+        make.top.mas_equalTo(blockView_2.top).offset(66);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-65, 20));
         make.left.mas_equalTo(lbl_tip_5.mas_left).offset(45);
     }];
@@ -204,7 +204,7 @@
     [blockView_2 addSubview:lbl_tip_6];
     
     [lbl_tip_6 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(85);
+        make.top.mas_equalTo(blockView_2.top).offset(94);
         make.size.mas_equalTo(CGSizeMake(45, 20));
         make.left.mas_equalTo(10);
     }];
@@ -217,7 +217,7 @@
     [blockView_2 addSubview:lbl_address];
     
     [lbl_address mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(85);
+        make.top.mas_equalTo(blockView_2.top).offset(94);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-65, 20));
         make.left.mas_equalTo(lbl_tip_6.mas_left).offset(45);
     }];
@@ -230,7 +230,7 @@
     [blockView_2 addSubview:lbl_tip_7];
     
     [lbl_tip_7 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(110);
+        make.top.mas_equalTo(blockView_2.top).offset(122);
         make.size.mas_equalTo(CGSizeMake(80, 20));
         make.left.mas_equalTo(10);
     }];
@@ -243,20 +243,47 @@
     [blockView_2 addSubview:lbl_deliverytime];
     
     [lbl_deliverytime mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(110);
+        make.top.mas_equalTo(blockView_2.top).offset(122);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-80, 20));
         make.left.mas_equalTo(lbl_tip_6.mas_left).offset(70);
     }];
     
-    ////////////////blockView_3///////////////
     UILabel *lbl_tip_8=[[UILabel alloc] init];
     lbl_tip_8.textColor=COLOR_BLACK;
     lbl_tip_8.font=FONT_SIZE_MIDDLE;
-    lbl_tip_8.text=@"打包员备注:";
+    lbl_tip_8.text=@"地址补充:";
     lbl_tip_8.textAlignment=NSTextAlignmentLeft;
-    [blockView_3 addSubview:lbl_tip_8];
+    [blockView_2 addSubview:lbl_tip_8];
     
     [lbl_tip_8 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_2.top).offset(150);
+        make.size.mas_equalTo(CGSizeMake(80, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_address_replenish=[[UILabel alloc] init];
+    lbl_address_replenish.textColor=COLOR_DARKGRAY;
+    lbl_address_replenish.font=FONT_SIZE_SMALL;
+    lbl_address_replenish.text=@"";
+    lbl_address_replenish.textAlignment=NSTextAlignmentLeft;
+    [blockView_2 addSubview:lbl_address_replenish];
+    
+    [lbl_address_replenish mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_2.top).offset(150);
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-80, 20));
+        make.left.mas_equalTo(lbl_tip_7.mas_left).offset(70);
+    }];
+
+    
+    ////////////////blockView_3///////////////
+    UILabel *lbl_tip_9=[[UILabel alloc] init];
+    lbl_tip_9.textColor=COLOR_BLACK;
+    lbl_tip_9.font=FONT_SIZE_MIDDLE;
+    lbl_tip_9.text=@"打包员备注:";
+    lbl_tip_9.textAlignment=NSTextAlignmentLeft;
+    [blockView_3 addSubview:lbl_tip_9];
+    
+    [lbl_tip_9 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_3.top).offset(10);
         make.size.mas_equalTo(CGSizeMake(120, 20));
         make.left.mas_equalTo(10);
@@ -266,7 +293,7 @@
     lbl_packagenote.textColor=COLOR_DARKGRAY;
     lbl_packagenote.font=FONT_SIZE_SMALL;
     lbl_packagenote.numberOfLines=3;
-    lbl_packagenote.text=@"以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场；";
+    lbl_packagenote.text=@"";
     lbl_packagenote.textAlignment=NSTextAlignmentLeft;
     [blockView_3 addSubview:lbl_packagenote];
     
@@ -361,6 +388,7 @@
         lbl_mobile.text=self.task_entity.mobile;
         lbl_address.text=self.task_entity.address;
         lbl_deliverytime.text=self.task_entity.delivery_time;
+        lbl_address_replenish.text=self.task_entity.address_replenish;
         lbl_packagenote.text=self.task_entity.package_note.length>0?self.task_entity.package_note:@"无备注信息";
     }
 }
