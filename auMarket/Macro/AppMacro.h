@@ -27,8 +27,8 @@ return __singleton__; \
 
 //接口相关
 #ifdef DEBUG//测试
-    #define SERVER_ADDRESS        @"http://www.kouzibuy.com"
-    #define SERVER_HTTP_ADDRESS   @"http://www.kouzibuy.com"
+    #define SERVER_ADDRESS        @"http://api.bigau.com"
+    #define SERVER_HTTP_ADDRESS   @"http://api.bigau.com"
 
 #else//正式
     #define SERVER_ADDRESS          @"http://www.kouzibuy.com"

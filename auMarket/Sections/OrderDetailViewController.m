@@ -5,7 +5,7 @@
 //  Created by 吴绪伟 on 2016/12/8.
 //  Copyright © 2016年 daao. All rights reserved.
 //
-#define ORDER_INFO_PANEL_HEIGHT 345.0
+#define ORDER_INFO_PANEL_HEIGHT 355.0
 #define DONE_ACTION_BAR 48.0
 #import "OrderDetailViewController.h"
 
@@ -49,6 +49,7 @@
     blockView_2.backgroundColor=COLOR_WHITE;
     blockView_2.userInteractionEnabled=YES;
     UIView *blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 280, WIDTH_SCREEN, 95)];
+    blockView_3.clipsToBounds=YES;
     blockView_3.backgroundColor=COLOR_WHITE;
     
     orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, ORDER_INFO_PANEL_HEIGHT)];
@@ -292,7 +293,7 @@
     lbl_packagenote=[[UILabel alloc] init];
     lbl_packagenote.textColor=COLOR_DARKGRAY;
     lbl_packagenote.font=FONT_SIZE_SMALL;
-    lbl_packagenote.numberOfLines=3;
+    lbl_packagenote.numberOfLines=0;
     lbl_packagenote.text=@"";
     lbl_packagenote.textAlignment=NSTextAlignmentLeft;
     [blockView_3 addSubview:lbl_packagenote];
@@ -389,7 +390,8 @@
         lbl_address.text=self.task_entity.address;
         lbl_deliverytime.text=self.task_entity.delivery_time;
         lbl_address_replenish.text=self.task_entity.address_replenish;
-        lbl_packagenote.text=self.task_entity.package_note.length>0?self.task_entity.package_note:@"无备注信息";
+        lbl_packagenote.text=self.task_entity.package_note.length>0?self.task_entity.package_note:@"无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息";
+        
     }
 }
 
