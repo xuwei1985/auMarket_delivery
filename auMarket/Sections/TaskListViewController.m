@@ -27,7 +27,7 @@
 
 -(void)initData{
     if(self.taskArr){
-        list_status_modal=Delivery_Status_Multi;
+        list_status_modal=Delivery_Status_Multi;//一个地址多单的模式
     }
     else{
         list_status_modal=Delivery_Status_Delivering;

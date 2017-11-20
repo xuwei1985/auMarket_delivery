@@ -5,7 +5,7 @@
 //  Created by 吴绪伟 on 2016/12/8.
 //  Copyright © 2016年 daao. All rights reserved.
 //
-#define ORDER_INFO_PANEL_HEIGHT 355.0
+#define ORDER_INFO_PANEL_HEIGHT 381.0
 #define DONE_ACTION_BAR 48.0
 #import "OrderDetailViewController.h"
 
@@ -43,12 +43,12 @@
 }
 
 -(void)createOrderInfoView{
-    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 10, WIDTH_SCREEN, 70)];
+    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 70)];
     blockView_1.backgroundColor=COLOR_WHITE;
-    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 92, WIDTH_SCREEN, 182)];
+    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 94, WIDTH_SCREEN, 182)];
     blockView_2.backgroundColor=COLOR_WHITE;
     blockView_2.userInteractionEnabled=YES;
-    UIView *blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 280, WIDTH_SCREEN, 95)];
+    UIView *blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 286, WIDTH_SCREEN, 95)];
     blockView_3.clipsToBounds=YES;
     blockView_3.backgroundColor=COLOR_WHITE;
     
@@ -133,7 +133,7 @@
     lbl_orderNo=[[UILabel alloc] init];
     lbl_orderNo.textColor=COLOR_DARKGRAY;
     lbl_orderNo.font=FONT_SIZE_SMALL;
-    lbl_orderNo.text=@"2017080911232343";
+    lbl_orderNo.text=@"";
     lbl_orderNo.textAlignment=NSTextAlignmentLeft;
     [blockView_2 addSubview:lbl_orderNo];
     
@@ -362,7 +362,13 @@
 
 -(void)setDeliveryDone:(NSString *)status andPayType:(NSString *)pay_type{
     [self startLoadingActivityIndicator];
-    [self.model order_delivery_done:self.task_entity.delivery_id andStatus:status andPayType:pay_type andImgPath:@""];
+    
+    if(lbl_orderNo.text.length>0){
+        [self.model order_delivery_done:self.task_entity.delivery_id andStatus:status andPayType:pay_type andImgPath:@"" andOrderSn:lbl_orderNo.text];
+    }
+    else{
+        [self showToastTopWithText:@"没有配送订单信息"];
+    }
 }
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
@@ -390,7 +396,7 @@
         lbl_address.text=self.task_entity.address;
         lbl_deliverytime.text=self.task_entity.delivery_time;
         lbl_address_replenish.text=self.task_entity.address_replenish;
-        lbl_packagenote.text=self.task_entity.package_note.length>0?self.task_entity.package_note:@"无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息无备注信息";
+        lbl_packagenote.text=self.task_entity.package_note.length>0?self.task_entity.package_note:@"无备注信息";
         
     }
 }
@@ -531,9 +537,16 @@
     }
     else if (1 == buttonIndex)//转账结算
     {
-        PaymentViewController *pvc=[[PaymentViewController alloc] init];
-        pvc.task_entity=self.task_entity;
-        [self.navigationController pushViewController:pvc animated:YES];
+        if(lbl_orderNo.text.length>0){
+            PaymentViewController *pvc=[[PaymentViewController alloc] init];
+            pvc.task_entity=self.task_entity;
+            pvc.order_sn=lbl_orderNo.text;
+            [self.navigationController pushViewController:pvc animated:YES];
+        }
+        else{
+            [self showToastTopWithText:@"没有配送订单信息"];
+        }
+        
     }
     else if (2 == buttonIndex)//无法配送
     {

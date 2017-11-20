@@ -31,14 +31,14 @@ return __singleton__; \
     #define SERVER_HTTP_ADDRESS   @"http://api.bigau.com"
 
 #else//正式
-    #define SERVER_ADDRESS          @"http://www.kouzibuy.com"
-    #define SERVER_HTTP_ADDRESS     @"http://www.kouzibuy.com"
+    #define SERVER_ADDRESS          @"https://api.bigau.com"
+    #define SERVER_HTTP_ADDRESS     @"https://api.bigau.com"
 
 #endif
 
 //系统相关
 #define APP_NAME @"配送员-大澳华人超市"
-#define APP_SCHEME  @"auMarket_delivery://"
+#define APP_SCHEME  @"auMarketDelivery://"
 #define APP_PRIVATE_KEY @"_auMarket@2016"
 #define APP_INTRO_VER @"APP_INTRO_VER"
 

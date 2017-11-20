@@ -25,4 +25,5 @@
 @property(nonatomic,retain) TaskItemEntity *task_entity;
 @property(nonatomic,retain) TaskModel *model;
 @property(nonatomic,retain) SPUploadFileModel *upload_model;
+@property(nonatomic,retain) NSString *order_sn;
 @end

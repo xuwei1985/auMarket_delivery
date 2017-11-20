@@ -370,7 +370,12 @@
                 [self.upload_model uploadImages:imageData andResourceType:@"proof"];
             }
             else{
-                [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2" andImgPath:@""];
+                if(self.order_sn.length>0){
+                    [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2" andImgPath:@"" andOrderSn:self.order_sn];
+                }
+                else{
+                    [self showToastTopWithText:@"没有配送订单信息"];
+                }
             }
         }
     }];
@@ -379,7 +384,12 @@
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     if(model==self.upload_model){
         if(isSuccess){
-           [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2"  andImgPath:self.upload_model.uploadEntity.filepath];
+            if(self.order_sn.length>0){
+                [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2"  andImgPath:self.upload_model.uploadEntity.filepath andOrderSn:self.order_sn];
+            }
+            else{
+                [self showToastTopWithText:@"没有配送订单信息"];
+            }
         }
         else{
             [self stopLoadingActivityIndicator];
