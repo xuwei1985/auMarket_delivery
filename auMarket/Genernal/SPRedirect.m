@@ -8,6 +8,7 @@
 
 #import "SPRedirect.h"
 #import "AppDelegate.h"
+#import "WebViewController.h"
 
 @implementation SPRedirect
 DEF_SINGLETON(SPRedirect)
@@ -60,20 +61,20 @@ DEF_SINGLETON(SPRedirect)
 #define WEB_USER_SUMMARY_PATH       @"/c/os/userSummary"
 
 //"pgy://pgy.cn/columnlist"
-- (void)jumpByUrl:(NSString *)url{
-    if(url == nil || [url isEmpty])
-    {
-        return;
-    }
-    
-    NSURL* urlObj = [NSURL URLWithString:url];
-    if (!urlObj) {
-        return;
-    }
-    
-    UIViewController* vcToPush = nil;
-    if ([urlObj.scheme isEqualToString:LOCALPAGE_SCHEME]) {
-        NSDictionary* dict = [self getParamFrom:urlObj.query];
+- (void)jumpByUrl:(NSString *)url andModal:(int)modal{
+        if(url == nil || [url isEmpty])
+        {
+            return;
+        }
+        
+        NSURL* urlObj = [NSURL URLWithString:url];
+        if (!urlObj) {
+            return;
+        }
+        
+        UIViewController* vcToPush = nil;
+        if ([urlObj.scheme isEqualToString:LOCALPAGE_SCHEME]) {
+            NSDictionary* dict = [self getParamFrom:urlObj.query];
         //明星宝贝：
         //pgy://pgy.cn/square/starbaby?sub_star_id=2
         //实际URL : m.primedu.cn/c/cm/square/starbaby?sub_star_id=2
@@ -164,14 +165,20 @@ DEF_SINGLETON(SPRedirect)
     //webview跳转
     else
     {
-//        YPWebViewController* vc = [[YPWebViewController alloc] init];
-//        vc.url =url;
-//        vcToPush = vc;
+        //webview跳转
+        WebViewController* vc = [[WebViewController alloc] init];
+        vc.url =url;
+        vcToPush = vc;
     }
     
     if (vcToPush) {
         UINavigationController* navVc = [AppDelegate getNavigationController];
-        [navVc pushViewController:vcToPush animated:YES];
+        if(modal<=0){
+            [navVc pushViewController:vcToPush animated:YES];
+        }
+        else{
+            [navVc presentViewController:vcToPush animated:YES completion:nil];
+        }
     }
 }
 

@@ -151,6 +151,7 @@
 		A9F4DAD41F68390F00D71774 /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DACB1F68390F00D71774 /* MJPhotoView.m */; };
 		A9F4DAD51F68390F00D71774 /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DACD1F68390F00D71774 /* SDWebImageManager+MJ.m */; };
 		A9F4DAD81F69099100D71774 /* AlertBlockView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAD71F69099100D71774 /* AlertBlockView.m */; };
+		A9F5603B1FFBCC8900EA8116 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F560391FFBCC8900EA8116 /* WebViewController.m */; };
 		A9FBC1BD1DF868F4005ECDDE /* CommonCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FBC1BC1DF868F4005ECDDE /* CommonCache.m */; };
 		A9FBC1C91DF93854005ECDDE /* btn_back_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FBC1C71DF93854005ECDDE /* btn_back_black@3x.png */; };
 		A9FBC1CA1DF93854005ECDDE /* btn_back_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FBC1C81DF93854005ECDDE /* btn_back_black@2x.png */; };
@@ -393,6 +394,8 @@
 		A9F4DACD1F68390F00D71774 /* SDWebImageManager+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SDWebImageManager+MJ.m"; sourceTree = "<group>"; };
 		A9F4DAD61F69099100D71774 /* AlertBlockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertBlockView.h; sourceTree = "<group>"; };
 		A9F4DAD71F69099100D71774 /* AlertBlockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertBlockView.m; sourceTree = "<group>"; };
+		A9F560391FFBCC8900EA8116 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		A9F5603A1FFBCC8900EA8116 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		A9F71FF31F734664007624E1 /* deliveryIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deliveryIcon@2x.png"; sourceTree = "<group>"; };
 		A9FBC1BB1DF868F4005ECDDE /* CommonCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonCache.h; sourceTree = "<group>"; };
 		A9FBC1BC1DF868F4005ECDDE /* CommonCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonCache.m; sourceTree = "<group>"; };
@@ -544,6 +547,8 @@
 		A9187C081DF9AB6300A3E902 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A9F5603A1FFBCC8900EA8116 /* WebViewController.h */,
+				A9F560391FFBCC8900EA8116 /* WebViewController.m */,
 				A96474261E1111FB00A5A39B /* UserLoginViewController.h */,
 				A96474271E1111FB00A5A39B /* UserLoginViewController.m */,
 				A96474231E1111F000A5A39B /* UserRegistViewController.h */,
@@ -1190,6 +1195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A95E116E1DF851EA00660E42 /* SPTabBarItem.m in Sources */,
+				A9F5603B1FFBCC8900EA8116 /* WebViewController.m in Sources */,
 				A90BF2911F6FDA570001A49E /* BooterModel.m in Sources */,
 				A9F4DAD21F68390F00D71774 /* MJPhotoProgressView.m in Sources */,
 				A95E113F1DF8491600660E42 /* NSData+IDPExtension.m in Sources */,

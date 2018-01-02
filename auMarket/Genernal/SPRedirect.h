@@ -14,7 +14,7 @@ DEC_SINGLETON(SPRedirect)
 - (void)jumpByUserId:(NSString*)userId;
 - (void)jumpByFid:(NSString*)fid;
 //链接跳转
--(void)jumpByUrl:(NSString*)url;
+-(void)jumpByUrl:(NSString*)url andModal:(int)modal;
 //是否应该
 -(BOOL)shouldJumpToLocalPage:(NSString*)url;
 

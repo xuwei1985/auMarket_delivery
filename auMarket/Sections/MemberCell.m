@@ -18,7 +18,7 @@
 //            [self.contentView addSubview:_iconImageView];
 //        }
         if (_itemLbl==nil) {
-            _itemLbl=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-100, 12, 90, 22)];
+            _itemLbl=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-125, 12, 90, 22)];
             _itemLbl.textAlignment=NSTextAlignmentRight;
             _itemLbl.textColor=COLOR_MAIN;
             _itemLbl.font=FONT_SIZE_MIDDLE;
@@ -34,6 +34,7 @@
             [_mySwitch addTarget: self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
             [self.contentView addSubview:_mySwitch];
         }
+        
     }
     return self;
 }
