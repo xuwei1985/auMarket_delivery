@@ -192,6 +192,13 @@
         cell.textLabel.textColor=COLOR_DARKGRAY;
     }
     
+    if(indexPath.section<1){
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    else{
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
     cell.itemName =[[[_itemArr objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"item_name"];
     
     if(indexPath.section==1&&indexPath.row==[[_itemArr objectAtIndex:indexPath.section] count]-1){
@@ -215,6 +222,17 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
+    
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    if(indexPath.row==0){
+//        WebViewController* vc = [[WebViewController alloc] init];
+//        vc.url =[NSString stringWithFormat:@"%@/delivery_orders_app.php?deliver_id=%@&settle_type=1",SERVER_HTTP_ADDRESS,user.user_id];
+//        [self.navigationController pushViewController:vc animated:YES];
+        [[SPRedirect sharedInstance] jumpByUrl:[NSString stringWithFormat:@"%@/delivery_orders_app.php?deliver_id=%@&settle_type=1",SERVER_HTTP_ADDRESS,user.user_id] andModal:0];
+    }
+    else if(indexPath.row==1){
+        [[SPRedirect sharedInstance] jumpByUrl:[NSString stringWithFormat:@"%@/delivery_orders_app.php?deliver_id=%@&settle_type=2",SERVER_HTTP_ADDRESS,user.user_id] andModal:0];
+    }
 }
 
 - (void)onAccountUpdate:(NSNotification*)aNotitification{

@@ -10,6 +10,7 @@
 #import "UserLoginViewController.h"
 #import "MemberCell.h"
 #import "MemberLoginModel.h"
+#import "WebViewController.h"
 
 @interface UserCenterViewController : SPBaseViewController
 {

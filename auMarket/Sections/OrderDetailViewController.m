@@ -396,8 +396,15 @@
         lbl_address.text=self.task_entity.address;
         lbl_deliverytime.text=self.task_entity.delivery_time;
         lbl_address_replenish.text=self.task_entity.address_replenish;
-        lbl_packagenote.text=self.task_entity.package_note.length>0?self.task_entity.package_note:@"无备注信息";
         
+        if(self.task_entity.package_note.length>0){
+            lbl_packagenote.textColor=COLOR_MAIN;
+            lbl_packagenote.text=self.task_entity.package_note;
+        }
+        else{
+            lbl_packagenote.textColor=COLOR_DARKGRAY;
+            lbl_packagenote.text=@"无备注信息";
+        }
     }
 }
 
