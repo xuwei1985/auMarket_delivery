@@ -51,8 +51,9 @@
 }
 
 -(void)createMemberInfoView{
-    _userInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, WIDTH_SCREEN*0.5)];
+    _userInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, WIDTH_SCREEN*0.56)];
     _userInfoView.userInteractionEnabled=YES;
+    _userInfoView.image=[UIImage imageNamed:@"memberBg.jpg"];
     _userInfoView.backgroundColor=COLOR_CLEAR;
     
     _headView=[[UIImageView alloc] init];
@@ -70,7 +71,7 @@
     
     
     _nicknameLbl=[[UILabel alloc] init];
-    _nicknameLbl.textColor=COLOR_MAIN;
+    _nicknameLbl.textColor=COLOR_WHITE;
     _nicknameLbl.font=FONT_SIZE_BIG;
     _nicknameLbl.text=@"";
     _nicknameLbl.hidden=YES;
@@ -224,13 +225,13 @@
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
     
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    if(indexPath.row==0){
+    if(indexPath.section==0&& indexPath.row==0){
 //        WebViewController* vc = [[WebViewController alloc] init];
 //        vc.url =[NSString stringWithFormat:@"%@/delivery_orders_app.php?deliver_id=%@&settle_type=1",SERVER_HTTP_ADDRESS,user.user_id];
 //        [self.navigationController pushViewController:vc animated:YES];
         [[SPRedirect sharedInstance] jumpByUrl:[NSString stringWithFormat:@"%@/delivery_orders_app.php?deliver_id=%@&settle_type=1",SERVER_HTTP_ADDRESS,user.user_id] andModal:0];
     }
-    else if(indexPath.row==1){
+    else if(indexPath.section==0&& indexPath.row==1){
         [[SPRedirect sharedInstance] jumpByUrl:[NSString stringWithFormat:@"%@/delivery_orders_app.php?deliver_id=%@&settle_type=2",SERVER_HTTP_ADDRESS,user.user_id] andModal:0];
     }
 }

@@ -152,6 +152,7 @@
 		A9F4DAD51F68390F00D71774 /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DACD1F68390F00D71774 /* SDWebImageManager+MJ.m */; };
 		A9F4DAD81F69099100D71774 /* AlertBlockView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAD71F69099100D71774 /* AlertBlockView.m */; };
 		A9F5603B1FFBCC8900EA8116 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F560391FFBCC8900EA8116 /* WebViewController.m */; };
+		A9F5603D1FFD104400EA8116 /* memberBg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A9F5603C1FFD104300EA8116 /* memberBg@2x.jpg */; };
 		A9FBC1BD1DF868F4005ECDDE /* CommonCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FBC1BC1DF868F4005ECDDE /* CommonCache.m */; };
 		A9FBC1C91DF93854005ECDDE /* btn_back_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FBC1C71DF93854005ECDDE /* btn_back_black@3x.png */; };
 		A9FBC1CA1DF93854005ECDDE /* btn_back_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FBC1C81DF93854005ECDDE /* btn_back_black@2x.png */; };
@@ -396,6 +397,7 @@
 		A9F4DAD71F69099100D71774 /* AlertBlockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertBlockView.m; sourceTree = "<group>"; };
 		A9F560391FFBCC8900EA8116 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		A9F5603A1FFBCC8900EA8116 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		A9F5603C1FFD104300EA8116 /* memberBg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "memberBg@2x.jpg"; sourceTree = "<group>"; };
 		A9F71FF31F734664007624E1 /* deliveryIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deliveryIcon@2x.png"; sourceTree = "<group>"; };
 		A9FBC1BB1DF868F4005ECDDE /* CommonCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonCache.h; sourceTree = "<group>"; };
 		A9FBC1BC1DF868F4005ECDDE /* CommonCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonCache.m; sourceTree = "<group>"; };
@@ -906,6 +908,7 @@
 		A9FBC1C61DF93838005ECDDE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A9F5603C1FFD104300EA8116 /* memberBg@2x.jpg */,
 				A9F71FF31F734664007624E1 /* deliveryIcon@2x.png */,
 				A94692F91F6AB367007537DC /* 1_29_gray@2x.png */,
 				A91357771F6783EF000186B0 /* defaut_list@2x.png */,
@@ -1130,6 +1133,7 @@
 				A9D354371E08E01D006D265D /* addCart@2x.png in Resources */,
 				A9F4DA8E1F658AFE00D71774 /* 1_41.png in Resources */,
 				A9F4DA901F658AFE00D71774 /* 1_49.png in Resources */,
+				A9F5603D1FFD104400EA8116 /* memberBg@2x.jpg in Resources */,
 				A9187C1E1DF9B42400A3E902 /* home@3x.png in Resources */,
 				A9F4DACF1F68390F00D71774 /* MJPhotoBrowser.bundle in Resources */,
 				A9D3546F1E0976E6006D265D /* icon_infomation@2x.png in Resources */,
@@ -1381,6 +1385,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = auMarket/auMarket.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K44WC33LW2;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1406,6 +1411,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = auMarket/auMarket.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K44WC33LW2;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
