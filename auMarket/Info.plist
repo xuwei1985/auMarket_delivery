@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>闪送到家</string>
+	<string>超市配送员-墨尔本超市优质秒送免运费平台</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.1</string>
+	<string>1.1.2</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -40,7 +40,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>5</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>wechat</string>
