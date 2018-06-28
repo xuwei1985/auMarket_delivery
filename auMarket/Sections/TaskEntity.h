@@ -24,6 +24,7 @@
 @property(nonatomic,retain)NSString *order_sn;
 @property(nonatomic,retain)NSString *delivery_id;
 @property(nonatomic,retain)NSString *delivery_time;
+@property(nonatomic,retain)NSString *predict_time;//预计送达时间
 @property(nonatomic,retain)NSString *package_note;
 @property(nonatomic,retain)NSString *mobile;
 @property(nonatomic,retain)NSString *add_time;

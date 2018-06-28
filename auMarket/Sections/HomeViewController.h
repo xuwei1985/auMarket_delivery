@@ -11,7 +11,7 @@
 #import "GMSMarker+MyGMSMarker.h"
 #import "TaskListViewController.h"
 
-@interface HomeViewController : SPBaseViewController<GMSMapViewDelegate,UIActionSheetDelegate>
+@interface HomeViewController : SPBaseViewController<GMSMapViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate>
 {
     GMSMapView *mapView;
     MapMaker *mapMaker;
@@ -21,6 +21,8 @@
     NSMutableArray<GMSMarker *> *parkingMarkerArr;
     Boolean isLoadedMaker;
     GMSMarker *selectedMarker;
+    UIPickerView *predictTimePicker;
     Boolean isShowing;
+    UITextField *_txt_predict;
 }
 @end

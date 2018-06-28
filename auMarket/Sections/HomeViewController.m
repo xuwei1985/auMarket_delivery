@@ -5,7 +5,7 @@
 //  Created by 吴绪伟 on 2016/12/8.
 //  Copyright © 2016年 daao. All rights reserved.
 //
-
+#define PREDICT_PICKER_HEIGHT 250
 #import "HomeViewController.h"
 
 @interface HomeViewController ()
@@ -32,6 +32,7 @@
     [self setNavigation];
     [self createMapView];
     [self createParkingMask];
+    [self createPredictTimeView];
 }
 
 -(void)setNavigation{
@@ -60,6 +61,43 @@
 
 -(void)addNotification{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
+}
+
+
+-(void)createPredictTimeView{
+    _txt_predict=[[UITextField alloc] initWithFrame:CGRectZero];
+    _txt_predict.delegate=self;
+    [self.view addSubview:_txt_predict];
+    
+    predictTimePicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, HEIGHT_SCREEN-64, WIDTH_SCREEN, PREDICT_PICKER_HEIGHT)];
+    predictTimePicker.backgroundColor=COLOR_WHITE;
+    //设置阴影的颜色
+    predictTimePicker.layer.shadowColor=[UIColor blackColor].CGColor;
+    //设置阴影的偏移量，如果为正数，则代表为往右边偏移
+    predictTimePicker.layer.shadowOffset=CGSizeMake(0, -5);
+    //设置阴影的透明度(0~1之间，0表示完全透明)
+    predictTimePicker.layer.shadowOpacity=0.4;
+    predictTimePicker.showsSelectionIndicator = YES;
+    predictTimePicker.backgroundColor=COLOR_BG_VIEW;
+    predictTimePicker.delegate=self;
+    predictTimePicker.dataSource=self;
+    predictTimePicker.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    _txt_predict.inputView=predictTimePicker;
+    
+    UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
+    keyboardDoneButtonView.barStyle = UIBarStyleBlackTranslucent;
+    keyboardDoneButtonView.translucent = YES;
+    keyboardDoneButtonView.barTintColor=COLOR_BTN_LIGHTGRAY;
+    keyboardDoneButtonView.tintColor = COLOR_BLACK;
+    [keyboardDoneButtonView sizeToFit];
+    
+    UIBarButtonItem *fixedButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace  target: nil action: nil];
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"确定"
+                                                                   style:UIBarButtonItemStyleBordered target:self
+                                                                  action:@selector(predictTimePickerDone:)];
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:fixedButton,doneButton, nil]];
+    _txt_predict.inputAccessoryView = keyboardDoneButtonView;
+
 }
 
 -(void)createMapView{
@@ -136,7 +174,12 @@
         marker=[self isExistMarker:itemEntity.coordinate andAddress:itemEntity.address];
         if(marker==nil){
             mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
-            mapMaker.image=[UIImage imageNamed:@"1_29"];
+            if([itemEntity.predict_time intValue]<=0){
+                mapMaker.image=[UIImage imageNamed:@"1_29_blue"];
+            }
+            else{
+                mapMaker.image=[UIImage imageNamed:@"1_29"];
+            }
             mapMaker.markTip=@"1";
             [mapMaker loadData];
             
@@ -281,23 +324,23 @@
         
         if(marker.appearAnimation==kGMSMarkerAnimationNone){
             if(marker.taskArr.count<=1){
-                actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单",@"拨打电话",@"复制地址", nil,nil];
+                actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单",@"拨打电话",@"复制地址", @"到达时间", nil,nil];
             }
             else{
-                actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看多个订单",@"复制地址", nil,nil];
+                actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看多个订单",@"复制地址", @"到达时间", nil,nil];
             }
         }
-        else{
+        else{//停车点
             actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", nil,nil];
         }
     }
     else{
         if(marker.appearAnimation==kGMSMarkerAnimationNone){
             if(marker.taskArr.count<=1){
-                actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看订单",@"拨打电话",@"复制地址",nil,nil];
+                actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看订单",@"拨打电话",@"复制地址", @"到达时间",nil,nil];
             }
             else{
-                actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看多个订单",@"复制地址", nil,nil];
+                actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看多个订单",@"复制地址", @"到达时间", nil,nil];
             }
         }
     }
@@ -323,10 +366,7 @@
     else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"复制地址"])
     {
         TaskItemEntity *item= (TaskItemEntity *)[selectedMarker.taskArr firstObject];
-        
-        
-        
-        
+
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
             pasteboard.string = item.address;
@@ -335,7 +375,32 @@
             });
         });
     }
+    else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"到达时间"])
+    {
+        [self showPredictTimeView];
+    }
 }
+
+//显示预计到达时间设置界面
+-(void)showPredictTimeView{
+    [self showMaskView];
+    deliveryTimePicker.hidden=NO;
+    [UIView animateWithDuration:0.35 animations:^{
+        deliveryTimePicker.frame=CGRectMake(0, HEIGHT_SCREEN-DELIVERY_PICKER_HEIGHT-64, WIDTH_SCREEN, DELIVERY_PICKER_HEIGHT);
+    } completion:^(BOOL finished) {
+    }];
+}
+
+-(void)closeDeliveryPicker:(id)sender{
+    [UIView animateWithDuration:0.35 animations:^{
+        deliveryTimePicker.frame=CGRectMake(0, HEIGHT_SCREEN-64, WIDTH_SCREEN, DELIVERY_PICKER_HEIGHT);
+        _maskLayer.opacity=0.0;
+    } completion:^(BOOL finished) {
+        [deliveryTimePicker setHidden:YES];
+        [self hideMaskView];
+    }];
+}
+
 
 -(void)runNavigationByGoogle{
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
