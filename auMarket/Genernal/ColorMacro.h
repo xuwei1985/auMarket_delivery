@@ -10,7 +10,7 @@
 #define ColorMacro_h
 
 //常用颜色
-#define COLOR_MAIN                [UIColor colorWithRed:220./255. green:3./255. blue:3./255. alpha:1] //主色调
+#define COLOR_MAIN                [UIColor colorWithRed:234/255. green:70./255. blue:63./255. alpha:1] //主色调
 
 
 //背景色

@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (assign, nonatomic) BOOL isWorking;
 @property (strong,nonatomic) Booter* booter;
+@property (strong, nonatomic) NSString *token;
 
 + (UINavigationController *)getNavigationController;
 + (UITabBarController *)getTabbarController;

@@ -34,6 +34,14 @@
     [self loadInner];
 }
 
+-(void)savePredictTime:(NSString *)ids andPredictTime:(NSString *)predict_time{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderPredictTime&ids=%@&predict_time=%@",ids,[Common encodeToPercentEscapeString:predict_time]];
+    self.parseDataClassType = [SPBaseEntity class];
+    self.params = @{};
+    self.requestTag=3003;
+    [self loadInner];
+}
+
 /**
  请求订单配送完成操作
  */

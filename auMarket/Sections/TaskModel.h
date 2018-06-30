@@ -27,4 +27,5 @@ typedef enum {
 -(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(NSString *)pay_type andImgPath:(NSString *)img_path andOrderSn:(NSString *)order_sn;
 //根据配送状态抽取配送列表
 -(NSArray<TaskItemEntity *> *)getTasksByStatus:(Delivery_Status)status;
+-(void)savePredictTime:(NSString *)ids andPredictTime:(NSString *)predict_time;
 @end

@@ -41,6 +41,7 @@ return __singleton__; \
 #define APP_SCHEME  @"auMarketDelivery://"
 #define APP_PRIVATE_KEY @"_auMarket@2016"
 #define APP_INTRO_VER @"APP_INTRO_VER"
+#define PRIVATE_KEY @"__xiaoyacity@2016"
 
 #define APP_WINDOW [UIApplication sharedApplication]
 #define APP_DELEGATE ((AppDelegate *)[[UIApplication sharedApplication] delegate])

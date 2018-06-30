@@ -7,6 +7,7 @@
 //
 
 #import "SPBaseEntity.h"
+#import "PredictTimeEntity.h"
 @class TaskItemEntity;
 
 @interface TaskEntity : SPBaseEntity
@@ -33,5 +34,6 @@
 @property(nonatomic,retain)NSString *latitude;
 @property(nonatomic,assign)CLLocationCoordinate2D coordinate;
 @property(nonatomic,retain)NSString *status;
-
+@property(nonatomic,retain)NSString *predict_sms_send;
+@property(nonatomic,assign)Boolean selected;
 @end
