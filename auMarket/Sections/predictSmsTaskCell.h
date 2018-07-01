@@ -15,21 +15,18 @@ typedef void(^SelDataBlock)(NSString *id,int action);
 {
     UIButton *btn_select;
     UILabel *lbl_order_sn;
-    UILabel *lbl_order_goods_num;
+    UILabel *lbl_order_contact;
     UILabel *lbl_order_region;
-    UILabel *lbl_order_price;
-    UILabel *lbl_bind_tip;
-    UILabel *lbl_bind_mark;
-    UILabel *lbl_done_time;
+    UILabel *lbl_order_tel;
+    UILabel *lbl_order_address;
+    UIImageView *send_mark;
+    UILabel *lbl_predict_time;
     
     UILabel *lbl_order_sn_value;
-    UILabel *lbl_order_goods_num_value;
+    UILabel *lbl_order_contact_value;
     UILabel *lbl_order_region_value;
-    UILabel *lbl_order_price_value;
-    UILabel *lbl_done_time_value;
-    UIButton *btn_type_freeze;
-    UIButton *btn_type_zero;
-    UIButton *btn_type_box;
+    UILabel *lbl_order_tel_value;
+    UILabel *lbl_order_address_value;
 }
 
 @property(nonatomic,retain) TaskItemEntity *entity;
@@ -37,5 +34,5 @@ typedef void(^SelDataBlock)(NSString *id,int action);
 @property (nonatomic, assign) int list_model;//0:待发送 1：已发送
 
 -(void)selDataId:(SelDataBlock)block;
--(void)toggleOrderSel;
+-(void)toggleDataSel;
 @end

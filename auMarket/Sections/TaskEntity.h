@@ -36,4 +36,5 @@
 @property(nonatomic,retain)NSString *status;
 @property(nonatomic,retain)NSString *predict_sms_send;
 @property(nonatomic,assign)Boolean selected;
+@property(nonatomic,retain)NSString *block_name;
 @end

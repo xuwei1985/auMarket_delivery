@@ -27,7 +27,23 @@
     [self loadInner];
 }
 
+-(void)delete_predict_sms:(NSString *)ids{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delete_predict_sms&ids=%@&uid=%@",ids,user.user_id];
+    self.parseDataClassType = [SPBaseEntity class];
+    self.params = @{};
+    self.requestTag=1002;
+    [self loadInner];
+}
 
+-(void)send_predict_sms:(NSString *)ids{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=send_predict_sms&ids=%@&uid=%@",ids,user.user_id];
+    self.parseDataClassType = [SPBaseEntity class];
+    self.params = @{};
+    self.requestTag=1003;
+    [self loadInner];
+}
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[TaskEntity class]]) {

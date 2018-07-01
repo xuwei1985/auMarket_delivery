@@ -11,13 +11,14 @@
 #import "PredictTaskModel.h"
 #import <MJRefresh.h>
 
-@interface SmsTaskViewController : SPBaseViewController
+@interface SmsTaskViewController : SPBaseViewController<UITextFieldDelegate>
 {
     UIView *_summaryView;
     UIView *_summaryView_bottom;
     UIButton *_sumBtn;
     UIButton *_selectAllBtn;
     NSString *ids;
+    UIAlertView *_inputAlertView;
 }
 
 

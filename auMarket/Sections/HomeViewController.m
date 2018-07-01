@@ -137,9 +137,13 @@
     UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
     keyboardDoneButtonView.barStyle = UIBarStyleBlackTranslucent;
     keyboardDoneButtonView.translucent = YES;
-    keyboardDoneButtonView.barTintColor=COLOR_BG_VIEW;
+    keyboardDoneButtonView.barTintColor=COLOR_BG_WHITE;
     keyboardDoneButtonView.tintColor = COLOR_MAIN;
     [keyboardDoneButtonView sizeToFit];
+    
+    UIView  *line=[[UIView alloc] initWithFrame:CGRectMake(0, keyboardDoneButtonView.frame.size.height-0.5, keyboardDoneButtonView.frame.size.width, 0.5)];
+    line.backgroundColor=COLOR_BG_VIEW;
+    [keyboardDoneButtonView addSubview:line];
     
     UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消"
                                                                    style:UIBarButtonItemStylePlain target:self
@@ -399,11 +403,11 @@
     UILabel* pickerLabel = (UILabel*)view;
     if (!pickerLabel){
         pickerLabel = [[UILabel alloc] init];
-        pickerLabel.minimumScaleFactor=15.0;
+        pickerLabel.minimumScaleFactor=16.0;
         pickerLabel.adjustsFontSizeToFitWidth = YES;
         [pickerLabel setTextAlignment:NSTextAlignmentCenter];
         [pickerLabel setBackgroundColor:[UIColor clearColor]];
-        [pickerLabel setFont:DEFAULT_FONT(17)];
+        [pickerLabel setFont:DEFAULT_FONT(18)];
     }
     // Fill the label text here
     pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
@@ -416,7 +420,7 @@
 }
 
 -(CGFloat) pickerView:(UIPickerView*)pickerView rowHeightForComponent:(NSInteger)component{
-    return 40;
+    return 48;
 }
 
 /*choose com is component,row's function*/

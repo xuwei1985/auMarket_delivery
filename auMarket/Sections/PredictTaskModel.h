@@ -12,4 +12,6 @@
 @property (nonatomic,retain) TaskEntity *entity;
 
 -(void)predict_task_list;
+-(void)delete_predict_sms:(NSString *)ids;
+-(void)send_predict_sms:(NSString *)ids;
 @end
