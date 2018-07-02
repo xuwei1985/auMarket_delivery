@@ -136,6 +136,10 @@
 		A9D354741E0A3139006D265D /* libPods-auMarket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E392563FC475100841AB9F4E /* libPods-auMarket.a */; };
 		A9DA916E1F67915E002033AA /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DA916C1F67915E002033AA /* PaymentViewController.m */; };
 		A9E0C1F820E4DEE800874609 /* 1_29_blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E0C1F720E4DEE700874609 /* 1_29_blue@2x.png */; };
+		A9E0C1FF20E9D54F00874609 /* PickGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E0C1FD20E9D54F00874609 /* PickGoodsViewController.m */; };
+		A9E0C20220E9D5CC00874609 /* PickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E0C20020E9D5CC00874609 /* PickModel.m */; };
+		A9E0C20520E9D61A00874609 /* PickGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E0C20420E9D61A00874609 /* PickGoodsCell.m */; };
+		A9E0C20820E9D62900874609 /* PickEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E0C20720E9D62900874609 /* PickEntity.m */; };
 		A9F4DA851F658AFE00D71774 /* 1_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA731F658AFE00D71774 /* 1_03@2x.png */; };
 		A9F4DA861F658AFE00D71774 /* 1_06@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA741F658AFE00D71774 /* 1_06@2x.png */; };
 		A9F4DA871F658AFE00D71774 /* 1_09@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA751F658AFE00D71774 /* 1_09@2x.png */; };
@@ -393,6 +397,14 @@
 		A9DA916C1F67915E002033AA /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
 		A9DA916D1F67915E002033AA /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
 		A9E0C1F720E4DEE700874609 /* 1_29_blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_29_blue@2x.png"; sourceTree = "<group>"; };
+		A9E0C1FD20E9D54F00874609 /* PickGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickGoodsViewController.m; sourceTree = "<group>"; };
+		A9E0C1FE20E9D54F00874609 /* PickGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickGoodsViewController.h; sourceTree = "<group>"; };
+		A9E0C20020E9D5CC00874609 /* PickModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickModel.m; sourceTree = "<group>"; };
+		A9E0C20120E9D5CC00874609 /* PickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickModel.h; sourceTree = "<group>"; };
+		A9E0C20320E9D61900874609 /* PickGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickGoodsCell.h; sourceTree = "<group>"; };
+		A9E0C20420E9D61A00874609 /* PickGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickGoodsCell.m; sourceTree = "<group>"; };
+		A9E0C20620E9D62900874609 /* PickEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickEntity.h; sourceTree = "<group>"; };
+		A9E0C20720E9D62900874609 /* PickEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickEntity.m; sourceTree = "<group>"; };
 		A9F4DA731F658AFE00D71774 /* 1_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_03@2x.png"; sourceTree = "<group>"; };
 		A9F4DA741F658AFE00D71774 /* 1_06@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_06@2x.png"; sourceTree = "<group>"; };
 		A9F4DA751F658AFE00D71774 /* 1_09@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_09@2x.png"; sourceTree = "<group>"; };
@@ -702,6 +714,7 @@
 		A95E11131DF846B100660E42 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
+				A9E0C1F920E9D52200874609 /* Pick */,
 				A95E11581DF84EA300660E42 /* Booter */,
 				A95E11191DF846D900660E42 /* Order */,
 				A95E11171DF846CC00660E42 /* Home */,
@@ -882,6 +895,45 @@
 				A967B2FB20E6815200D50C46 /* SmsTaskViewController.m */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		A9E0C1F920E9D52200874609 /* Pick */ = {
+			isa = PBXGroup;
+			children = (
+				A9E0C1FC20E9D54200874609 /* Models */,
+				A9E0C1FB20E9D53D00874609 /* Views */,
+				A9E0C1FA20E9D53400874609 /* Controllers */,
+			);
+			name = Pick;
+			sourceTree = "<group>";
+		};
+		A9E0C1FA20E9D53400874609 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A9E0C1FE20E9D54F00874609 /* PickGoodsViewController.h */,
+				A9E0C1FD20E9D54F00874609 /* PickGoodsViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		A9E0C1FB20E9D53D00874609 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A9E0C20320E9D61900874609 /* PickGoodsCell.h */,
+				A9E0C20420E9D61A00874609 /* PickGoodsCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		A9E0C1FC20E9D54200874609 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A9E0C20620E9D62900874609 /* PickEntity.h */,
+				A9E0C20720E9D62900874609 /* PickEntity.m */,
+				A9E0C20120E9D5CC00874609 /* PickModel.h */,
+				A9E0C20020E9D5CC00874609 /* PickModel.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		A9F4DABE1F68390F00D71774 /* MJPhotoBrowser */ = {
@@ -1285,6 +1337,7 @@
 				A95E113B1DF8491600660E42 /* b64.m in Sources */,
 				A964741F1E110D5B00A5A39B /* MemberLoginEntity.m in Sources */,
 				A9A85E321F6A84EB00443E6F /* GMSMarker+MyGMSMarker.m in Sources */,
+				A9E0C1FF20E9D54F00874609 /* PickGoodsViewController.m in Sources */,
 				A967B2DF20E612E200D50C46 /* PredictTimeEntity.m in Sources */,
 				A9FBC1FD1DF97314005ECDDE /* PunchScrollView.m in Sources */,
 				A967B2E620E672EB00D50C46 /* GTMBase64.m in Sources */,
@@ -1334,6 +1387,7 @@
 				A9F4DAD01F68390F00D71774 /* MJPhotoBrowser.m in Sources */,
 				A9FBC1F41DF96E9A005ECDDE /* Booter.m in Sources */,
 				A95E10F51DF8104800660E42 /* SPBaseModel.m in Sources */,
+				A9E0C20820E9D62900874609 /* PickEntity.m in Sources */,
 				A9AD42B11E1364D800A4B131 /* ScrollImageView.m in Sources */,
 				A95E10FB1DF8104800660E42 /* SPEntityResponseSerialization.m in Sources */,
 				A95E113C1DF8491600660E42 /* ColorUtils.mm in Sources */,
@@ -1345,12 +1399,14 @@
 				A95E11511DF84DA700660E42 /* SyncManager.m in Sources */,
 				A95E10F31DF8104800660E42 /* SPUploadFileModel.m in Sources */,
 				A9F4DACE1F68390F00D71774 /* MJPhoto.m in Sources */,
+				A9E0C20220E9D5CC00874609 /* PickModel.m in Sources */,
 				A91D843A1F665EC600DF69EF /* TaskListViewController.m in Sources */,
 				A9AD42B71E13698D00A4B131 /* BannerModel.m in Sources */,
 				A95E11611DF8505C00660E42 /* BadgeManager.m in Sources */,
 				A9AD42B41E13673500A4B131 /* BannerEntity.m in Sources */,
 				A95E10911DF80ED000660E42 /* main.m in Sources */,
 				A9F4DAB71F66D4A800D71774 /* OrderDetailCell.m in Sources */,
+				A9E0C20520E9D61A00874609 /* PickGoodsCell.m in Sources */,
 				A95E11401DF8491600660E42 /* NSDate+IDPExtension.m in Sources */,
 				A9F4DA991F65965200D71774 /* MapMaker.m in Sources */,
 				A967B2FD20E6815300D50C46 /* SmsTaskViewController.m in Sources */,
