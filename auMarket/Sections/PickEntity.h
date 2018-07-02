@@ -30,6 +30,7 @@
 @property (nonatomic,retain) NSString *box_package;
 @property (nonatomic,retain) NSString *freeze_package;
 @property (nonatomic,retain) NSString *refrigerate_package;
+@property (nonatomic,retain) NSArray *package_arr;
 @end
 
 

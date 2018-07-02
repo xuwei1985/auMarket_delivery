@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-#import "PickGoodsEntity.h"
+#import "PickEntity.h"
 
 @interface PickGoodsCell : UITableViewCell
 {
@@ -21,5 +21,5 @@
     UILabel *lbl_care_mark;
 }
 
-@property(nonatomic,retain) PickGoodsEntity *entity;
+@property(nonatomic,retain) PickItemEntity *entity;
 @end

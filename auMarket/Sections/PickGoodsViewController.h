@@ -21,5 +21,4 @@
 @property(nonatomic,retain) PickModel *model;
 @property(nonatomic,retain) NSString *order_ids;
 @property(nonatomic,assign) int list_type;
-@property(nonatomic,assign) BOOL isGotoShelvesView;//是否前往了货架列表准备去转移库存的
 @end

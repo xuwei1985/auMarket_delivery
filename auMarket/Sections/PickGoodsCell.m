@@ -176,42 +176,42 @@
 -(void)layoutSubviews{
     [super layoutSubviews];
     
-    [_iconImageView sd_setImageWithURL:[NSURL URLWithString:self.entity.goods_thumb] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
-    lbl_goods_name.text=self.entity.goods_name;
-    
-    @weakify(self);
-    [lbl_goods_name mas_updateConstraints:^(MASConstraintMaker *make) {
-        @strongify(self);
-        make.top.mas_equalTo(lbl_box_name.mas_bottom).offset(2);
-        make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
-        make.right.mas_equalTo(self.mas_right).offset(-12);
-        make.height.mas_equalTo(38);
-    }];
-    lbl_goods_number.text=[NSString stringWithFormat:@"%@",self.entity.goods_number];
-    if([self.entity.goods_number intValue]>1){
-        lbl_goods_number.textColor=COLOR_MAIN;
-    }
-    else{
-        lbl_goods_number.textColor=COLOR_DARKGRAY;
-    }
-    lbl_shelf_code.text=self.entity.shelves_code;
-    
-    NSRange range = [self.entity.box rangeOfString:@"-"];
-    if(range.location != NSNotFound){
-        lbl_box_name.text=[NSString stringWithFormat:@"%@",[self.entity.box substringToIndex:range.location]];
-        lbl_box_mark.backgroundColor=[Common hexColor:[self.entity.box substringFromIndex:range.location+1]];
-    }
-    else{
-        lbl_box_name.text=@"invalid";
-        lbl_box_mark.backgroundColor=[UIColor clearColor];
-    }
-    
-    if([self.entity.need_care intValue]==1){
-        lbl_care_mark.hidden=NO;
-    }
-    else{
-        lbl_care_mark.hidden=YES;
-    }
+//    [_iconImageView sd_setImageWithURL:[NSURL URLWithString:self.entity.goods_thumb] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
+//    lbl_goods_name.text=self.entity.goods_name;
+//    
+//    @weakify(self);
+//    [lbl_goods_name mas_updateConstraints:^(MASConstraintMaker *make) {
+//        @strongify(self);
+//        make.top.mas_equalTo(lbl_box_name.mas_bottom).offset(2);
+//        make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
+//        make.right.mas_equalTo(self.mas_right).offset(-12);
+//        make.height.mas_equalTo(38);
+//    }];
+//    lbl_goods_number.text=[NSString stringWithFormat:@"%@",self.entity.goods_number];
+//    if([self.entity.goods_number intValue]>1){
+//        lbl_goods_number.textColor=COLOR_MAIN;
+//    }
+//    else{
+//        lbl_goods_number.textColor=COLOR_DARKGRAY;
+//    }
+//    lbl_shelf_code.text=self.entity.shelves_code;
+//    
+//    NSRange range = [self.entity.box rangeOfString:@"-"];
+//    if(range.location != NSNotFound){
+//        lbl_box_name.text=[NSString stringWithFormat:@"%@",[self.entity.box substringToIndex:range.location]];
+//        lbl_box_mark.backgroundColor=[Common hexColor:[self.entity.box substringFromIndex:range.location+1]];
+//    }
+//    else{
+//        lbl_box_name.text=@"invalid";
+//        lbl_box_mark.backgroundColor=[UIColor clearColor];
+//    }
+//    
+//    if([self.entity.need_care intValue]==1){
+//        lbl_care_mark.hidden=NO;
+//    }
+//    else{
+//        lbl_care_mark.hidden=YES;
+//    }
 }
 
 
