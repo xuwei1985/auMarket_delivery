@@ -18,9 +18,9 @@
     return self;
 }
 
--(void)predict_task_list{
+-(void)predict_task_listWithListType:(int)list_type{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=predict_task_list&delivery_id=%@",user.user_id];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=predict_task_list&delivery_id=%@&list_type=%d",user.user_id,list_type];
     self.parseDataClassType = [TaskEntity class];
     self.params = @{};
     self.requestTag=1001;

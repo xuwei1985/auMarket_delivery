@@ -46,18 +46,18 @@
             }];
         }
         
-        if(!send_mark){
-            send_mark=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"send_off"]];
-            [self.contentView addSubview:send_mark];
-            
-            @strongify(self);
-            
-            [send_mark mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(btn_select.mas_top).offset(4);
-                make.left.mas_equalTo(self.mas_right).offset(-40);
-                make.size.mas_equalTo(CGSizeMake(28, 28));
-            }];
-        }
+//        if(!send_mark){
+//            send_mark=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"send_off"]];
+//            [self.contentView addSubview:send_mark];
+//
+//            @strongify(self);
+//
+//            [send_mark mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.top.mas_equalTo(btn_select.mas_top).offset(4);
+//                make.left.mas_equalTo(self.mas_right).offset(-40);
+//                make.size.mas_equalTo(CGSizeMake(28, 28));
+//            }];
+//        }
         
         if(!lbl_order_sn){
             lbl_order_sn=[[UILabel alloc] init];
@@ -252,12 +252,12 @@
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-150, h+5));
     }];
     
-    if([self.entity.predict_sms_send intValue]>0){
-        send_mark.image=[UIImage imageNamed:@"send_on"];
-    }
-    else{
-        send_mark.image=[UIImage imageNamed:@"send_off"];
-    }
+//    if([self.entity.predict_sms_send intValue]>0){
+//        send_mark.image=[UIImage imageNamed:@"send_on"];
+//    }
+//    else{
+//        send_mark.image=[UIImage imageNamed:@"send_off"];
+//    }
 }
 
 

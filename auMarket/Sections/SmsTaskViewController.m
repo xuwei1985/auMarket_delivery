@@ -5,7 +5,7 @@
 //  Created by 吴绪伟 on 2018/1/4.
 //  Copyright © 2018年 daao. All rights reserved.
 //
-
+#define CATEGORY_BAR 44.0
 #import "SmsTaskViewController.h"
 
 @interface SmsTaskViewController ()
@@ -27,6 +27,7 @@
 
 -(void)initUI{
     [self setNavigation];
+    [self createCategoryView];
     [self setUpTableView];
     [self createBottomView];
 }
@@ -48,6 +49,74 @@
 //- (void)removeNotification{
 //    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TASK_ORDER_NOTIFICATION" object:nil];
 //}
+
+-(void)createCategoryView{
+    blockView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, CATEGORY_BAR)];
+    blockView.backgroundColor=COLOR_BG_WHITE;
+    CALayer *layer = [CALayer layer];
+    layer.frame = CGRectMake(0, blockView.frame.size.height-0.5, blockView.frame.size.width, 0.5);
+    layer.backgroundColor = COLOR_BG_LINE_DARK.CGColor;
+    [blockView.layer addSublayer:layer];
+    [self.view addSubview:blockView];
+    
+    btn_picking=[UIButton buttonWithType:UIButtonTypeCustom];
+    [btn_picking setTitle:@"待发送" forState:UIControlStateNormal];
+    [btn_picking setTitleColor:COLOR_DARKGRAY forState:UIControlStateNormal];
+    [btn_picking setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
+    btn_picking.titleLabel.textAlignment=NSTextAlignmentCenter;
+    btn_picking.tintColor=COLOR_WHITE;
+    btn_picking.titleLabel.font=FONT_SIZE_MIDDLE;
+    btn_picking.tag=7000;
+    [btn_picking addTarget:self action:@selector(changePickState:) forControlEvents:UIControlEventTouchUpInside];
+    [blockView addSubview:btn_picking];
+    
+    [btn_picking mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(0);
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(WIDTH_SCREEN/2);
+        make.height.mas_equalTo(blockView.mas_height);
+    }];
+    
+    btn_picked=[UIButton buttonWithType:UIButtonTypeCustom];
+    [btn_picked setTitle:@"已发送" forState:UIControlStateNormal];
+    [btn_picked setTitleColor:COLOR_DARKGRAY forState:UIControlStateNormal];
+    [btn_picked setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
+    btn_picked.titleLabel.textAlignment=NSTextAlignmentCenter;
+    btn_picked.tintColor=COLOR_WHITE;
+    btn_picked.titleLabel.font=FONT_SIZE_MIDDLE;
+    btn_picked.tag=7001;
+    [btn_picked addTarget:self action:@selector(changePickState:) forControlEvents:UIControlEventTouchUpInside];
+    [blockView addSubview:btn_picked];
+    
+    [btn_picked mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(0);
+        make.left.mas_equalTo(WIDTH_SCREEN/2);
+        make.width.mas_equalTo(WIDTH_SCREEN/2);
+        make.height.mas_equalTo(blockView.mas_height);
+    }];
+    
+    if(self.list_type==0){
+        btn_picking.selected=YES;
+    }
+    else{
+        btn_picked.selected=YES;
+    }
+}
+
+-(void)changePickState:(UIButton *)sender{
+    int btn_index=(int)sender.tag-7000;
+    if(self.list_type!=btn_index)
+    {
+        if(!self.model.isLoading){
+            self.list_type=btn_index;
+            ((UIButton *)[blockView viewWithTag:7000]).selected=NO;
+            ((UIButton *)[blockView viewWithTag:7001]).selected=NO;
+            sender.selected=YES;
+            
+            [self loadOrders];
+        }
+    }
+}
 
 -(void)createBottomView{
     _summaryView_bottom=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 44)];
@@ -98,8 +167,8 @@
 }
 
 -(void)setUpTableView{
-    float table_height=HEIGHT_SCREEN-64-48-44;
-    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
+    float table_height=HEIGHT_SCREEN-64-48-CATEGORY_BAR;
+    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, CATEGORY_BAR, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
     self.tableView.backgroundColor=COLOR_BG_TABLEVIEW;
@@ -314,8 +383,7 @@
     if(!self.tableView.mj_header.isRefreshing){
         [self startLoadingActivityIndicator];
     }
-    
-    [self.model predict_task_list];
+    [self.model predict_task_listWithListType:self.list_type];
 }
 
 -(void)deletePredictSms{

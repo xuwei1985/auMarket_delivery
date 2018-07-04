@@ -18,9 +18,13 @@
     UIButton *_sumBtn;
     UIButton *_selectAllBtn;
     NSString *ids;
+    UIView *blockView;
+    UIButton *btn_picking;
+    UIButton *btn_picked;
     UIAlertView *_inputAlertView;
 }
 
 
 @property(nonatomic,retain) PredictTaskModel *model;
+@property(nonatomic,assign) int list_type;
 @end

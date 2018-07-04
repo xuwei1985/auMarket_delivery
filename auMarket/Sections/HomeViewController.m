@@ -474,14 +474,34 @@
 {
     selectedMarker=marker;
     UIActionSheet *actionsheet;
+    
+    TaskItemEntity *item= (TaskItemEntity *)[selectedMarker.taskArr firstObject];
+    BOOL show_predict_menu=true;//是否显示预计配送时间菜单
+    if([item.predict_sms_send intValue]>0||[item.status intValue]==2){
+        show_predict_menu=false;
+    }
+    else{
+        show_predict_menu=true;
+    }
+    
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
         
         if(marker.appearAnimation==kGMSMarkerAnimationNone){
             if(marker.taskArr.count<=1){
-                actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单",@"拨打电话",@"复制地址", @"预计送达时间", nil,nil];
+                if(show_predict_menu){
+                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单",@"拨打电话",@"复制地址", @"预计送达时间", nil,nil];
+                }
+                else{
+                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单",@"拨打电话",@"复制地址", nil,nil];
+                }
             }
             else{
-                actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看多个订单",@"复制地址", @"预计送达时间", nil,nil];
+                if(show_predict_menu){
+                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看多个订单",@"复制地址", @"预计送达时间", nil,nil];
+                }
+                else{
+                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看多个订单",@"复制地址", nil,nil];
+                }
             }
         }
         else{//停车点
@@ -491,10 +511,20 @@
     else{
         if(marker.appearAnimation==kGMSMarkerAnimationNone){
             if(marker.taskArr.count<=1){
-                actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看订单",@"拨打电话",@"复制地址", @"预计送达时间",nil,nil];
+                if(show_predict_menu){
+                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看订单",@"拨打电话",@"复制地址", @"预计送达时间",nil,nil];
+                }
+                else{
+                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看订单",@"拨打电话",@"复制地址",nil,nil];
+                }
             }
             else{
-                actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看多个订单",@"复制地址", @"预计送达时间", nil,nil];
+                if(show_predict_menu){
+                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看多个订单",@"复制地址", @"预计送达时间", nil,nil];
+                }
+                else{
+                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看多个订单",@"复制地址", nil,nil];
+                }
             }
         }
     }
