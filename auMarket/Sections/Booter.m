@@ -11,11 +11,13 @@
 #import "UserCenterViewController.h"
 #import "AdPageViewController.h"
 #import "TaskListViewController.h"
+#import "PickOrderViewController.h"
 
 @interface Booter() 
 {
     HomeViewController* homeViewController;
     TaskListViewController* taskListViewController;
+    PickOrderViewController* pickOrderViewController;
     UserCenterViewController* userCenterViewController;
 }
 @end
@@ -58,15 +60,19 @@
     userCenterViewController.hidesBottomBarWhenPushed = NO;
     userCenterViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"1_69"] selectedImage:[UIImage imageNamed:@"1_59"]];
     
+    pickOrderViewController = [[PickOrderViewController alloc] init];
+    pickOrderViewController.hidesBottomBarWhenPushed = NO;
+    pickOrderViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"上货" image:[UIImage imageNamed:@"1_53"] selectedImage:[UIImage imageNamed:@"1_72"]];
+    
     SPNavigationController *navHomeViewController = [[SPNavigationController alloc] initWithRootViewController:homeViewController];
     SPNavigationController *navTaskListViewController = [[SPNavigationController alloc] initWithRootViewController:taskListViewController];
     SPNavigationController *navUserCenterViewController = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
-
+    SPNavigationController *navPickViewController = [[SPNavigationController alloc] initWithRootViewController:pickOrderViewController];
   
     self.tabBarController = [[SPTabBarController alloc] init];
     self.tabBarController.tabBar.translucent = NO;
     self.tabBarController.tabBar.tintColor = COLOR_FONT_MAIN;
-    [self.tabBarController setViewControllers:@[navHomeViewController,navTaskListViewController,navUserCenterViewController]];
+    [self.tabBarController setViewControllers:@[navHomeViewController,navPickViewController,navTaskListViewController,navUserCenterViewController]];
     self.tabBarController.selectedIndex = 0;
     self.tabBarController.delegate = self;
     

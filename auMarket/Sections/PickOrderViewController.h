@@ -7,16 +7,18 @@
 //
 
 #import "SPBaseViewController.h"
-#import "PickGoodsCell.h"
+#import "PickOrderCell.h"
+#import "GoodsListItemCell.h"
 #import "PickModel.h"
 
-@interface PickGoodsViewController : SPBaseViewController<UIActionSheetDelegate,UITextFieldDelegate>
+@interface PickOrderViewController : SPBaseViewController<UIActionSheetDelegate,UITextFieldDelegate>
 {
     UIButton *btn_picking;
     UIButton *btn_picked;
     UIView *blockView;
     NSIndexPath *current_confirm_path;
     UIAlertView *_inputAlertView;
+    
 }
 @property(nonatomic,retain) PickModel *model;
 @property(nonatomic,retain) NSString *order_ids;

@@ -11,4 +11,5 @@
 @interface PickModel : SPBaseModel
 @property (nonatomic,retain) PickEntity *entity;
 -(void)loadPickOrderWithListType:(int)list_type;
+-(void)finishPickPackage:(int)type andOrderId:(NSString *)order_id andDeliveryId:(NSString *)delivery_id andPackageType:(NSString *)package_type;
 @end

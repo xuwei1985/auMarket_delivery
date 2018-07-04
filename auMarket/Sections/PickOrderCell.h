@@ -10,16 +10,14 @@
 #import <AVFoundation/AVFoundation.h>
 #import "PickEntity.h"
 
-@interface PickGoodsCell : UITableViewCell
+@interface PickOrderCell : UITableViewCell
 {
     UIImageView *_iconImageView;
-    UILabel *lbl_box_mark;
-    UILabel *lbl_goods_name;
-    UILabel *lbl_goods_number;
-    UILabel *lbl_box_name;
-    UILabel *lbl_shelf_code;
-    UILabel *lbl_care_mark;
+    UILabel *lbl_package_number;
+    UILabel *lbl_package_title;
 }
 
 @property(nonatomic,retain) PickItemEntity *entity;
+@property(nonatomic,assign) int row_index;
+@property(nonatomic,assign) int list_type;
 @end

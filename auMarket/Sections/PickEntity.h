@@ -21,7 +21,7 @@
 @property (nonatomic,retain) NSString *predict_time;//预计配送时间
 @property (nonatomic,retain) NSString *block_name;
 @property (nonatomic,retain) NSString *consignee;
-@property (nonatomic,retain) NSMutableArray<PackageGoodsEntity*> *box_goods_list;
+@property (nonatomic,retain) NSMutableArray<PackageGoodsEntity*> *box_goods;
 @property (nonatomic,retain) NSString *address;
 @property (nonatomic,retain) NSString *mobile;
 @property (nonatomic,retain) NSString *order_amount;
@@ -30,6 +30,10 @@
 @property (nonatomic,retain) NSString *box_package;
 @property (nonatomic,retain) NSString *freeze_package;
 @property (nonatomic,retain) NSString *refrigerate_package;
+@property (nonatomic,retain) NSString *default_package_pick;
+@property (nonatomic,retain) NSString *box_package_pick;
+@property (nonatomic,retain) NSString *freeze_package_pick;
+@property (nonatomic,retain) NSString *refrigerate_package_pick;
 @property (nonatomic,retain) NSArray *package_arr;
 @end
 

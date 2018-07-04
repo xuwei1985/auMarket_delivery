@@ -23,7 +23,7 @@
 -(id)init{
     self = [super init];
     if (self) {
-        [self addMappingRuleArrayProperty:@"box_goods_list" class:[PackageGoodsEntity class]];
+        [self addMappingRuleArrayProperty:@"box_goods" class:[PackageGoodsEntity class]];
     }
     return self;
 }
