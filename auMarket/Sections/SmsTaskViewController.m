@@ -38,7 +38,7 @@
 //    UIBarButtonItem *left_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"hs"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickedGoodsView)];
 //    self.navigationItem.leftBarButtonItem=left_Item;
     
-    UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"del"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(showDeleteConfirm)];
+    right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"del"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(showDeleteConfirm)];
     self.navigationItem.rightBarButtonItem=right_Item;
 }
 
@@ -105,6 +105,20 @@
 
 -(void)changePickState:(UIButton *)sender{
     int btn_index=(int)sender.tag-7000;
+    
+    if(btn_index==0){
+        self.navigationItem.rightBarButtonItem=right_Item;
+        _summaryView_bottom.hidden=NO;
+        float table_height=HEIGHT_SCREEN-64-44-CATEGORY_BAR;
+        self.tableView.frame=CGRectMake(0, CATEGORY_BAR, WIDTH_SCREEN,table_height);
+    }
+    else{
+        self.navigationItem.rightBarButtonItem=nil;
+        _summaryView_bottom.hidden=YES;
+        float table_height=HEIGHT_SCREEN-64-CATEGORY_BAR;
+        self.tableView.frame=CGRectMake(0, CATEGORY_BAR, WIDTH_SCREEN,table_height);
+    }
+    
     if(self.list_type!=btn_index)
     {
         if(!self.model.isLoading){
@@ -167,7 +181,7 @@
 }
 
 -(void)setUpTableView{
-    float table_height=HEIGHT_SCREEN-64-48-CATEGORY_BAR;
+    float table_height=HEIGHT_SCREEN-64-44-CATEGORY_BAR;
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, CATEGORY_BAR, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
@@ -351,6 +365,7 @@
     }
     TaskItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
     cell.entity=entity;
+    cell.list_model=self.list_type;
     [cell selDataId:^(NSString *order_id,int action) {
         [self handlerOrdersSelect];
     }];
@@ -367,7 +382,10 @@
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
     predictSmsTaskCell *cell=[tv cellForRowAtIndexPath:indexPath];
-    [cell toggleDataSel];
+    if(self.list_type==0){
+        [cell toggleDataSel];
+    }
+    
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

@@ -33,12 +33,14 @@
 -(void)generatePredictTime{
     int start_hour=9;
     int end_hour=22;
-    int step=90;
+    int step=90;//结束时间的步进分钟数
+    int interval=30;//开始时间的间隔分钟数（2:00-3:30  然后是 2:30-4:00）
     int start_minite=0;
     int end_minite=0;
-    int current_hour=start_hour;
+    int current_start_hour=start_hour;
+    int current_end_hour=start_hour;
     
-    while (current_hour<=end_hour) {
+    while ((current_start_hour+step/60)<=end_hour) {
         NSString *minite_str=@"";
         PredictTimeEntity *entity=[[PredictTimeEntity alloc] init];
         if(start_minite<10){
@@ -47,11 +49,11 @@
         else{
             minite_str=[NSString stringWithFormat:@"%d",start_minite];
         }
-        entity.start_time=[NSString stringWithFormat:@"%d:%@",current_hour,minite_str];
+        entity.start_time=[NSString stringWithFormat:@"%d:%@",current_start_hour,minite_str];
         
         end_minite=start_minite+step;
         if(end_minite>=60){
-            current_hour+=end_minite/60;
+            current_end_hour+=end_minite/60;
             end_minite=end_minite%60;
         }
         if(end_minite<10){
@@ -60,13 +62,16 @@
         else{
             minite_str=[NSString stringWithFormat:@"%d",end_minite];
         }
-        entity.end_time=[NSString stringWithFormat:@"%d:%@",current_hour,minite_str];
+        entity.end_time=[NSString stringWithFormat:@"%d:%@",current_end_hour,minite_str];
         entity.time_range=[NSString stringWithFormat:@"%@ — %@",entity.start_time,entity.end_time];
         [predict_time_arr addObject:entity];
         
-        if(end_minite<60){
-            current_hour++;
+        start_minite+=interval;
+        if(start_minite>=60){
+            current_start_hour+=start_minite/60;
+            start_minite=start_minite%60;
         }
+        current_end_hour=current_start_hour;
     }
 }
 
@@ -306,22 +311,28 @@
 }
 
 -(GMSMarker *)isExistMarker:(CLLocationCoordinate2D)coordinate andAddress:(NSString *)addr{
-    NSArray<GMSMarker *> *mArr=[[NSMutableArray alloc] init];
+    GMSMarker *mArr=nil;
     if(markerArr){
-        NSString *filterStr=[NSString stringWithFormat:@"latitude==%f AND longitude==%f",coordinate.latitude,coordinate.longitude];
-        NSPredicate *predicate=[NSPredicate predicateWithFormat:filterStr];
-        mArr=[markerArr filteredArrayUsingPredicate:predicate];
+//        NSString *filterStr=[NSString stringWithFormat:@"latitude=%f AND longitude=%f",coordinate.latitude,coordinate.longitude];
+//        NSPredicate *predicate=[NSPredicate predicateWithFormat:filterStr];
+//        mArr=[markerArr filteredArrayUsingPredicate:predicate];
+        for(int i=0;i<markerArr.count;i++){
+            if(([markerArr objectAtIndex:i].latitude==coordinate.latitude)&&([markerArr objectAtIndex:i].longitude==coordinate.longitude)){
+                mArr= [markerArr objectAtIndex:i];
+                break;
+            }
+        }
         
-        if(mArr!=nil&&mArr.count>0){
-            return [mArr firstObject];
+        if(mArr!=nil){
+            return mArr;
         }
         else{
-            mArr=[[NSMutableArray alloc] init];
-            filterStr=[NSString stringWithFormat:@"snippet=='%@'",addr];
-            predicate=[NSPredicate predicateWithFormat:filterStr];
-            mArr=[markerArr filteredArrayUsingPredicate:predicate];
-            
-            return [mArr firstObject];
+            for(int i=0;i<markerArr.count;i++){
+                if([markerArr objectAtIndex:i].snippet==addr){
+                    return [markerArr objectAtIndex:i];
+                    break;
+                }
+            }
         }
     }
 

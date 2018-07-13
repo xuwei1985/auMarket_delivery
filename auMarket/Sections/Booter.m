@@ -72,7 +72,7 @@
     self.tabBarController = [[SPTabBarController alloc] init];
     self.tabBarController.tabBar.translucent = NO;
     self.tabBarController.tabBar.tintColor = COLOR_FONT_MAIN;
-    [self.tabBarController setViewControllers:@[navHomeViewController,navPickViewController,navTaskListViewController,navUserCenterViewController]];
+    [self.tabBarController setViewControllers:@[navHomeViewController,navTaskListViewController,navPickViewController,navUserCenterViewController]];
     self.tabBarController.selectedIndex = 0;
     self.tabBarController.delegate = self;
     
@@ -300,12 +300,12 @@
 -(void)onResponse:(SPBaseModel*)model isSuccess:(BOOL)isSuccess{
     if(model==self.taskModel){
         if(isSuccess){
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 self.tasklist_delivering= [self.taskModel getTasksByStatus:Delivery_Status_Delivering];
                 self.tasklist_finished= [self.taskModel getTasksByStatus:Delivery_Status_Finished];
                 self.tasklist_failed= [self.taskModel getTasksByStatus:Delivery_Status_Failed];
                 self.tasklist_unknown= [self.taskModel getTasksByStatus:Delivery_Status_Unknow];
-            });
+            //});
         }
         else{
             self.tasklist_delivering= [[NSArray alloc] init];

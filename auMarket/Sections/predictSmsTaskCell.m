@@ -237,6 +237,20 @@
 
 -(void)layoutSubviews{
     [super layoutSubviews];
+    if(self.list_model==0){
+        [btn_select mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(18);
+            make.left.mas_equalTo(10);
+            make.size.mas_equalTo(CGSizeMake(28, 28));
+        }];
+    }
+    else{
+        [btn_select mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(18);
+            make.left.mas_equalTo(10);
+            make.size.mas_equalTo(CGSizeMake(0, 0));
+        }];
+    }
     
     btn_select.selected=self.entity.selected;
     lbl_order_contact_value.text=self.entity.consignee;
