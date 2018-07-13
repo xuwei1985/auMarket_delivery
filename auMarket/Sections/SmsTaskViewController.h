@@ -22,6 +22,7 @@
     UIButton *btn_picking;
     UIButton *btn_picked;
     UIAlertView *_inputAlertView;
+    UIBarButtonItem *right_Item;
 }
 
 
