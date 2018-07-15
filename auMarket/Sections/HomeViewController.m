@@ -566,7 +566,7 @@
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
             pasteboard.string = item.address;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self showSuccesWithText:@"复制成功"];
+                [self showToastWithText:@"复制成功"];
             });
         });
     }

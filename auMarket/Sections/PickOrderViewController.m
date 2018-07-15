@@ -425,11 +425,11 @@
     else if(model==self.model&&self.model.requestTag==1002){
         if(isSuccess){
             if([self isLastestPackage:[self.model.entity.list objectAtIndex:current_confirm_path.section]]){
-                [self showSuccesWithText:@"拣货完成"];
+                [self showToastWithText:@"拣货完成"];
                 [self loadPickOrderList];
             }
             else{
-                [self showSuccesWithText:@"保存成功"];
+                [self showToastWithText:@"保存成功"];
             }
         }
     }

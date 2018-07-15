@@ -434,13 +434,13 @@
         }
         else if(model.requestTag==1002){
             if(isSuccess){
-                [self showSuccesWithText:@"删除成功"];
+                [self showToastWithText:@"删除成功"];
                 [self loadOrders];
             }
         }
         else if(model.requestTag==1003){
             if(isSuccess){
-                [self showSuccesWithText:@"发送成功"];
+                [self showToastWithText:@"发送成功"];
                 [self loadOrders];
             }
         }

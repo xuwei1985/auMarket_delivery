@@ -27,8 +27,8 @@ return __singleton__; \
 
 //接口相关
 #ifdef DEBUG//测试
-    #define SERVER_ADDRESS        @"http://api.bigau.com"
-    #define SERVER_HTTP_ADDRESS   @"http://api.bigau.com"
+    #define SERVER_ADDRESS        @"https://api.bigau.com"
+    #define SERVER_HTTP_ADDRESS   @"https://api.bigau.com"
 
 #else//正式
     #define SERVER_ADDRESS          @"https://api.bigau.com"
@@ -39,14 +39,13 @@ return __singleton__; \
 //系统相关
 #define APP_NAME @"配送员-大澳华人超市"
 #define APP_SCHEME  @"auMarketDelivery://"
-#define APP_PRIVATE_KEY @"_auMarket@2016"
 #define APP_INTRO_VER @"APP_INTRO_VER"
-#define PRIVATE_KEY @"__xiaoyacity@2016"
+#define PRIVATE_KEY @"_auMarket@2016"
 
 #define APP_WINDOW [UIApplication sharedApplication]
 #define APP_DELEGATE ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 #define USER_DEFAULT [NSUserDefaults standardUserDefaults]
-#define OPEN_WIFI_SETTING_URL @"prefs:root=WIFI"
+//#define OPEN_WIFI_SETTING_URL @"prefs:root=WIFI"
 #define SYSTEM_VERSION_STRING  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 
 #define IPHONE6PLUS ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? (CGSizeEqualToSize(CGSizeMake(1242,2208), [[UIScreen mainScreen] currentMode].size)||CGSizeEqualToSize(CGSizeMake(1125,2001), [[UIScreen mainScreen] currentMode].size)): NO)
