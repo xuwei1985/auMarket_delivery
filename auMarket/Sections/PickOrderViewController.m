@@ -121,6 +121,17 @@
 //    [self.tableView setTableHeaderView:view];
     [self.tableView setTableFooterView:view];
     [self.view addSubview:self.tableView];
+    
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(reloadPickOrderList)];
+
+//    [header setTitle:@"加载中..." forState:MJRefreshStateRefreshing]; // 松手刷新
+    header.stateLabel.font = FONT_SIZE_SMALL;
+    header.stateLabel.textColor = COLOR_DARKGRAY;
+    header.automaticallyChangeAlpha = YES;
+    header.lastUpdatedTimeLabel.hidden=YES;
+//    [header beginRefreshing];
+
+    self.tableView.mj_header=header;
 }
 
 -(UITableView *)getSectionFooterView:(int)section andEntity:(PickItemEntity *)entity{
@@ -306,6 +317,17 @@
     return section_view;
 }
 
+-(void)reloadPickOrderList{
+    if (!self.tableView.isLoading)
+    {
+        self.model.entity.next=0;
+        self.tableView.isFirstLoad=YES;
+        [self.tableView reloadData];
+        [self loadPickOrderList];
+    }
+    
+}
+
 //请求订单下的要拣货的订单
 -(void)loadPickOrderList{
     [self startLoadingActivityIndicator];
@@ -412,12 +434,16 @@
     [self stopLoadingActivityIndicator];
     
     if(model==self.model&&self.model.requestTag==1001){
+        [self.tableView.mj_header endRefreshing];
+        
+        
         if(isSuccess){
             [self.tableView reloadData];
             if(self.model.entity.list&&self.model.entity.list.count>0){
                 [self hideNoContentView];
             }
             else{
+                [self.tableView reloadData];
                 [self showNoContentView];
             }
         }
