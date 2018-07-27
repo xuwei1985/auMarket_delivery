@@ -26,6 +26,7 @@
     GMSMarker *selectedMarker;
     UIPickerView *predictTimePicker;
     Boolean isShowing;
+    Boolean isExchangeModel;
     UITextField *_txt_predict;
     int predict_select_index;
     NSMutableArray<PredictTimeEntity *>*predict_time_arr;

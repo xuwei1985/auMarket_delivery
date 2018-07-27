@@ -242,8 +242,12 @@
         self.noContentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, top, WIDTH_SCREEN, CGRectGetHeight(self.view.bounds)-top)];
         self.noContentView.backgroundColor = [UIColor clearColor];
         self.noContentView.showsVerticalScrollIndicator = NO;
-        
-        [self.view addSubview:self.noContentView];
+        if(self.tableView!=nil){
+            [self.tableView addSubview:self.noContentView];
+        }
+        else{
+            [self.view addSubview:self.noContentView];
+        }
         
         UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 667)];
         container.tag = 100;
@@ -511,12 +515,12 @@
 }
 
 - (void)onNetworkSetting{
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        NSURL * url = [NSURL URLWithString:OPEN_WIFI_SETTING_URL];
-        if([[UIApplication sharedApplication] canOpenURL:url]) {
-            [[UIApplication sharedApplication] openURL:url];
-        }
-    }
+//    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+//        NSURL * url = [NSURL URLWithString:OPEN_WIFI_SETTING_URL];
+//        if([[UIApplication sharedApplication] canOpenURL:url]) {
+//            [[UIApplication sharedApplication] openURL:url];
+//        }
+//    }
 }
 
 -(void)onReloadBtnTap

@@ -23,6 +23,7 @@
 }
 
 -(void)initData{
+    isExchangeModel=NO;
     isLoadedMaker=NO;
     markerArr=[[NSMutableArray alloc] init];
     parkingMarkerArr=[[NSMutableArray alloc] init];
@@ -101,14 +102,18 @@
     self.navigationItem.rightBarButtonItem =btn_right;
     
     btn_workState = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_workState.frame= CGRectMake(0, 0, 95, 29);
+    btn_workState.frame= CGRectMake(0, 0, 100, 29);
     [btn_workState setBackgroundImage:[UIImage imageNamed:@"1_04"] forState:UIControlStateNormal];
     [btn_workState setBackgroundImage:[UIImage imageNamed:@"1_03"] forState:UIControlStateSelected];
-    [btn_workState setTitle:@"休息中" forState:UIControlStateNormal];
-    [btn_workState setTitle:@"正在接单" forState:UIControlStateSelected];
-    btn_workState.titleLabel.font=FONT_SIZE_MIDDLE;
-    [btn_workState setTitleColor:COLOR_GRAY forState:UIControlStateNormal];
+//    [btn_workState setTitle:@"休息中" forState:UIControlStateNormal];
+//    [btn_workState setTitle:@"正在接单" forState:UIControlStateSelected];
+    [btn_workState setTitle:@"全部订单" forState:UIControlStateNormal];
+    [btn_workState setTitle:@"未设置送达时间" forState:UIControlStateSelected];
+    btn_workState.titleLabel.font=FONT_SIZE_SMALL;
+    [btn_workState setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
     [btn_workState setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
+//    [btn_workState setTitleColor:COLOR_GRAY forState:UIControlStateNormal];
+//    [btn_workState setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     [btn_workState addTarget:self action:@selector(toggleWorkState:) forControlEvents:UIControlEventTouchUpInside];
     btn_workState.selected=APP_DELEGATE.isWorking;
     self.navigationItem.titleView=btn_workState;
@@ -174,10 +179,11 @@
     self.view = mapView;
 }
 
--(void)loadTaskMask{
+-(void)loadTaskMask:(int)model{
     CLLocationCoordinate2D coordinate;
     TaskItemEntity *itemEntity;
     GMSMarker *marker;
+    BOOL only_unset_predict_order=(model==1);//model:1 只显示未设置预计配送到达时间的订单
 
     if(markerArr){
         for(int i=0;i<markerArr.count;i++){
@@ -194,6 +200,13 @@
     //配送失败的
     for(int i=0;i<[APP_DELEGATE.booter.tasklist_failed count];i++){
         itemEntity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i];
+        
+        if(only_unset_predict_order){//只显示未设置配送时间的订单
+            if(itemEntity.predict_time.length>0){
+                break;
+            }
+        }
+        
         coordinate=CLLocationCoordinate2DMake([self reviseDoubleValue:[itemEntity.latitude doubleValue]], [self reviseDoubleValue:[itemEntity.longitude doubleValue]]);
         itemEntity.coordinate=coordinate;//设置配送项目的坐标
         
@@ -230,10 +243,16 @@
     
     //等待配送的
     for(int i=0;i<[APP_DELEGATE.booter.tasklist_delivering count];i++){
+        
         itemEntity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i];
+        if(only_unset_predict_order){//只显示未设置配送时间的订单
+            if(itemEntity.predict_time.length>0){
+                break;
+            }
+        }
+        
         coordinate=CLLocationCoordinate2DMake([self reviseDoubleValue:[itemEntity.latitude doubleValue]], [self reviseDoubleValue:[itemEntity.longitude doubleValue]]);
         itemEntity.coordinate=coordinate;//设置配送项目的坐标
-        
         //判断某个coordinate的marker是否存在
         marker=[self isExistMarker:itemEntity.coordinate andAddress:itemEntity.address];
         if(marker==nil){
@@ -269,7 +288,7 @@
             marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithArray:arr];
         }
     }
-    
+    isExchangeModel=NO;
 }
 
 //创建停车场的Marker
@@ -369,9 +388,9 @@
         ids=[NSMutableString stringWithString:[ids substringToIndex:ids.length-1]];
     }
     
-    [self loadTaskMask];
+    [self loadTaskMask:0];
     
-    NSLog(@"ids:%@",ids);
+//    NSLog(@"ids:%@",ids);
     [self savePredictTime:ids andPredictTime:t];
 }
 
@@ -477,7 +496,7 @@
 -(void)mapViewDidStartTileRendering:(GMSMapView *)mapView{
     if(!isLoadedMaker){
         isLoadedMaker=YES;
-        [self loadTaskMask];
+        [self loadTaskMask:0];
     }
 }
 
@@ -566,7 +585,7 @@
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
             pasteboard.string = item.address;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self showSuccesWithText:@"复制成功"];
+                [self showToastWithText:@"复制成功"];
             });
         });
     }
@@ -625,14 +644,24 @@
 }
 
 -(void)toggleWorkState:(UIButton *)sender{
-    sender.selected=!sender.selected;
-    [APP_DELEGATE.booter handlerWorkingState:sender.selected];
+    if(!isExchangeModel){
+        sender.selected=!sender.selected;
+        //    [APP_DELEGATE.booter handlerWorkingState:sender.selected];
+        if(sender.selected){
+            isExchangeModel=YES;
+            [self loadTaskMask:1];
+        }
+        else{
+            isExchangeModel=YES;
+            [self loadTaskMask:0];
+        }
+    }
 }
 
 //配送数据更新
 - (void)onTaskUpdate:(NSNotification*)aNotitification{
     if(isShowing){
-        [self loadTaskMask];
+        [self loadTaskMask:0];
     }
 }
 
