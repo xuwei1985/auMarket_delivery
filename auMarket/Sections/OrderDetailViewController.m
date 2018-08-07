@@ -336,8 +336,15 @@
         _btn_doneAction=[UIButton buttonWithType:UIButtonTypeCustom];
         [_btn_doneAction setTitle:@"完成配送" forState:UIControlStateNormal];
         _btn_doneAction.titleLabel.textAlignment=NSTextAlignmentCenter;
-        [_btn_doneAction setBackgroundColor:COLOR_MAIN];
-        _btn_doneAction.tintColor=COLOR_WHITE;
+        if([self.task_entity.is_ready intValue]==1){
+            [_btn_doneAction setBackgroundColor:COLOR_MAIN];
+            [_btn_doneAction setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+        }
+        else{
+            [_btn_doneAction setBackgroundColor:COLOR_LIGHTGRAY];
+            [_btn_doneAction setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
+        }
+        
         _btn_doneAction.titleLabel.font=FONT_SIZE_BIG;
         [_btn_doneAction addTarget:self action:@selector(deliveryFinish) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_btn_doneAction];
@@ -512,53 +519,83 @@
 }
 
 -(void)deliveryFinish{
-    if([self.task_entity.pay_type intValue]==4){//如果是货到付款，则须先选择结算方式
+    if([self.task_entity.is_ready intValue]==1){
         [self showFinishMenu];
+//        if([self.task_entity.pay_type intValue]==4){//如果是货到付款，则须先选择结算方式
+//            [self showFinishMenu];
+//        }
+//        else{//如果是线上支付，直接调用配送完成接口
+//            [[AlertBlockView sharedInstance] showChoiceAlert:@"确认完成订单配送吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
+//                if(index==0){
+//                    [self setDeliveryDone:@"1" andPayType:@"0"];//0代表线上支付 1现金 2转账
+//                }
+//            }];
+//        }
     }
-    else{//如果是线上支付，直接调用配送完成接口
-        [[AlertBlockView sharedInstance] showChoiceAlert:@"确认完成订单配送吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
-            if(index==0){
-                [self setDeliveryDone:@"1" andPayType:@"0"];//0代表线上支付 1现金 2转账
-            }
-        }];
+    else{
+        [self showToastWithText:@"订单尚未发货"];
     }
+    
 }
 
 - (void)showFinishMenu
 {
     UIActionSheet *actionsheet;
-    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"现金结算", @"转账结算",@"无法配送", nil,nil];
+    if([self.task_entity.pay_type intValue]==4){//如果是货到付款，则须先选择结算方式
+        actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"现金结算", @"转账结算",@"无法配送", nil,nil];
+    }
+    else{
+        actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"配送完成",@"无法配送", nil,nil];
+    }
     
     [actionsheet showInView:self.view];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (0 == buttonIndex)//现金结算
-    {
-        [[AlertBlockView sharedInstance] showChoiceAlert:@"确认完成订单配送吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
-            if(index==0){
-                [self setDeliveryDone:@"1" andPayType:@"1"];//0代表线上支付 1现金 2转账
+    if([self.task_entity.pay_type intValue]==4){//如果是货到付款
+        if (0 == buttonIndex)//现金结算
+        {
+            [[AlertBlockView sharedInstance] showChoiceAlert:@"确认完成订单配送吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
+                if(index==0){
+                    [self setDeliveryDone:@"1" andPayType:@"1"];//0代表线上支付 1现金 2转账
+                }
+            }];
+        }
+        else if (1 == buttonIndex)//转账结算
+        {
+            if(lbl_orderNo.text.length>0){
+                PaymentViewController *pvc=[[PaymentViewController alloc] init];
+                pvc.task_entity=self.task_entity;
+                pvc.order_sn=lbl_orderNo.text;
+                [self.navigationController pushViewController:pvc animated:YES];
             }
-        }];
-    }
-    else if (1 == buttonIndex)//转账结算
-    {
-        if(lbl_orderNo.text.length>0){
-            PaymentViewController *pvc=[[PaymentViewController alloc] init];
-            pvc.task_entity=self.task_entity;
-            pvc.order_sn=lbl_orderNo.text;
-            [self.navigationController pushViewController:pvc animated:YES];
+            else{
+                [self showToastTopWithText:@"没有配送订单信息"];
+            }
+            
         }
-        else{
-            [self showToastTopWithText:@"没有配送订单信息"];
+        else if (2 == buttonIndex)//无法配送
+        {
+            [self setDeliveryDone:@"2" andPayType:@"-1"];//0代表线上支付 1现金 2转账 -1未配送结算
         }
-        
     }
-    else if (2 == buttonIndex)//无法配送
-    {
-        [self setDeliveryDone:@"2" andPayType:@"-1"];//0代表线上支付 1现金 2转账 -1未配送结算
+    else{//显示支付
+        if (0 == buttonIndex)//完成配送
+        {
+            [[AlertBlockView sharedInstance] showChoiceAlert:@"确认完成订单配送吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
+                if(index==0){
+                    [self setDeliveryDone:@"1" andPayType:@"0"];//0代表线上支付 1现金 2转账
+                }
+            }];
+        }
+        else if (1 == buttonIndex)//无法配送
+        {
+            [self setDeliveryDone:@"2" andPayType:@"-1"];//0代表线上支付 1现金 2转账 -1未配送结算
+            
+        }
     }
+    
 }
 
 -(void)runNavigationByGoogle{

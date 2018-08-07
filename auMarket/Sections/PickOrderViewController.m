@@ -37,6 +37,17 @@
 
 -(void)setNavigation{
     self.title=@"上货";
+    
+    doneBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
+    [doneBtn addTarget:self action:@selector(finishPicking) forControlEvents:UIControlEventTouchUpInside];
+    [doneBtn setTitle:@"批量完成" forState:UIControlStateNormal];
+    [doneBtn setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+    [doneBtn setTitleColor:COLOR_WHITE forState:UIControlStateHighlighted];
+    doneBtn.titleLabel.font=FONT_SIZE_BIG;
+    doneBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
+    
+    UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithCustomView:doneBtn];
+    self.navigationItem.rightBarButtonItem=right_Item_cart;
 }
 
 -(void)createCategoryView{
@@ -101,7 +112,12 @@
             ((UIButton *)[blockView viewWithTag:7000]).selected=NO;
             ((UIButton *)[blockView viewWithTag:7001]).selected=NO;
             sender.selected=YES;
-            
+            if(self.list_type==0){
+                doneBtn.hidden=NO;
+            }
+            else{
+                doneBtn.hidden=YES;
+            }
             [self loadPickOrderList];
         }
     }
@@ -159,7 +175,13 @@
     UIView *section_view;
 
     section_view=[[UIView alloc] initWithFrame:CGRectMake(0, 15, WIDTH_SCREEN, SECTION_HEADER_HEIGHT)];
-    section_view.backgroundColor=COLOR_BG_WHITE;
+    
+    if([entity.is_ready intValue]==0){//订单未准备好
+        section_view.backgroundColor=COLOR_BG_IMAGEVIEW;
+    }
+    else{
+        section_view.backgroundColor=COLOR_BG_WHITE;
+    }
     
     UIView *line_view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 15)];
     line_view.backgroundColor=COLOR_BG_VIEW;
@@ -376,6 +398,7 @@
     }
 }
 
+
 //批量拣货完成
 -(void)finishPicking{
     [self showAllPickConfirm];
@@ -403,8 +426,15 @@
         NSString *txt_value=[nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         
         if([txt_value isEqualToString:@"1234"]){
-            [self startLoadingActivityIndicator];
-//            [self.model finishAllGoodsPick];
+            [self getAllPackageIds];
+            if(all_delivery_ids==nil||all_delivery_ids.length<=0){
+                [self showToastWithText:@"无有效订单"];
+            }
+            else{
+                [self startLoadingActivityIndicator];
+                [self.model finishAllPackagePick:all_order_ids andDeliveryId:all_delivery_ids];
+            }
+            
         }
         else{
             [self showToastWithText:@"确认码不正确"];
@@ -459,8 +489,41 @@
             }
         }
     }
+    else if(model==self.model&&self.model.requestTag==1003){
+        if(isSuccess){
+            [self showToastWithText:@"拣货完成"];
+            
+            [self.model.entity.list removeAllObjects];
+            [self.tableView reloadData];
+
+            btn_picking.selected=NO;
+            btn_picked.selected=YES;
+            self.list_type=1;
+            doneBtn.hidden=YES;
+
+            [self loadPickOrderList];
+        }
+    }
 }
 
+
+-(void)getAllPackageIds{
+    if(self.model.entity.list){
+        all_order_ids=[NSMutableString stringWithFormat:@""];
+        all_delivery_ids=[NSMutableString stringWithFormat:@""];
+        for (PickItemEntity *obj in self.model.entity.list ) {
+            if([obj.is_ready intValue]==1){
+                [all_order_ids appendFormat:@"%@,",obj.order_id];
+                [all_delivery_ids appendFormat:@"%@,",obj.sid];
+            }
+        }
+        
+        if(all_order_ids.length>0){
+            [all_order_ids deleteCharactersInRange:NSMakeRange((all_order_ids.length-1), 1)];
+            [all_delivery_ids deleteCharactersInRange:NSMakeRange((all_delivery_ids.length-1), 1)];
+        }
+    }
+}
 
 #pragma mark - Table view delegate
 
@@ -539,6 +602,7 @@
         cell.entity=entity;
         cell.row_index=(int)indexPath.row;
         cell.list_type=self.list_type;
+        
         return cell;
     }
     else{

@@ -104,6 +104,8 @@
 		A976B7151F697EBC00B85C1C /* TaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A976B7141F697EBC00B85C1C /* TaskModel.m */; };
 		A982F78F1E0FA87E00DB4C13 /* sign_weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */; };
 		A982F79A1E1107DA00DB4C13 /* grayline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F7991E1107DA00DB4C13 /* grayline@2x.png */; };
+		A99FD1BB2119654200AC4BC1 /* sh_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FD1B92119654100AC4BC1 /* sh_on@2x.png */; };
+		A99FD1BC2119654200AC4BC1 /* sh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FD1BA2119654100AC4BC1 /* sh@2x.png */; };
 		A9A85E321F6A84EB00443E6F /* GMSMarker+MyGMSMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A85E311F6A84EB00443E6F /* GMSMarker+MyGMSMarker.m */; };
 		A9AD42AD1E12B0CF00A4B131 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD42AB1E12B0CF00A4B131 /* search@2x.png */; };
 		A9AD42AE1E12B0CF00A4B131 /* search@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD42AC1E12B0CF00A4B131 /* search@3x.png */; };
@@ -365,6 +367,8 @@
 		A976B7141F697EBC00B85C1C /* TaskModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskModel.m; sourceTree = "<group>"; };
 		A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign_weixin@2x.png"; sourceTree = "<group>"; };
 		A982F7991E1107DA00DB4C13 /* grayline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayline@2x.png"; sourceTree = "<group>"; };
+		A99FD1B92119654100AC4BC1 /* sh_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sh_on@2x.png"; sourceTree = "<group>"; };
+		A99FD1BA2119654100AC4BC1 /* sh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sh@2x.png"; sourceTree = "<group>"; };
 		A9A85E301F6A84EB00443E6F /* GMSMarker+MyGMSMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GMSMarker+MyGMSMarker.h"; sourceTree = "<group>"; };
 		A9A85E311F6A84EB00443E6F /* GMSMarker+MyGMSMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GMSMarker+MyGMSMarker.m"; sourceTree = "<group>"; };
 		A9AD42AB1E12B0CF00A4B131 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
@@ -1027,6 +1031,8 @@
 		A9FBC1C61DF93838005ECDDE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A99FD1B92119654100AC4BC1 /* sh_on@2x.png */,
+				A99FD1BA2119654100AC4BC1 /* sh@2x.png */,
 				A900772720EB6D3F00F269D7 /* c_box@2x.png */,
 				A900772920EB6D4000F269D7 /* c_default@2x.png */,
 				A900772820EB6D4000F269D7 /* c_freeze@2x.png */,
@@ -1239,6 +1245,7 @@
 				A967B2F120E67A3000D50C46 /* send_off@2x.png in Resources */,
 				A9AD42AD1E12B0CF00A4B131 /* search@2x.png in Resources */,
 				A9D3546D1E0976D8006D265D /* icon_setting@2x.png in Resources */,
+				A99FD1BC2119654200AC4BC1 /* sh@2x.png in Resources */,
 				A9FBC1C91DF93854005ECDDE /* btn_back_black@3x.png in Resources */,
 				A9FBC1E71DF94A91005ECDDE /* noContent@2x.png in Resources */,
 				A9F4DA871F658AFE00D71774 /* 1_09@2x.png in Resources */,
@@ -1276,6 +1283,7 @@
 				A967B2F220E67A3000D50C46 /* send_on@2x.png in Resources */,
 				A9F4DA941F658AFE00D71774 /* 1_65@2x.png in Resources */,
 				A9F4DA891F658AFE00D71774 /* 1_19.png in Resources */,
+				A99FD1BB2119654200AC4BC1 /* sh_on@2x.png in Resources */,
 				A9AD42AE1E12B0CF00A4B131 /* search@3x.png in Resources */,
 				A9F4DA8A1F658AFE00D71774 /* 1_21@2x.png in Resources */,
 				A9D354371E08E01D006D265D /* addCart@2x.png in Resources */,
@@ -1544,6 +1552,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = auMarket/auMarket.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K44WC33LW2;
@@ -1559,6 +1568,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.delivery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
@@ -1570,6 +1580,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = auMarket/auMarket.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K44WC33LW2;
@@ -1585,6 +1596,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.delivery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;

@@ -34,6 +34,7 @@
 @property (nonatomic,retain) NSString *box_package_pick;
 @property (nonatomic,retain) NSString *freeze_package_pick;
 @property (nonatomic,retain) NSString *refrigerate_package_pick;
+@property (nonatomic,retain) NSString *is_ready;
 @property (nonatomic,retain) NSArray *package_arr;
 @end
 

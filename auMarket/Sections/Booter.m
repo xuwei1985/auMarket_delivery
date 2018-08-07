@@ -62,7 +62,7 @@
     
     pickOrderViewController = [[PickOrderViewController alloc] init];
     pickOrderViewController.hidesBottomBarWhenPushed = NO;
-    pickOrderViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"上货" image:[UIImage imageNamed:@"1_53"] selectedImage:[UIImage imageNamed:@"1_72"]];
+    pickOrderViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"上货" image:[UIImage imageNamed:@"sh"] selectedImage:[UIImage imageNamed:@"sh_on"]];
     
     SPNavigationController *navHomeViewController = [[SPNavigationController alloc] initWithRootViewController:homeViewController];
     SPNavigationController *navTaskListViewController = [[SPNavigationController alloc] initWithRootViewController:taskListViewController];

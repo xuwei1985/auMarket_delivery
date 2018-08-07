@@ -37,4 +37,5 @@
 @property(nonatomic,retain)NSString *predict_sms_send;
 @property(nonatomic,assign)Boolean selected;
 @property(nonatomic,retain)NSString *block_name;
+@property(nonatomic,retain)NSString *is_ready;//是否打包完成
 @end
