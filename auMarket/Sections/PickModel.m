@@ -38,6 +38,14 @@
     [self loadInner];
 }
 
+-(void)finishAllPackagePick:(NSString *)order_ids andDeliveryId:(NSString *)delivery_ids{
+    self.parseDataClassType = [SPBaseEntity class];
+    self.shortRequestAddress= [NSString stringWithFormat:@"apiv1.php?act=package_pick_all_done&order_ids=%@&delivery_ids=%@",order_ids,delivery_ids];
+    self.params = @{};
+    self.requestTag=1003;
+    [self loadInner];
+}
+
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[PickEntity class]]) {
         self.entity=[self convertPickOrderdata:(PickEntity*)parsedData];
