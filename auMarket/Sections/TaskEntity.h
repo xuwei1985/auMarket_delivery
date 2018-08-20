@@ -38,4 +38,5 @@
 @property(nonatomic,assign)Boolean selected;
 @property(nonatomic,retain)NSString *block_name;
 @property(nonatomic,retain)NSString *is_ready;//是否打包完成
+@property(nonatomic,retain)NSString *option_title;//送货方式选项（送货上楼、下楼自取）
 @end

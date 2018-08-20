@@ -9,7 +9,7 @@
 #import "SPBaseEntity.h"
 @class OrderGoodsItemEntity;
 
-@interface OrderGoodsEntity : SPBaseEntity
+@interface OrderGoodsEntity:SPBaseEntity
 @property(nonatomic,retain)NSMutableArray <OrderGoodsItemEntity*> *goods_list_normal;
 @property(nonatomic,retain)NSMutableArray <OrderGoodsItemEntity*> *goods_list_alone;
 @end

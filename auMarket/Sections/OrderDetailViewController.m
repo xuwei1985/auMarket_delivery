@@ -5,7 +5,7 @@
 //  Created by 吴绪伟 on 2016/12/8.
 //  Copyright © 2016年 daao. All rights reserved.
 //
-#define ORDER_INFO_PANEL_HEIGHT 381.0
+#define ORDER_INFO_PANEL_HEIGHT 430.0
 #define DONE_ACTION_BAR 48.0
 #import "OrderDetailViewController.h"
 
@@ -45,12 +45,18 @@
 -(void)createOrderInfoView{
     UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 70)];
     blockView_1.backgroundColor=COLOR_WHITE;
+    
     UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 94, WIDTH_SCREEN, 182)];
     blockView_2.backgroundColor=COLOR_WHITE;
     blockView_2.userInteractionEnabled=YES;
-    UIView *blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 286, WIDTH_SCREEN, 95)];
-    blockView_3.clipsToBounds=YES;
+    
+    UIView *blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 285, WIDTH_SCREEN, 48)];
     blockView_3.backgroundColor=COLOR_WHITE;
+    blockView_3.userInteractionEnabled=YES;
+    
+    UIView *blockView_4=[[UIView alloc] initWithFrame:CGRectMake(0, 342, WIDTH_SCREEN, 92)];
+    blockView_4.clipsToBounds=YES;
+    blockView_4.backgroundColor=COLOR_WHITE;
     
     orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, ORDER_INFO_PANEL_HEIGHT)];
     orderInfoView.userInteractionEnabled=YES;
@@ -59,7 +65,7 @@
     [orderInfoView addSubview:blockView_1];
     [orderInfoView addSubview:blockView_2];
     [orderInfoView addSubview:blockView_3];
-    
+    [orderInfoView addSubview:blockView_4];
     
     ////////////////blockView_1///////////////
     UILabel *lbl_tip_1=[[UILabel alloc] init];
@@ -275,17 +281,43 @@
         make.left.mas_equalTo(lbl_tip_7.mas_left).offset(70);
     }];
 
-    
     ////////////////blockView_3///////////////
     UILabel *lbl_tip_9=[[UILabel alloc] init];
     lbl_tip_9.textColor=COLOR_BLACK;
     lbl_tip_9.font=FONT_SIZE_MIDDLE;
-    lbl_tip_9.text=@"打包员备注:";
+    lbl_tip_9.text=@"送货方式:";
     lbl_tip_9.textAlignment=NSTextAlignmentLeft;
     [blockView_3 addSubview:lbl_tip_9];
     
     [lbl_tip_9 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_3.top).offset(10);
+        make.size.mas_equalTo(CGSizeMake(70, 28));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_upstairs=[[UILabel alloc] init];
+    lbl_upstairs.textColor=COLOR_DARKGRAY;
+    lbl_upstairs.font=FONT_SIZE_SMALL;
+    lbl_upstairs.text=@"默认";
+    lbl_upstairs.textAlignment=NSTextAlignmentRight;
+    [blockView_3 addSubview:lbl_upstairs];
+    
+    [lbl_upstairs mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_3.top).offset(10);
+        make.size.mas_equalTo(CGSizeMake(120, 28));
+        make.right.mas_equalTo(blockView_3.mas_right).offset(-10);
+    }];
+    
+    ////////////////blockView_4///////////////
+    UILabel *lbl_tip_10=[[UILabel alloc] init];
+    lbl_tip_10.textColor=COLOR_BLACK;
+    lbl_tip_10.font=FONT_SIZE_MIDDLE;
+    lbl_tip_10.text=@"打包员备注:";
+    lbl_tip_10.textAlignment=NSTextAlignmentLeft;
+    [blockView_4 addSubview:lbl_tip_10];
+    
+    [lbl_tip_10 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_4.top).offset(10);
         make.size.mas_equalTo(CGSizeMake(120, 20));
         make.left.mas_equalTo(10);
     }];
@@ -296,14 +328,14 @@
     lbl_packagenote.numberOfLines=0;
     lbl_packagenote.text=@"";
     lbl_packagenote.textAlignment=NSTextAlignmentLeft;
-    [blockView_3 addSubview:lbl_packagenote];
+    [blockView_4 addSubview:lbl_packagenote];
     
     UIView *line=[[UIView alloc] initWithFrame:CGRectMake(0, 35, WIDTH_SCREEN, 0.5)];
     line.backgroundColor=RGBCOLOR(230, 230, 230);
-    [blockView_3 addSubview:line];
+    [blockView_4 addSubview:line];
     
     [lbl_packagenote mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(40);
+        make.top.mas_equalTo(40);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-20, 50));
         make.left.mas_equalTo(10);
     }];
@@ -403,7 +435,7 @@
         lbl_address.text=self.task_entity.address;
         lbl_deliverytime.text=self.task_entity.delivery_time;
         lbl_address_replenish.text=self.task_entity.address_replenish;
-        
+        lbl_upstairs.text=self.task_entity.option_title;
         if(self.task_entity.package_note.length>0){
             lbl_packagenote.textColor=COLOR_MAIN;
             lbl_packagenote.text=self.task_entity.package_note;
