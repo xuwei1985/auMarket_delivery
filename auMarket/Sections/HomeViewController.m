@@ -308,7 +308,7 @@
                 n=1;
             }
         
-            ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%d",n+1];
+            ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%@",(n+1)>1?[NSString stringWithFormat:@"%d",(n+1)]:@""];
             [((MapMaker *)marker.iconView) loadData];
 
             NSMutableArray *arr=[NSMutableArray arrayWithArray:marker.taskArr];
