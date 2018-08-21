@@ -1174,7 +1174,7 @@
 					A95E108B1DF80ED000660E42 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = K44WC33LW2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1554,7 +1554,7 @@
 				CODE_SIGN_ENTITLEMENTS = auMarket/auMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = K44WC33LW2;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1568,8 +1568,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.delivery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "52d07723-a4b3-4fc3-83f3-8ede7b97e502";
+				PROVISIONING_PROFILE_SPECIFIER = dev_delivery;
 			};
 			name = Debug;
 		};
@@ -1582,7 +1582,7 @@
 				CODE_SIGN_ENTITLEMENTS = auMarket/auMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = K44WC33LW2;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1596,8 +1596,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.delivery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "52d07723-a4b3-4fc3-83f3-8ede7b97e502";
+				PROVISIONING_PROFILE_SPECIFIER = dev_delivery;
 			};
 			name = Release;
 		};

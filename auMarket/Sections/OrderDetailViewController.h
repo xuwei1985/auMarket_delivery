@@ -24,6 +24,7 @@
     UILabel *lbl_address_replenish;//地址补充
     UILabel *lbl_deliverytime;
     UILabel *lbl_packagenote;
+    UILabel *lbl_upstairs;
     UIButton *_btn_doneAction;
     
     CLLocationCoordinate2D coordinate;
