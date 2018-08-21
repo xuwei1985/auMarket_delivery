@@ -214,6 +214,7 @@
         marker=[self isExistMarker:itemEntity.coordinate andAddress:itemEntity.address];
         if(marker==nil){
             mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
+            if(itemEntity.upstairs_mark)
             mapMaker.image=[UIImage imageNamed:@"1_29_gray"];
             mapMaker.markTip=@"1";
             [mapMaker loadData];
