@@ -214,8 +214,13 @@
         marker=[self isExistMarker:itemEntity.coordinate andAddress:itemEntity.address];
         if(marker==nil){
             mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
-            if(itemEntity.upstairs_mark)
-            mapMaker.image=[UIImage imageNamed:@"1_29_gray"];
+            if([itemEntity.upstairs_mark isEqualToString:@"defalut"]){
+                mapMaker.image=[UIImage imageNamed:@"1_29_gray"];
+            }
+            else{
+                mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_gray_%@",itemEntity.upstairs_mark]];
+            }
+            
             mapMaker.markTip=@"1";
             [mapMaker loadData];
             
@@ -233,12 +238,18 @@
             [markerArr addObject:marker];
         }
         else{
-            ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%d",[((MapMaker *)marker.iconView).markTip intValue]+1];
+            int n=[((MapMaker *)marker.iconView).markTip intValue];
+            if(n<=0){
+                n=1;
+            }
+            ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%d",n+1];
             [((MapMaker *)marker.iconView) loadData];
             
             NSMutableArray *arr=[NSMutableArray arrayWithArray:marker.taskArr];
             [arr addObject:itemEntity];
             marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithArray:arr];
+            
+            mapMaker.image=[UIImage imageNamed:@"1_29_gray"];
         }
     }
     
@@ -259,12 +270,23 @@
         if(marker==nil){
             mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
             if([itemEntity.predict_time length]<=0){
-                mapMaker.image=[UIImage imageNamed:@"1_29_blue"];
+                
+                if([itemEntity.upstairs_mark isEqualToString:@"default"]){
+                    mapMaker.image=[UIImage imageNamed:@"1_29_blue"];
+                }
+                else{
+                    mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_blue_%@",itemEntity.upstairs_mark]];
+                }
             }
             else{
-                mapMaker.image=[UIImage imageNamed:@"1_29"];
+                if([itemEntity.upstairs_mark isEqualToString:@"defalut"]){
+                    mapMaker.image=[UIImage imageNamed:@"1_29"];
+                }
+                else{
+                    mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_%@",itemEntity.upstairs_mark]];
+                }
             }
-            mapMaker.markTip=@"1";
+            mapMaker.markTip=@"";
             [mapMaker loadData];
             
             marker = [[GMSMarker alloc] init];
@@ -281,12 +303,30 @@
             [markerArr addObject:marker];
         }
         else{
-            ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%d",[((MapMaker *)marker.iconView).markTip intValue]+1];
+            int n=[((MapMaker *)marker.iconView).markTip intValue];
+            if(n<=0){
+                n=1;
+            }
+        
+            ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%d",n+1];
             [((MapMaker *)marker.iconView) loadData];
 
             NSMutableArray *arr=[NSMutableArray arrayWithArray:marker.taskArr];
             [arr addObject:itemEntity];
             marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithArray:arr];
+            
+            Boolean has_unPredict=NO;
+            for (TaskItemEntity *enity in marker.taskArr) {
+                if([enity.predict_time length]<=0){
+                    has_unPredict=YES;
+                }
+            }
+            if(has_unPredict){
+                mapMaker.image=[UIImage imageNamed:@"1_29_blue"];
+            }
+            else{
+                mapMaker.image=[UIImage imageNamed:@"1_29"];
+            }
         }
     }
     isExchangeModel=NO;
