@@ -214,7 +214,7 @@
         marker=[self isExistMarker:itemEntity.coordinate andAddress:itemEntity.address];
         if(marker==nil){
             mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
-            if([itemEntity.upstairs_mark isEqualToString:@"defalut"]){
+            if([itemEntity.upstairs_mark isEqualToString:@"default"]){
                 mapMaker.image=[UIImage imageNamed:@"1_29_gray"];
             }
             else{
@@ -279,7 +279,7 @@
                 }
             }
             else{
-                if([itemEntity.upstairs_mark isEqualToString:@"defalut"]){
+                if([itemEntity.upstairs_mark isEqualToString:@"default"]){
                     mapMaker.image=[UIImage imageNamed:@"1_29"];
                 }
                 else{
