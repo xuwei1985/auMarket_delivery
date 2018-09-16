@@ -201,10 +201,8 @@
     for(int i=0;i<[APP_DELEGATE.booter.tasklist_failed count];i++){
         itemEntity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i];
         
-        if(only_unset_predict_order){//只显示未设置配送时间的订单
-            if(itemEntity.predict_time.length>0){
-                break;
-            }
+        if(only_unset_predict_order&&itemEntity.predict_time.length>0){//只显示未设置配送时间的订单
+            break;
         }
         
         coordinate=CLLocationCoordinate2DMake([self reviseDoubleValue:[itemEntity.latitude doubleValue]], [self reviseDoubleValue:[itemEntity.longitude doubleValue]]);
@@ -221,7 +219,7 @@
                 mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_gray_%@",itemEntity.upstairs_mark]];
             }
             
-            mapMaker.markTip=@"1";
+            mapMaker.markTip=@"";
             [mapMaker loadData];
             
             marker = [[GMSMarker alloc] init];
@@ -377,7 +375,7 @@
 //        NSPredicate *predicate=[NSPredicate predicateWithFormat:filterStr];
 //        mArr=[markerArr filteredArrayUsingPredicate:predicate];
         for(int i=0;i<markerArr.count;i++){
-            if(([markerArr objectAtIndex:i].latitude==coordinate.latitude)&&([markerArr objectAtIndex:i].longitude==coordinate.longitude)){
+            if(([[NSString stringWithFormat:@"%.5f",[markerArr objectAtIndex:i].latitude] isEqualToString:[NSString stringWithFormat:@"%.5f",coordinate.latitude]])&&([[NSString stringWithFormat:@"%.5f",[markerArr objectAtIndex:i].longitude] isEqualToString:[NSString stringWithFormat:@"%.5f",coordinate.longitude]])){
                 mArr= [markerArr objectAtIndex:i];
                 break;
             }
