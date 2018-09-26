@@ -375,7 +375,7 @@
 //        NSPredicate *predicate=[NSPredicate predicateWithFormat:filterStr];
 //        mArr=[markerArr filteredArrayUsingPredicate:predicate];
         for(int i=0;i<markerArr.count;i++){
-            if(([[NSString stringWithFormat:@"%.5f",[markerArr objectAtIndex:i].latitude] isEqualToString:[NSString stringWithFormat:@"%.5f",coordinate.latitude]])&&([[NSString stringWithFormat:@"%.5f",[markerArr objectAtIndex:i].longitude] isEqualToString:[NSString stringWithFormat:@"%.5f",coordinate.longitude]])){
+            if(([[NSString stringWithFormat:@"%.4f",[markerArr objectAtIndex:i].latitude] isEqualToString:[NSString stringWithFormat:@"%.4f",coordinate.latitude]])&&([[NSString stringWithFormat:@"%.4f",[markerArr objectAtIndex:i].longitude] isEqualToString:[NSString stringWithFormat:@"%.4f",coordinate.longitude]])){
                 mArr= [markerArr objectAtIndex:i];
                 break;
             }
