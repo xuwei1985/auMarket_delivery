@@ -70,8 +70,21 @@
     
 //    [_iconImageView sd_setImageWithURL:[NSURL URLWithString:self.entity.goods_thumb] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
     if(self.entity.package_arr&&self.entity.package_arr.count>0){
-        lbl_package_number.text=[NSString stringWithFormat:@"x%@",[[self.entity.package_arr objectAtIndex:self.row_index] objectForKey:@"number"]];
-        lbl_package_title.text=[[self.entity.package_arr objectAtIndex:self.row_index] objectForKey:@"category"];
+        NSDictionary *dic=[self.entity.package_arr objectAtIndex:self.row_index];
+        lbl_package_number.text=[NSString stringWithFormat:@"x%@",[dic objectForKey:@"number"]];
+        if([[dic objectForKey:@"category"] isEqualToString:@"普通包裹"]){
+            lbl_package_title.text=[NSString stringWithFormat:@"%@(%@%@)",[dic objectForKey:@"category"],self.entity.default_code,self.entity.default_number];
+        }
+        else if([[dic objectForKey:@"category"] isEqualToString:@"冷冻包裹"]){
+            lbl_package_title.text=[NSString stringWithFormat:@"%@(Y%@)",[dic objectForKey:@"category"],self.entity.freeze_number];
+        }
+        else if([[dic objectForKey:@"category"] isEqualToString:@"冷藏包裹"]){
+            lbl_package_title.text=[NSString stringWithFormat:@"%@(X%@)",[dic objectForKey:@"category"],self.entity.refrigerate_number];
+        }
+        else{
+            lbl_package_title.text=[NSString stringWithFormat:@"%@",[dic objectForKey:@"category"]];
+        }
+        
         _iconImageView.image=[UIImage imageNamed:[[self.entity.package_arr objectAtIndex:self.row_index] objectForKey:@"icon"]];
     }
     
