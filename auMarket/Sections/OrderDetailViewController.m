@@ -5,7 +5,7 @@
 //  Created by 吴绪伟 on 2016/12/8.
 //  Copyright © 2016年 daao. All rights reserved.
 //
-#define ORDER_INFO_PANEL_HEIGHT 430.0
+#define ORDER_INFO_PANEL_HEIGHT 470.0
 #define DONE_ACTION_BAR 48.0
 #import "OrderDetailViewController.h"
 
@@ -54,7 +54,7 @@
     blockView_3.backgroundColor=COLOR_WHITE;
     blockView_3.userInteractionEnabled=YES;
     
-    UIView *blockView_4=[[UIView alloc] initWithFrame:CGRectMake(0, 342, WIDTH_SCREEN, 92)];
+    UIView *blockView_4=[[UIView alloc] initWithFrame:CGRectMake(0, 342, WIDTH_SCREEN, 130)];
     blockView_4.clipsToBounds=YES;
     blockView_4.backgroundColor=COLOR_WHITE;
     
@@ -336,7 +336,7 @@
     
     [lbl_packagenote mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(40);
-        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-20, 50));
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-20, 88));
         make.left.mas_equalTo(10);
     }];
     

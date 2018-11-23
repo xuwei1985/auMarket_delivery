@@ -31,7 +31,8 @@
                 _itemLbl.font=DEFAULT_FONT(14.0);
             }
             _itemLbl.numberOfLines=0;
-            _itemLbl.lineBreakMode=NSLineBreakByWordWrapping;
+            _itemLbl.lineBreakMode=NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail;
+            _itemLbl.clipsToBounds=YES;
             [self.contentView addSubview:_itemLbl];
             
             [_itemLbl mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -39,6 +40,7 @@
                 make.top.mas_equalTo(self.mas_top).offset(8);
                 make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
                 make.right.mas_equalTo(self.mas_right).offset(-10);
+                make.height.mas_equalTo(42);
             }];
         }
         
