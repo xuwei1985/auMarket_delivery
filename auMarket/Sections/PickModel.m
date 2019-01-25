@@ -75,6 +75,10 @@
                 dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].box_package,@"number",[entity.list objectAtIndex:i].box_package_pick,@"picked",@"整箱包裹",@"category",@"c_box",@"icon",nil];
                 [mArr addObject:dic];
             }
+            if([[entity.list objectAtIndex:i].meat_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].meat_package,@"number",[entity.list objectAtIndex:i].box_package_pick,@"picked",@"纸箱包裹",@"category",@"c_meat",@"icon",nil];
+                [mArr addObject:dic];
+            }
             [entity.list objectAtIndex:i].package_arr=[NSArray arrayWithArray:mArr];
         }
     }

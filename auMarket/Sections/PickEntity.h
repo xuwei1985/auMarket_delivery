@@ -26,18 +26,26 @@
 @property (nonatomic,retain) NSString *mobile;
 @property (nonatomic,retain) NSString *order_amount;
 @property (nonatomic,retain) NSString *delivery_time;
+
 @property (nonatomic,retain) NSString *default_package;
 @property (nonatomic,retain) NSString *box_package;
 @property (nonatomic,retain) NSString *freeze_package;
 @property (nonatomic,retain) NSString *refrigerate_package;
-@property (nonatomic,retain) NSString *default_package_pick;
-@property (nonatomic,retain) NSString *default_code;
+@property (nonatomic,retain) NSString *meat_package;
+
+
 @property (nonatomic,retain) NSString *default_number;
 @property (nonatomic,retain) NSString *freeze_number;
 @property (nonatomic,retain) NSString *refrigerate_number;
+@property (nonatomic,retain) NSString *meat_number;
+
+@property (nonatomic,retain) NSString *default_package_pick;
 @property (nonatomic,retain) NSString *box_package_pick;
 @property (nonatomic,retain) NSString *freeze_package_pick;
 @property (nonatomic,retain) NSString *refrigerate_package_pick;
+@property (nonatomic,retain) NSString *meat_package_pick;
+
+@property (nonatomic,retain) NSString *default_code;
 @property (nonatomic,retain) NSString *is_ready;
 @property (nonatomic,retain) NSArray *package_arr;
 @end
