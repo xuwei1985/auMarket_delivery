@@ -34,6 +34,22 @@
 
 -(void)setNavigation{
     self.title=@"转账信息";
+    
+    UIButton *payBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
+    [payBtn addTarget:self action:@selector(showPayCodeView) forControlEvents:UIControlEventTouchUpInside];
+    [payBtn setTitle:@"支付码" forState:UIControlStateNormal];
+    [payBtn setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+    [payBtn setTitleColor:COLOR_WHITE forState:UIControlStateHighlighted];
+    payBtn.titleLabel.font=FONT_SIZE_BIG;
+    payBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
+    
+    UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithCustomView:payBtn];
+    self.navigationItem.rightBarButtonItem=right_Item_cart;
+}
+
+-(void)showPayCodeView{
+    PayCodeViewController *pvc=[[PayCodeViewController alloc] init];
+    [self.navigationController pushViewController:pvc animated:YES];
 }
 
 -(void)createPaymentInfoView{
