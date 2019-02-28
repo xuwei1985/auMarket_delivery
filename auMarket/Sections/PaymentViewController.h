@@ -12,6 +12,7 @@
 #import "MJPhoto.h"
 #import "SPUploadFileModel.h"
 #import "TaskModel.h"
+#import "PayCodeViewController.h"
 
 @interface PaymentViewController : SPBaseViewController<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
