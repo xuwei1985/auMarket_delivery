@@ -8,6 +8,7 @@
 
 #import "SPBaseModel.h"
 #import "TaskEntity.h"
+#import "TimeSectionEntity.h"
 #import "OrderGoodsEntity.h"
 
 typedef enum {
@@ -21,8 +22,10 @@ typedef enum {
 @interface TaskModel : SPBaseModel
 @property (nonatomic,retain) TaskEntity *entity;
 @property (nonatomic,retain) OrderGoodsEntity *goods_entity;
+@property (nonatomic,retain) TimeSectionEntity *time_entity;
 
 -(void)loadTaskList;
+-(void)loadDeliveryTimeSection;
 -(void)loadGoodsListForOrder:(NSString *)order_id;
 -(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(NSString *)pay_type andImgPath:(NSString *)img_path andOrderSn:(NSString *)order_sn;
 //根据配送状态抽取配送列表

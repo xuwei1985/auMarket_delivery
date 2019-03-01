@@ -28,7 +28,12 @@
     markerArr=[[NSMutableArray alloc] init];
     parkingMarkerArr=[[NSMutableArray alloc] init];
     predict_time_arr=[[NSMutableArray alloc] init];
+    sectionSelArr=[[NSMutableArray alloc] init];
+    defaultSectionColor=@"#B4B4B4";
+    sectionColorArr=[[NSArray alloc] initWithObjects:@"#0E7ECA",@"#CCB857",@"#C73855",@"#24BF4B",@"#6251BE", nil];
     [self generatePredictTime];
+    [self.model loadDeliveryTimeSection];
+    
 }
 
 -(void)generatePredictTime{
@@ -81,6 +86,8 @@
     [self createMapView];
     [self createParkingMask];
     [self createPredictTimeView];
+    [self createDeliveryTimeSection];
+    
 }
 
 -(void)setNavigation{
@@ -123,6 +130,54 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
 }
 
+-(void)createDeliveryTimeSection{
+    float s_width=(WIDTH_SCREEN-20-10)/2;
+    float s_height=32.0f;
+    float s_x=20.0;
+    float s_y=10.0;
+    
+    self.view.userInteractionEnabled=YES;
+    for (int i=0; i<4; i++) {
+        s_x=i%2*((WIDTH_SCREEN-20-10)/2+10)+10;
+        s_y=i/2*(s_height+10)+10;
+        UIView *timeSectionView=[[UIView alloc] initWithFrame:CGRectMake(s_x, s_y, s_width, s_height)];
+        timeSectionView.tag=7000+i;
+        timeSectionView.layer.cornerRadius=16;
+        timeSectionView.clipsToBounds=YES;
+        timeSectionView.alpha=0.8;
+        timeSectionView.userInteractionEnabled=YES;
+        timeSectionView.backgroundColor=[Common hexColor:defaultSectionColor];
+        [self.view addSubview:timeSectionView];
+        
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(timeSectionTap:)];
+        tapRecognizer.cancelsTouchesInView = NO;
+        [timeSectionView addGestureRecognizer:tapRecognizer];
+        
+        UILabel *timeSectionLbl=[[UILabel alloc] initWithFrame:CGRectMake(36, 2, (s_width-44),(s_height-4))];
+        timeSectionLbl.text=@"11:00-14:00";
+        timeSectionLbl.font=FONT_SIZE_MIDDLE;
+        timeSectionLbl.textColor=COLOR_WHITE;
+        timeSectionLbl.textAlignment=NSTextAlignmentLeft;
+        timeSectionLbl.userInteractionEnabled=YES;
+        [timeSectionView addSubview:timeSectionLbl];
+        
+    }
+}
+
+-(void)timeSectionTap:(UITapGestureRecognizer *)sender{
+    int tag=(int)sender.view.tag;
+    NSString *sectionColor=[sectionColorArr objectAtIndex:(tag-7000)];//匹配对应的颜色值
+
+    if(((int)[sectionSelArr indexOfObject:[NSString stringWithFormat:@"%d",tag]])<0){//未选择过
+        [sectionSelArr addObject:[NSString stringWithFormat:@"%d",tag]];
+        sender.view.backgroundColor=[Common hexColor:sectionColor];
+    }
+    else{
+        [sectionSelArr removeObject:[NSString stringWithFormat:@"%d",tag]];
+        sender.view.backgroundColor=[Common hexColor:defaultSectionColor];
+        
+    }
+}
 
 -(void)createPredictTimeView{
     _txt_predict=[[UITextField alloc] initWithFrame:CGRectZero];
@@ -438,14 +493,25 @@
     [self.model savePredictTime:ids andPredictTime:predict_time];
 }
 
--(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
+-(void)onResponse:(TaskModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
-    if(isSuccess){
-        [self showToastWithText:@"保存成功"];
+    if(model.requestTag==3001){
+        if(isSuccess){
+            [self showToastWithText:@"保存成功"];
+        }
     }
-    else{
-        [self showToastWithText:@"保存失败"];
+    else if(model.requestTag==3003){
+        if(isSuccess){
+            NSLog(@"%@",model.time_entity.list);
+        }
     }
+}
+#pragma mark UIGestureRecognizerClick
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+    
 }
 
 #pragma mark - picker view delegate
@@ -726,7 +792,7 @@
     isShowing=YES;
     btn_workState.selected=APP_DELEGATE.isWorking;
     [APP_DELEGATE.booter loadTaskList];
-    [self checkLoginStatus];
+//    [self checkLoginStatus];
 }
 
 
