@@ -278,6 +278,7 @@
         
         [self performSelector:@selector(postPersonLogin) withObject:nil afterDelay:0.1];
     }
+    [self gotoHomeView];
 }
 
 

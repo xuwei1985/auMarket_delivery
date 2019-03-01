@@ -22,6 +22,9 @@
     UIButton *btn_workState;
     NSMutableArray<GMSMarker *> *markerArr;
     NSMutableArray<GMSMarker *> *parkingMarkerArr;
+    NSMutableArray *sectionSelArr;
+    NSArray *sectionColorArr;
+    NSString *defaultSectionColor;
     Boolean isLoadedMaker;
     GMSMarker *selectedMarker;
     UIPickerView *predictTimePicker;
