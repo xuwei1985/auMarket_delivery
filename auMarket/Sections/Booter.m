@@ -305,6 +305,7 @@
                 self.tasklist_finished= [self.taskModel getTasksByStatus:Delivery_Status_Finished];
                 self.tasklist_failed= [self.taskModel getTasksByStatus:Delivery_Status_Failed];
                 self.tasklist_unknown= [self.taskModel getTasksByStatus:Delivery_Status_Unknow];
+                self.sectionArr=[self.taskModel getSectionTimes];
             //});
         }
         else{

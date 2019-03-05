@@ -19,7 +19,7 @@
 
 -(void)loadTaskList{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delivery_list&delivery_id=%@",user.user_id];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delivery_list&delivery_id=%@",@"999"];//user.user_id
     self.parseDataClassType = [TaskEntity class];
     self.params = @{};
     self.requestTag=3001;
@@ -94,6 +94,39 @@
     }
     return mArr;
 }
+
+/**
+ 抽取配送列表中，所有的配送时间段
+ */
+-(NSArray *)getSectionTimes{
+    NSMutableArray *mArr=[[NSMutableArray alloc] init];
+    if(self.entity.list){
+        for(int i=0;i<self.entity.list.count;i++){
+            NSString *section_time=[self formatSectionTime:[self.entity.list objectAtIndex:i].delivery_time];
+            if([mArr indexOfObject:section_time]<0){
+                [mArr addObject:section_time];
+            }
+        }
+    }
+    return mArr;
+}
+
+-(NSString *)formatSectionTime:(NSString *)sectionTime{
+    NSString * str=sectionTime;
+    if(str){
+        NSArray *array =[str componentsSeparatedByString:@" "];
+        if(array){
+            return [array lastObject];
+        }
+        else{
+            return @"";
+        }
+    }
+    else{
+        return @"";
+    }
+}
+
 
 -(TaskEntity *)entity{
     if(!_entity){
