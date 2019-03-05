@@ -161,12 +161,12 @@
     
     self.view.userInteractionEnabled=YES;
     
-    NSMutableArray<TimeItemEntity*> *list=self.model.time_entity.list;
+    NSArray *list=APP_DELEGATE.booter.sectionArr;
     for (int i=0; i<list.count; i++) {
         s_x=i%2*((WIDTH_SCREEN-20-10)/2+10)+10;
         s_y=i/2*(s_height+10)+10;
         UIButton *timeSectionBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-        [timeSectionBtn setTitle:[self formatSectionTime:[list objectAtIndex:i].receiving_time] forState:UIControlStateNormal];
+        [timeSectionBtn setTitle:[self formatSectionTime:[list objectAtIndex:i]] forState:UIControlStateNormal];
         timeSectionBtn.tag=7000+i;
         [timeSectionBtn setFrame:CGRectMake(s_x, s_y, s_width, s_height)];
         [timeSectionBtn setImage:[UIImage imageNamed:@"section_location"] forState:UIControlStateNormal];
@@ -300,8 +300,6 @@
 }
 
 -(void)loadTaskMask:(int)model{
-    [self createDeliveryTimeSection];
-    
     CLLocationCoordinate2D coordinate;
     TaskItemEntity *itemEntity;
     GMSMarker *marker;
@@ -851,6 +849,7 @@
 //配送数据更新
 - (void)onTaskUpdate:(NSNotification*)aNotitification{
     if(isShowing){
+        [self createDeliveryTimeSection];
         [self loadTaskMask:0];
     }
 }
