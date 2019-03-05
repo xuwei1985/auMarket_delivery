@@ -33,6 +33,8 @@
     UITextField *_txt_predict;
     int predict_select_index;
     NSMutableArray<PredictTimeEntity *>*predict_time_arr;
+    UISwitch *sectionSwitch;
+    BOOL showSections;
 }
 @property(nonatomic,retain) TaskModel *model;
 @end

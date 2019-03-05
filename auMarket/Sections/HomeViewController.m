@@ -25,15 +25,14 @@
 -(void)initData{
     isExchangeModel=NO;
     isLoadedMaker=NO;
+    showSections=YES;
     markerArr=[[NSMutableArray alloc] init];
     parkingMarkerArr=[[NSMutableArray alloc] init];
     predict_time_arr=[[NSMutableArray alloc] init];
     sectionSelArr=[[NSMutableArray alloc] init];
     defaultSectionColor=@"#B4B4B4";
-    sectionColorArr=[[NSArray alloc] initWithObjects:@"#0E7ECA",@"#CCB857",@"#C73855",@"#24BF4B",@"#6251BE", nil];
+    sectionColorArr=[[NSArray alloc] initWithObjects:@"#0E7ECA",@"#6251BE",@"#C73855",@"#24BF4B",@"#F267EB",@"#CCB857", nil];
     [self generatePredictTime];
-    [self.model loadDeliveryTimeSection];
-    
 }
 
 -(void)generatePredictTime{
@@ -86,8 +85,6 @@
     [self createMapView];
     [self createParkingMask];
     [self createPredictTimeView];
-    [self createDeliveryTimeSection];
-    
 }
 
 -(void)setNavigation{
@@ -96,16 +93,22 @@
     [btn_l setImage:[UIImage imageNamed:@"task"] forState:UIControlStateNormal];
     [btn_l addTarget:self action:@selector(gotoSmsTaskView) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_r.frame= CGRectMake(0, 0, 32, 32);
-    [btn_r setImage:[UIImage imageNamed:@"1_09"] forState:UIControlStateNormal];
-    [btn_r setImage:[UIImage imageNamed:@"1_21"] forState:UIControlStateSelected];
-    [btn_r addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
+//    UIButton *btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
+//    btn_r.frame= CGRectMake(0, 0, 32, 32);
+//    [btn_r setImage:[UIImage imageNamed:@"1_09"] forState:UIControlStateNormal];
+//    [btn_r setImage:[UIImage imageNamed:@"1_21"] forState:UIControlStateSelected];
+//    [btn_r addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *btn_left = [[UIBarButtonItem alloc] initWithCustomView:btn_l];
     self.navigationItem.leftBarButtonItem =btn_left;
     
-    UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:btn_r];
+    sectionSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    sectionSwitch.on = showSections;
+    sectionSwitch.transform = CGAffineTransformMakeScale(0.95, 0.95);
+    [sectionSwitch addTarget:self action:@selector(sectionSwitchChanged:) forControlEvents:(UIControlEventValueChanged)];
+    self.navigationItem.titleView=sectionSwitch;
+    
+    UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:sectionSwitch];
     self.navigationItem.rightBarButtonItem =btn_right;
     
     btn_workState = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -126,57 +129,119 @@
     self.navigationItem.titleView=btn_workState;
 }
 
+
+-(void)sectionSwitchChanged:(id)sender
+{
+    UISwitch *switchButton = (UISwitch*)sender;
+    BOOL isButtonOn = [switchButton isOn];
+    
+    if (isButtonOn) {
+        sectionSwitch.on = YES;
+        showSections=YES;
+        [self setSectionButtonState:1];
+    }else {
+        sectionSwitch.on = NO;
+        showSections=NO;
+        [self setSectionButtonState:0];
+    }
+    [self handlerWorkState];
+}
+
+
 -(void)addNotification{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
 }
 
 -(void)createDeliveryTimeSection{
+    //sectionArr
     float s_width=(WIDTH_SCREEN-20-10)/2;
-    float s_height=32.0f;
+    float s_height=34.0f;
     float s_x=20.0;
     float s_y=10.0;
     
     self.view.userInteractionEnabled=YES;
-    for (int i=0; i<4; i++) {
+    
+    NSMutableArray<TimeItemEntity*> *list=self.model.time_entity.list;
+    for (int i=0; i<list.count; i++) {
         s_x=i%2*((WIDTH_SCREEN-20-10)/2+10)+10;
         s_y=i/2*(s_height+10)+10;
-        UIView *timeSectionView=[[UIView alloc] initWithFrame:CGRectMake(s_x, s_y, s_width, s_height)];
-        timeSectionView.tag=7000+i;
-        timeSectionView.layer.cornerRadius=16;
-        timeSectionView.clipsToBounds=YES;
-        timeSectionView.alpha=0.8;
-        timeSectionView.userInteractionEnabled=YES;
-        timeSectionView.backgroundColor=[Common hexColor:defaultSectionColor];
-        [self.view addSubview:timeSectionView];
-        
-        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(timeSectionTap:)];
-        tapRecognizer.cancelsTouchesInView = NO;
-        [timeSectionView addGestureRecognizer:tapRecognizer];
-        
-        UILabel *timeSectionLbl=[[UILabel alloc] initWithFrame:CGRectMake(36, 2, (s_width-44),(s_height-4))];
-        timeSectionLbl.text=@"11:00-14:00";
-        timeSectionLbl.font=FONT_SIZE_MIDDLE;
-        timeSectionLbl.textColor=COLOR_WHITE;
-        timeSectionLbl.textAlignment=NSTextAlignmentLeft;
-        timeSectionLbl.userInteractionEnabled=YES;
-        [timeSectionView addSubview:timeSectionLbl];
-        
+        UIButton *timeSectionBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+        [timeSectionBtn setTitle:[self formatSectionTime:[list objectAtIndex:i].receiving_time] forState:UIControlStateNormal];
+        timeSectionBtn.tag=7000+i;
+        [timeSectionBtn setFrame:CGRectMake(s_x, s_y, s_width, s_height)];
+        [timeSectionBtn setImage:[UIImage imageNamed:@"section_location"] forState:UIControlStateNormal];
+        timeSectionBtn.imageEdgeInsets = UIEdgeInsetsMake(2, 8, 2, 75);
+        timeSectionBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -38, 0, 0);
+        [timeSectionBtn setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+        timeSectionBtn.titleLabel.font=FONT_SIZE_MIDDLE;
+        timeSectionBtn.layer.cornerRadius=16;
+        timeSectionBtn.clipsToBounds=YES;
+        timeSectionBtn.alpha=0.83;
+        timeSectionBtn.backgroundColor=[Common hexColor:defaultSectionColor];
+        [timeSectionBtn addTarget:self action:@selector(timeSectionTap:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:timeSectionBtn];
+    }
+    
+    [self setSectionButtonState:1];
+}
+
+-(void)setSectionButtonState:(int)mode{
+    NSMutableArray<TimeItemEntity*> *list=self.model.time_entity.list;
+    if(mode==0){
+        for (int i=0; i<list.count; i++) {
+            UIButton *timeSectionBtn=[self.view viewWithTag:7000+i];
+            timeSectionBtn.backgroundColor=[Common hexColor:defaultSectionColor];
+        }
+    }
+    else{
+        for (int i=0; i<list.count; i++) {
+            NSString *sectionColor=[sectionColorArr objectAtIndex:i];//匹配对应的颜色值
+            UIButton *timeSectionBtn=[self.view viewWithTag:7000+i];
+            timeSectionBtn.backgroundColor=[Common hexColor:sectionColor];
+        }
     }
 }
 
--(void)timeSectionTap:(UITapGestureRecognizer *)sender{
-    int tag=(int)sender.view.tag;
+-(void)timeSectionTap:(UIButton *)sender{
+    int tag=(int)sender.tag;
     NSString *sectionColor=[sectionColorArr objectAtIndex:(tag-7000)];//匹配对应的颜色值
 
     if(((int)[sectionSelArr indexOfObject:[NSString stringWithFormat:@"%d",tag]])<0){//未选择过
         [sectionSelArr addObject:[NSString stringWithFormat:@"%d",tag]];
-        sender.view.backgroundColor=[Common hexColor:sectionColor];
+        sender.backgroundColor=[Common hexColor:sectionColor];
     }
     else{
         [sectionSelArr removeObject:[NSString stringWithFormat:@"%d",tag]];
-        sender.view.backgroundColor=[Common hexColor:defaultSectionColor];
+        sender.backgroundColor=[Common hexColor:defaultSectionColor];
         
     }
+}
+
+-(NSString *)formatSectionTime:(NSString *)sectionTime{
+    NSString * str=sectionTime;
+    if(str){
+        NSArray *array =[str componentsSeparatedByString:@" "];
+        if(array){
+            return [array lastObject];
+        }
+        else{
+            return @"";
+        }
+    }
+    else{
+        return @"";
+    }
+}
+
+-(int)getSectionColorIndex:(NSString *)time{
+    int color= -1;
+    NSMutableArray<TimeItemEntity*> *list=self.model.time_entity.list;
+    for (int i=0; i<list.count; i++) {
+        if([[self formatSectionTime:time] isEqualToString:[self formatSectionTime:[list objectAtIndex:i].receiving_time]]){
+            color = i;
+        }
+    }
+    return color;
 }
 
 -(void)createPredictTimeView{
@@ -235,9 +300,12 @@
 }
 
 -(void)loadTaskMask:(int)model{
+    [self createDeliveryTimeSection];
+    
     CLLocationCoordinate2D coordinate;
     TaskItemEntity *itemEntity;
     GMSMarker *marker;
+    NSString *location_icon=@"";
     BOOL only_unset_predict_order=(model==1);//model:1 只显示未设置预计配送到达时间的订单
 
     if(markerArr){
@@ -322,23 +390,41 @@
         marker=[self isExistMarker:itemEntity.coordinate andAddress:itemEntity.address];
         if(marker==nil){
             mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
-            if([itemEntity.predict_time length]<=0){
-                
-                if([itemEntity.upstairs_mark isEqualToString:@"default"]){
-                    mapMaker.image=[UIImage imageNamed:@"1_29_blue"];
+            
+            if(showSections){
+                int n=[self getSectionColorIndex:itemEntity.delivery_time];
+                if(n>-1){
+                    location_icon=[NSString stringWithFormat:@"1_29_color_%d",n];
+                    if([itemEntity.predict_time length]<=0){
+                        if(![itemEntity.upstairs_mark isEqualToString:@"default"]){
+                            location_icon=[NSString stringWithFormat:@"%@_%@",location_icon,itemEntity.upstairs_mark];
+                        }
+                    }
                 }
                 else{
-                    mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_blue_%@",itemEntity.upstairs_mark]];
+                    location_icon=@"1_29_blue";
                 }
+                mapMaker.image=[UIImage imageNamed:location_icon];
             }
             else{
-                if([itemEntity.upstairs_mark isEqualToString:@"default"]){
-                    mapMaker.image=[UIImage imageNamed:@"1_29"];
+                if([itemEntity.predict_time length]<=0){
+                    if([itemEntity.upstairs_mark isEqualToString:@"default"]){
+                        mapMaker.image=[UIImage imageNamed:@"1_29_blue"];
+                    }
+                    else{
+                        mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_blue_%@",itemEntity.upstairs_mark]];
+                    }
                 }
                 else{
-                    mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_%@",itemEntity.upstairs_mark]];
+                    if([itemEntity.upstairs_mark isEqualToString:@"default"]){
+                        mapMaker.image=[UIImage imageNamed:@"1_29"];
+                    }
+                    else{
+                        mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_%@",itemEntity.upstairs_mark]];
+                    }
                 }
             }
+            
             mapMaker.markTip=@"";
             [mapMaker loadData];
             
@@ -498,11 +584,6 @@
     if(model.requestTag==3001){
         if(isSuccess){
             [self showToastWithText:@"保存成功"];
-        }
-    }
-    else if(model.requestTag==3003){
-        if(isSuccess){
-            NSLog(@"%@",model.time_entity.list);
         }
     }
 }
@@ -750,16 +831,20 @@
 
 -(void)toggleWorkState:(UIButton *)sender{
     if(!isExchangeModel){
-        sender.selected=!sender.selected;
-        //    [APP_DELEGATE.booter handlerWorkingState:sender.selected];
-        if(sender.selected){
-            isExchangeModel=YES;
-            [self loadTaskMask:1];
-        }
-        else{
-            isExchangeModel=YES;
-            [self loadTaskMask:0];
-        }
+        btn_workState.selected=!btn_workState.selected;
+        [APP_DELEGATE.booter handlerWorkingState:btn_workState.selected];
+        [self handlerWorkState];
+    }
+}
+
+-(void)handlerWorkState{
+    if(btn_workState.selected){
+        isExchangeModel=YES;
+        [self loadTaskMask:1];
+    }
+    else{
+        isExchangeModel=YES;
+        [self loadTaskMask:0];
     }
 }
 

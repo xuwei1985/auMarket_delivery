@@ -37,6 +37,7 @@
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_finished;//配送完成的订单
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_failed;//配送失败的订单
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_unknown;//没有配送坐标的订单
+@property (nonatomic,strong) NSArray *sectionArr;//配送时间段数组
 @property (nonatomic,strong) NSArray<ParkingItemEntity *> *parkinglist;
 
 // 获取引导页
