@@ -186,18 +186,26 @@
 }
 
 -(void)setSectionButtonState:(int)mode{
-    NSMutableArray<TimeItemEntity*> *list=self.model.time_entity.list;
+    NSArray *list=APP_DELEGATE.booter.sectionArr;
     if(mode==0){
         for (int i=0; i<list.count; i++) {
             UIButton *timeSectionBtn=[self.view viewWithTag:7000+i];
-            timeSectionBtn.backgroundColor=[Common hexColor:defaultSectionColor];
+            [timeSectionBtn setBackgroundColor:[Common hexColor:defaultSectionColor]];
+            
+            if([sectionSelArr containsObject:[NSString stringWithFormat:@"%d",(7000+i)]]){
+                [sectionSelArr removeObject:[NSString stringWithFormat:@"%d",(7000+i)]];
+            }
         }
     }
     else{
         for (int i=0; i<list.count; i++) {
             NSString *sectionColor=[sectionColorArr objectAtIndex:i];//匹配对应的颜色值
             UIButton *timeSectionBtn=[self.view viewWithTag:7000+i];
-            timeSectionBtn.backgroundColor=[Common hexColor:sectionColor];
+            [timeSectionBtn setBackgroundColor:[Common hexColor:sectionColor]];
+            
+            if(![sectionSelArr containsObject:[NSString stringWithFormat:@"%d",(7000+i)]]){//未选择过
+                [sectionSelArr addObject:[NSString stringWithFormat:@"%d",(7000+i)]];
+            }
         }
     }
 }
@@ -206,15 +214,15 @@
     int tag=(int)sender.tag;
     NSString *sectionColor=[sectionColorArr objectAtIndex:(tag-7000)];//匹配对应的颜色值
 
-    if(((int)[sectionSelArr indexOfObject:[NSString stringWithFormat:@"%d",tag]])<0){//未选择过
+    if(![sectionSelArr containsObject:[NSString stringWithFormat:@"%d",tag]]){//未选择过
         [sectionSelArr addObject:[NSString stringWithFormat:@"%d",tag]];
-        sender.backgroundColor=[Common hexColor:sectionColor];
+        [sender setBackgroundColor:[Common hexColor:sectionColor]];
     }
     else{
         [sectionSelArr removeObject:[NSString stringWithFormat:@"%d",tag]];
-        sender.backgroundColor=[Common hexColor:defaultSectionColor];
-        
+        [sender setBackgroundColor:[Common hexColor:defaultSectionColor]];
     }
+    [self loadTaskMask:0];
 }
 
 -(NSString *)formatSectionTime:(NSString *)sectionTime{
@@ -235,9 +243,9 @@
 
 -(int)getSectionColorIndex:(NSString *)time{
     int color= -1;
-    NSMutableArray<TimeItemEntity*> *list=self.model.time_entity.list;
+    NSArray *list=APP_DELEGATE.booter.sectionArr;
     for (int i=0; i<list.count; i++) {
-        if([[self formatSectionTime:time] isEqualToString:[self formatSectionTime:[list objectAtIndex:i].receiving_time]]){
+        if([[self formatSectionTime:time] isEqualToString:[self formatSectionTime:[list objectAtIndex:i]]]){
             color = i;
         }
     }
@@ -389,7 +397,7 @@
         if(marker==nil){
             mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
             
-            if(showSections){
+            if(showSections&&[self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]]){//时段模式，并且该时段按钮点亮的情况
                 int n=[self getSectionColorIndex:itemEntity.delivery_time];
                 if(n>-1){
                     location_icon=[NSString stringWithFormat:@"1_29_color_%d",n];
@@ -467,6 +475,21 @@
         }
     }
     isExchangeModel=NO;
+}
+
+//判断某个时间段的按钮是否开启
+-(BOOL)isSectionEnable:(NSString *)timeStr{
+    NSArray *list=APP_DELEGATE.booter.sectionArr;
+    for(int i=0;i<list.count;i++){
+        if([[list objectAtIndex:i] isEqualToString:timeStr]){
+            int tag=7000+i;
+            if([sectionSelArr containsObject:[NSString stringWithFormat:@"%d",tag]]){
+                return YES;
+            }
+            break;
+        }
+    }
+    return NO;
 }
 
 //创建停车场的Marker

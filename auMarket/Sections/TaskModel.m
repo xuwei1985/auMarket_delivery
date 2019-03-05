@@ -103,7 +103,7 @@
     if(self.entity.list){
         for(int i=0;i<self.entity.list.count;i++){
             NSString *section_time=[self formatSectionTime:[self.entity.list objectAtIndex:i].delivery_time];
-            if([mArr indexOfObject:section_time]<0){
+            if(![mArr containsObject:section_time]){
                 [mArr addObject:section_time];
             }
         }
