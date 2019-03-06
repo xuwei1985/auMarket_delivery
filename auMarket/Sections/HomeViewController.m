@@ -102,13 +102,18 @@
     UIBarButtonItem *btn_left = [[UIBarButtonItem alloc] initWithCustomView:btn_l];
     self.navigationItem.leftBarButtonItem =btn_left;
     
-    sectionSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    sectionSwitch.on = showSections;
-    sectionSwitch.transform = CGAffineTransformMakeScale(0.95, 0.95);
-    [sectionSwitch addTarget:self action:@selector(sectionSwitchChanged:) forControlEvents:(UIControlEventValueChanged)];
-    self.navigationItem.titleView=sectionSwitch;
+//    sectionSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 120, 30)];
+//    sectionSwitch.on = showSections;
+//    sectionSwitch.transform = CGAffineTransformMakeScale(0.95, 0.95);
+//    [sectionSwitch addTarget:self action:@selector(sectionSwitchChanged:) forControlEvents:(UIControlEventValueChanged)];
     
-    UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:sectionSwitch];
+    UIButton *btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn_r.frame= CGRectMake(0, 0, 32, 32);
+    [btn_r setImage:[UIImage imageNamed:@"1_09"] forState:UIControlStateNormal];
+    [btn_r setImage:[UIImage imageNamed:@"1_21"] forState:UIControlStateSelected];
+    [btn_r addTarget:self action:@selector(sectionSwitchChanged:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:btn_r];
     self.navigationItem.rightBarButtonItem =btn_right;
     
     btn_workState = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -139,6 +144,11 @@
         sectionSwitch.on = YES;
         showSections=YES;
         [self setSectionButtonState:1];
+
+        if(!isExchangeModel){
+            btn_workState.selected=NO;
+            [APP_DELEGATE.booter handlerWorkingState:btn_workState.selected];
+        }
     }else {
         sectionSwitch.on = NO;
         showSections=NO;
@@ -155,16 +165,14 @@
 -(void)createDeliveryTimeSection{
     //sectionArr
     float s_width=(WIDTH_SCREEN-20-10)/2;
-    float s_height=34.0f;
+    float s_height=36.0f;
     float s_x=20.0;
     float s_y=10.0;
-    
-    self.view.userInteractionEnabled=YES;
-    
+
     NSArray *list=APP_DELEGATE.booter.sectionArr;
     for (int i=0; i<list.count; i++) {
         s_x=i%2*((WIDTH_SCREEN-20-10)/2+10)+10;
-        s_y=i/2*(s_height+10)+10;
+        s_y=i/2*(s_height+10)+20;
         UIButton *timeSectionBtn=[UIButton buttonWithType:UIButtonTypeCustom];
         [timeSectionBtn setTitle:[self formatSectionTime:[list objectAtIndex:i]] forState:UIControlStateNormal];
         timeSectionBtn.tag=7000+i;
@@ -174,14 +182,14 @@
         timeSectionBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -38, 0, 0);
         [timeSectionBtn setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
         timeSectionBtn.titleLabel.font=FONT_SIZE_MIDDLE;
-        timeSectionBtn.layer.cornerRadius=16;
+        timeSectionBtn.layer.cornerRadius=18;
         timeSectionBtn.clipsToBounds=YES;
         timeSectionBtn.alpha=0.83;
         timeSectionBtn.backgroundColor=[Common hexColor:defaultSectionColor];
         [timeSectionBtn addTarget:self action:@selector(timeSectionTap:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:timeSectionBtn];
     }
-    
+
     [self setSectionButtonState:1];
 }
 
@@ -393,28 +401,41 @@
         
         coordinate=CLLocationCoordinate2DMake([self reviseDoubleValue:[itemEntity.latitude doubleValue]], [self reviseDoubleValue:[itemEntity.longitude doubleValue]]);
         itemEntity.coordinate=coordinate;//设置配送项目的坐标
+        
         //判断某个coordinate的marker是否存在
         marker=[self isExistMarker:itemEntity.coordinate andAddress:itemEntity.address];
+        
         if(marker==nil){
             mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
             
-            if(showSections&&[self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]]){//时段模式，并且该时段按钮点亮的情况
-                int n=[self getSectionColorIndex:itemEntity.delivery_time];
-                if(n>-1){
-                    location_icon=[NSString stringWithFormat:@"1_29_color_%d",n];
-                    if([itemEntity.predict_time length]<=0){
-                        if(![itemEntity.upstairs_mark isEqualToString:@"default"]){
-                            location_icon=[NSString stringWithFormat:@"%@_%@",location_icon,itemEntity.upstairs_mark];
+            if(showSections){//时段模式，并且该时段按钮点亮的情况
+                if([self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]]){
+                    int n=[self getSectionColorIndex:itemEntity.delivery_time];
+                    if(n>-1){
+                        location_icon=[NSString stringWithFormat:@"1_29_color_%d",n];
+                        
+                        if([itemEntity.predict_time length]<=0){//未设置预计送达时间
+                            if(![itemEntity.upstairs_mark isEqualToString:@"default"]){
+                                location_icon=[NSString stringWithFormat:@"%@_%@",location_icon,itemEntity.upstairs_mark];
+                            }
+                        }
+                        else{//设置了预计送达时间
+                            if([itemEntity.upstairs_mark isEqualToString:@"default"]){//非送货上楼
+                                mapMaker.image=[UIImage imageNamed:@"1_29"];
+                            }
+                            else{//送货上楼
+                                mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_%@",itemEntity.upstairs_mark]];
+                            }
                         }
                     }
+                    else{
+                        location_icon=@"1_29_blue";
+                    }
+                    mapMaker.image=[UIImage imageNamed:location_icon];
                 }
-                else{
-                    location_icon=@"1_29_blue";
-                }
-                mapMaker.image=[UIImage imageNamed:location_icon];
             }
             else{
-                if([itemEntity.predict_time length]<=0){
+                if([itemEntity.predict_time length]<=0){//未设置预计送达时间
                     if([itemEntity.upstairs_mark isEqualToString:@"default"]){
                         mapMaker.image=[UIImage imageNamed:@"1_29_blue"];
                     }
@@ -422,56 +443,64 @@
                         mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_blue_%@",itemEntity.upstairs_mark]];
                     }
                 }
-                else{
-                    if([itemEntity.upstairs_mark isEqualToString:@"default"]){
+                else{//设置了预计送达时间
+                    if([itemEntity.upstairs_mark isEqualToString:@"default"]){//非送货上楼
                         mapMaker.image=[UIImage imageNamed:@"1_29"];
                     }
-                    else{
+                    else{//送货上楼
                         mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_%@",itemEntity.upstairs_mark]];
                     }
                 }
             }
             
-            mapMaker.markTip=@"";
-            [mapMaker loadData];
-            
-            marker = [[GMSMarker alloc] init];
-            marker.position = CLLocationCoordinate2DMake(itemEntity.coordinate.latitude, itemEntity.coordinate.longitude);
-            marker.title = itemEntity.consignee;
-            marker.snippet = itemEntity.address;
-            marker.appearAnimation = kGMSMarkerAnimationNone;
-            marker.iconView=mapMaker;
-            marker.map = mapView;
-            marker.latitude=[self reviseDoubleValue:itemEntity.coordinate.latitude];
-            marker.longitude=[self reviseDoubleValue:itemEntity.coordinate.longitude];
-            marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithObjects:itemEntity, nil];
+            if(!showSections||(showSections&&[self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]])){//时段模式，并且该时段按钮点亮的情况
+                mapMaker.markTip=@"";
+                [mapMaker loadData];
+                
+                marker = [[GMSMarker alloc] init];
+                marker.position = CLLocationCoordinate2DMake(itemEntity.coordinate.latitude, itemEntity.coordinate.longitude);
+                marker.title = itemEntity.consignee;
+                marker.snippet = itemEntity.address;
+                marker.appearAnimation = kGMSMarkerAnimationNone;
+                marker.iconView=mapMaker;
+                marker.map = mapView;
+                marker.latitude=[self reviseDoubleValue:itemEntity.coordinate.latitude];
+                marker.longitude=[self reviseDoubleValue:itemEntity.coordinate.longitude];
+                marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithObjects:itemEntity, nil];
 
-            [markerArr addObject:marker];
+                [markerArr addObject:marker];
+            }
         }
         else{
-            int n=[((MapMaker *)marker.iconView).markTip intValue];
-            if(n<=0){
-                n=1;
-            }
-        
-            ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%@",(n+1)>1?[NSString stringWithFormat:@"%d",(n+1)]:@""];
-            [((MapMaker *)marker.iconView) loadData];
-
-            NSMutableArray *arr=[NSMutableArray arrayWithArray:marker.taskArr];
-            [arr addObject:itemEntity];
-            marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithArray:arr];
-            
-            Boolean has_unPredict=NO;
-            for (TaskItemEntity *enity in marker.taskArr) {
-                if([enity.predict_time length]<=0){
-                    has_unPredict=YES;
+            if(!showSections||(showSections&&[self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]])){//时段模式，并且该时段按钮点亮的情况
+                int n=[((MapMaker *)marker.iconView).markTip intValue];
+                if(n<=0){
+                    n=1;
                 }
-            }
-            if(has_unPredict){
-                mapMaker.image=[UIImage imageNamed:@"1_29_blue"];
-            }
-            else{
-                mapMaker.image=[UIImage imageNamed:@"1_29"];
+                
+                ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%@",(n+1)>1?[NSString stringWithFormat:@"%d",(n+1)]:@""];
+                [((MapMaker *)marker.iconView) loadData];
+                
+                NSMutableArray *arr=[NSMutableArray arrayWithArray:marker.taskArr];
+                [arr addObject:itemEntity];
+                marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithArray:arr];
+                
+                //设置预计送达时间状态
+                if(!showSections){
+                    Boolean has_unPredict=NO;
+                    for (TaskItemEntity *enity in marker.taskArr) {
+                        if([enity.predict_time length]<=0){
+                            has_unPredict=YES;
+                        }
+                    }
+                    
+                    if(has_unPredict){
+                        mapMaker.image=[UIImage imageNamed:@"1_29_blue"];
+                    }
+                    else{
+                        mapMaker.image=[UIImage imageNamed:@"1_29"];
+                    }
+                }
             }
         }
     }
@@ -852,7 +881,7 @@
 }
 
 -(void)toggleWorkState:(UIButton *)sender{
-    if(!isExchangeModel){
+    if(!isExchangeModel&&!showSections){
         btn_workState.selected=!btn_workState.selected;
         [APP_DELEGATE.booter handlerWorkingState:btn_workState.selected];
         [self handlerWorkState];
@@ -873,7 +902,7 @@
 //配送数据更新
 - (void)onTaskUpdate:(NSNotification*)aNotitification{
     if(isShowing){
-        [self createDeliveryTimeSection];
+//        [self createDeliveryTimeSection];
         [self loadTaskMask:0];
     }
 }
