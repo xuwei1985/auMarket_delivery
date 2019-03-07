@@ -31,7 +31,7 @@
     predict_time_arr=[[NSMutableArray alloc] init];
     sectionSelArr=[[NSMutableArray alloc] init];
     defaultSectionColor=@"#B4B4B4";
-    sectionColorArr=[[NSArray alloc] initWithObjects:@"#0E7ECA",@"#6251BE",@"#C73855",@"#24BF4B",@"#F267EB",@"#CCB857", nil];
+    sectionColorArr=[[NSArray alloc] initWithObjects:@"#fb4d3d",@"#70BEB7",@"#E37CB0",@"#F7D062",@"#F267EB",@"#CCB857", nil];
     [self generatePredictTime];
 }
 
@@ -109,9 +109,11 @@
     
     UIButton *btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_r.frame= CGRectMake(0, 0, 32, 32);
-    [btn_r setImage:[UIImage imageNamed:@"1_09"] forState:UIControlStateNormal];
-    [btn_r setImage:[UIImage imageNamed:@"1_21"] forState:UIControlStateSelected];
-    [btn_r addTarget:self action:@selector(sectionSwitchChanged:) forControlEvents:UIControlEventTouchUpInside];
+    btn_r.selected=showSections;
+    [btn_r setImage:[UIImage imageNamed:@"section_time_off"] forState:UIControlStateNormal];
+    [btn_r setImage:[UIImage imageNamed:@"section_time_on"] forState:UIControlStateSelected];
+    btn_r.imageEdgeInsets = UIEdgeInsetsMake(2, 10, 2, 0);
+    [btn_r addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:btn_r];
     self.navigationItem.rightBarButtonItem =btn_right;
@@ -173,6 +175,14 @@
     for (int i=0; i<list.count; i++) {
         s_x=i%2*((WIDTH_SCREEN-20-10)/2+10)+10;
         s_y=i/2*(s_height+10)+20;
+        
+        NSString *sectionColor=[sectionColorArr objectAtIndex:i];//匹配对应的颜色值
+        
+        UIButton *btn=[self.view viewWithTag:7000+i];
+        if(btn){
+            [btn removeFromSuperview];
+        }
+            
         UIButton *timeSectionBtn=[UIButton buttonWithType:UIButtonTypeCustom];
         [timeSectionBtn setTitle:[self formatSectionTime:[list objectAtIndex:i]] forState:UIControlStateNormal];
         timeSectionBtn.tag=7000+i;
@@ -184,13 +194,19 @@
         timeSectionBtn.titleLabel.font=FONT_SIZE_MIDDLE;
         timeSectionBtn.layer.cornerRadius=18;
         timeSectionBtn.clipsToBounds=YES;
-        timeSectionBtn.alpha=0.83;
-        timeSectionBtn.backgroundColor=[Common hexColor:defaultSectionColor];
+        timeSectionBtn.alpha=0.85;
+        [timeSectionBtn setBackgroundImage:[UIImage imageWithColor:[Common hexColor:defaultSectionColor]] forState:UIControlStateNormal];
+        [timeSectionBtn setBackgroundImage:[UIImage imageWithColor:[Common hexColor:sectionColor]] forState:UIControlStateSelected];
         [timeSectionBtn addTarget:self action:@selector(timeSectionTap:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:timeSectionBtn];
     }
 
-    [self setSectionButtonState:1];
+    if(showSections){
+         [self setSectionButtonState:1];
+    }
+    else{
+        [self setSectionButtonState:0];
+    }
 }
 
 -(void)setSectionButtonState:(int)mode{
@@ -198,7 +214,7 @@
     if(mode==0){
         for (int i=0; i<list.count; i++) {
             UIButton *timeSectionBtn=[self.view viewWithTag:7000+i];
-            [timeSectionBtn setBackgroundColor:[Common hexColor:defaultSectionColor]];
+            timeSectionBtn.selected=NO;
             
             if([sectionSelArr containsObject:[NSString stringWithFormat:@"%d",(7000+i)]]){
                 [sectionSelArr removeObject:[NSString stringWithFormat:@"%d",(7000+i)]];
@@ -207,9 +223,9 @@
     }
     else{
         for (int i=0; i<list.count; i++) {
-            NSString *sectionColor=[sectionColorArr objectAtIndex:i];//匹配对应的颜色值
+//            NSString *sectionColor=[sectionColorArr objectAtIndex:i];//匹配对应的颜色值
             UIButton *timeSectionBtn=[self.view viewWithTag:7000+i];
-            [timeSectionBtn setBackgroundColor:[Common hexColor:sectionColor]];
+            timeSectionBtn.selected=YES;
             
             if(![sectionSelArr containsObject:[NSString stringWithFormat:@"%d",(7000+i)]]){//未选择过
                 [sectionSelArr addObject:[NSString stringWithFormat:@"%d",(7000+i)]];
@@ -219,18 +235,19 @@
 }
 
 -(void)timeSectionTap:(UIButton *)sender{
-    int tag=(int)sender.tag;
-    NSString *sectionColor=[sectionColorArr objectAtIndex:(tag-7000)];//匹配对应的颜色值
+    if(showSections){
+        int tag=(int)sender.tag;
 
-    if(![sectionSelArr containsObject:[NSString stringWithFormat:@"%d",tag]]){//未选择过
-        [sectionSelArr addObject:[NSString stringWithFormat:@"%d",tag]];
-        [sender setBackgroundColor:[Common hexColor:sectionColor]];
+        if(!sender.selected){//未选择过
+            [sectionSelArr addObject:[NSString stringWithFormat:@"%d",tag]];
+            sender.selected=YES;
+        }
+        else{
+            [sectionSelArr removeObject:[NSString stringWithFormat:@"%d",tag]];
+            sender.selected=NO;
+        }
+        [self loadTaskMask:0];
     }
-    else{
-        [sectionSelArr removeObject:[NSString stringWithFormat:@"%d",tag]];
-        [sender setBackgroundColor:[Common hexColor:defaultSectionColor]];
-    }
-    [self loadTaskMask:0];
 }
 
 -(NSString *)formatSectionTime:(NSString *)sectionTime{
@@ -871,13 +888,31 @@
 }
 
 -(void)toggleParkMaker:(UIButton *)sender{
+//    sender.selected=!sender.selected;
+//    if(sender.selected){
+//        [self showParkingMarkers];
+//    }
+//    else{
+//        [self hideParkingMarkers];
+//    }
+    
+    //挪用为控制时间分段的订单
     sender.selected=!sender.selected;
     if(sender.selected){
-        [self showParkingMarkers];
+        showSections=YES;
+        [self setSectionButtonState:1];
+        
+        if(!isExchangeModel){
+            btn_workState.selected=NO;
+            [APP_DELEGATE.booter handlerWorkingState:btn_workState.selected];
+        }
     }
     else{
-        [self hideParkingMarkers];
+        showSections=NO;
+        [self setSectionButtonState:0];
     }
+    
+    [self handlerWorkState];
 }
 
 -(void)toggleWorkState:(UIButton *)sender{
@@ -902,7 +937,7 @@
 //配送数据更新
 - (void)onTaskUpdate:(NSNotification*)aNotitification{
     if(isShowing){
-//        [self createDeliveryTimeSection];
+        [self createDeliveryTimeSection];
         [self loadTaskMask:0];
     }
 }
