@@ -52,6 +52,7 @@
 //
     SPNavigationController *navController = [[SPNavigationController alloc] initWithRootViewController:[[UserLoginViewController alloc] init]];
     [self.window setRootViewController:navController];
+    [self initLocation];
     
     //启动的弹出界面
 //    UIViewController *startPageViewController = [self.booter bootStartPage];
@@ -66,6 +67,30 @@
 
 -(void)logObj:(id)sender{
     NSLog(@"%@",sender);
+}
+
+-(void)initLocation{
+    // 初始化定位管理器
+    _locationManager = [[CLLocationManager alloc] init];
+    // 设置代理
+    _locationManager.delegate = self;
+    // 设置定位精确度到米
+    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    // 设置过滤器为无
+    _locationManager.distanceFilter = kCLDistanceFilterNone;
+    // 取得定位权限，有两个方法，取决于你的定位使用情况
+    // 一个是requestAlwaysAuthorization，一个是requestWhenInUseAuthorization
+    // 这句话ios8以上版本使用。
+    [_locationManager requestAlwaysAuthorization];
+    // 开始定位
+    [_locationManager startUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    //获取经度
+   CLLocationCoordinate2D coordinate=  newLocation.coordinate;
+   NSLog(@"%lf %lf", coordinate.latitude, coordinate.longitude) ;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -90,9 +115,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    
 }
-
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.

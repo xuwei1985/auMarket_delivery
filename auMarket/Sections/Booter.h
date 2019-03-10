@@ -26,7 +26,9 @@
 #import "BooterModel.h"
 #import "MemberLoginModel.h"
 
-@interface Booter : NSObject<UIGestureRecognizerDelegate,UITabBarControllerDelegate,SPBaseModelProtocol>
+@interface Booter : NSObject<UIGestureRecognizerDelegate,UITabBarControllerDelegate,SPBaseModelProtocol>{
+    int last_location_update;
+}
 
 @property (nonatomic,strong) UINavigationController* navigationController;
 @property (nonatomic,strong) UITabBarController* tabBarController;
@@ -62,4 +64,5 @@
 -(void)bootGoogleMap;
 -(void)loadTaskList;
 -(void)loadParkingList;
+-(void)postLocation;
 @end

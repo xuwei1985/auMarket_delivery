@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Booter.h"
+#import <CoreLocation/CoreLocation.h>
 
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (assign, nonatomic) BOOL isWorking;
 @property (strong,nonatomic) Booter* booter;
 @property (strong, nonatomic) NSString *token;
+@property (strong, nonatomic) CLLocationManager *locationManager;
 
 + (UINavigationController *)getNavigationController;
 + (UITabBarController *)getTabbarController;
