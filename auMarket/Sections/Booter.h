@@ -64,5 +64,5 @@
 -(void)bootGoogleMap;
 -(void)loadTaskList;
 -(void)loadParkingList;
--(void)postLocation;
+-(void)postLocation:(CLLocationCoordinate2D)coordinate;
 @end

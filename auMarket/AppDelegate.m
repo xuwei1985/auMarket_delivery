@@ -79,9 +79,16 @@
     // 设置过滤器为无
     _locationManager.distanceFilter = kCLDistanceFilterNone;
     // 取得定位权限，有两个方法，取决于你的定位使用情况
+    
     // 一个是requestAlwaysAuthorization，一个是requestWhenInUseAuthorization
     // 这句话ios8以上版本使用。
-    [_locationManager requestAlwaysAuthorization];
+    if([[[UIDevice currentDevice] systemVersion]floatValue] >=8) {
+        [_locationManager requestAlwaysAuthorization];
+    }
+    if([[[UIDevice currentDevice] systemVersion]floatValue] >=9) {
+        _locationManager.allowsBackgroundLocationUpdates=YES;
+    }
+    
     // 开始定位
     [_locationManager startUpdatingLocation];
 }
@@ -89,8 +96,9 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     //获取经度
-   CLLocationCoordinate2D coordinate=  newLocation.coordinate;
-   NSLog(@"%lf %lf", coordinate.latitude, coordinate.longitude) ;
+    CLLocationCoordinate2D coordinate=  newLocation.coordinate;
+    [self.booter postLocation:coordinate];
+    NSLog(@"%lf %lf", coordinate.latitude, coordinate.longitude) ;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -13,4 +13,5 @@
 @property (nonatomic,retain) ParkingEntity *parking_entity;
 
 -(void)loadParkingList;
+-(void)postLocation:(CLLocationCoordinate2D)coordinate andUserId:(NSString *)user_id;
 @end

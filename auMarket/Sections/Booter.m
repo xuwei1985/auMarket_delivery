@@ -149,10 +149,14 @@
     [GMSServices provideAPIKey:GOOGLE_APPKEY];
 }
 
--(void)postLocation{
-    int now=[[Common getNowTimeTimestamp] intValue];
-    if((now-last_location_update)>15){
-        
+-(void)postLocation:(CLLocationCoordinate2D)coordinate {
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    if(user.user_id.length>0){
+        int now=[[Common getNowTimeTimestamp] intValue];
+        if((now-last_location_update)>15){//最短15秒提交一次位置信息
+            last_location_update=now;
+            [self.model postLocation:coordinate andUserId:user.user_id];
+        }
     }
 }
 

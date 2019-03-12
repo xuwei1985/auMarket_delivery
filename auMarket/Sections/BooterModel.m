@@ -24,6 +24,13 @@
     [self loadInner];
 }
 
+-(void)postLocation:(CLLocationCoordinate2D)coordinate andUserId:(NSString *)user_id{
+    self.parseDataClassType = [SPBaseEntity class];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=updateDeliverLocation&latitude=%lf&longitude=%lf&delivery_id=%@",coordinate.latitude,coordinate.longitude,user_id];
+    self.params = @{};
+    [self loadInner];
+}
+
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[ParkingEntity class]]) {
