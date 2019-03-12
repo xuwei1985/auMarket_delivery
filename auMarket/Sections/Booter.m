@@ -111,7 +111,6 @@
 - (void)onAccountUpdate:(NSNotification*)aNotification{
 
     //[[SPPullMessageManager sharedInstance] resetPullMessager];
-    
 }
 
 - (UIViewController *)bootStartPage {
@@ -149,6 +148,14 @@
 -(void)bootGoogleMap{
     [GMSServices provideAPIKey:GOOGLE_APPKEY];
 }
+
+-(void)postLocation{
+    int now=[[Common getNowTimeTimestamp] intValue];
+    if((now-last_location_update)>15){
+        
+    }
+}
+
 //启动友盟
 -(void)bootUMeng
 {
