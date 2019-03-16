@@ -438,10 +438,10 @@
                         }
                         else{//设置了预计送达时间
                             if([itemEntity.upstairs_mark isEqualToString:@"default"]){//非送货上楼
-                                mapMaker.image=[UIImage imageNamed:@"1_29"];
+                                location_icon=@"1_29";
                             }
                             else{//送货上楼
-                                mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_%@",itemEntity.upstairs_mark]];
+                                location_icon=[NSString stringWithFormat:@"1_29_%@",itemEntity.upstairs_mark];
                             }
                         }
                     }
