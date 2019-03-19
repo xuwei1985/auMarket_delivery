@@ -100,7 +100,7 @@
     //获取经度
     CLLocationCoordinate2D coordinate=  newLocation.coordinate;
     [self.booter postLocation:coordinate];
-    NSLog(@"%lf %lf", coordinate.latitude, coordinate.longitude) ;
+//    NSLog(@"%lf %lf", coordinate.latitude, coordinate.longitude) ;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

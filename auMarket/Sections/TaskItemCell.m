@@ -29,7 +29,7 @@
     
     [_iconView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(15);
-        make.top.mas_equalTo(18);
+        make.top.mas_equalTo(12);
         make.size.mas_equalTo(CGSizeMake(24, 24));
     }];
     
@@ -44,7 +44,7 @@
     
     [_taskTitleLbl mas_makeConstraints:^(MASConstraintMaker *make) {
         @strongify(self);
-        make.top.mas_equalTo(self.mas_top).offset(18);
+        make.top.mas_equalTo(self.mas_top).offset(12);
         make.left.mas_equalTo(_iconView.mas_right).offset(10);
         make.right.mas_equalTo(self.mas_right).offset(-40);
     }];

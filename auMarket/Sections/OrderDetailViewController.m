@@ -5,7 +5,7 @@
 //  Created by 吴绪伟 on 2016/12/8.
 //  Copyright © 2016年 daao. All rights reserved.
 //
-#define ORDER_INFO_PANEL_HEIGHT 470.0
+#define ORDER_INFO_PANEL_HEIGHT 494.0
 #define DONE_ACTION_BAR 48.0
 #import "OrderDetailViewController.h"
 
@@ -46,15 +46,15 @@
     UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 70)];
     blockView_1.backgroundColor=COLOR_WHITE;
     
-    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 94, WIDTH_SCREEN, 182)];
+    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 92, WIDTH_SCREEN, 210)];
     blockView_2.backgroundColor=COLOR_WHITE;
     blockView_2.userInteractionEnabled=YES;
     
-    UIView *blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 285, WIDTH_SCREEN, 48)];
+    UIView *blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 311, WIDTH_SCREEN, 48)];
     blockView_3.backgroundColor=COLOR_WHITE;
     blockView_3.userInteractionEnabled=YES;
     
-    UIView *blockView_4=[[UIView alloc] initWithFrame:CGRectMake(0, 342, WIDTH_SCREEN, 130)];
+    UIView *blockView_4=[[UIView alloc] initWithFrame:CGRectMake(0, 366, WIDTH_SCREEN, 130)];
     blockView_4.clipsToBounds=YES;
     blockView_4.backgroundColor=COLOR_WHITE;
     
@@ -245,7 +245,7 @@
     lbl_deliverytime=[[UILabel alloc] init];
     lbl_deliverytime.textColor=COLOR_DARKGRAY;
     lbl_deliverytime.font=FONT_SIZE_SMALL;
-    lbl_deliverytime.text=@"08月27日[星期日] 17:30-22:30";
+    lbl_deliverytime.text=@"--";
     lbl_deliverytime.textAlignment=NSTextAlignmentLeft;
     [blockView_2 addSubview:lbl_deliverytime];
     
@@ -255,6 +255,33 @@
         make.left.mas_equalTo(lbl_tip_6.mas_left).offset(70);
     }];
     
+    UILabel *lbl_tip_11=[[UILabel alloc] init];
+    lbl_tip_11.textColor=COLOR_BLACK;
+    lbl_tip_11.font=FONT_SIZE_MIDDLE;
+    lbl_tip_11.text=@"签收方式:";
+    lbl_tip_11.textAlignment=NSTextAlignmentLeft;
+    [blockView_2 addSubview:lbl_tip_11];
+    
+    [lbl_tip_11 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_2.top).offset(150);
+        make.size.mas_equalTo(CGSizeMake(80, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_putType=[[UILabel alloc] init];
+    lbl_putType.textColor=COLOR_MAIN;
+    lbl_putType.font=FONT_SIZE_SMALL;
+    lbl_putType.text=@"当面签收";
+    lbl_putType.textAlignment=NSTextAlignmentLeft;
+    [blockView_2 addSubview:lbl_putType];
+    
+    [lbl_putType mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_2.top).offset(150);
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-80, 20));
+        make.left.mas_equalTo(lbl_tip_7.mas_left).offset(70);
+    }];
+    
+    
     UILabel *lbl_tip_8=[[UILabel alloc] init];
     lbl_tip_8.textColor=COLOR_BLACK;
     lbl_tip_8.font=FONT_SIZE_MIDDLE;
@@ -263,7 +290,7 @@
     [blockView_2 addSubview:lbl_tip_8];
     
     [lbl_tip_8 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(150);
+        make.top.mas_equalTo(blockView_2.top).offset(178);
         make.size.mas_equalTo(CGSizeMake(80, 20));
         make.left.mas_equalTo(10);
     }];
@@ -276,7 +303,7 @@
     [blockView_2 addSubview:lbl_address_replenish];
     
     [lbl_address_replenish mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(150);
+        make.top.mas_equalTo(blockView_2.top).offset(178);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-80, 20));
         make.left.mas_equalTo(lbl_tip_7.mas_left).offset(70);
     }];
@@ -434,6 +461,13 @@
         lbl_mobile.text=self.task_entity.mobile;
         lbl_address.text=self.task_entity.address;
         lbl_deliverytime.text=self.task_entity.delivery_time;
+        if([self.task_entity.put_type intValue]==1){
+            lbl_putType.text=@"放门口";
+        }
+        else{
+            lbl_putType.text=@"当面签收";
+        }
+        
         lbl_address_replenish.text=self.task_entity.address_replenish;
         lbl_upstairs.text=self.task_entity.option_title;
         if(self.task_entity.package_note.length>0){
