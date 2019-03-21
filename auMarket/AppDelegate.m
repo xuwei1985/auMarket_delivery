@@ -76,8 +76,10 @@
     _locationManager.delegate = self;
     // 设置定位精确度到米
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    // 设置过滤器为无
-    _locationManager.distanceFilter = kCLDistanceFilterNone;
+    // 设置距离筛选器,表示设备至少移动n米,才通知委托更新
+    _locationManager.distanceFilter = 5;
+    //设置iOS设备是否可暂停定位来节省电池的电量
+    _locationManager.pausesLocationUpdatesAutomatically = NO;
     // 取得定位权限，有两个方法，取决于你的定位使用情况
     
     // 一个是requestAlwaysAuthorization，一个是requestWhenInUseAuthorization
