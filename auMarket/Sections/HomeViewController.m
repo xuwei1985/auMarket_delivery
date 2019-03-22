@@ -31,7 +31,7 @@
     predict_time_arr=[[NSMutableArray alloc] init];
     sectionSelArr=[[NSMutableArray alloc] init];
     defaultSectionColor=@"#B4B4B4";
-    sectionColorArr=[[NSArray alloc] initWithObjects:@"#fb4d3d",@"#70BEB7",@"#E37CB0",@"#F7D062",@"#F267EB",@"#CCB857", nil];
+    sectionColorArr=[[NSArray alloc] initWithObjects:@"#fb4d3d",@"#70BEB7",@"#E37CB0",@"#F7D062",@"#83D450",@"#CCB857", nil];
     [self generatePredictTime];
 }
 
