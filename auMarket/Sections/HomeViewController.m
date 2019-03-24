@@ -25,7 +25,7 @@
 -(void)initData{
     isExchangeModel=NO;
     isLoadedMaker=NO;
-    showSections=YES;
+    showSections=0;
     markerArr=[[NSMutableArray alloc] init];
     parkingMarkerArr=[[NSMutableArray alloc] init];
     predict_time_arr=[[NSMutableArray alloc] init];
@@ -102,16 +102,10 @@
     UIBarButtonItem *btn_left = [[UIBarButtonItem alloc] initWithCustomView:btn_l];
     self.navigationItem.leftBarButtonItem =btn_left;
     
-//    sectionSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 120, 30)];
-//    sectionSwitch.on = showSections;
-//    sectionSwitch.transform = CGAffineTransformMakeScale(0.95, 0.95);
-//    [sectionSwitch addTarget:self action:@selector(sectionSwitchChanged:) forControlEvents:(UIControlEventValueChanged)];
     
-    UIButton *btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_r.frame= CGRectMake(0, 0, 32, 32);
-    btn_r.selected=showSections;
-    [btn_r setImage:[UIImage imageNamed:@"section_time_off"] forState:UIControlStateNormal];
-    [btn_r setImage:[UIImage imageNamed:@"section_time_on"] forState:UIControlStateSelected];
+    [btn_r setImage:[UIImage imageNamed:@"section_time_0"] forState:UIControlStateNormal];
     btn_r.imageEdgeInsets = UIEdgeInsetsMake(2, 10, 2, 0);
     [btn_r addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -135,30 +129,6 @@
     btn_workState.selected=APP_DELEGATE.isWorking;
     self.navigationItem.titleView=btn_workState;
 }
-
-
--(void)sectionSwitchChanged:(id)sender
-{
-    UISwitch *switchButton = (UISwitch*)sender;
-    BOOL isButtonOn = [switchButton isOn];
-    
-    if (isButtonOn) {
-        sectionSwitch.on = YES;
-        showSections=YES;
-        [self setSectionButtonState:1];
-
-        if(!isExchangeModel){
-            btn_workState.selected=NO;
-            [APP_DELEGATE.booter handlerWorkingState:btn_workState.selected];
-        }
-    }else {
-        sectionSwitch.on = NO;
-        showSections=NO;
-        [self setSectionButtonState:0];
-    }
-    [self handlerWorkState];
-}
-
 
 -(void)addNotification{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
@@ -201,7 +171,7 @@
         [self.view addSubview:timeSectionBtn];
     }
 
-    if(showSections){
+    if(showSections!=2){
          [self setSectionButtonState:1];
     }
     else{
@@ -211,7 +181,7 @@
 
 -(void)setSectionButtonState:(int)mode{
     NSArray *list=APP_DELEGATE.booter.sectionArr;
-    if(mode==0){
+    if(mode==0){//设置时间段为熄灭
         for (int i=0; i<list.count; i++) {
             UIButton *timeSectionBtn=[self.view viewWithTag:7000+i];
             timeSectionBtn.selected=NO;
@@ -221,7 +191,7 @@
             }
         }
     }
-    else{
+    else{//设置时间段为亮起
         for (int i=0; i<list.count; i++) {
 //            NSString *sectionColor=[sectionColorArr objectAtIndex:i];//匹配对应的颜色值
             UIButton *timeSectionBtn=[self.view viewWithTag:7000+i];
@@ -235,7 +205,7 @@
 }
 
 -(void)timeSectionTap:(UIButton *)sender{
-    if(showSections){
+    if(showSections!=2){
         int tag=(int)sender.tag;
 
         if(!sender.selected){//未选择过
@@ -337,7 +307,7 @@
     TaskItemEntity *itemEntity;
     GMSMarker *marker;
     NSString *location_icon=@"";
-    BOOL only_unset_predict_order=(model==1);//model:1 只显示未设置预计配送到达时间的订单
+    BOOL only_unset_predict_order=(model==1);//model:0:全部显示  1 只显示未设置预计配送到达时间的订单
 
     if(markerArr){
         for(int i=0;i<markerArr.count;i++){
@@ -425,18 +395,18 @@
         if(marker==nil){
             mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
             
-            if(showSections){//时段模式，并且该时段按钮点亮的情况
+            if(showSections!=2){//时段模式，并且该时段按钮点亮的情况
                 if([self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]]){
                     int n=[self getSectionColorIndex:itemEntity.delivery_time];
                     if(n>-1){
                         location_icon=[NSString stringWithFormat:@"1_29_color_%d",n];
                         
-                        if([itemEntity.predict_time length]<=0){//未设置预计送达时间
+                        if([itemEntity.predict_time length]<=0||showSections==0){//未设置预计送达时间
                             if(![itemEntity.upstairs_mark isEqualToString:@"default"]){
                                 location_icon=[NSString stringWithFormat:@"%@_%@",location_icon,itemEntity.upstairs_mark];
                             }
                         }
-                        else{//设置了预计送达时间
+                        else if([itemEntity.predict_time length]>0&&showSections==1){//设置了预计送达时间
                             if([itemEntity.upstairs_mark isEqualToString:@"default"]){//非送货上楼
                                 location_icon=@"1_29";
                             }
@@ -451,7 +421,7 @@
                     mapMaker.image=[UIImage imageNamed:location_icon];
                 }
             }
-            else{
+            else{//非时段模式
                 if([itemEntity.predict_time length]<=0){//未设置预计送达时间
                     if([itemEntity.upstairs_mark isEqualToString:@"default"]){
                         mapMaker.image=[UIImage imageNamed:@"1_29_blue"];
@@ -470,7 +440,7 @@
                 }
             }
             
-            if(!showSections||(showSections&&[self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]])){//时段模式，并且该时段按钮点亮的情况
+            if(showSections==2||(showSections!=2&&[self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]])){//时段模式，并且该时段按钮点亮的情况
                 mapMaker.markTip=@"";
                 [mapMaker loadData];
                 
@@ -489,7 +459,7 @@
             }
         }
         else{
-            if(!showSections||(showSections&&[self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]])){//时段模式，并且该时段按钮点亮的情况
+            if(showSections==2||(showSections!=2&&[self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]])){//时段模式，并且该时段按钮点亮的情况
                 int n=[((MapMaker *)marker.iconView).markTip intValue];
                 if(n<=0){
                     n=1;
@@ -503,7 +473,7 @@
                 marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithArray:arr];
                 
                 //设置预计送达时间状态
-                if(!showSections){
+                if(showSections==2){//非时间段模式
                     Boolean has_unPredict=NO;
                     for (TaskItemEntity *enity in marker.taskArr) {
                         if([enity.predict_time length]<=0){
@@ -518,12 +488,32 @@
                         mapMaker.image=[UIImage imageNamed:@"1_29"];
                     }
                 }
+                else{
+                    if([self hasMutiTimeSection:marker.taskArr]){
+                        ((MapMaker *)marker.iconView).is_muti=YES;
+                        ((MapMaker *)marker.iconView).image=[UIImage imageNamed:@"1_29_color_99"];
+                    }
+                }
             }
         }
     }
     isExchangeModel=NO;
 }
 
+-(BOOL)hasMutiTimeSection:(NSMutableArray<TaskItemEntity *> *)arr{
+    NSString *str=@"";
+    if(arr&&arr.count>0){
+        str=[arr firstObject].delivery_time;
+        for (TaskItemEntity *entity in arr) {
+            if(![str isEqualToString:entity.delivery_time]){
+                return YES;
+                break;
+            }
+        }
+    }
+    return NO;
+}
+    
 //判断某个时间段的按钮是否开启
 -(BOOL)isSectionEnable:(NSString *)timeStr{
     NSArray *list=APP_DELEGATE.booter.sectionArr;
@@ -736,7 +726,10 @@
 //        [self showMaskMenu:marker];
 //        return YES;
 //    }
-    
+    if(((MapMaker *)marker.iconView).is_muti){
+        [self showToastWithText:@"复合订单不能操作"];
+        return NO;
+    }
     sel_coordinate=marker.position;
     [self showMaskMenu:marker];
     return YES;
@@ -896,27 +889,31 @@
 //        [self hideParkingMarkers];
 //    }
     
-    //挪用为控制时间分段的订单
-    sender.selected=!sender.selected;
-    if(sender.selected){
-        showSections=YES;
-        [self setSectionButtonState:1];
+    //控制时间分段的订单
+    //showSections=0:分时图标不管预计送达的状态 1:分时图标带预计送达的图标 2:关闭分时图标状态
+    showSections++;
+    if(showSections>2){
+        showSections=0;
+    }
+    [btn_r setImage:[UIImage imageNamed:[NSString stringWithFormat:@"section_time_%d",showSections]] forState:UIControlStateNormal];
+    
+    if(showSections<2){//分时段模式开启
+        [self setSectionButtonState:1];//设置时间段为亮起
         
         if(!isExchangeModel){
             btn_workState.selected=NO;
             [APP_DELEGATE.booter handlerWorkingState:btn_workState.selected];
         }
     }
-    else{
-        showSections=NO;
-        [self setSectionButtonState:0];
+    else{//分时段模式关闭
+        [self setSectionButtonState:0];//设置时间段为熄灭
     }
     
     [self handlerWorkState];
 }
 
 -(void)toggleWorkState:(UIButton *)sender{
-    if(!isExchangeModel&&!showSections){
+    if(!isExchangeModel&&showSections==2){
         btn_workState.selected=!btn_workState.selected;
         [APP_DELEGATE.booter handlerWorkingState:btn_workState.selected];
         [self handlerWorkState];

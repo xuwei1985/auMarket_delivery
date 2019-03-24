@@ -12,5 +12,6 @@
     UILabel *lbl_markTip;
 }
 @property(nonatomic,assign) NSString *markTip;
+@property(nonatomic,assign) BOOL is_muti;
 -(void)loadData;
 @end

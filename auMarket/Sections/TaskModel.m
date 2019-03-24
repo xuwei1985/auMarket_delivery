@@ -107,6 +107,24 @@
                 [mArr addObject:section_time];
             }
         }
+        
+        //以结束时间排序
+        NSArray *result = [mArr sortedArrayUsingComparator:^NSComparisonResult(id _Nonnull obj1, id  _Nonnull obj2) {
+            NSArray *array_1= [obj1 componentsSeparatedByString:@"-"];
+            NSArray *array_2= [obj2 componentsSeparatedByString:@"-"];
+            if(array_1&&array_1.count==2&&array_2&&array_2.count==2){
+                NSArray *array_11= [[array_1 lastObject] componentsSeparatedByString:@":"];
+                NSArray *array_22= [[array_2 lastObject] componentsSeparatedByString:@":"];
+                int num_1=[[array_11 firstObject] intValue]*60+[[array_11 lastObject] intValue];
+                int num_2=[[array_22 firstObject] intValue]*60+[[array_22 lastObject] intValue];
+                
+                return [[NSNumber numberWithInt:num_1] compare:[NSNumber numberWithInt:num_2]]; //升序
+            }
+            else{
+                return [obj1 compare:obj2]; //升序
+            }
+        }];
+        return result;
     }
     return mArr;
 }
