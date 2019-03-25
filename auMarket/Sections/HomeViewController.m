@@ -492,6 +492,8 @@
                     if([self hasMutiTimeSection:marker.taskArr]){
                         ((MapMaker *)marker.iconView).is_muti=YES;
                         ((MapMaker *)marker.iconView).image=[UIImage imageNamed:@"1_29_color_99"];
+                    }else{
+                        ((MapMaker *)marker.iconView).is_muti=NO;
                     }
                 }
             }
