@@ -31,7 +31,7 @@
     predict_time_arr=[[NSMutableArray alloc] init];
     sectionSelArr=[[NSMutableArray alloc] init];
     defaultSectionColor=@"#B4B4B4";
-    sectionColorArr=[[NSArray alloc] initWithObjects:@"#fb4d3d",@"#70BEB7",@"#E37CB0",@"#F7D062",@"#83D450",@"#CCB857", nil];
+    sectionColorArr=[[NSArray alloc] initWithObjects:@"#fb4d3d",@"#70BEB7",@"#E37CB0",@"#F7D062",@"#83D450",@"#4F3BBC", nil];
     [self generatePredictTime];
 }
 
@@ -333,6 +333,7 @@
         itemEntity.coordinate=coordinate;//设置配送项目的坐标
         
         //判断某个coordinate的marker是否存在
+        MapMaker *mapMaker;
         marker=[self isExistMarker:itemEntity.coordinate andAddress:itemEntity.address];
         if(marker==nil){
             mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
@@ -390,6 +391,7 @@
         itemEntity.coordinate=coordinate;//设置配送项目的坐标
         
         //判断某个coordinate的marker是否存在
+        MapMaker *mapMaker;
         marker=[self isExistMarker:itemEntity.coordinate andAddress:itemEntity.address];
         
         if(marker==nil){

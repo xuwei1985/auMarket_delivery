@@ -17,7 +17,6 @@
 @interface HomeViewController : SPBaseViewController<GMSMapViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate>
 {
     GMSMapView *mapView;
-    MapMaker *mapMaker;
     CLLocationCoordinate2D sel_coordinate;
     UIButton *btn_workState;
     NSMutableArray<GMSMarker *> *markerArr;
