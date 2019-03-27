@@ -31,7 +31,7 @@
     predict_time_arr=[[NSMutableArray alloc] init];
     sectionSelArr=[[NSMutableArray alloc] init];
     defaultSectionColor=@"#B4B4B4";
-    sectionColorArr=[[NSArray alloc] initWithObjects:@"#fb4d3d",@"#70BEB7",@"#E37CB0",@"#F7D062",@"#83D450",@"#4F3BBC", nil];
+    sectionColorArr=[[NSArray alloc] initWithObjects:@"#743EF4",@"#4A856C",@"#4468F6",@"#E27CB0",@"#92D568",@"#E94D64", nil];
     [self generatePredictTime];
 }
 
@@ -507,9 +507,9 @@
 -(BOOL)hasMutiTimeSection:(NSMutableArray<TaskItemEntity *> *)arr{
     NSString *str=@"";
     if(arr&&arr.count>0){
-        str=[arr firstObject].delivery_time;
+        str=[self formatSectionTime:[arr firstObject].delivery_time];
         for (TaskItemEntity *entity in arr) {
-            if(![str isEqualToString:entity.delivery_time]){
+            if(![str isEqualToString:[self formatSectionTime:entity.delivery_time]]){
                 return YES;
                 break;
             }
