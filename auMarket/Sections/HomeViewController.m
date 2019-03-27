@@ -960,6 +960,17 @@
     [self.navigationController pushViewController:svc animated:YES];
 }
 
+-(void)cacheDeliveryData{
+    NSUserDefaults *cache=USER_DEFAULT;
+    
+    //选择的时间段数据
+    [cache setObject:sectionSelArr forKey:@"sectionSelArr"];
+    
+    //导航右上角按钮状态
+    [cache setValue:[NSString stringWithFormat:@"%d",showSections] forKey:@"showSections"];
+    
+}
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     isShowing=YES;
