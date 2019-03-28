@@ -172,11 +172,12 @@
     }
 
     if(showSections!=2){
-         [self setSectionButtonState:1];
+        [self setSectionButtonState:1];//设置按钮都为点亮状态
     }
     else{
-        [self setSectionButtonState:0];
+        [self setSectionButtonState:0];//设置按钮都为关闭状态
     }
+    
 }
 
 -(void)setSectionButtonState:(int)mode{
@@ -192,15 +193,35 @@
         }
     }
     else{//设置时间段为亮起
+//        BOOL hasCacheSections=NO;
+//        NSUserDefaults *cache=USER_DEFAULT;
+//        NSMutableArray *cacheArr=[cache objectForKey:@"sectionSelArr"];//记忆的时间段数据
+//        if(cacheArr){
+//            hasCacheSections=YES;
+//        }
+        
         for (int i=0; i<list.count; i++) {
-//            NSString *sectionColor=[sectionColorArr objectAtIndex:i];//匹配对应的颜色值
             UIButton *timeSectionBtn=[self.view viewWithTag:7000+i];
+//            if(hasCacheSections){
+//                if([cacheArr containsObject:[NSString stringWithFormat:@"%d",(7000+i)]]){
+//                    timeSectionBtn.selected=YES;
+//                }
+//                else{
+//                    timeSectionBtn.selected=NO;
+//                }
+//            }
+//            else{
+//                timeSectionBtn.selected=YES;
+//            }
             timeSectionBtn.selected=YES;
-            
             if(![sectionSelArr containsObject:[NSString stringWithFormat:@"%d",(7000+i)]]){//未选择过
                 [sectionSelArr addObject:[NSString stringWithFormat:@"%d",(7000+i)]];
             }
         }
+        
+//        [cache removeObjectForKey:@"sectionSelArr"];
+//        [cache synchronize];
+//        cacheArr=nil;
     }
 }
 
@@ -308,7 +329,7 @@
     GMSMarker *marker;
     NSString *location_icon=@"";
     BOOL only_unset_predict_order=(model==1);//model:0:全部显示  1 只显示未设置预计配送到达时间的订单
-
+    
     if(markerArr){
         for(int i=0;i<markerArr.count;i++){
             [markerArr objectAtIndex:i].map=nil;
@@ -967,10 +988,7 @@
     
     //选择的时间段数据
     [cache setObject:sectionSelArr forKey:@"sectionSelArr"];
-    
-    //导航右上角按钮状态
-    [cache setValue:[NSString stringWithFormat:@"%d",showSections] forKey:@"showSections"];
-    
+    [cache synchronize];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -978,9 +996,13 @@
     isShowing=YES;
     btn_workState.selected=APP_DELEGATE.isWorking;
     [APP_DELEGATE.booter loadTaskList];
-//    [self checkLoginStatus];
+    [self checkLoginStatus];
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self cacheDeliveryData];
+}
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
