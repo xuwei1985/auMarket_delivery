@@ -332,48 +332,50 @@
         coordinate=CLLocationCoordinate2DMake([self reviseDoubleValue:[itemEntity.latitude doubleValue]], [self reviseDoubleValue:[itemEntity.longitude doubleValue]]);
         itemEntity.coordinate=coordinate;//设置配送项目的坐标
         
-        //判断某个coordinate的marker是否存在
-        MapMaker *mapMaker;
-        marker=[self isExistMarker:itemEntity.coordinate andAddress:itemEntity.address];
-        if(marker==nil){
-            mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
-            
-            if([itemEntity.upstairs_mark isEqualToString:@"default"]){
-                mapMaker.image=[UIImage imageNamed:@"1_29_gray"];
+        if([self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]]){
+            //判断某个coordinate的marker是否存在
+            MapMaker *mapMaker;
+            marker=[self isExistMarker:itemEntity.coordinate andAddress:itemEntity.address];
+            if(marker==nil){
+                mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
+                
+                if([itemEntity.upstairs_mark isEqualToString:@"default"]){
+                    mapMaker.image=[UIImage imageNamed:@"1_29_gray"];
+                }
+                else{
+                    mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_gray_%@",itemEntity.upstairs_mark]];
+                }
+                
+                mapMaker.markTip=@"";
+                [mapMaker loadData];
+                
+                marker = [[GMSMarker alloc] init];
+                marker.position = CLLocationCoordinate2DMake(itemEntity.coordinate.latitude, itemEntity.coordinate.longitude);
+                marker.title = itemEntity.consignee;
+                marker.snippet = itemEntity.address;
+                marker.appearAnimation = kGMSMarkerAnimationNone;
+                marker.iconView=mapMaker;
+                marker.map = mapView;
+                marker.latitude=[self reviseDoubleValue:itemEntity.coordinate.latitude];
+                marker.longitude=[self reviseDoubleValue:itemEntity.coordinate.longitude];
+                marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithObjects:itemEntity, nil];
+                
+                [markerArr addObject:marker];
             }
             else{
-                mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_gray_%@",itemEntity.upstairs_mark]];
+                int n=[((MapMaker *)marker.iconView).markTip intValue];
+                if(n<=0){
+                    n=1;
+                }
+                ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%d",n+1];
+                [((MapMaker *)marker.iconView) loadData];
+                
+                NSMutableArray *arr=[NSMutableArray arrayWithArray:marker.taskArr];
+                [arr addObject:itemEntity];
+                marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithArray:arr];
+                
+                mapMaker.image=[UIImage imageNamed:@"1_29_gray"];
             }
-
-            mapMaker.markTip=@"";
-            [mapMaker loadData];
-            
-            marker = [[GMSMarker alloc] init];
-            marker.position = CLLocationCoordinate2DMake(itemEntity.coordinate.latitude, itemEntity.coordinate.longitude);
-            marker.title = itemEntity.consignee;
-            marker.snippet = itemEntity.address;
-            marker.appearAnimation = kGMSMarkerAnimationNone;
-            marker.iconView=mapMaker;
-            marker.map = mapView;
-            marker.latitude=[self reviseDoubleValue:itemEntity.coordinate.latitude];
-            marker.longitude=[self reviseDoubleValue:itemEntity.coordinate.longitude];
-            marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithObjects:itemEntity, nil];
-            
-            [markerArr addObject:marker];
-        }
-        else{
-            int n=[((MapMaker *)marker.iconView).markTip intValue];
-            if(n<=0){
-                n=1;
-            }
-            ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%d",n+1];
-            [((MapMaker *)marker.iconView) loadData];
-            
-            NSMutableArray *arr=[NSMutableArray arrayWithArray:marker.taskArr];
-            [arr addObject:itemEntity];
-            marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithArray:arr];
-            
-            mapMaker.image=[UIImage imageNamed:@"1_29_gray"];
         }
     }
     
