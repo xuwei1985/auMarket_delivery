@@ -132,6 +132,7 @@
 
 -(void)addNotification{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppEnterBackground:) name:APP_DID_ENTER_BACKGROUND object:nil];
 }
 
 -(void)createDeliveryTimeSection{
@@ -193,35 +194,45 @@
         }
     }
     else{//设置时间段为亮起
-//        BOOL hasCacheSections=NO;
-//        NSUserDefaults *cache=USER_DEFAULT;
-//        NSMutableArray *cacheArr=[cache objectForKey:@"sectionSelArr"];//记忆的时间段数据
-//        if(cacheArr){
-//            hasCacheSections=YES;
-//        }
+        BOOL hasCacheSections=NO;
+        NSUserDefaults *cache=USER_DEFAULT;
+        NSArray *cacheSelArr=[cache objectForKey:@"sectionSelArr"];//记忆的选择的时间段数据
+        NSArray *cacheArr=[cache objectForKey:@"sectionArr"];//记忆的所有时间段数据
+        
+        if(cacheSelArr){
+            hasCacheSections=YES;
+        }
         
         for (int i=0; i<list.count; i++) {
             UIButton *timeSectionBtn=[self.view viewWithTag:7000+i];
-//            if(hasCacheSections){
-//                if([cacheArr containsObject:[NSString stringWithFormat:@"%d",(7000+i)]]){
-//                    timeSectionBtn.selected=YES;
-//                }
-//                else{
-//                    timeSectionBtn.selected=NO;
-//                }
-//            }
-//            else{
-//                timeSectionBtn.selected=YES;
-//            }
-            timeSectionBtn.selected=YES;
+            if(hasCacheSections){
+                if([cacheSelArr containsObject:[NSString stringWithFormat:@"%d",(7000+i)]]){
+                    timeSectionBtn.selected=YES;
+                }
+                else{
+                    timeSectionBtn.selected=NO;
+                }
+            }
+            else{
+                timeSectionBtn.selected=YES;
+            }
             if(![sectionSelArr containsObject:[NSString stringWithFormat:@"%d",(7000+i)]]){//未选择过
-                [sectionSelArr addObject:[NSString stringWithFormat:@"%d",(7000+i)]];
+                if(hasCacheSections){
+                    if([cacheArr containsObject:((UIButton *)[self.view viewWithTag:(7000+i)]).titleLabel.text]&&[cacheSelArr containsObject:[NSString stringWithFormat:@"%d",(7000+i)]]){
+                        [sectionSelArr addObject:[NSString stringWithFormat:@"%d",(7000+i)]];
+                    }
+                }
+                else{
+                    [sectionSelArr addObject:[NSString stringWithFormat:@"%d",(7000+i)]];
+                }
             }
         }
         
-//        [cache removeObjectForKey:@"sectionSelArr"];
-//        [cache synchronize];
-//        cacheArr=nil;
+        [cache removeObjectForKey:@"sectionSelArr"];
+        [cache removeObjectForKey:@"sectionArr"];
+        [cache synchronize];
+        cacheArr=nil;
+        cacheSelArr=nil;
     }
 }
 
@@ -966,6 +977,10 @@
     }
 }
 
+- (void)onAppEnterBackground:(NSNotification*)aNotitification{
+    [self cacheDeliveryData];
+}
+
 -(void)callPhone:(NSString *)phone{
     if(phone!=nil&&phone.length>0){
         NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"tel:%@",phone];
@@ -988,6 +1003,7 @@
     
     //选择的时间段数据
     [cache setObject:sectionSelArr forKey:@"sectionSelArr"];
+    [cache setObject:APP_DELEGATE.booter.sectionArr forKey:@"sectionArr"];
     [cache synchronize];
 }
 
