@@ -26,6 +26,7 @@
 @property (nonatomic,retain) NSString *mobile;
 @property (nonatomic,retain) NSString *order_amount;
 @property (nonatomic,retain) NSString *delivery_time;
+@property (nonatomic,retain) NSString *shelf_code;
 
 @property (nonatomic,retain) NSString *default_package;
 @property (nonatomic,retain) NSString *box_package;

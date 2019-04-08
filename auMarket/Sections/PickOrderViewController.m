@@ -6,7 +6,7 @@
 //  Copyright © 2016年 daao. All rights reserved.
 //
 #define CATEGORY_BAR 44.0
-#define SECTION_HEADER_HEIGHT 166.0
+#define SECTION_HEADER_HEIGHT 190.0
 #define GOODS_ROW_HEIGHT 72.0
 
 #import "PickOrderViewController.h"
@@ -217,9 +217,9 @@
     [section_view addSubview:iconView];
     
     [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(12);
+        make.left.mas_equalTo(10);
         make.top.mas_equalTo(74);
-        make.size.mas_equalTo(CGSizeMake(28, 28));
+        make.size.mas_equalTo(CGSizeMake(26, 26));
     }];
     
     UILabel *lbl_order_region=[[UILabel alloc] init];
@@ -230,7 +230,7 @@
     
     [lbl_order_region mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(line_view.mas_bottom).offset(15);
-        make.left.mas_equalTo(iconView.mas_right).offset(12);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
         make.size.mas_equalTo(CGSizeMake(58, 20));
     }];
 
@@ -243,7 +243,7 @@
     [lbl_order_region_value mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(line_view.mas_bottom).offset(15);
         make.left.mas_equalTo(lbl_order_region.mas_right);
-        make.size.mas_equalTo(CGSizeMake(140, 20));
+        make.size.mas_equalTo(CGSizeMake(144, 20));
     }];
     
     UILabel *lbl_order_sn=[[UILabel alloc] init];
@@ -254,7 +254,7 @@
     
     [lbl_order_sn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(lbl_order_region.mas_bottom).offset(5);
-        make.left.mas_equalTo(iconView.mas_right).offset(12);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
         make.size.mas_equalTo(CGSizeMake(58, 20));
     }];
     
@@ -278,7 +278,7 @@
     
     [lbl_order_address mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(lbl_order_sn.mas_bottom).offset(5);
-        make.left.mas_equalTo(iconView.mas_right).offset(12);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
         make.size.mas_equalTo(CGSizeMake(58, 20));
     }];
     
@@ -292,7 +292,7 @@
     [lbl_order_address_value mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(lbl_order_sn.mas_bottom).offset(5);
         make.left.mas_equalTo(lbl_order_address.mas_right);
-        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-120, 20));
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-116, 20));
     }];
     
     UILabel *lbl_predict_time=[[UILabel alloc] init];
@@ -303,7 +303,7 @@
     
     [lbl_predict_time mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(lbl_order_address.mas_bottom).offset(5);
-        make.left.mas_equalTo(iconView.mas_right).offset(12);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
         make.size.mas_equalTo(CGSizeMake(76, 20));
     }];
     
@@ -323,7 +323,38 @@
     [lbl_predict_time_value mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(lbl_order_address.mas_bottom).offset(5);
         make.left.mas_equalTo(lbl_predict_time.mas_right);
-        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-150, 20));
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-146, 20));
+    }];
+    
+    UILabel *lbl_shelf_code=[[UILabel alloc] init];
+    lbl_shelf_code.textColor=COLOR_GRAY;
+    lbl_shelf_code.font=FONT_SIZE_MIDDLE;
+    lbl_shelf_code.text=@"货架号：";
+    [section_view addSubview:lbl_shelf_code];
+    
+    [lbl_shelf_code mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_predict_time.mas_bottom).offset(5);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
+        make.size.mas_equalTo(CGSizeMake(76, 20));
+    }];
+    
+    UILabel *lbl_shelf_code_value=[[UILabel alloc] init];
+    lbl_shelf_code_value.textColor=COLOR_MAIN;
+    lbl_shelf_code_value.font=FONT_SIZE_MIDDLE;
+    
+    if(entity.shelf_code!=nil&&![entity.shelf_code isEqualToString:@"null"]&&[entity.shelf_code length]>0){
+        lbl_shelf_code_value.text=entity.shelf_code;
+    }
+    else{
+        lbl_shelf_code_value.text=@"--";
+    }
+    
+    [section_view addSubview:lbl_shelf_code_value];
+    
+    [lbl_shelf_code_value mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_predict_time.mas_bottom).offset(5);
+        make.left.mas_equalTo(lbl_shelf_code.mas_right);
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-146, 20));
     }];
     
 //    line_view=[[UIView alloc] init];
