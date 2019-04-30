@@ -601,7 +601,7 @@
                 }
                 //位移处理
                 
-                //混淆私钥+加密
+                //混淆私钥+加密act:deliver_loginpassword:123456username:test001__xiaoyacity@201618c3e2e7bf645488ed7bca87d6848e72
                 if (signatureStr!=nil&&![signatureStr isEqualToString:@""]&&signatureStr.length>0) {
                     //属性拼接结果__privateKey进行md5
                     signatureStr=[NSString stringWithFormat:@"%@%@%@",signatureStr,privateKey,APP_DELEGATE.token];
