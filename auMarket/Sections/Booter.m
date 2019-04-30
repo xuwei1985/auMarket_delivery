@@ -28,6 +28,7 @@
 {
     self = [super init];
     if (self) {
+        self.hasNetWork=YES;
         [self checkIfLoginAccountIsValid];
         APP_DELEGATE.isWorking=[USER_DEFAULT boolForKey:@"isWorking"];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAccountUpdate:) name:ACCOUNT_UPDATE_NOTIFICATION object:nil];
@@ -219,19 +220,23 @@
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
                 NSLog(@"未识别的网络");
+                self.hasNetWork=YES;
                 break;
                 
             case AFNetworkReachabilityStatusNotReachable:
                 NSLog(@"不可达的网络(未连接)");
+                self.hasNetWork=NO;
                 [SVProgressHUD showInfoWithStatus:@"当前网络不可用,请检查你的网络连接。"];
                 break;
                 
             case AFNetworkReachabilityStatusReachableViaWWAN:
                 NSLog(@"2G,3G,4G...的网络");
+                self.hasNetWork=YES;
                 break;
                 
             case AFNetworkReachabilityStatusReachableViaWiFi:
                 NSLog(@"wifi的网络");
+                self.hasNetWork=YES;
                 break;
             default:
                 break;
@@ -341,12 +346,12 @@
     if(self.hasNetWork){
         if(APP_DELEGATE.token!=nil&&APP_DELEGATE.token.length>0){
             NSLog(@"================getTokenAsync===================");
-            [self.booterModel getTokenAsync];
+            [self.model getTokenAsync];
         }
         else{
             NSLog(@"================getTokenSync===================");
             
-            [self.booterModel getTokenSync];
+            [self.model getTokenSync];
             
         }
     }

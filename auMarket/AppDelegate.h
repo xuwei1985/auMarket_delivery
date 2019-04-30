@@ -11,7 +11,9 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate>
-
+{
+    NSTimer *tokenTimer;
+}
 @property (strong, nonatomic) UIWindow *window;
 @property (assign, nonatomic) BOOL isWorking;
 @property (strong,nonatomic) Booter* booter;

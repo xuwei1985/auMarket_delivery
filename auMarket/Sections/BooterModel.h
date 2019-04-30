@@ -8,6 +8,7 @@
 
 #import "SPBaseModel.h"
 #import "ParkingEntity.h"
+#import "SeqIDGenerator.h"
 
 @class UserTokenEntity;
 @interface BooterModel : SPBaseModel
@@ -17,6 +18,8 @@
 
 -(void)loadParkingList;
 -(void)postLocation:(CLLocationCoordinate2D)coordinate andUserId:(NSString *)user_id;
+-(void)getTokenAsync;
+-(void)getTokenSync;
 @end
 
 

@@ -47,12 +47,21 @@
 
 //同步获取Token
 -(void)getTokenSync{
+    static NSString* systemVer;
+    static dispatch_once_t once;
+    dispatch_once( &once, ^{ systemVer = [UIDevice currentDevice].systemVersion; } );
+    
     self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=get_token"];
     
     NSString *urlString =[NSString stringWithFormat:@"%@/%@",[self getHost],self.shortRequestAddress];
     NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:15.0];
+    [request setHTTPMethod:@"POST"];
+    NSString *postString = [NSString stringWithFormat:@"app_ver=%@&sys_ver=%@&seqid=%@&client_type=ios&client_source=ps",[SPBaseModel getAppVer],systemVer,[[SeqIDGenerator sharedInstance] seqId]];
+    [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+
     //2.创建一个 NSMutableURLRequest 添加 header
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
     [mutableRequest addValue:[Common getClientId] forHTTPHeaderField:@"clientid"];

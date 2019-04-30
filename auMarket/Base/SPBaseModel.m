@@ -253,6 +253,7 @@
     [dict setObject:[SPBaseModel getAppVer] forKey:@"app_ver"];
     [dict setObject:[SPBaseModel getSystemVer] forKey:@"sys_ver"];
     [dict setObject:@"ios" forKey:@"client_type"];
+    [dict setObject:@"ps" forKey:@"client_source"];//标注来自配送员App
     [dict setObject:[[SeqIDGenerator sharedInstance] seqId] forKey:@"seqid"];
     
     NSString* uToken = [[AccountManager sharedInstance] getCurrentUser].user_token;

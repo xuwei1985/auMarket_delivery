@@ -37,4 +37,18 @@ DEF_SINGLETON(CommonCache)
     }
 }
 
+- (TMCache *)getUserCache:(NSString*)strNameSpace {
+    NSString *path = [[AccountManager sharedInstance] getCurrentUser].user_id;
+    if (!path) {
+        path = @"public";
+    }
+    path = [NSString stringWithFormat:@"%@/%@",path,strNameSpace];
+    if ([self.cacheList objectForKey:path]) {
+        return [self.cacheList objectForKey:path];
+    } else {
+        TMCache *cache = [[TMCache alloc] initWithName:path];
+        [self.cacheList setObject:cache forKey:path];
+        return cache;
+    }
+}
 @end

@@ -16,5 +16,5 @@ DEC_SINGLETON(CommonCache)
 @property (nonatomic, strong) NSMutableDictionary *cacheList;
 
 - (TMCache *)getCache:(NSString*)strNameSpace;
-
+- (TMCache *)getUserCache:(NSString*)strNameSpace;
 @end
