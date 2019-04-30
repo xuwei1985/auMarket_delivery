@@ -336,6 +336,24 @@
     }
 }
 
+
+-(void)getToken{
+    if(self.hasNetWork){
+        if(APP_DELEGATE.token!=nil&&APP_DELEGATE.token.length>0){
+            NSLog(@"================getTokenAsync===================");
+            [self.booterModel getTokenAsync];
+        }
+        else{
+            NSLog(@"================getTokenSync===================");
+            
+            [self.booterModel getTokenSync];
+            
+        }
+    }
+}
+
+
+
 -(TaskModel *)taskModel{
     if(!_taskModel){
         _taskModel=[[TaskModel alloc] init];

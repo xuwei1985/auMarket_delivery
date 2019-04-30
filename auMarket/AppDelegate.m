@@ -183,4 +183,35 @@
 //    [self.booter handleRemoteNotifacation:userInfo];
 }
 
+
+-(void)updateToken{
+    [self.booter getToken];
+    if(APP_DELEGATE.token!=nil&&APP_DELEGATE.token.length>0){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.booter.booterModel getAppconfig];
+        });
+    }else{
+        [self.booter.booterModel getAppconfig];
+    }
+    
+}
+
+-(void)initTokenTimer:(int)type{
+    //0:normal 1:加速
+    if(tokenTimer){
+        [tokenTimer invalidate];
+        tokenTimer=nil;
+    }
+    
+    if(type==0){
+        tokenTimer =  [NSTimer scheduledTimerWithTimeInterval:60*7 target:self selector:@selector(updateToken) userInfo:nil repeats:YES];
+        
+        //创建正常token_timer
+    }else{
+        tokenTimer =  [NSTimer scheduledTimerWithTimeInterval:60*1 target:self selector:@selector(updateToken) userInfo:nil repeats:YES];
+        //创建加速token_timer
+    }
+    
+}
+
 @end
