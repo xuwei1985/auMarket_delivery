@@ -94,7 +94,7 @@
 {
     if(self.requestTask)
     {
-
+        
         if (self.requestTask.state != NSURLSessionTaskStateCanceling && self.requestTask.state != NSURLSessionTaskStateCompleted) {
             return YES;
         }
@@ -134,17 +134,27 @@
     
     [self addCommonParams];
     
-    NSString* requestAddress =  [NSString stringWithFormat:@"%@/%@", [self getHost], self.shortRequestAddress ];
+    NSString* requestAddress =  [NSString stringWithFormat:@"%@/%@", [self getHost], self.shortRequestAddress];
     AFHTTPSessionManager* manager = [AFHTTPSessionManager manager];
+    
+    NSString *sign=[Common getRequestSignature:requestAddress];
+    UInt64 recordTime = [[NSDate date] timeIntervalSince1970]*1000*1000;
+    NSString *authorization=[NSString stringWithFormat:@"Signature oauth_signature=\"%@\",oauth_consumer_key=\"%@\",oauth_timestamp=\"%llu\",oauth_version=1.0.0",sign,[[[NSString stringWithFormat:@"%@",[Common getUserKey]] dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],recordTime];
+    
+    [manager.requestSerializer setValue:authorization forHTTPHeaderField:@"Authorization"];
+    [manager.requestSerializer setValue:[Common getClientId] forHTTPHeaderField:@"clientid"];
+    [manager.requestSerializer setValue:APP_DELEGATE.token forHTTPHeaderField:@"token"];
+    
     SPEntityResponseSerialization* serializer = [SPEntityResponseSerialization serializer];
     serializer.parseDataClassType = self.parseDataClassType;
     manager.responseSerializer = serializer;
     [manager.requestSerializer setHTTPShouldHandleCookies:NO];
+    manager.requestSerializer.timeoutInterval = 20;
     
     _requestTag = self.requestTagInner;
-
+    
     NSDictionary *params = self.params;
-    if (self.contentTypes && self.contentTypes.count > 0) {
+    if (self.contentTypes && self.contentTypes.count > 0) {//二进制提交
         self.requestTask =[manager POST:requestAddress parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             for (NSString *key in [self.params allKeys]) {
                 id value = [self.params objectForKey:key];
@@ -171,7 +181,6 @@
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [self onFailure:task error:error];
         }];
-    
     }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(onStartRequest:)])
@@ -184,8 +193,8 @@
     BOOL isSuccess = YES;
     if (self.parseDataClassType) {
         SPBaseEntity *entity = responseObject;
-        self.errorCode = [entity.code integerValue];
-        if (![entity.code isEqualToString:@"0"]) {
+        self.errorCode =[entity isKindOfClass:[SPBaseEntity  class]]?[entity.code integerValue]:0;
+        if (self.errorCode!=0) {
             isSuccess = NO;
             
             if (SPServerErrorCodeDefUserNotLogin == self.errorCode) {
@@ -214,21 +223,28 @@
 }
 
 - (void)onFailure:(NSURLSessionDataTask *)operation error:(NSError *)error {
+    BOOL isIgnore=NO;//是否对取消请求，忽略错误提示
     if (self.showErrorMsg) {
         if (error.userInfo && [error.userInfo objectForKey:NSLocalizedDescriptionKey]) {
-            [SVProgressHUD showErrorWithStatus:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
+            if([[error.userInfo objectForKey:NSLocalizedDescriptionKey] isEqualToString:@"cancelled"]){
+                isIgnore=YES;
+            }
+            else{
+                [SVProgressHUD showErrorWithStatus:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
+            }
         } else {
             [SVProgressHUD showErrorWithStatus:@"请求失败"];
         }
     }
     [self onNetError];
-    if (self.delegate) {
+    if (self.delegate&&!isIgnore) {
         [self.delegate onResponse:self isSuccess:NO];
     }
 }
 
 -(void)addCommonParams
 {
+    
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
     if (self.params) {
         [dict addEntriesFromDictionary:self.params];
@@ -238,6 +254,7 @@
     [dict setObject:[SPBaseModel getSystemVer] forKey:@"sys_ver"];
     [dict setObject:@"ios" forKey:@"client_type"];
     [dict setObject:[[SeqIDGenerator sharedInstance] seqId] forKey:@"seqid"];
+    
     NSString* uToken = [[AccountManager sharedInstance] getCurrentUser].user_token;
     if (uToken && ![uToken isEmpty]) {
         [dict setObject:uToken forKey:@"utoken"];
@@ -274,8 +291,8 @@
 - (id<NSCoding>)getUserItemFromCache:(NSString *)key {
     SPAccount* currentUser = [[AccountManager sharedInstance] getCurrentUser];
     if (currentUser) {
-
-        return [[[CommonCache sharedInstance] getCache:NSStringFromClass(self.class)] objectForKey:[NSString stringWithFormat:@"%@_%@",currentUser.user_id,key]];
+        
+        return [[[CommonCache sharedInstance] getUserCache:NSStringFromClass(self.class)] objectForKey:[NSString stringWithFormat:@"%@_%@",currentUser.user_id,key]];
     }
     return nil;
 }
@@ -305,8 +322,13 @@
     // 可以解析
     if (![self.parseDataClassType isSubclassOfClass:[SPBaseEntity class]])
     {
-        IDPLogWarning(0, @"parseDataType is not TBCBaseItem class");
-        return;
+        if([parsedData isKindOfClass:[NSDictionary class]]){
+            [self handleParsedData:parsedData];
+        }
+        else{
+            IDPLogWarning(0, @"parseDataType is not TBCBaseItem class");
+            return;
+        }
     }
     if(![parsedData isKindOfClass:self.parseDataClassType])
     {

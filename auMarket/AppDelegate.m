@@ -32,6 +32,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
     self.booter = [[Booter alloc] init];
+    [self initTokenTimer:0];
+    [self updateToken];
+    
     [self.booter bootReachability];
     [self.booter bootGoogleMap];
     [self.booter loadTaskList];
