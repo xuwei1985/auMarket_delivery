@@ -196,11 +196,11 @@
     }
     
     if(type==0){
-        tokenTimer = [NSTimer scheduledTimerWithTimeInterval:40 target:self selector:@selector(updateToken) userInfo:nil repeats:YES];
+        tokenTimer = [NSTimer scheduledTimerWithTimeInterval:60*7 target:self selector:@selector(updateToken) userInfo:nil repeats:YES];
         
         //创建正常token_timer
     }else{
-        tokenTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(updateToken) userInfo:nil repeats:YES];
+        tokenTimer = [NSTimer scheduledTimerWithTimeInterval:60*1 target:self selector:@selector(updateToken) userInfo:nil repeats:YES];
         //创建加速token_timer
     }
     
