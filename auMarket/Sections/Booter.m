@@ -331,12 +331,35 @@
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
     }
-    else if(model==self.model){
+    else if(model==self.model&&self.model.requestTag==1002){
         if(isSuccess){
             self.parkinglist=self.model.parking_entity.list;
         }
         else{
             self.parkinglist= [[NSArray alloc] init];
+        }
+    }
+    else if(model==self.model&&self.model.requestTag==1001){
+        if(isSuccess){
+            if(self.model.entity!=nil&&self.model.entity.token.length>0){
+                if(APP_DELEGATE.isTokenRequestFaild){
+                    [APP_DELEGATE initTokenTimer:0];
+                }
+                APP_DELEGATE.isTokenRequestFaild=NO;
+                APP_DELEGATE.token=self.model.entity.token;
+            }
+            else{
+                if(!APP_DELEGATE.isTokenRequestFaild){
+                    [APP_DELEGATE initTokenTimer:1];
+                }
+                APP_DELEGATE.isTokenRequestFaild=YES;
+            }
+        }
+        else{
+            if(!APP_DELEGATE.isTokenRequestFaild){
+                [APP_DELEGATE initTokenTimer:1];
+            }
+            APP_DELEGATE.isTokenRequestFaild=YES;
         }
     }
 }
@@ -356,8 +379,6 @@
         }
     }
 }
-
-
 
 -(TaskModel *)taskModel{
     if(!_taskModel){

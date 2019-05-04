@@ -34,7 +34,6 @@
 }
 
 
-
 //异步获取Token
 -(void)getTokenAsync{
     self.parseDataClassType = [UserTokenEntity class];
