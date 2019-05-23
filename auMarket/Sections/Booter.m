@@ -342,23 +342,26 @@
     else if(model==self.model&&self.model.requestTag==1001){
         if(isSuccess){
             if(self.model.entity!=nil&&self.model.entity.token.length>0){
-                if(APP_DELEGATE.isTokenRequestFaild){
-                    [APP_DELEGATE initTokenTimer:0];
-                }
+                //if(APP_DELEGATE.isTokenRequestFaild){
+                //    [APP_DELEGATE initTokenTimer:0];
+                //}
+                [APP_DELEGATE initTokenTimer:-1];
                 APP_DELEGATE.isTokenRequestFaild=NO;
                 APP_DELEGATE.token=self.model.entity.token;
             }
             else{
-                if(!APP_DELEGATE.isTokenRequestFaild){
-                    [APP_DELEGATE initTokenTimer:1];
-                }
+                //if(!APP_DELEGATE.isTokenRequestFaild){
+                //    [APP_DELEGATE initTokenTimer:1];
+                //}
+                [APP_DELEGATE initTokenTimer:1];
                 APP_DELEGATE.isTokenRequestFaild=YES;
             }
         }
         else{
-            if(!APP_DELEGATE.isTokenRequestFaild){
-                [APP_DELEGATE initTokenTimer:1];
-            }
+            //if(!APP_DELEGATE.isTokenRequestFaild){
+            //    [APP_DELEGATE initTokenTimer:1];
+            //}
+            [APP_DELEGATE initTokenTimer:1];
             APP_DELEGATE.isTokenRequestFaild=YES;
         }
     }

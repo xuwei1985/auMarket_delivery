@@ -77,9 +77,7 @@
     }
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
     if (error) {
-        if(!APP_DELEGATE.isTokenRequestFaild){
-            [APP_DELEGATE initTokenTimer:1];
-        }
+        [APP_DELEGATE initTokenTimer:1];
         APP_DELEGATE.isTokenRequestFaild=YES;
     }
     else{
@@ -93,9 +91,10 @@
         else{
             NSString *token = [[dict objectForKey:@"data"] objectForKey:@"token"];
             if(token!=nil&&token.length>0){
-                if(APP_DELEGATE.isTokenRequestFaild){
-                    [APP_DELEGATE initTokenTimer:0];
-                }
+                //if(APP_DELEGATE.isTokenRequestFaild){
+                //    [APP_DELEGATE initTokenTimer:0];
+                //}
+                [APP_DELEGATE initTokenTimer:-1];
                 APP_DELEGATE.isTokenRequestFaild=NO;
                 APP_DELEGATE.token=token;
             }

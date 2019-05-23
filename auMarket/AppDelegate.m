@@ -32,7 +32,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
     self.booter = [[Booter alloc] init];
-    [self initTokenTimer:0];
+    //[self initTokenTimer:0];
     [self updateToken];
     
     [self.booter bootReachability];
@@ -196,12 +196,11 @@
     }
     
     if(type==0){
-        tokenTimer = [NSTimer scheduledTimerWithTimeInterval:60*7 target:self selector:@selector(updateToken) userInfo:nil repeats:YES];
-        
         //创建正常token_timer
-    }else{
-        tokenTimer = [NSTimer scheduledTimerWithTimeInterval:60*1 target:self selector:@selector(updateToken) userInfo:nil repeats:YES];
+        tokenTimer = [NSTimer scheduledTimerWithTimeInterval:60*6 target:self selector:@selector(updateToken) userInfo:nil repeats:YES];
+    }else if(type==1){
         //创建加速token_timer
+        tokenTimer = [NSTimer scheduledTimerWithTimeInterval:15*1 target:self selector:@selector(updateToken) userInfo:nil repeats:YES];
     }
     
 }
