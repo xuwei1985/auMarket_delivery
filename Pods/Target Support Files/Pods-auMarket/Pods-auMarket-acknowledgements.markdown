@@ -24,6 +24,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
+## GoogleMaps
+
+Copyright 2018 Google
+
 ## JPush
 
 Copyright jpush.cn
@@ -53,7 +57,7 @@ THE SOFTWARE.
 
 ## MOBFoundation
 
-Copyright © 2012-2015 mob
+Copyright © 2012-2018 mob
 
 ## Masonry
 

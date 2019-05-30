@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+extern NSString *kMOBFReachabilityChangedNotification;
+
 /**
  *  网络类型
  */
@@ -38,6 +40,19 @@ typedef NS_ENUM(NSUInteger, MOBFNetworkType)
      *  4G网络
      */
     MOBFNetworkTypeCellular4G   = 5,
+};
+
+
+/**
+ IP版本
+
+ - MOBFIPVersion4: IPv4
+ - MOBFIPVersion6: IPv6
+ */
+typedef NS_ENUM(NSUInteger, MOBFIPVersion)
+{
+    MOBFIPVersion4 = 0,
+    MOBFIPVersion6 = 1,
 };
 
 /**
@@ -153,13 +168,6 @@ typedef NS_ENUM(NSUInteger, MOBFNetworkType)
 + (NSString *)bssid;
 
 /**
- *  获取广告商ID
- *
- *  @return 广告商ID
- */
-+ (NSString *)idfa;
-
-/**
  *  获取当前语言
  *
  *  @return 语言描述
@@ -171,7 +179,7 @@ typedef NS_ENUM(NSUInteger, MOBFNetworkType)
  *
  *  @return IP地址
  */
-+ (NSString *)ipAddress;
++ (NSString *)ipAddress:(MOBFIPVersion)ver;
 
 /**
  *  获取开发商ID
@@ -179,5 +187,33 @@ typedef NS_ENUM(NSUInteger, MOBFNetworkType)
  *  @return 开发商ID
  */
 + (NSString *)idfv;
+
+/**
+ *  获取物理内存
+
+ @return 物理内存
+ */
++ (double)physicalMemory;
+
+/**
+ *  获取存储大小
+
+ @return 存储大小
+ */
++ (long long)diskSpace;
+
+/**
+ *  cpu 类型
+ *
+ *  @return cpu 类型
+ */
++ (NSString *)cpuType;
+
+/**
+ *  获取无线局域网的强度
+ *
+ *  @return 强度 3: 强 ，2：中， 1：弱 ，无
+ */
++ (int)wifiLevel;
 
 @end

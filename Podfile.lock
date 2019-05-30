@@ -14,27 +14,33 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - GoogleMaps (3.0.3):
+    - GoogleMaps/Maps (= 3.0.3)
+  - GoogleMaps/Base (3.0.3)
+  - GoogleMaps/Maps (3.0.3):
+    - GoogleMaps/Base
   - JPush (2.1.9)
   - Masonry (1.0.2)
-  - MJRefresh (3.1.12)
-  - MOBFoundation (2.2.11)
+  - MJRefresh (3.1.17)
+  - MOBFoundation (3.2.2)
   - SDWebImage (3.7.6):
     - SDWebImage/Core (= 3.7.6)
   - SDWebImage/Core (3.7.6)
-  - ShareSDK3 (3.5.4):
+  - ShareSDK3 (4.0.4):
     - MOBFoundation
-    - ShareSDK3/ShareSDK (= 3.5.4)
-  - ShareSDK3/ShareSDK (3.5.4):
+    - ShareSDK3/ShareSDK (= 4.0.4)
+  - ShareSDK3/ShareSDK (4.0.4):
     - MOBFoundation
-  - ShareSDK3/ShareSDKPlatforms/WeChat (3.5.4):
+  - ShareSDK3/ShareSDKPlatforms/WeChat (4.0.4):
     - MOBFoundation
   - SVProgressHUD (2.0.4)
   - TMCache (2.1.0)
-  - UICKeyChainStore (2.1.0)
+  - UICKeyChainStore (2.1.2)
   - UMengAnalytics-NO-IDFA (4.0.5)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
+  - GoogleMaps (~> 3.0.0)
   - JPush (~> 2.1.6)
   - Masonry (~> 1.0.0)
   - MJRefresh (~> 3.1.0)
@@ -47,19 +53,35 @@ DEPENDENCIES:
   - UICKeyChainStore (~> 2.1.0)
   - UMengAnalytics-NO-IDFA (~> 4.0.1)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - GoogleMaps
+    - JPush
+    - Masonry
+    - MJRefresh
+    - MOBFoundation
+    - SDWebImage
+    - ShareSDK3
+    - SVProgressHUD
+    - TMCache
+    - UICKeyChainStore
+    - UMengAnalytics-NO-IDFA
+
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  GoogleMaps: fd5c9fa58871781b9fb94d4936f19c69fe60ce32
   JPush: 8bccf709ace4318a8e7008cc4fab42b706bfad46
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
-  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  MOBFoundation: 170a1b551023123590c349c491584d0d081ad5d5
+  MJRefresh: ee5b68f639775462faba4db0fd243baf4d42c2cf
+  MOBFoundation: b5ff4038ddb9a0f06b685b86408f905a10aa147c
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
-  ShareSDK3: 80e4208c44b259781a17c411f6feec99b604fc25
+  ShareSDK3: 75b57bab0cbe3119e281c7668eaad9d48adf3fde
   SVProgressHUD: bfde85ed6c573ea802b9cb37894ed9b629034f1b
   TMCache: 95ebcc9b3c7e90fb5fd8fc3036cba3aa781c9bed
-  UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
+  UICKeyChainStore: 85db518bb1d294366d15ec9b92a416c4e670518f
   UMengAnalytics-NO-IDFA: 965a219b05475ff2a4c09a164139a27bbaa0e25b
 
-PODFILE CHECKSUM: 45b4afda0f21d34bc96b2213e64854a7b8c6ef3c
+PODFILE CHECKSUM: 2bced36aeaf0f23659a7a658d79095dcf7a82511
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.7.0
