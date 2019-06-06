@@ -24,14 +24,19 @@
 
 -(void)initUI{
     [self setNavigation];
-    [self createOrderInfoView];
+    if(self.task_entity!=nil){
+        [self createOrderInfoView];
+        [self createDoneActionBar];
+    }
+    
     [self setUpTableView];
-    [self createDoneActionBar];
 }
 
 -(void)initData{
     [self loadGoodsForOrder];
-    [self loadDeliveryInfo];
+    if(self.task_entity!=nil){
+        [self loadDeliveryInfo];
+    }
 }
 
 -(void)setNavigation{
@@ -382,7 +387,12 @@
     UIView *view = [UIView new];
     view.backgroundColor = COLOR_CLEAR;
     
-    [self.tableView setTableHeaderView:orderInfoView];
+    if(self.task_entity!=nil){
+        [self.tableView setTableHeaderView:orderInfoView];
+    }
+    else{
+        [self.tableView setTableHeaderView:view];
+    }
     [self.tableView setTableFooterView:view];
     [self.view addSubview:self.tableView];
 }
@@ -423,7 +433,12 @@
 //请求订单下的商品信息
 -(void)loadGoodsForOrder{
     [self startLoadingActivityIndicator];
-    [self.model loadGoodsListForOrder:self.task_entity.order_id];
+    if(self.task_entity!=nil){
+        [self.model loadGoodsListForOrder:self.task_entity.order_id];
+    }
+    else{
+        [self.model loadGoodsListForOrder:self.order_id];
+    }
 }
 
 -(void)setDeliveryDone:(NSString *)status andPayType:(NSString *)pay_type{

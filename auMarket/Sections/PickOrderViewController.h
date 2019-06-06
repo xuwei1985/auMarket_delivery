@@ -10,6 +10,7 @@
 #import "PickOrderCell.h"
 #import "GoodsListItemCell.h"
 #import "PickModel.h"
+#import "OrderDetailViewController.h"
 
 @interface PickOrderViewController : SPBaseViewController<UIActionSheetDelegate,UITextFieldDelegate>
 {
@@ -21,6 +22,7 @@
     UIButton *doneBtn;
     NSMutableString *all_delivery_ids;
     NSMutableString *all_order_ids;
+    PickItemEntity *sel_entity;
 }
 @property(nonatomic,retain) PickModel *model;
 @property(nonatomic,retain) NSString *order_ids;

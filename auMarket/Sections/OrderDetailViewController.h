@@ -30,6 +30,7 @@
     
     CLLocationCoordinate2D coordinate;
 }
+@property(nonatomic,retain) NSString *order_id;
 @property(nonatomic,retain) TaskItemEntity *task_entity;
 @property(nonatomic,retain) TaskModel *model;
 @end
