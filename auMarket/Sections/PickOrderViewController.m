@@ -169,12 +169,15 @@
     return goodsTableView;
 }
 
--(UIView *)getSectionHeaderView:(PickItemEntity *)entity{
+-(UIView *)getSectionHeaderView:(PickItemEntity *)entity andSection:(int)section{
     UILabel *lbl_contact;
     UILabel *lbl_package_num;
     UIView *section_view;
 
     section_view=[[UIView alloc] initWithFrame:CGRectMake(0, 15, WIDTH_SCREEN, SECTION_HEADER_HEIGHT)];
+    section_view.userInteractionEnabled=YES;
+    section_view.tag=7000+section;
+    [section_view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoOrderDetailView:)]];
     
     if([entity.is_ready intValue]==0){//订单未准备好
         section_view.backgroundColor=COLOR_BG_IMAGEVIEW;
@@ -588,7 +591,7 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if(tableView.tag<5000){
         PickItemEntity *entity=[self.model.entity.list objectAtIndex:section];
-        return [self getSectionHeaderView:entity];
+        return [self getSectionHeaderView:entity andSection:section];
     }
     return nil;
 }
@@ -697,6 +700,14 @@
     editingStyle = UITableViewCellEditingStyleDelete;
 }
 
+-(void)gotoOrderDetailView:(UITapGestureRecognizer *)sender{
+    int index=(int)sender.view.tag-7000;
+    PickItemEntity *entity=[self.model.entity.list objectAtIndex:index];
+    
+    OrderDetailViewController *ovc=[[OrderDetailViewController alloc] init];
+    ovc.order_id=entity.order_id;
+    [self.navigationController pushViewController:ovc animated:YES];
+}
 
 -(void)goBack{
     [self.navigationController popViewControllerAnimated:YES];

@@ -193,9 +193,6 @@
 		A9F4DA991F65965200D71774 /* MapMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DA981F65965200D71774 /* MapMaker.m */; };
 		A9F4DAA51F66CA6400D71774 /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAA31F66CA6400D71774 /* OrderDetailViewController.m */; };
 		A9F4DAB71F66D4A800D71774 /* OrderDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAB51F66D4A800D71774 /* OrderDetailCell.m */; };
-		A9F4DABB1F66D4D700D71774 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4DAB81F66D4D700D71774 /* GoogleMaps.framework */; };
-		A9F4DABC1F66D4D700D71774 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4DAB91F66D4D700D71774 /* GoogleMapsBase.framework */; };
-		A9F4DABD1F66D4D700D71774 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4DABA1F66D4D700D71774 /* GoogleMapsCore.framework */; };
 		A9F4DACE1F68390F00D71774 /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAC01F68390F00D71774 /* MJPhoto.m */; };
 		A9F4DACF1F68390F00D71774 /* MJPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DAC11F68390F00D71774 /* MJPhotoBrowser.bundle */; };
 		A9F4DAD01F68390F00D71774 /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F4DAC31F68390F00D71774 /* MJPhotoBrowser.m */; };
@@ -504,9 +501,6 @@
 		A9F4DAA41F66CA6400D71774 /* OrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController.h; sourceTree = "<group>"; };
 		A9F4DAB51F66D4A800D71774 /* OrderDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailCell.m; sourceTree = "<group>"; };
 		A9F4DAB61F66D4A800D71774 /* OrderDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailCell.h; sourceTree = "<group>"; };
-		A9F4DAB81F66D4D700D71774 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = auMarket/GoogleMaps.framework; sourceTree = "<group>"; };
-		A9F4DAB91F66D4D700D71774 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = auMarket/GoogleMapsBase.framework; sourceTree = "<group>"; };
-		A9F4DABA1F66D4D700D71774 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = auMarket/GoogleMapsCore.framework; sourceTree = "<group>"; };
 		A9F4DABF1F68390F00D71774 /* MJPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhoto.h; sourceTree = "<group>"; };
 		A9F4DAC01F68390F00D71774 /* MJPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhoto.m; sourceTree = "<group>"; };
 		A9F4DAC11F68390F00D71774 /* MJPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJPhotoBrowser.bundle; sourceTree = "<group>"; };
@@ -578,8 +572,6 @@
 				A9B2D8AF1F63A0B600D1AE2D /* OpenGLES.framework in Frameworks */,
 				A9B2D8AD1F63A0AF00D1AE2D /* libz.tbd in Frameworks */,
 				A9B2D8AB1F63A0A800D1AE2D /* libc++.tbd in Frameworks */,
-				A9F4DABC1F66D4D700D71774 /* GoogleMapsBase.framework in Frameworks */,
-				A9F4DABD1F66D4D700D71774 /* GoogleMapsCore.framework in Frameworks */,
 				A9B2D8A91F63A0A100D1AE2D /* ImageIO.framework in Frameworks */,
 				A9B2D8A61F63A03100D1AE2D /* GLKit.framework in Frameworks */,
 				A9B2D8A41F63A02400D1AE2D /* CoreText.framework in Frameworks */,
@@ -588,7 +580,6 @@
 				A9B2D89E1F63A00E00D1AE2D /* CoreData.framework in Frameworks */,
 				A9B2D89C1F63A00600D1AE2D /* Accelerate.framework in Frameworks */,
 				A964742C1E11205500A5A39B /* CoreTelephony.framework in Frameworks */,
-				A9F4DABB1F66D4D700D71774 /* GoogleMaps.framework in Frameworks */,
 				A9D354741E0A3139006D265D /* libPods-auMarket.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -599,9 +590,6 @@
 		587F95023A7DB0FB072F1520 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A9F4DAB81F66D4D700D71774 /* GoogleMaps.framework */,
-				A9F4DAB91F66D4D700D71774 /* GoogleMapsBase.framework */,
-				A9F4DABA1F66D4D700D71774 /* GoogleMapsCore.framework */,
 				A9B2D8B41F63A0D100D1AE2D /* UIKit.framework */,
 				A9B2D8B21F63A0C700D1AE2D /* SystemConfiguration.framework */,
 				A9B2D8B01F63A0C000D1AE2D /* QuartzCore.framework */,
@@ -1253,7 +1241,6 @@
 				A95E10881DF80ED000660E42 /* Sources */,
 				A95E10891DF80ED000660E42 /* Frameworks */,
 				A95E108A1DF80ED000660E42 /* Resources */,
-				049F0C432351ED67E0EA5E01 /* [CP] Embed Pods Frameworks */,
 				6D7515FF1EFEFF608DE7B4F7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -1438,34 +1425,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		049F0C432351ED67E0EA5E01 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-auMarket/Pods-auMarket-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6D7515FF1EFEFF608DE7B4F7 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-auMarket/Pods-auMarket-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
+				"${PODS_ROOT}/ShareSDK3/SDK/ShareSDK/Support/Required/ShareSDK.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ShareSDK.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-auMarket/Pods-auMarket-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-auMarket/Pods-auMarket-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E5298E8B231C88A716052C28 /* [CP] Check Pods Manifest.lock */ = {
@@ -1474,13 +1455,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-auMarket-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1701,7 +1685,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/auMarket/PrefixHeader.pch";
 				INFOPLIST_FILE = auMarket/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.delivery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1729,7 +1713,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/auMarket/PrefixHeader.pch";
 				INFOPLIST_FILE = auMarket/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.delivery;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -1,4 +1,4 @@
-platform :ios, '7.0'
+platform :ios, '9.0'
 
 target "auMarket" do
 
@@ -11,6 +11,7 @@ pod 'JPush', '~> 2.1.6'
 pod 'Masonry', '~> 1.0.0'
 pod 'UICKeyChainStore', '~> 2.1.0'
 pod 'TMCache', '~> 2.1.0'
+pod 'GoogleMaps', '~> 3.0.0'
 # 主模块(必须)
 pod 'ShareSDK3'
 pod 'MOBFoundation'
