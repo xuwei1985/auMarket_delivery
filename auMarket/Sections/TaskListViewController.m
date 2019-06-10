@@ -9,6 +9,9 @@
 #define TASK_CATEGORY_EDGE 12
 #define TASK_CATEGORY_GAP 15
 #define TASK_CATEGORY_WIDTH (WIDTH_SCREEN-TASK_CATEGORY_EDGE*2-TASK_CATEGORY_GAP*2)/3
+#define CATEGORY_BAR 44.0
+#define SECTION_HEADER_HEIGHT 190.0
+#define GOODS_ROW_HEIGHT 72.0
 #import "TaskListViewController.h"
 
 @interface TaskListViewController ()
@@ -116,10 +119,10 @@
 
 -(void)setUpTableView{
     if(!self.taskArr){
-        self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, SEGMENTVIEW_HEIGHT, WIDTH_SCREEN, HEIGHT_SCREEN-64-SEGMENTVIEW_HEIGHT-48) style:UITableViewStylePlain];
+        self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, SEGMENTVIEW_HEIGHT, WIDTH_SCREEN, HEIGHT_SCREEN-64-SEGMENTVIEW_HEIGHT-48) style:UITableViewStyleGrouped];
     }
     else{
-        self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64-48) style:UITableViewStylePlain];
+        self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64-48) style:UITableViewStyleGrouped];
     }
     
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
@@ -132,6 +135,220 @@
     [self.view addSubview:self.tableView];
 }
 
+
+
+-(UITableView *)getSectionFooterView:(int)section andEntity:(TaskItemEntity *)entity{
+    int n=(int)[entity.box_goods count];
+    int height=GOODS_ROW_HEIGHT*n;
+    UITableView *goodsTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,height) style:UITableViewStylePlain];
+    goodsTableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
+    goodsTableView.separatorColor=COLOR_BG_TABLESEPARATE;
+    goodsTableView.backgroundColor=COLOR_BG_TABLEVIEW;
+    goodsTableView.tag=5000+section;
+    goodsTableView.delegate=self;
+    goodsTableView.dataSource=self;
+    UIView *view = [UIView new];
+    view.backgroundColor = COLOR_CLEAR;
+    
+    [goodsTableView setTableHeaderView:view];
+    [goodsTableView setTableFooterView:view];
+    [goodsTableView reloadData];
+    return goodsTableView;
+}
+
+-(UIView *)getSectionHeaderView:(TaskItemEntity *)entity andSection:(int)section{
+    UILabel *lbl_contact;
+    UILabel *lbl_package_num;
+    UIView *section_view;
+    
+    section_view=[[UIView alloc] initWithFrame:CGRectMake(0, 15, WIDTH_SCREEN, SECTION_HEADER_HEIGHT)];
+    section_view.userInteractionEnabled=YES;
+    section_view.tag=7000+section;
+    [section_view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoOrderDetailView:)]];
+    
+    if([entity.is_ready intValue]==0){//订单未准备好
+        section_view.backgroundColor=COLOR_BG_IMAGEVIEW;
+    }
+    else{
+        section_view.backgroundColor=COLOR_BG_WHITE;
+    }
+    
+    UIView *line_view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 15)];
+    line_view.backgroundColor=COLOR_BG_VIEW;
+    [section_view addSubview:line_view];
+    
+    lbl_contact=[[UILabel alloc] initWithFrame:CGRectMake(10, 24, 160, 20)];
+    lbl_contact.textAlignment=NSTextAlignmentLeft;
+    lbl_contact.font=DEFAULT_FONT(13);
+    lbl_contact.textColor=COLOR_MAIN;
+    [section_view addSubview:lbl_contact];
+    
+    lbl_package_num=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-130, 24, 120, 20)];
+    lbl_package_num.textAlignment=NSTextAlignmentRight;
+    lbl_package_num.font=DEFAULT_FONT(13);
+    lbl_package_num.textColor=COLOR_MAIN;
+    [section_view addSubview:lbl_package_num];
+    
+    line_view=[[UIView alloc] initWithFrame:CGRectMake(0, 52, WIDTH_SCREEN, 1)];
+    line_view.backgroundColor=COLOR_BG_VIEW;
+    [section_view addSubview:line_view];
+    
+    lbl_contact.text=[NSString stringWithFormat:@"收货人：%@",entity.consignee];
+    
+    int n=0;
+    for (int i=0; i<entity.package_arr.count; i++) {
+        n+=[[[entity.package_arr objectAtIndex:i] objectForKey:@"number"] intValue];
+    }
+    
+    lbl_package_num.text=[NSString stringWithFormat:@"包裹总数：%d",n];
+    
+    UIImageView *iconView=[[UIImageView alloc] init];
+    iconView.image=[UIImage imageNamed:@"1_45"];
+    [section_view addSubview:iconView];
+    
+    [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(10);
+        make.top.mas_equalTo(74);
+        make.size.mas_equalTo(CGSizeMake(26, 26));
+    }];
+    
+    UILabel *lbl_order_region=[[UILabel alloc] init];
+    lbl_order_region.textColor=COLOR_GRAY;
+    lbl_order_region.font=FONT_SIZE_MIDDLE;
+    lbl_order_region.text=@"区域：";
+    [section_view addSubview:lbl_order_region];
+    
+    [lbl_order_region mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(line_view.mas_bottom).offset(15);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
+        make.size.mas_equalTo(CGSizeMake(58, 20));
+    }];
+    
+    UILabel *lbl_order_region_value=[[UILabel alloc] init];
+    lbl_order_region_value.textColor=COLOR_DARKGRAY;
+    lbl_order_region_value.font=FONT_SIZE_MIDDLE;
+    lbl_order_region_value.text=entity.block_name;
+    [section_view addSubview:lbl_order_region_value];
+    
+    [lbl_order_region_value mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(line_view.mas_bottom).offset(15);
+        make.left.mas_equalTo(lbl_order_region.mas_right);
+        make.size.mas_equalTo(CGSizeMake(144, 20));
+    }];
+    
+    UILabel *lbl_order_sn=[[UILabel alloc] init];
+    lbl_order_sn.textColor=COLOR_GRAY;
+    lbl_order_sn.font=FONT_SIZE_MIDDLE;
+    lbl_order_sn.text=@"订单号：";
+    [section_view addSubview:lbl_order_sn];
+    
+    [lbl_order_sn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_order_region.mas_bottom).offset(5);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
+        make.size.mas_equalTo(CGSizeMake(58, 20));
+    }];
+    
+    UILabel *lbl_order_sn_value=[[UILabel alloc] init];
+    lbl_order_sn_value.textColor=COLOR_DARKGRAY;
+    lbl_order_sn_value.font=FONT_SIZE_MIDDLE;
+    lbl_order_sn_value.text=entity.order_sn;
+    [section_view addSubview:lbl_order_sn_value];
+    
+    [lbl_order_sn_value mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_order_region.mas_bottom).offset(5);
+        make.left.mas_equalTo(lbl_order_region.mas_right);
+        make.size.mas_equalTo(CGSizeMake(140, 20));
+    }];
+    
+    UILabel *lbl_order_address=[[UILabel alloc] init];
+    lbl_order_address.textColor=COLOR_GRAY;
+    lbl_order_address.font=FONT_SIZE_MIDDLE;
+    lbl_order_address.text=@"地址：";
+    [section_view addSubview:lbl_order_address];
+    
+    [lbl_order_address mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_order_sn.mas_bottom).offset(5);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
+        make.size.mas_equalTo(CGSizeMake(58, 20));
+    }];
+    
+    UILabel *lbl_order_address_value=[[UILabel alloc] init];
+    lbl_order_address_value.textColor=COLOR_DARKGRAY;
+    lbl_order_address_value.font=FONT_SIZE_MIDDLE;
+    lbl_order_address_value.text=entity.address;
+    lbl_order_address_value.lineBreakMode=NSLineBreakByTruncatingTail;
+    [section_view addSubview:lbl_order_address_value];
+    
+    [lbl_order_address_value mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_order_sn.mas_bottom).offset(5);
+        make.left.mas_equalTo(lbl_order_address.mas_right);
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-116, 20));
+    }];
+    
+    UILabel *lbl_predict_time=[[UILabel alloc] init];
+    lbl_predict_time.textColor=COLOR_GRAY;
+    lbl_predict_time.font=FONT_SIZE_MIDDLE;
+    lbl_predict_time.text=@"预计送达：";
+    [section_view addSubview:lbl_predict_time];
+    
+    [lbl_predict_time mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_order_address.mas_bottom).offset(5);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
+        make.size.mas_equalTo(CGSizeMake(76, 20));
+    }];
+    
+    UILabel *lbl_predict_time_value=[[UILabel alloc] init];
+    lbl_predict_time_value.textColor=COLOR_DARKGRAY;
+    lbl_predict_time_value.font=FONT_SIZE_MIDDLE;
+    
+    if(entity.predict_time!=nil&&![entity.predict_time isEqualToString:@"null"]&&[entity.predict_time length]>0){
+        lbl_predict_time_value.text=entity.predict_time;
+    }
+    else{
+        lbl_predict_time_value.text=@"--";
+    }
+    
+    [section_view addSubview:lbl_predict_time_value];
+    
+    [lbl_predict_time_value mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_order_address.mas_bottom).offset(5);
+        make.left.mas_equalTo(lbl_predict_time.mas_right);
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-146, 20));
+    }];
+    
+    UILabel *lbl_shelf_code=[[UILabel alloc] init];
+    lbl_shelf_code.textColor=COLOR_GRAY;
+    lbl_shelf_code.font=FONT_SIZE_MIDDLE;
+    lbl_shelf_code.text=@"货架号：";
+    [section_view addSubview:lbl_shelf_code];
+    
+    [lbl_shelf_code mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_predict_time.mas_bottom).offset(5);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
+        make.size.mas_equalTo(CGSizeMake(76, 20));
+    }];
+    
+    UILabel *lbl_shelf_code_value=[[UILabel alloc] init];
+    lbl_shelf_code_value.textColor=COLOR_MAIN;
+    lbl_shelf_code_value.font=FONT_SIZE_MIDDLE;
+    
+    if(entity.shelf_code!=nil&&![entity.shelf_code isEqualToString:@"null"]&&[entity.shelf_code length]>0){
+        lbl_shelf_code_value.text=entity.shelf_code;
+    }
+    else{
+        lbl_shelf_code_value.text=@"--";
+    }
+    
+    [section_view addSubview:lbl_shelf_code_value];
+    
+    [lbl_shelf_code_value mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_predict_time.mas_bottom).offset(5);
+        make.left.mas_equalTo(lbl_shelf_code.mas_right);
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-146, 20));
+    }];
+    
+    return section_view;
+}
 
 -(void)taskCategoryTap:(UIButton *)sender{
     btn_waitDelivery.selected=NO;
@@ -192,11 +409,8 @@
     }
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     if(list_status_modal==Delivery_Status_Delivering){
         return [APP_DELEGATE.booter.tasklist_delivering count];
     }
@@ -212,50 +426,201 @@
     return 0;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 56;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *reuseIdetify = @"taskListItemCell";
-    TaskItemCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdetify];
-    if (cell == nil) {
-        cell=[[TaskItemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
-        cell.opaque=YES;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-
-    if(list_status_modal==Delivery_Status_Delivering){
-        cell.entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
-    }
-    else if(list_status_modal==Delivery_Status_Finished){
-        cell.entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.row];
-    }
-    else if(list_status_modal==Delivery_Status_Failed){
-        cell.entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.row];
-    }
-    else if(list_status_modal==Delivery_Status_Multi){
-         cell.entity=[self.taskArr objectAtIndex:indexPath.row];
+- (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
+{
+    if(tv.tag<5000){
+        if(list_status_modal==Delivery_Status_Delivering){
+            return [[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:section].package_arr count];
+        }
+        else if(list_status_modal==Delivery_Status_Finished){
+            return [[APP_DELEGATE.booter.tasklist_finished objectAtIndex:section].package_arr count];
+        }
+        else if(list_status_modal==Delivery_Status_Failed){
+            return [[APP_DELEGATE.booter.tasklist_failed objectAtIndex:section].package_arr count];
+        }
+        else if(list_status_modal==Delivery_Status_Multi){
+            return [[self.taskArr  objectAtIndex:section].package_arr count];;
+        }
     }
     
-    return cell;
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    TaskItemEntity *entity;
+    
     if(list_status_modal==Delivery_Status_Delivering){
-        entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
+        return [[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:section].box_goods count];
     }
     else if(list_status_modal==Delivery_Status_Finished){
-        entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.row];
+        return [[APP_DELEGATE.booter.tasklist_finished objectAtIndex:section].box_goods count];
     }
     else if(list_status_modal==Delivery_Status_Failed){
-        entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.row];
+        return [[APP_DELEGATE.booter.tasklist_failed objectAtIndex:section].box_goods count];
     }
     else if(list_status_modal==Delivery_Status_Multi){
-        entity=[self.taskArr objectAtIndex:indexPath.row];
+        return [[self.taskArr  objectAtIndex:section].box_goods count];;
     }
-    [self gotoOrderDetailView:entity];
+    return 0;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if(tableView.tag<5000){
+        return SECTION_HEADER_HEIGHT+15;
+    }
+    return 0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if(tableView.tag<5000){
+        TaskItemEntity *entity;
+        if(list_status_modal==Delivery_Status_Delivering){
+            entity= [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:section];
+        }
+        else if(list_status_modal==Delivery_Status_Finished){
+            entity= [APP_DELEGATE.booter.tasklist_finished objectAtIndex:section];
+        }
+        else if(list_status_modal==Delivery_Status_Failed){
+            entity= [APP_DELEGATE.booter.tasklist_failed objectAtIndex:section];
+        }
+        else if(list_status_modal==Delivery_Status_Multi){
+            entity= [self.taskArr  objectAtIndex:section];
+        }
+        
+        return [self getSectionHeaderView:entity andSection:(int)section];
+    }
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if(tableView.tag<5000){
+        int n=0;
+        if(list_status_modal==Delivery_Status_Delivering){
+            n= (int)[[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:section].box_goods count];
+        }
+        else if(list_status_modal==Delivery_Status_Finished){
+            n= (int)[[APP_DELEGATE.booter.tasklist_finished objectAtIndex:section].box_goods count];
+        }
+        else if(list_status_modal==Delivery_Status_Failed){
+            n= (int)[[APP_DELEGATE.booter.tasklist_failed objectAtIndex:section].box_goods count];
+        }
+        else if(list_status_modal==Delivery_Status_Multi){
+            n= (int)[[self.taskArr  objectAtIndex:section].box_goods count];;
+        }
+        
+        float height=GOODS_ROW_HEIGHT*n;
+        if(height<=0){
+            height=CGFLOAT_MIN;
+        }
+        return height;
+    }
+    return 0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if(tableView.tag<5000){
+        TaskItemEntity *entity;
+        if(list_status_modal==Delivery_Status_Delivering){
+            entity= [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:section];
+        }
+        else if(list_status_modal==Delivery_Status_Finished){
+            entity= [APP_DELEGATE.booter.tasklist_finished objectAtIndex:section];
+        }
+        else if(list_status_modal==Delivery_Status_Failed){
+            entity= [APP_DELEGATE.booter.tasklist_failed objectAtIndex:section];
+        }
+        else if(list_status_modal==Delivery_Status_Multi){
+            entity= [self.taskArr  objectAtIndex:section];
+        }
+        UITableView *goodsTableView=[self getSectionFooterView:(int)section andEntity:entity];
+        return goodsTableView;
+    }
+    return nil;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(tv.tag<5000){
+        NSString *reuseIdetify = @"taskListItemCell";
+        TaskItemCell *cell = [tv dequeueReusableCellWithIdentifier:reuseIdetify];
+        if (cell == nil) {
+            cell = [[TaskItemCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdetify];
+            cell.showsReorderControl = NO;
+            cell.accessoryType=UITableViewCellAccessoryNone;
+            cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
+            cell.textLabel.backgroundColor = [UIColor clearColor];
+            cell.textLabel.font=FONT_SIZE_MIDDLE;
+            cell.textLabel.textColor=COLOR_DARKGRAY;
+        }
+        
+        TaskItemEntity *entity;
+        if(list_status_modal==Delivery_Status_Delivering){
+            entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
+        }
+        else if(list_status_modal==Delivery_Status_Finished){
+            entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.row];
+        }
+        else if(list_status_modal==Delivery_Status_Failed){
+            entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.row];
+        }
+        else if(list_status_modal==Delivery_Status_Multi){
+            entity=[self.taskArr objectAtIndex:indexPath.row];
+        }
+        cell.entity=entity;
+        cell.row_index=(int)indexPath.row;
+        
+        return cell;
+    }
+    else{
+        NSString *identifier=@"GoodsCellIdentifier";
+        GoodsListItemCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
+        if (cell == nil) {
+            cell = [[GoodsListItemCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+            cell.showsReorderControl = NO;
+            cell.accessoryType=UITableViewCellAccessoryNone;
+            cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
+            cell.textLabel.backgroundColor = [UIColor clearColor];
+            cell.textLabel.font=FONT_SIZE_MIDDLE;
+            cell.textLabel.textColor=COLOR_DARKGRAY;
+        }
+        int s=(int)tv.tag-5000;
+        pGoodsEntity *entity;
+        if(list_status_modal==Delivery_Status_Delivering){
+            entity=[[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
+        }
+        else if(list_status_modal==Delivery_Status_Finished){
+            entity=[[APP_DELEGATE.booter.tasklist_finished objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
+        }
+        else if(list_status_modal==Delivery_Status_Failed){
+            entity=[[APP_DELEGATE.booter.tasklist_failed objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
+        }
+        else if(list_status_modal==Delivery_Status_Multi){
+            entity=[[self.taskArr objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
+        }
+        cell.entity=entity;
+        return cell;
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(tv.tag<5000){
+        return 44;
+    }
+    return GOODS_ROW_HEIGHT;
+}
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:NO];
+//    TaskItemEntity *entity;
+//    if(list_status_modal==Delivery_Status_Delivering){
+//        entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
+//    }
+//    else if(list_status_modal==Delivery_Status_Finished){
+//        entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.row];
+//    }
+//    else if(list_status_modal==Delivery_Status_Failed){
+//        entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.row];
+//    }
+//    else if(list_status_modal==Delivery_Status_Multi){
+//        entity=[self.taskArr objectAtIndex:indexPath.row];
+//    }
+//    [self gotoOrderDetailView:entity];
 }
 
 -(void)refreshCategoryBtn{
@@ -278,7 +643,21 @@
     [APP_DELEGATE.booter handlerWorkingState:sender.selected];
 }
 
--(void)gotoOrderDetailView:(TaskItemEntity *)entity{
+-(void)gotoOrderDetailView:(UIGestureRecognizer *)sender{
+    int row=(int)sender.view.tag-7000;
+    TaskItemEntity *entity;
+    if(list_status_modal==Delivery_Status_Delivering){
+        entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:row];
+    }
+    else if(list_status_modal==Delivery_Status_Finished){
+        entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:row];
+    }
+    else if(list_status_modal==Delivery_Status_Failed){
+        entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:row];
+    }
+    else if(list_status_modal==Delivery_Status_Multi){
+        entity=[self.taskArr objectAtIndex:row];
+    }
     OrderDetailViewController *ovc=[[OrderDetailViewController alloc] init];
     ovc.task_entity=entity;
     [self.navigationController pushViewController:ovc animated:YES];

@@ -19,7 +19,7 @@
 
 -(void)loadTaskList{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delivery_list&delivery_id=%@",999];//user.user_id
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delivery_list&delivery_id=%@",user.user_id];//
     self.parseDataClassType = [TaskEntity class];
     self.params = @{};
     self.requestTag=3001;
@@ -65,7 +65,8 @@
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[TaskEntity class]]) {
-        self.entity = (TaskEntity*)parsedData;
+//        self.entity = (TaskEntity*)parsedData;
+        self.entity=[self convertDeliverydata:(TaskEntity*)parsedData];
     }
     else if ([parsedData isKindOfClass:[OrderGoodsEntity class]]) {
         self.goods_entity = (OrderGoodsEntity*)parsedData;
@@ -73,6 +74,40 @@
     else if ([parsedData isKindOfClass:[TimeSectionEntity class]]) {
         self.time_entity = (TimeSectionEntity*)parsedData;
     }
+}
+
+
+-(TaskEntity *)convertDeliverydata:(TaskEntity *)entity{
+    NSMutableArray *mArr;
+    if(entity&&entity.list){
+        
+        for(int i=0;i<entity.list.count;i++){
+            mArr=[[NSMutableArray alloc] init];
+            NSMutableDictionary *dic;
+            if([[entity.list objectAtIndex:i].default_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].default_package,@"number",[entity.list objectAtIndex:i].default_package_pick,@"picked",@"普通包裹",@"category",@"c_default",@"icon",nil];
+                [mArr addObject:dic];
+            }
+            if([[entity.list objectAtIndex:i].freeze_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].freeze_package,@"number",[entity.list objectAtIndex:i].freeze_package_pick,@"picked",@"冷冻包裹",@"category",@"c_freeze",@"icon",nil];
+                [mArr addObject:dic];
+            }
+            if([[entity.list objectAtIndex:i].refrigerate_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].refrigerate_package,@"number",[entity.list objectAtIndex:i].refrigerate_package_pick,@"picked",@"冷藏包裹",@"category",@"c_refrigerate",@"icon",nil];
+                [mArr addObject:dic];
+            }
+            if([[entity.list objectAtIndex:i].box_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].box_package,@"number",[entity.list objectAtIndex:i].box_package_pick,@"picked",@"整箱包裹",@"category",@"c_box",@"icon",nil];
+                [mArr addObject:dic];
+            }
+            if([[entity.list objectAtIndex:i].meat_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].meat_package,@"number",[entity.list objectAtIndex:i].box_package_pick,@"picked",@"纸箱包裹",@"category",@"c_meat",@"icon",nil];
+                [mArr addObject:dic];
+            }
+            [entity.list objectAtIndex:i].package_arr=[NSArray arrayWithArray:mArr];
+        }
+    }
+    return entity;
 }
 
 /**

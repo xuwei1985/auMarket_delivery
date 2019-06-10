@@ -11,10 +11,11 @@
 
 
 @interface TaskItemCell : UITableViewCell<UITextFieldDelegate,UIAlertViewDelegate>{
-    UILabel *_taskTitleLbl;
-    UIImageView *_iconView;
+    UIImageView *_iconImageView;
+    UILabel *lbl_package_number;
+    UILabel *lbl_package_title;
 }
 
 @property(nonatomic,retain)TaskItemEntity *entity;
-@property(nonatomic,retain)NSIndexPath *indexPath;
+@property(nonatomic,assign) int row_index;
 @end

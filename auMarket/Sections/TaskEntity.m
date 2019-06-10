@@ -8,6 +8,7 @@
 
 #import "TaskEntity.h"
 
+
 @implementation TaskEntity
 -(id)init{
     self = [super init];
@@ -20,6 +21,16 @@
 
 
 @implementation TaskItemEntity
+-(id)init{
+    self = [super init];
+    if (self) {
+        [self addMappingRuleArrayProperty:@"box_goods" class:[pGoodsEntity class]];
+    }
+    return self;
+}
 
 @end
 
+@implementation pGoodsEntity : SPBaseEntity
+
+@end

@@ -591,7 +591,7 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if(tableView.tag<5000){
         PickItemEntity *entity=[self.model.entity.list objectAtIndex:section];
-        return [self getSectionHeaderView:entity andSection:section];
+        return [self getSectionHeaderView:entity andSection:(int)section];
     }
     return nil;
 }

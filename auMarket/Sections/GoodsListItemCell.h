@@ -16,6 +16,6 @@
     UIImageView *_goodsImageView;
 }
 
-@property(nonatomic,retain)PackageGoodsEntity *entity;
+@property(nonatomic,retain)pGoodsEntity *entity;
 
 @end
