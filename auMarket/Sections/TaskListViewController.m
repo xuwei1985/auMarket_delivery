@@ -592,7 +592,7 @@
         else if(list_status_modal==Delivery_Status_Multi){
             entity=[[self.taskArr objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
         }
-        cell.entity=entity;
+        cell.entity=(PackageGoodsEntity*)entity;
         return cell;
     }
 }
