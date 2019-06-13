@@ -411,23 +411,27 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if(list_status_modal==Delivery_Status_Delivering){
-        return [APP_DELEGATE.booter.tasklist_delivering count];
+    if(tableView.tag<5000){
+        if(list_status_modal==Delivery_Status_Delivering){
+            return [APP_DELEGATE.booter.tasklist_delivering count];
+        }
+        else if(list_status_modal==Delivery_Status_Finished){
+            return [APP_DELEGATE.booter.tasklist_finished count];
+        }
+        else if(list_status_modal==Delivery_Status_Failed){
+            return [APP_DELEGATE.booter.tasklist_failed count];
+        }
+        else if(list_status_modal==Delivery_Status_Multi){
+            return [self.taskArr count];
+        }
     }
-    else if(list_status_modal==Delivery_Status_Finished){
-        return [APP_DELEGATE.booter.tasklist_finished count];
-    }
-    else if(list_status_modal==Delivery_Status_Failed){
-        return [APP_DELEGATE.booter.tasklist_failed count];
-    }
-    else if(list_status_modal==Delivery_Status_Multi){
-        return [self.taskArr count];
-    }
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"section:%lu",(unsigned long)section);
+
     if(tv.tag<5000){
         if(list_status_modal==Delivery_Status_Delivering){
             return [[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:section].package_arr count];
@@ -437,25 +441,28 @@
         }
         else if(list_status_modal==Delivery_Status_Failed){
             return [[APP_DELEGATE.booter.tasklist_failed objectAtIndex:section].package_arr count];
+            
         }
         else if(list_status_modal==Delivery_Status_Multi){
             return [[self.taskArr  objectAtIndex:section].package_arr count];;
         }
+        
+    }
+    else{
+        if(list_status_modal==Delivery_Status_Delivering){
+            return [[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:section].box_goods count];
+        }
+        else if(list_status_modal==Delivery_Status_Finished){
+            return [[APP_DELEGATE.booter.tasklist_finished objectAtIndex:section].box_goods count];
+        }
+        else if(list_status_modal==Delivery_Status_Failed){
+            return [[APP_DELEGATE.booter.tasklist_failed objectAtIndex:section].box_goods count];
+        }
+        else if(list_status_modal==Delivery_Status_Multi){
+            return [[self.taskArr  objectAtIndex:section].box_goods count];;
+        }
     }
     
-    
-    if(list_status_modal==Delivery_Status_Delivering){
-        return [[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:section].box_goods count];
-    }
-    else if(list_status_modal==Delivery_Status_Finished){
-        return [[APP_DELEGATE.booter.tasklist_finished objectAtIndex:section].box_goods count];
-    }
-    else if(list_status_modal==Delivery_Status_Failed){
-        return [[APP_DELEGATE.booter.tasklist_failed objectAtIndex:section].box_goods count];
-    }
-    else if(list_status_modal==Delivery_Status_Multi){
-        return [[self.taskArr  objectAtIndex:section].box_goods count];;
-    }
     return 0;
 }
 
