@@ -128,6 +128,7 @@
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
     self.tableView.backgroundColor=COLOR_BG_TABLEVIEW;
+    self.tableView.tag=999;
     
     UIView *view = [UIView new];
     view.backgroundColor = COLOR_CLEAR;
@@ -432,7 +433,7 @@
 {
     NSLog(@"section:%lu",(unsigned long)section);
 
-    if(tv.tag<5000){
+    if(tv.tag<5000){//订单包含的包裹种类数据
         if(list_status_modal==Delivery_Status_Delivering){
             return [[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:section].package_arr count];
         }
@@ -448,18 +449,19 @@
         }
         
     }
-    else{
+    else{//包裹种类中商品数据
+        int s=(int)tv.tag-5000;
         if(list_status_modal==Delivery_Status_Delivering){
-            return [[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:section].box_goods count];
+            return [[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:s].box_goods count];
         }
         else if(list_status_modal==Delivery_Status_Finished){
-            return [[APP_DELEGATE.booter.tasklist_finished objectAtIndex:section].box_goods count];
+            return [[APP_DELEGATE.booter.tasklist_finished objectAtIndex:s].box_goods count];
         }
         else if(list_status_modal==Delivery_Status_Failed){
-            return [[APP_DELEGATE.booter.tasklist_failed objectAtIndex:section].box_goods count];
+            return [[APP_DELEGATE.booter.tasklist_failed objectAtIndex:s].box_goods count];
         }
         else if(list_status_modal==Delivery_Status_Multi){
-            return [[self.taskArr  objectAtIndex:section].box_goods count];;
+            return [[self.taskArr  objectAtIndex:s].box_goods count];;
         }
     }
     
@@ -542,6 +544,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"section1:%lu",(unsigned long)indexPath.section);
     if(tv.tag<5000){
         NSString *reuseIdetify = @"taskListItemCell";
         TaskItemCell *cell = [tv dequeueReusableCellWithIdentifier:reuseIdetify];
@@ -557,16 +560,16 @@
         
         TaskItemEntity *entity;
         if(list_status_modal==Delivery_Status_Delivering){
-            entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
+            entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.section];
         }
         else if(list_status_modal==Delivery_Status_Finished){
-            entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.row];
+            entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.section];
         }
         else if(list_status_modal==Delivery_Status_Failed){
-            entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.row];
+            entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.section];
         }
         else if(list_status_modal==Delivery_Status_Multi){
-            entity=[self.taskArr objectAtIndex:indexPath.row];
+            entity=[self.taskArr objectAtIndex:indexPath.section];
         }
         cell.entity=entity;
         cell.row_index=(int)indexPath.row;
@@ -638,7 +641,7 @@
 
 //配送数据更新
 - (void)onTaskUpdate:(NSNotification*)aNotitification{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self refreshCategoryBtn];
         [self.tableView reloadData];
     });
