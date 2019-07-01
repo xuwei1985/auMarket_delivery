@@ -27,6 +27,7 @@
 @property(nonatomic,retain)NSString *add_time;
 @property(nonatomic,retain)NSString *longitude;
 @property(nonatomic,retain)NSString *latitude;
+@property (nonatomic,retain)NSString *return_price;
 @property(nonatomic,assign)CLLocationCoordinate2D coordinate;
 @property(nonatomic,retain)NSString *status;
 @property(nonatomic,retain)NSString *predict_sms_send;
