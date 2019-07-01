@@ -6,7 +6,7 @@
 //  Copyright © 2016年 daao. All rights reserved.
 //
 #define ORDER_INFO_PANEL_HEIGHT 494.0
-#define DONE_ACTION_BAR 48.0
+#define DONE_ACTION_BAR 48.5
 #import "OrderDetailViewController.h"
 
 @interface OrderDetailViewController ()
@@ -401,6 +401,20 @@
  创建完成操作条
  */
 -(void)createDoneActionBar{
+    @weakify(self);
+    
+    UIView *top_line=[[UIView alloc] init];
+    top_line.backgroundColor=COLOR_LIGHTGRAY;
+    [self.view addSubview:top_line];
+    
+    [top_line mas_makeConstraints:^(MASConstraintMaker *make) {
+        @strongify(self);
+        make.top.mas_equalTo(self.view.mas_bottom).offset(-DONE_ACTION_BAR);
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(WIDTH_SCREEN);
+        make.height.mas_equalTo(0.5);
+    }];
+    
     if([self.task_entity.status intValue]!=1&&[self.task_entity.status intValue]!=2){
         _btn_returnAction=[UIButton buttonWithType:UIButtonTypeCustom];
         [_btn_returnAction setTitle:@"订单返现" forState:UIControlStateNormal];
@@ -410,9 +424,9 @@
         _btn_returnAction.titleLabel.font=FONT_SIZE_BIG;
         [_btn_returnAction addTarget:self action:@selector(confirmReturnPrice) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_btn_returnAction];
-        
-        
-        @weakify(self);
+
+
+
         [_btn_returnAction mas_makeConstraints:^(MASConstraintMaker *make) {
             @strongify(self);
             make.top.mas_equalTo(self.view.mas_bottom).offset(-48);
@@ -420,7 +434,7 @@
             make.width.mas_equalTo(WIDTH_SCREEN/2);
             make.height.mas_equalTo(DONE_ACTION_BAR);
         }];
-        
+
         _btn_doneAction=[UIButton buttonWithType:UIButtonTypeCustom];
         [_btn_doneAction setTitle:@"完成配送" forState:UIControlStateNormal];
         _btn_doneAction.titleLabel.textAlignment=NSTextAlignmentCenter;
@@ -432,11 +446,11 @@
             [_btn_doneAction setBackgroundColor:COLOR_LIGHTGRAY];
             [_btn_doneAction setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
         }
-        
+
         _btn_doneAction.titleLabel.font=FONT_SIZE_BIG;
         [_btn_doneAction addTarget:self action:@selector(deliveryFinish) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_btn_doneAction];
-    
+
         [_btn_doneAction mas_makeConstraints:^(MASConstraintMaker *make) {
             @strongify(self);
             make.top.mas_equalTo(self.view.mas_bottom).offset(-48);
