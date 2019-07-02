@@ -32,4 +32,5 @@ typedef enum {
 -(NSArray<TaskItemEntity *> *)getTasksByStatus:(Delivery_Status)status;
 -(NSArray *)getSectionTimes;
 -(void)savePredictTime:(NSString *)ids andPredictTime:(NSString *)predict_time;
+-(void)saveOrderReturnInfo:(NSString *)order_id andReturnPrice:(int)price;
 @end

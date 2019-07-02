@@ -482,6 +482,11 @@
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
+    else if(model==self.model&&self.model.requestTag==3004){
+        if(isSuccess){
+            [self showSuccesWithText:@"保存成功"];
+        }
+    }
 }
 
 -(void)loadDeliveryInfo{
@@ -618,7 +623,12 @@
 
 
 -(void)confirmReturnPrice{
-    [self showReturnMenu];
+    if(self.task_entity!=nil){
+        [self showReturnMenu];
+    }
+    else{
+        [self showToastWithText:@"缺少订单数据"];
+    }
 }
 
 - (void)showReturnMenu
@@ -722,22 +732,29 @@
     }
     else if(actionSheet.tag==3888){
         if (0 == buttonIndex){//5
-            
+            [self saveOrderReturnInfo:self.task_entity.order_id andReturnPrice:5];
         }
         else{//2
+             [self saveOrderReturnInfo:self.task_entity.order_id andReturnPrice:2];
         }
     }
     else if(actionSheet.tag==3889){
         if (0 == buttonIndex){//2
-            
+             [self saveOrderReturnInfo:self.task_entity.order_id andReturnPrice:2];
         }
     }
     else if(actionSheet.tag==3890){
         if (0 == buttonIndex){//0
-            
+             [self saveOrderReturnInfo:self.task_entity.order_id andReturnPrice:0];
         }
     }
 }
+
+-(void)saveOrderReturnInfo:(NSString *)order_id andReturnPrice:(int)price{
+    [self startLoadingActivityIndicator];
+    [self.model saveOrderReturnInfo:order_id andReturnPrice:price];
+}
+
 
 -(void)runNavigationByGoogle{
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){

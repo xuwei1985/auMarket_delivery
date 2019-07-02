@@ -51,6 +51,14 @@
     [self loadInner];
 }
 
+-(void)saveOrderReturnInfo:(NSString *)order_id andReturnPrice:(int)price{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderReturnInfo&order_id=%@&return_price=%d",order_id,price];
+    self.parseDataClassType = [SPBaseEntity class];
+    self.params = @{};
+    self.requestTag=3004;
+    [self loadInner];
+}
+
 /**
  请求订单配送完成操作
  */
