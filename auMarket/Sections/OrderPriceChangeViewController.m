@@ -78,7 +78,7 @@
     
     [lbl_tip_2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_1.top).offset(40);
-        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+        make.width.mas_equalTo(90);
         make.left.mas_equalTo(10);
     }];
     
@@ -86,7 +86,7 @@
     changePriceField.delegate=self;
     changePriceField.placeholder =[NSString stringWithFormat:@"请输入减价金额"];
     changePriceField.keyboardType=UIKeyboardTypeNumberPad;
-    changePriceField.backgroundColor=COLOR_RED;
+    changePriceField.backgroundColor=COLOR_BG_VIEW;
     changePriceField.layer.cornerRadius=3.0;
     changePriceField.clipsToBounds=YES;
     [blockView_1 addSubview:changePriceField];
@@ -95,7 +95,7 @@
         make.top.mas_equalTo(lbl_tip_2.top).offset(0);
         make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
         make.left.mas_equalTo(lbl_tip_2.mas_right).offset(5);
-        make.height.mas_equalTo(22);
+        make.height.mas_equalTo(30);
     }];
     
     UIButton *upload_btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -111,7 +111,7 @@
     
     [upload_btn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_1.mas_bottom).offset(20);
-        make.size.mas_equalTo(CGSizeMake((WIDTH_SCREEN-40), 38));
+        make.size.mas_equalTo(CGSizeMake((WIDTH_SCREEN-40), 40));
         make.left.mas_equalTo(20);
     }];
     
