@@ -29,6 +29,14 @@
 
 -(void)initData{
     imageData=nil;
+    lbl_tip_value_1.text=[NSString stringWithFormat:@"$%@",self.task_entity.order_amount];
+    if(self.changeType==1){
+        lbl_tip_2.text=@"减价金额:";
+    }
+    else{
+        lbl_tip_2.text=@"增加金额:";
+    }
+    [changePriceField becomeFirstResponder];
 }
 
 -(void)setNavigation{
@@ -36,66 +44,63 @@
 }
 
 -(void)createPaymentInfoView{
-    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 10, WIDTH_SCREEN, 125)];
-    blockView_1.backgroundColor=COLOR_WHITE;
-    
-    [self.view addSubview:blockView_1];
-    
-    ////////////////blockView_1///////////////
     UILabel *lbl_tip_1=[[UILabel alloc] init];
     lbl_tip_1.textColor=COLOR_BLACK;
-    lbl_tip_1.font=FONT_SIZE_MIDDLE;
-    lbl_tip_1.text=@"当前订单价格:";
+    lbl_tip_1.font=FONT_SIZE_BIG;
+    lbl_tip_1.text=@"订单价格:";
     lbl_tip_1.textAlignment=NSTextAlignmentLeft;
-    [blockView_1 addSubview:lbl_tip_1];
+    [self.view addSubview:lbl_tip_1];
     
     [lbl_tip_1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(10);
-        make.size.mas_equalTo(CGSizeMake(100, 20));
-        make.left.mas_equalTo(10);
+        make.top.mas_equalTo(35);
+        make.size.mas_equalTo(CGSizeMake(70, 20));
+        make.left.mas_equalTo(15);
     }];
     
-    UILabel *lbl_tip_value_1=[[UILabel alloc] init];
+    lbl_tip_value_1=[[UILabel alloc] init];
     lbl_tip_value_1.textColor=COLOR_BLACK;
-    lbl_tip_value_1.font=FONT_SIZE_MIDDLE;
-    lbl_tip_value_1.text=self.task_entity.order_amount;
+    lbl_tip_value_1.font=FONT_SIZE_BIG;
     lbl_tip_value_1.textAlignment=NSTextAlignmentLeft;
-    [blockView_1 addSubview:lbl_tip_value_1];
+    lbl_tip_value_1.text=@"$0.00";
+    [self.view addSubview:lbl_tip_value_1];
     
     [lbl_tip_value_1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(10);
+        make.top.mas_equalTo(lbl_tip_1.mas_top);
         make.size.mas_equalTo(CGSizeMake(100, 20));
-        make.left.mas_equalTo(lbl_tip_1.mas_right).offset(5);
+        make.left.mas_equalTo(lbl_tip_1.mas_right).offset(10);
     }];
     
-    UILabel *lbl_tip_2=[[UILabel alloc] init];
+    lbl_tip_2=[[UILabel alloc] init];
     lbl_tip_2.textColor=COLOR_BLACK;
-    lbl_tip_2.font=FONT_SIZE_MIDDLE;
+    lbl_tip_2.font=FONT_SIZE_BIG;
     lbl_tip_2.text=@"减价金额:";
     lbl_tip_2.textAlignment=NSTextAlignmentLeft;
     lbl_tip_2.numberOfLines=0;
-    [blockView_1 addSubview:lbl_tip_2];
+    [self.view addSubview:lbl_tip_2];
     
     [lbl_tip_2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(40);
-        make.width.mas_equalTo(90);
-        make.left.mas_equalTo(10);
+        make.top.mas_equalTo(75);
+        make.width.mas_equalTo(70);
+        make.left.mas_equalTo(15);
     }];
     
-    UITextField *changePriceField = [[UITextField alloc] init];
+    changePriceField = [[UITextField alloc] init];
     changePriceField.delegate=self;
-    changePriceField.placeholder =[NSString stringWithFormat:@"请输入减价金额"];
-    changePriceField.keyboardType=UIKeyboardTypeNumberPad;
-    changePriceField.backgroundColor=COLOR_BG_VIEW;
+    changePriceField.keyboardType=UIKeyboardTypeDecimalPad;
+    changePriceField.backgroundColor=COLOR_BG_WHITE;
     changePriceField.layer.cornerRadius=3.0;
     changePriceField.clipsToBounds=YES;
-    [blockView_1 addSubview:changePriceField];
+    changePriceField.font=FONT_SIZE_BIG;
+    changePriceField.clearButtonMode = UITextFieldViewModeNever; //编辑时会出现个修改X
+    [changePriceField setValue:[NSNumber numberWithInt:10] forKey:@"paddingLeft"];
+    [changePriceField setValue:[NSNumber numberWithInt:10] forKey:@"paddingRight"];
+    [self.view addSubview:changePriceField];
     
     [changePriceField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lbl_tip_2.top).offset(0);
-        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
-        make.left.mas_equalTo(lbl_tip_2.mas_right).offset(5);
-        make.height.mas_equalTo(30);
+        make.top.mas_equalTo(lbl_tip_2.mas_top).offset(-7);
+        make.right.mas_equalTo(self.view.mas_right).offset(-15);
+        make.left.mas_equalTo(lbl_tip_2.mas_right).offset(10);
+        make.height.mas_equalTo(35);
     }];
     
     UIButton *upload_btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -110,9 +115,9 @@
     [self.view addSubview: upload_btn];
     
     [upload_btn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.mas_bottom).offset(20);
-        make.size.mas_equalTo(CGSizeMake((WIDTH_SCREEN-40), 40));
-        make.left.mas_equalTo(20);
+        make.top.mas_equalTo(changePriceField.mas_bottom).offset(30);
+        make.size.mas_equalTo(CGSizeMake((WIDTH_SCREEN-30), 40));
+        make.left.mas_equalTo(15);
     }];
     
     previewView=[[UIImageView alloc] init];
@@ -153,8 +158,8 @@
     _btn_doneAction=[UIButton buttonWithType:UIButtonTypeCustom];
     [_btn_doneAction setTitle:@"确认提交" forState:UIControlStateNormal];
     _btn_doneAction.titleLabel.textAlignment=NSTextAlignmentCenter;
-    [_btn_doneAction setBackgroundColor:RGBCOLOR(255, 255, 255)];
-    [_btn_doneAction setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
+    [_btn_doneAction setBackgroundColor:COLOR_BG_WHITE];
+    [_btn_doneAction setTitleColor:COLOR_MAIN forState:UIControlStateNormal];
     _btn_doneAction.titleLabel.font=FONT_SIZE_BIG;
     [_btn_doneAction addTarget:self action:@selector(requestFinishDelivery) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn_doneAction];
@@ -212,6 +217,30 @@
         imagePicker.allowsEditing = NO;
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         [self presentViewController:imagePicker animated:YES completion:nil];
+    }
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    if(textField==changePriceField){
+        UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
+        keyboardDoneButtonView.barStyle = UIBarStyleDefault;
+        keyboardDoneButtonView.translucent = YES;
+        keyboardDoneButtonView.tintColor = RGBCOLOR(165, 165, 165);
+        [keyboardDoneButtonView sizeToFit];
+        
+        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消"
+                                                                         style:UIBarButtonItemStyleBordered target:self
+                                                                        action:nil];
+        
+        UIBarButtonItem *fixedButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace
+                                                                                      target: nil
+                                                                                      action: nil];
+        UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"完成"
+                                                                       style:UIBarButtonItemStyleBordered target:self
+                                                                      action:@selector(cartNumChanged:)];
+        doneButton.tintColor=RGBCOLOR(99, 99, 99);
+        [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:cancelButton,fixedButton,doneButton, nil]];
+        textField.inputAccessoryView = keyboardDoneButtonView;
     }
 }
 
@@ -419,6 +448,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
 }
 
 - (void)didReceiveMemoryWarning {

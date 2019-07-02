@@ -801,6 +801,8 @@
 
 -(void)gotoOrderPriceChangeView:(int)model{
     OrderPriceChangeViewController *cvc=[[OrderPriceChangeViewController alloc] init];
+    cvc.task_entity=self.task_entity;
+    cvc.changeType=model;
     [self.navigationController pushViewController:cvc animated:YES];
 }
 

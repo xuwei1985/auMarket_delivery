@@ -21,6 +21,9 @@
     UILabel *lbl_packagenote;
     UIButton *_btn_doneAction;
     NSData *imageData;
+    UILabel *lbl_tip_value_1;
+    UILabel *lbl_tip_2;
+    UITextField *changePriceField;
 }
 @property(nonatomic,retain) TaskItemEntity *task_entity;
 @property(nonatomic,retain) TaskModel *model;
