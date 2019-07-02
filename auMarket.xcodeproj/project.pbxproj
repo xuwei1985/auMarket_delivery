@@ -14,6 +14,8 @@
 		A90BF2911F6FDA570001A49E /* BooterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A90BF28D1F6FDA570001A49E /* BooterModel.m */; };
 		A90BF2921F6FDA570001A49E /* ParkingEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A90BF28F1F6FDA570001A49E /* ParkingEntity.m */; };
 		A90BF2941F7017F40001A49E /* 1_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A90BF2931F7017F40001A49E /* 1_32@2x.png */; };
+		A90F0DAC22CB5B17006D6F1C /* money_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A90F0DAB22CB5B17006D6F1C /* money_icon@2x.png */; };
+		A90F0DAF22CB6171006D6F1C /* OrderPriceChangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A90F0DAE22CB6171006D6F1C /* OrderPriceChangeViewController.m */; };
 		A91357731F668BB4000186B0 /* TaskItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A91357721F668BB4000186B0 /* TaskItemCell.m */; };
 		A91357761F668BFF000186B0 /* TaskEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A91357751F668BFF000186B0 /* TaskEntity.m */; };
 		A91357781F6783EF000186B0 /* defaut_list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A91357771F6783EF000186B0 /* defaut_list@2x.png */; };
@@ -244,6 +246,9 @@
 		A90BF28F1F6FDA570001A49E /* ParkingEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParkingEntity.m; sourceTree = "<group>"; };
 		A90BF2901F6FDA570001A49E /* ParkingEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParkingEntity.h; sourceTree = "<group>"; };
 		A90BF2931F7017F40001A49E /* 1_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_32@2x.png"; sourceTree = "<group>"; };
+		A90F0DAB22CB5B17006D6F1C /* money_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "money_icon@2x.png"; sourceTree = "<group>"; };
+		A90F0DAD22CB6171006D6F1C /* OrderPriceChangeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderPriceChangeViewController.h; sourceTree = "<group>"; };
+		A90F0DAE22CB6171006D6F1C /* OrderPriceChangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPriceChangeViewController.m; sourceTree = "<group>"; };
 		A91357711F668BB4000186B0 /* TaskItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskItemCell.h; sourceTree = "<group>"; };
 		A91357721F668BB4000186B0 /* TaskItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskItemCell.m; sourceTree = "<group>"; };
 		A91357741F668BFF000186B0 /* TaskEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskEntity.h; sourceTree = "<group>"; };
@@ -668,6 +673,8 @@
 		A9187C051DF9AB4D00A3E902 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A90F0DAD22CB6171006D6F1C /* OrderPriceChangeViewController.h */,
+				A90F0DAE22CB6171006D6F1C /* OrderPriceChangeViewController.m */,
 				A9DA916D1F67915E002033AA /* PaymentViewController.h */,
 				A9DA916C1F67915E002033AA /* PaymentViewController.m */,
 				A9F4DAA41F66CA6400D71774 /* OrderDetailViewController.h */,
@@ -1091,6 +1098,7 @@
 		A9FBC1C61DF93838005ECDDE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A90F0DAB22CB5B17006D6F1C /* money_icon@2x.png */,
 				A9F4DA731F658AFE00D71774 /* 1_03@2x.png */,
 				A91D842E1F665B5300DF69EF /* 1_04@2x.png */,
 				A9F4DA741F658AFE00D71774 /* 1_06@2x.png */,
@@ -1326,6 +1334,7 @@
 				A9E0C1F820E4DEE800874609 /* 1_29_blue@2x.png in Resources */,
 				A900772D20EB6D4000F269D7 /* c_default@2x.png in Resources */,
 				A9A5B430212C0ED60000A738 /* 1_29_gray_down@2x.png in Resources */,
+				A90F0DAC22CB5B17006D6F1C /* money_icon@2x.png in Resources */,
 				A91D842F1F665B5300DF69EF /* 1_04@2x.png in Resources */,
 				A967B2FA20E67BC600D50C46 /* option_on@2x.png in Resources */,
 				A964742A1E1117DB00A5A39B /* mark@2x.png in Resources */,
@@ -1552,6 +1561,7 @@
 				A91D843A1F665EC600DF69EF /* TaskListViewController.m in Sources */,
 				A9AD42B71E13698D00A4B131 /* BannerModel.m in Sources */,
 				A95E11611DF8505C00660E42 /* BadgeManager.m in Sources */,
+				A90F0DAF22CB6171006D6F1C /* OrderPriceChangeViewController.m in Sources */,
 				A9AD42B41E13673500A4B131 /* BannerEntity.m in Sources */,
 				A95E10911DF80ED000660E42 /* main.m in Sources */,
 				A9F4DAB71F66D4A800D71774 /* OrderDetailCell.m in Sources */,

@@ -11,6 +11,7 @@
 #import "OrderDetailCell.h"
 #import "PaymentViewController.h"
 #import "TaskModel.h"
+#import "OrderPriceChangeViewController.h"
 
 @interface OrderDetailViewController : SPBaseViewController<UIActionSheetDelegate>
 {

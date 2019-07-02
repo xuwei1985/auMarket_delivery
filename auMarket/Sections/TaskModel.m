@@ -59,6 +59,14 @@
     [self loadInner];
 }
 
+-(void)saveOrderChangePrice:(NSString *)order_id andChagePrice:(float)price{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderPriceChange&order_id=%@&change_price=%f",order_id,price];
+    self.parseDataClassType = [SPBaseEntity class];
+    self.params = @{};
+    self.requestTag=3005;
+    [self loadInner];
+}
+
 /**
  请求订单配送完成操作
  */

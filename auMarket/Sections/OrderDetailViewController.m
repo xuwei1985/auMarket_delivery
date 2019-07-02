@@ -41,10 +41,8 @@
 
 -(void)setNavigation{
     self.title=@"订单详情";
-    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
-        UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"1_24"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(runNavigationByGoogle)];
-        self.navigationItem.rightBarButtonItem=right_Item_cart;
-    }
+    UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"money_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(showAdjustPriceMenu)];
+    self.navigationItem.rightBarButtonItem=right_Item_cart;
 }
 
 -(void)createOrderInfoView{
@@ -196,7 +194,7 @@
     lbl_mobile=[[UILabel alloc] init];
     lbl_mobile.textColor=RGBCOLOR(15, 34, 177);
     lbl_mobile.font=FONT_SIZE_SMALL;
-    lbl_mobile.text=@"0419234058";
+    lbl_mobile.text=@"0488888888";
     lbl_mobile.textAlignment=NSTextAlignmentLeft;
     lbl_mobile.userInteractionEnabled=YES;
     [blockView_2 addSubview:lbl_mobile];
@@ -228,6 +226,12 @@
     lbl_address.textAlignment=NSTextAlignmentLeft;
     [blockView_2 addSubview:lbl_address];
     
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
+        lbl_address.userInteractionEnabled=YES;
+        lbl_address.textColor=RGBCOLOR(15, 34, 177);
+        [lbl_address addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(runNavigationByGoogle)]];
+    }
+
     [lbl_address mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_2.top).offset(94);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-65, 20));
@@ -685,6 +689,13 @@
     
 }
 
+-(void)showAdjustPriceMenu{
+    UIActionSheet *actionsheet;
+    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"减少金额", @"增加金额", nil,nil];
+    actionsheet.tag=4000;
+    [actionsheet showInView:self.view];
+}
+
 - (void)showFinishMenu
 {
     UIActionSheet *actionsheet;
@@ -748,7 +759,7 @@
         if (0 == buttonIndex){//5
             [self saveOrderReturnInfo:self.task_entity.order_id andReturnPrice:5];
         }
-        else{//2
+        else if (1 == buttonIndex){//2
              [self saveOrderReturnInfo:self.task_entity.order_id andReturnPrice:2];
         }
     }
@@ -760,6 +771,14 @@
     else if(actionSheet.tag==3890){
         if (0 == buttonIndex){//0
              [self saveOrderReturnInfo:self.task_entity.order_id andReturnPrice:0];
+        }
+    }
+    else if(actionSheet.tag==4000){
+        if (0 == buttonIndex){//减少金额
+            [self gotoOrderPriceChangeView:1];
+        }
+        else if (1 == buttonIndex){//增加金额
+            [self gotoOrderPriceChangeView:2];
         }
     }
 }
@@ -778,6 +797,11 @@
     else{
         [self showToastBottomWithText:@"您未安装Google Maps"];
     }
+}
+
+-(void)gotoOrderPriceChangeView:(int)model{
+    OrderPriceChangeViewController *cvc=[[OrderPriceChangeViewController alloc] init];
+    [self.navigationController pushViewController:cvc animated:YES];
 }
 
 -(void)makeCall:(UIGestureRecognizer *)sender{
