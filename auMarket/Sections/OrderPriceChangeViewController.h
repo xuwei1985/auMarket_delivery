@@ -24,6 +24,7 @@
     UILabel *lbl_tip_value_1;
     UILabel *lbl_tip_2;
     UITextField *changePriceField;
+    float change_price;
 }
 @property(nonatomic,retain) TaskItemEntity *task_entity;
 @property(nonatomic,retain) TaskModel *model;

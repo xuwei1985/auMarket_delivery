@@ -17,7 +17,10 @@
 {
     UIImageView *orderInfoView;
     UILabel *lbl_payType;
+    UILabel *lbl_returnPrice;
+    UILabel *lbl_changePrice;
     UILabel *lbl_orderSum;
+    UILabel *lbl_orderSum2;
     UILabel *lbl_orderNo;
     UILabel *lbl_contact;
     UILabel *lbl_mobile;
@@ -30,6 +33,8 @@
     UIButton *_btn_doneAction;
     UIButton *_btn_returnAction;
     CLLocationCoordinate2D coordinate;
+    float return_price;
+    BOOL isGotoOrderChangeView;
 }
 @property(nonatomic,retain) NSString *order_id;
 @property(nonatomic,retain) TaskItemEntity *task_entity;

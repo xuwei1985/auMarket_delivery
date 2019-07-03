@@ -161,7 +161,7 @@
     [_btn_doneAction setBackgroundColor:COLOR_BG_WHITE];
     [_btn_doneAction setTitleColor:COLOR_MAIN forState:UIControlStateNormal];
     _btn_doneAction.titleLabel.font=FONT_SIZE_BIG;
-    [_btn_doneAction addTarget:self action:@selector(requestFinishDelivery) forControlEvents:UIControlEventTouchUpInside];
+    [_btn_doneAction addTarget:self action:@selector(saveOrderPriceChange) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn_doneAction];
     
     
@@ -230,18 +230,26 @@
         
         UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消"
                                                                          style:UIBarButtonItemStyleBordered target:self
-                                                                        action:nil];
+                                                                        action:@selector(changeNumCanceled:)];
         
         UIBarButtonItem *fixedButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace
                                                                                       target: nil
                                                                                       action: nil];
         UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"完成"
                                                                        style:UIBarButtonItemStyleBordered target:self
-                                                                      action:@selector(cartNumChanged:)];
+                                                                      action:@selector(changeNumChanged:)];
         doneButton.tintColor=RGBCOLOR(99, 99, 99);
         [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:cancelButton,fixedButton,doneButton, nil]];
         textField.inputAccessoryView = keyboardDoneButtonView;
     }
+}
+
+-(void)changeNumCanceled:(id)sender{
+    [changePriceField resignFirstResponder];
+}
+
+-(void)changeNumChanged:(id)sender{
+    [changePriceField resignFirstResponder];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -388,34 +396,54 @@
     [browser show];
 }
 
--(void)requestFinishDelivery{
-    [[AlertBlockView sharedInstance] showChoiceAlert:@"确认完成订单配送吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
+-(void)saveOrderPriceChange{
+    [[AlertBlockView sharedInstance] showChoiceAlert:@"确认提交吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
         if(index==0){
-            [self startLoadingActivityIndicator];
-            if(imageData){
-                [self.upload_model uploadImages:imageData andResourceType:@"proof"];
+            //判断订单金额合法性
+            BOOL fg=YES;
+            if(self.changeType==1){//减少订单金额的情况
+                if(([self.task_entity.order_amount floatValue]+[self.task_entity.return_price floatValue]-[[changePriceField.text stringByReplacingOccurrencesOfString:@" " withString:@""] floatValue])<0){
+                    fg=NO;
+                }
             }
-            else{
-                if(self.task_entity.order_id.length>0){
-                    //[self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2" andImgPath:@"" andOrderSn:self.order_sn];
+            
+            if(fg){
+                [self startLoadingActivityIndicator];
+                if(imageData){
+                    [self.upload_model uploadImages:imageData andResourceType:@"order"];
                 }
                 else{
-                    [self showToastTopWithText:@"没有配送订单信息"];
+                    [self postOrderPriceChange];
                 }
+            }
+            else{
+                [self showToastWithText:@"不能低于订单可减金额"];
             }
         }
     }];
 }
 
+-(void)postOrderPriceChange{
+    if(self.task_entity.order_id.length>0){
+        change_price=0.0;
+        if(self.changeType==1){
+            change_price-=[[changePriceField.text stringByReplacingOccurrencesOfString:@" " withString:@""] floatValue];
+        }
+        else{
+            change_price=[[changePriceField.text stringByReplacingOccurrencesOfString:@" " withString:@""] floatValue];
+        }
+        
+        [self.model saveOrderChangePrice:self.task_entity.order_id andChagePrice:change_price];
+    }
+    else{
+        [self showToastTopWithText:@"没有配送订单信息"];
+    }
+}
+
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     if(model==self.upload_model){
         if(isSuccess){
-            if(self.task_entity.order_id.length>0){
-                //[self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2"  andImgPath:self.upload_model.uploadEntity.filepath andOrderSn:self.order_sn];
-            }
-            else{
-                [self showToastTopWithText:@"没有配送订单信息"];
-            }
+            [self postOrderPriceChange];
         }
         else{
             [self stopLoadingActivityIndicator];
@@ -426,6 +454,15 @@
         if(isSuccess){
             [self showSuccesWithText:@"操作成功"];
             [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    }
+    else if(model==self.model&&self.model.requestTag==3005){
+        [self stopLoadingActivityIndicator];
+        if(isSuccess){
+            [self showSuccesWithText:@"保存成功"];
+            self.task_entity.change_price=[NSString stringWithFormat:@"%.2f",change_price];
+            changePriceField.text=@"";
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }
@@ -448,7 +485,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
 }
 
 - (void)didReceiveMemoryWarning {
