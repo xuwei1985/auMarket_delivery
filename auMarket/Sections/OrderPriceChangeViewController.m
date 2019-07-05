@@ -159,7 +159,7 @@
     [_btn_doneAction setTitle:@"确认提交" forState:UIControlStateNormal];
     _btn_doneAction.titleLabel.textAlignment=NSTextAlignmentCenter;
     [_btn_doneAction setBackgroundColor:COLOR_BG_WHITE];
-    [_btn_doneAction setTitleColor:COLOR_MAIN forState:UIControlStateNormal];
+    [_btn_doneAction setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
     _btn_doneAction.titleLabel.font=FONT_SIZE_BIG;
     [_btn_doneAction addTarget:self action:@selector(saveOrderPriceChange) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn_doneAction];
