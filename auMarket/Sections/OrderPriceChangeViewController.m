@@ -433,7 +433,7 @@
             change_price=[[changePriceField.text stringByReplacingOccurrencesOfString:@" " withString:@""] floatValue];
         }
         
-        [self.model saveOrderChangePrice:self.task_entity.order_id andChagePrice:change_price];
+        [self.model saveOrderChangePrice:self.task_entity.order_id andChagePrice:change_price andProof:self.upload_model.uploadEntity.filepath];
     }
     else{
         [self showToastTopWithText:@"没有配送订单信息"];
