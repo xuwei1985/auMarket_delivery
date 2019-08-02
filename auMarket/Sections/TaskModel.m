@@ -36,7 +36,7 @@
 
 -(void)loadDeliveryTimeSection{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=getDeliveryTimeSection&delivery_id=37",user.user_id];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=getDeliveryTimeSection&delivery_id=%@",user.user_id];
     self.parseDataClassType = [TimeSectionEntity class];
     self.params = @{};
     self.requestTag=3003;
@@ -59,8 +59,8 @@
     [self loadInner];
 }
 
--(void)saveOrderChangePrice:(NSString *)order_id andChagePrice:(float)price{
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderPriceChange&order_id=%@&change_price=%f",order_id,price];
+-(void)saveOrderChangePrice:(NSString *)order_id andChagePrice:(float)price andProof:(NSString *)proof_path{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderPriceChange&order_id=%@&change_price=%f&proof_path=%@",order_id,price,proof_path];
     self.parseDataClassType = [SPBaseEntity class];
     self.params = @{};
     self.requestTag=3005;

@@ -33,5 +33,5 @@ typedef enum {
 -(NSArray *)getSectionTimes;
 -(void)savePredictTime:(NSString *)ids andPredictTime:(NSString *)predict_time;
 -(void)saveOrderReturnInfo:(NSString *)order_id andReturnPrice:(int)price;
--(void)saveOrderChangePrice:(NSString *)order_id andChagePrice:(float)price;
+-(void)saveOrderChangePrice:(NSString *)order_id andChagePrice:(float)price andProof:(NSString *)proof_path;
 @end
