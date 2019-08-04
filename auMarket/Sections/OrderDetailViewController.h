@@ -12,6 +12,7 @@
 #import "PaymentViewController.h"
 #import "TaskModel.h"
 #import "OrderPriceChangeViewController.h"
+#import "ReturnProofViewController.h"
 
 @interface OrderDetailViewController : SPBaseViewController<UIActionSheetDelegate>
 {
@@ -35,6 +36,7 @@
     CLLocationCoordinate2D coordinate;
     float return_price;
     BOOL isGotoOrderChangeView;
+    Boolean isGotoReturnProofView;
 }
 @property(nonatomic,retain) NSString *order_id;
 @property(nonatomic,retain) TaskItemEntity *task_entity;

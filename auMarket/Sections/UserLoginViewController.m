@@ -80,7 +80,7 @@
     //创建输入框
     _accountText = [[UITextField alloc] initWithFrame:CGRectMake(40, 6, WIDTH_SCREEN-60, 39)];
     _accountText.delegate=self;
-    _accountText.font=DEFAULT_FONT(15);;
+    _accountText.font=DEFAULT_FONT(16);;
     //_accountText.clearButtonMode = UITextFieldViewModeWhileEditing;
     _accountText.placeholder = @"请输入账号";
     _accountText.text=@"";
@@ -95,7 +95,7 @@
     _passwordText = [[UITextField alloc] initWithFrame:CGRectMake(40, 6, WIDTH_SCREEN-60, 39)];
     _passwordText.delegate=self;
     _passwordText.text=@"";
-    _passwordText.font=DEFAULT_FONT(15);
+    _passwordText.font=DEFAULT_FONT(16);
     _passwordText.placeholder = @"输入密码";
     _passwordText.textColor=RGBCOLOR(45, 45, 45);
     _passwordText.backgroundColor=[UIColor clearColor];
@@ -108,7 +108,7 @@
     
     
     UIButton *login_btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    login_btn.frame = CGRectMake(20, (IOS7?160:140)+offset, (WIDTH_SCREEN-40), 38);
+    login_btn.frame = CGRectMake(20, (IOS7?160:140)+offset, (WIDTH_SCREEN-40), 42);
     login_btn.titleLabel.font=DEFAULT_FONT(14);;
     [login_btn setTitle:@"立即登录" forState:UIControlStateNormal];
     login_btn.backgroundColor=COLOR_MAIN;

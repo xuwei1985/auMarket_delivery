@@ -51,16 +51,16 @@
     [self loadInner];
 }
 
--(void)saveOrderReturnInfo:(NSString *)order_id andReturnPrice:(int)price{
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderReturnInfo&order_id=%@&return_price=%d",order_id,price];
+-(void)saveOrderReturnInfo:(NSString *)order_id andReturnPrice:(int)price andProof:(NSString *)proof_path andMsg:(NSString *)msg{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderReturnInfo&order_id=%@&return_price=%d&proof=%@&msg=%@",order_id,price,proof_path,[Common encodeToPercentEscapeString:msg]];
     self.parseDataClassType = [SPBaseEntity class];
     self.params = @{};
     self.requestTag=3004;
     [self loadInner];
 }
 
--(void)saveOrderChangePrice:(NSString *)order_id andChagePrice:(float)price andProof:(NSString *)proof_path{
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderPriceChange&order_id=%@&change_price=%f&proof_path=%@",order_id,price,proof_path];
+-(void)saveOrderChangePrice:(NSString *)order_id andChagePrice:(float)price andProof:(NSString *)proof_path andMsg:(NSString *)msg{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderPriceChange&order_id=%@&change_price=%f&proof_path=%@&msg=%@",order_id,price,proof_path,[Common encodeToPercentEscapeString:msg]];
     self.parseDataClassType = [SPBaseEntity class];
     self.params = @{};
     self.requestTag=3005;
@@ -70,9 +70,10 @@
 /**
  请求订单配送完成操作
  */
--(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(NSString *)pay_type andImgPath:(NSString *)img_path andOrderSn:(NSString *)order_sn{
+-(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(NSString *)pay_type andImgPath:(NSString *)img_path andOrderSn:(NSString *)order_sn andMsg:(NSString *)msg{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=order_delivery_done&delivery_id=%@&status=%@&pay_type=%@&user_id=%@&img_path=%@&order_sn=%@",delivery_id,status,pay_type,user.user_id,img_path,order_sn];
+
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=order_delivery_done&delivery_id=%@&status=%@&pay_type=%@&user_id=%@&img_path=%@&order_sn=%@&msg=%@",delivery_id,status,pay_type,user.user_id,img_path,order_sn,[Common encodeToPercentEscapeString:msg]];
     self.parseDataClassType = [TaskEntity class];
     self.params = @{};
     self.requestTag=3003;

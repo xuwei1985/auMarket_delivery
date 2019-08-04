@@ -1,18 +1,18 @@
 //
-//  OrderPriceChangeViewController.m
+//  ReturnProofViewController.m
 //  auMarket
 //
 //  Created by 吴绪伟 on 2019/07/02.
 //  Copyright © 2019年 daao. All rights reserved.
 //
 #define DONE_ACTION_BAR 48.0
-#import "OrderPriceChangeViewController.h"
+#import "ReturnProofViewController.h"
 
-@interface OrderPriceChangeViewController ()
+@interface ReturnProofViewController ()
 
 @end
 
-@implementation OrderPriceChangeViewController
+@implementation ReturnProofViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,25 +29,18 @@
 
 -(void)initData{
     imageData=nil;
-    lbl_tip_value_1.text=[NSString stringWithFormat:@"$%@",self.task_entity.order_amount];
-    if(self.changeType==1){
-        lbl_tip_2.text=@"减价金额:";
-    }
-    else{
-        lbl_tip_2.text=@"增加金额:";
-    }
-    [changePriceField becomeFirstResponder];
+    lbl_tip_value_1.text=[NSString stringWithFormat:@"$%d",self.returnPrice];
 }
 
 -(void)setNavigation{
-    self.title=@"订单价格调整";
+    self.title=@"朋友圈返现";
 }
 
 -(void)createPaymentInfoView{
     UILabel *lbl_tip_1=[[UILabel alloc] init];
     lbl_tip_1.textColor=COLOR_BLACK;
     lbl_tip_1.font=FONT_SIZE_MIDDLE;
-    lbl_tip_1.text=@"订单价格:";
+    lbl_tip_1.text=@"返现金额:";
     lbl_tip_1.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:lbl_tip_1];
     
@@ -70,39 +63,6 @@
         make.left.mas_equalTo(lbl_tip_1.mas_right).offset(10);
     }];
     
-    lbl_tip_2=[[UILabel alloc] init];
-    lbl_tip_2.textColor=COLOR_BLACK;
-    lbl_tip_2.font=FONT_SIZE_MIDDLE;
-    lbl_tip_2.text=@"减价金额:";
-    lbl_tip_2.textAlignment=NSTextAlignmentLeft;
-    lbl_tip_2.numberOfLines=0;
-    [self.view addSubview:lbl_tip_2];
-    
-    [lbl_tip_2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(65);
-        make.width.mas_equalTo(70);
-        make.left.mas_equalTo(10);
-    }];
-    
-    changePriceField = [[UITextField alloc] init];
-    changePriceField.delegate=self;
-    changePriceField.keyboardType=UIKeyboardTypeDecimalPad;
-    changePriceField.backgroundColor=COLOR_BG_WHITE;
-    changePriceField.layer.cornerRadius=3.0;
-    changePriceField.clipsToBounds=YES;
-    changePriceField.font=FONT_SIZE_BIG;
-    changePriceField.clearButtonMode = UITextFieldViewModeNever; //编辑时会出现个修改X
-    [changePriceField setValue:[NSNumber numberWithInt:10] forKey:@"paddingLeft"];
-    [changePriceField setValue:[NSNumber numberWithInt:10] forKey:@"paddingRight"];
-    [self.view addSubview:changePriceField];
-    
-    [changePriceField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lbl_tip_2.mas_top).offset(-7);
-        make.right.mas_equalTo(self.view.mas_right).offset(-10);
-        make.left.mas_equalTo(lbl_tip_2.mas_right).offset(10);
-        make.height.mas_equalTo(35);
-    }];
-    
     UILabel *lbl_tip_8=[[UILabel alloc] init];
     lbl_tip_8.textColor=COLOR_BLACK;
     lbl_tip_8.font=FONT_SIZE_MIDDLE;
@@ -111,7 +71,7 @@
     [self.view addSubview:lbl_tip_8];
     
     [lbl_tip_8 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lbl_tip_2.mas_bottom).offset(19);
+        make.top.mas_equalTo(lbl_tip_1.mas_bottom).offset(10);
         make.size.mas_equalTo(CGSizeMake(100, 20));
         make.left.mas_equalTo(10);
     }];
@@ -198,7 +158,7 @@
     [_btn_doneAction setBackgroundColor:COLOR_BG_WHITE];
     [_btn_doneAction setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
     _btn_doneAction.titleLabel.font=FONT_SIZE_BIG;
-    [_btn_doneAction addTarget:self action:@selector(saveOrderPriceChange) forControlEvents:UIControlEventTouchUpInside];
+    [_btn_doneAction addTarget:self action:@selector(saveReturnProof) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn_doneAction];
     
     
@@ -256,55 +216,6 @@
         [self presentViewController:imagePicker animated:YES completion:nil];
     }
 }
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    if(textField==changePriceField){
-        UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
-        keyboardDoneButtonView.barStyle = UIBarStyleDefault;
-        keyboardDoneButtonView.translucent = YES;
-        keyboardDoneButtonView.tintColor = RGBCOLOR(165, 165, 165);
-        [keyboardDoneButtonView sizeToFit];
-        
-        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消"
-                                                                         style:UIBarButtonItemStyleBordered target:self
-                                                                        action:@selector(changeNumCanceled:)];
-        
-        UIBarButtonItem *fixedButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace
-                                                                                      target: nil
-                                                                                      action: nil];
-        UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"完成"
-                                                                       style:UIBarButtonItemStyleBordered target:self
-                                                                      action:@selector(changeNumChanged:)];
-        doneButton.tintColor=RGBCOLOR(99, 99, 99);
-        [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:cancelButton,fixedButton,doneButton, nil]];
-        textField.inputAccessoryView = keyboardDoneButtonView;
-    }
-}
-
--(void)changeNumCanceled:(id)sender{
-    [changePriceField resignFirstResponder];
-}
-
--(void)changeNumChanged:(id)sender{
-    [changePriceField resignFirstResponder];
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    //判断是否为删除字符，如果为删除则让执行
-    char c=[string UTF8String][0];
-    if (c=='\000') {
-        return YES;
-    }
-    //长度限制
-    if([textField.text length] > 6){
-        textField.text = [textField.text substringToIndex:6];
-        return NO;
-    }
-    
-    return YES;
-}
-
 
 #pragma mark -
 #pragma UIImagePickerController Delegate
@@ -433,30 +344,18 @@
     [browser show];
 }
 
--(void)saveOrderPriceChange{
+-(void)saveReturnProof{
     [[AlertBlockView sharedInstance] showChoiceAlert:@"确认提交吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
         if(index==0){
-            //判断订单金额合法性
-            BOOL fg=YES;
             [text_msg resignFirstResponder];
             msg=[text_msg.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            if(self.changeType==1){//减少订单金额的情况
-                if(([self.task_entity.order_amount floatValue]+[self.task_entity.return_price floatValue]-[[changePriceField.text stringByReplacingOccurrencesOfString:@" " withString:@""] floatValue])<0){
-                    fg=NO;
-                }
-            }
             
-            if(fg){
-                [self startLoadingActivityIndicator];
-                if(imageData){
-                    [self.upload_model uploadImages:imageData andResourceType:@"change"];
-                }
-                else{
-                    [self postOrderPriceChange];
-                }
+            [self startLoadingActivityIndicator];
+            if(imageData){
+                [self.upload_model uploadImages:imageData andResourceType:@"return"];
             }
             else{
-                [self showToastWithText:@"不能低于订单可减金额"];
+                [self postReturnProof];
             }
         }
     }];
@@ -514,17 +413,9 @@
 }
 
 
--(void)postOrderPriceChange{
+-(void)postReturnProof{
     if(self.task_entity.order_id.length>0){
-        change_price=0.0;
-        if(self.changeType==1){
-            change_price-=[[changePriceField.text stringByReplacingOccurrencesOfString:@" " withString:@""] floatValue];
-        }
-        else{
-            change_price=[[changePriceField.text stringByReplacingOccurrencesOfString:@" " withString:@""] floatValue];
-        }
-        
-        [self.model saveOrderChangePrice:self.task_entity.order_id andChagePrice:change_price andProof:self.upload_model.uploadEntity.filepath andMsg:msg];
+        [self.model saveOrderReturnInfo:self.task_entity.order_id andReturnPrice:self.returnPrice andProof:self.upload_model.uploadEntity.filepath andMsg:msg];
     }
     else{
         [self showToastTopWithText:@"没有配送订单信息"];
@@ -534,26 +425,18 @@
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     if(model==self.upload_model){
         if(isSuccess){
-            [self postOrderPriceChange];
+            [self postReturnProof];
         }
         else{
             [self stopLoadingActivityIndicator];
         }
     }
-    else if(model==self.model&&self.model.requestTag==3003){
-        [self stopLoadingActivityIndicator];
-        if(isSuccess){
-            [self showSuccesWithText:@"操作成功"];
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }
-    }
-    else if(model==self.model&&self.model.requestTag==3005){
+    else if(model==self.model&&self.model.requestTag==3004){
         [self stopLoadingActivityIndicator];
         if(isSuccess){
             [self showSuccesWithText:@"保存成功"];
-            self.task_entity.change_price=[NSString stringWithFormat:@"%.2f",change_price];
-            changePriceField.text=@"";
             text_msg.text=@"";
+            self.task_entity.return_price=[NSString stringWithFormat:@"%d",self.returnPrice];
             [self.navigationController popViewControllerAnimated:YES];
         }
     }

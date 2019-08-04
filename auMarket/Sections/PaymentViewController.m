@@ -53,12 +53,19 @@
 }
 
 -(void)createPaymentInfoView{
-    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 10, WIDTH_SCREEN, 125)];
+    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 125)];
+    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 148, WIDTH_SCREEN, 190)];
     blockView_1.backgroundColor=COLOR_WHITE;
-    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 142, WIDTH_SCREEN, 80)];
+
+    if(self.payment_type==1){
+        [self.view addSubview:blockView_1];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    }
+    else{
+        blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 190)];
+    }
     blockView_2.backgroundColor=COLOR_WHITE;
-    
-    [self.view addSubview:blockView_1];
     [self.view addSubview:blockView_2];
     
     
@@ -105,15 +112,15 @@
 
     
     ////////////////blockView_2///////////////
-    UILabel *lbl_tip_8=[[UILabel alloc] init];
-    lbl_tip_8.textColor=COLOR_BLACK;
-    lbl_tip_8.font=FONT_SIZE_MIDDLE;
-    lbl_tip_8.text=@"快递员注意:";
-    lbl_tip_8.textAlignment=NSTextAlignmentLeft;
-    [blockView_2 addSubview:lbl_tip_8];
+    UILabel *lbl_tip_9=[[UILabel alloc] init];
+    lbl_tip_9.textColor=COLOR_BLACK;
+    lbl_tip_9.font=FONT_SIZE_MIDDLE;
+    lbl_tip_9.text=@"快递员注意:";
+    lbl_tip_9.textAlignment=NSTextAlignmentLeft;
+    [blockView_2 addSubview:lbl_tip_9];
     
-    [lbl_tip_8 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(10);
+    [lbl_tip_9 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(10);
         make.size.mas_equalTo(CGSizeMake(120, 20));
         make.left.mas_equalTo(10);
     }];
@@ -127,14 +134,51 @@
     [blockView_2 addSubview:lbl_packagenote];
     
     [lbl_packagenote mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(38);
+        make.top.mas_equalTo(35);
         make.right.mas_equalTo(blockView_2.mas_right).offset(-10);
         make.left.mas_equalTo(10);
     }];
     
+    UILabel *lbl_tip_8=[[UILabel alloc] init];
+    lbl_tip_8.textColor=COLOR_BLACK;
+    lbl_tip_8.font=FONT_SIZE_MIDDLE;
+    lbl_tip_8.text=@"留言备注:";
+    lbl_tip_8.textAlignment=NSTextAlignmentLeft;
+    [blockView_2 addSubview:lbl_tip_8];
+    
+    [lbl_tip_8 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(78);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    //初始化UITextView
+    text_msg =  [[UITextView alloc] init];
+    text_msg.backgroundColor=COLOR_BG_WHITE; //设置背景色
+    text_msg.scrollEnabled = YES;    //设置当文字超过视图的边框时是否允许滑动，默认为“YES”
+    text_msg.editable = YES;        //设置是否允许编辑内容，默认为“YES”
+    text_msg.delegate = self;       //设置代理方法的实现类
+    text_msg.font=FONT_SIZE_MIDDLE; //设置字体名字和字体大小;
+    text_msg.returnKeyType = UIReturnKeyDone;//设置return键的类型
+    text_msg.keyboardType = UIKeyboardTypeDefault;//设置键盘类型一般为默认
+    text_msg.textAlignment = NSTextAlignmentLeft; //文本显示的位置默认为居左
+    text_msg.dataDetectorTypes = UIDataDetectorTypeAll; //显示数据类型的连接模式（如电话号码、网址、地址等）
+    text_msg.textColor = COLOR_DARKGRAY;// 设置显示文字颜色
+    text_msg.text = @"";//设置显示的文本内容
+    text_msg.layer.borderWidth=0.5;
+    text_msg.layer.borderColor=COLOR_LIGHTGRAY.CGColor;
+    text_msg.layoutManager.allowsNonContiguousLayout=NO;//防止在拼音打字时抖动
+    [blockView_2 addSubview:text_msg];
+    
+    [text_msg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(106);
+        make.left.mas_equalTo(10);
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-20, 75));
+    }];
+    
     
     UIButton *upload_btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    upload_btn.titleLabel.font=DEFAULT_FONT(14);;
+    upload_btn.titleLabel.font=DEFAULT_FONT(15);;
     [upload_btn setTitle:@"上传照片" forState:UIControlStateNormal];
     upload_btn.backgroundColor=COLOR_MAIN;
     upload_btn.layer.cornerRadius=4;
@@ -146,7 +190,7 @@
     
     [upload_btn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_2.mas_bottom).offset(20);
-        make.size.mas_equalTo(CGSizeMake((WIDTH_SCREEN-40), 38));
+        make.size.mas_equalTo(CGSizeMake((WIDTH_SCREEN-40), 42));
         make.left.mas_equalTo(20);
     }];
     
@@ -188,7 +232,7 @@
     _btn_doneAction=[UIButton buttonWithType:UIButtonTypeCustom];
     [_btn_doneAction setTitle:@"完成订单" forState:UIControlStateNormal];
     _btn_doneAction.titleLabel.textAlignment=NSTextAlignmentCenter;
-    [_btn_doneAction setBackgroundColor:RGBCOLOR(255, 255, 255)];
+    [_btn_doneAction setBackgroundColor:RGBCOLOR(240, 240, 240)];
     [_btn_doneAction setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
     _btn_doneAction.titleLabel.font=FONT_SIZE_BIG;
     [_btn_doneAction addTarget:self action:@selector(requestFinishDelivery) forControlEvents:UIControlEventTouchUpInside];
@@ -205,7 +249,7 @@
     }];
     
     UIView *line=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 0.5)];
-    line.backgroundColor=RGBCOLOR(230, 230, 230);
+    line.backgroundColor=RGBCOLOR(220, 220, 220);
     [_btn_doneAction addSubview:line];
 }
 
@@ -226,8 +270,6 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"buttonIndex=%ld", buttonIndex);
-    
     if (0 == buttonIndex)//直接拍照
     {
         if([self imagePickerControlerIsAvailabelToCamera]){
@@ -378,16 +420,107 @@
     [browser show];
 }
 
+
+#pragma mark - TextViewDelegate
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+}
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    int n=[Common getStingToInt:[textView.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]/2;
+    
+    //回车即完成
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    
+    //判断是否为删除字符，如果为删除则让执行
+    char c=[text UTF8String][0];
+    if (c=='\000') {
+        //numberOfCharsLabel.text=[NSString stringWithFormat:@"%d",50-[[contentText text] length]+1];
+        return YES;
+    }
+    
+    if(n>=120){
+        return NO;
+    }
+    
+    if(n>=120) {
+        if(![text isEqualToString:@"\b"]) return NO;
+    }
+    
+    //numberOfCharsLabel.text=[NSString stringWithFormat:@"%d",MaxNumberOfDescriptionChars-[[textView text] length]-[text length]];
+    
+    //    contentText.selectedRange = range;
+    return YES;
+}
+
+-(void)textViewDidChange:(UITextView *)textView{
+    //该判断用于联想输入
+    int n=[Common getStingToInt:[textView.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]/2;
+    if (n >= 120)
+    {
+        //获取光标位置
+        NSMutableString *tobeStr = [NSMutableString stringWithString:textView.text];
+        text_msg.text = [tobeStr substringToIndex:120];
+    }
+}
+
+- (void)keyboardWillChangeFrame:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    //kbSize即為鍵盤尺寸 (有width, height)
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;//得到鍵盤的高度
+    [self putUpTextField:kbSize.height];
+}
+
+//当键盘隐藏的时候
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    [self putDownTextField];
+}
+
+
+-(void)putUpTextField:(int)kHeight{
+    if (kHeight==0) {
+        kHeight=216;
+    }
+    CGRect rect =CGRectMake(0, -kHeight/2, WIDTH_SCREEN, self.view.frame.size.height);
+    NSTimeInterval animationDuration = 0.3f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    
+    self.view.frame = rect;
+    [UIView commitAnimations];
+}
+
+-(void)putDownTextField{
+    CGRect rect =CGRectMake(0, 64, WIDTH_SCREEN, self.view.frame.size.height);
+    [UIView animateWithDuration:0.3 animations:^{
+        self.view.frame = rect;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
 -(void)requestFinishDelivery{
     [[AlertBlockView sharedInstance] showChoiceAlert:@"确认完成订单配送吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
         if(index==0){
+            [text_msg resignFirstResponder];
+            msg=[text_msg.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
             [self startLoadingActivityIndicator];
             if(imageData){
                 [self.upload_model uploadImages:imageData andResourceType:@"proof"];
             }
             else{
                 if(self.order_sn.length>0){
-                    [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2" andImgPath:@"" andOrderSn:self.order_sn];
+                    [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2" andImgPath:@"" andOrderSn:self.order_sn andMsg:msg];
                 }
                 else{
                     [self showToastTopWithText:@"没有配送订单信息"];
@@ -401,7 +534,7 @@
     if(model==self.upload_model){
         if(isSuccess){
             if(self.order_sn.length>0){
-                [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2"  andImgPath:self.upload_model.uploadEntity.filepath andOrderSn:self.order_sn];
+                [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2"  andImgPath:self.upload_model.uploadEntity.filepath andOrderSn:self.order_sn andMsg:msg];
             }
             else{
                 [self showToastTopWithText:@"没有配送订单信息"];

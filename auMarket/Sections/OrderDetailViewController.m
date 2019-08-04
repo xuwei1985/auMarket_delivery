@@ -564,7 +564,7 @@
     [self startLoadingActivityIndicator];
     
     if(lbl_orderNo.text.length>0){
-        [self.model order_delivery_done:self.task_entity.delivery_id andStatus:status andPayType:pay_type andImgPath:@"" andOrderSn:lbl_orderNo.text];
+        [self.model order_delivery_done:self.task_entity.delivery_id andStatus:status andPayType:pay_type andImgPath:@"" andOrderSn:lbl_orderNo.text andMsg:@""];
     }
     else{
         [self showToastTopWithText:@"没有配送订单信息"];
@@ -582,13 +582,6 @@
         if(isSuccess){
             [self showSuccesWithText:@"操作成功"];
             [self.navigationController popViewControllerAnimated:YES];
-        }
-    }
-    else if(model==self.model&&self.model.requestTag==3004){
-        if(isSuccess){
-            self.task_entity.return_price=[NSString stringWithFormat:@"%.2f",return_price];
-            [self loadDeliveryInfo];
-            [self showSuccesWithText:@"保存成功"];
         }
     }
 }
@@ -741,15 +734,15 @@
 - (void)showReturnMenu
 {
     UIActionSheet *actionsheet;
-    if([self.task_entity.return_price intValue]>=5){
+    if([self.task_entity.return_price_pre intValue]>=5){
         actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择返现金额" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"返现5澳币", @"返现2澳币", nil,nil];
         actionsheet.tag=3888;
     }
-    else if([self.task_entity.return_price intValue]>=2&&[self.task_entity.return_price intValue]<5){
+    else if([self.task_entity.return_price_pre intValue]>=2&&[self.task_entity.return_price_pre intValue]<5){
         actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择返现金额" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"返现2澳币", nil,nil];
         actionsheet.tag=3889;
     }
-    else if([self.task_entity.return_price intValue]<=0){
+    else if([self.task_entity.return_price_pre intValue]<=0){
         actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择返现金额" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"无返现", nil,nil];
         actionsheet.tag=3890;
     }
@@ -789,7 +782,7 @@
 {
     UIActionSheet *actionsheet;
     if([self.task_entity.pay_type intValue]==4){//如果是货到付款，则须先选择结算方式
-        actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"现金结算", @"转账结算",@"无法配送", nil,nil];
+        actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"现金结算", @"银行转账结算", @"支付宝转账结算", @"微信转账结算",@"无法配送", nil,nil];
     }
     else{
         actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"配送完成",@"无法配送", nil,nil];
@@ -810,12 +803,13 @@
                     }
                 }];
             }
-            else if (1 == buttonIndex)//转账结算
+            else if (buttonIndex>0&&buttonIndex<4)//转账结算
             {
                 if(lbl_orderNo.text.length>0){
                     PaymentViewController *pvc=[[PaymentViewController alloc] init];
                     pvc.task_entity=self.task_entity;
                     pvc.order_sn=lbl_orderNo.text;
+                    pvc.payment_type=buttonIndex;
                     [self.navigationController pushViewController:pvc animated:YES];
                 }
                 else{
@@ -823,7 +817,7 @@
                 }
                 
             }
-            else if (2 == buttonIndex)//无法配送
+            else if (4 == buttonIndex)//无法配送
             {
                 [self setDeliveryDone:@"2" andPayType:@"-1"];//0代表线上支付 1现金 2转账 -1未配送结算
             }
@@ -845,21 +839,39 @@
         }
     }
     else if(actionSheet.tag==3888){
+        ReturnProofViewController *rvc=[[ReturnProofViewController alloc] init];
+        rvc.task_entity=self.task_entity;
+        isGotoReturnProofView=YES;
+        
         if (0 == buttonIndex){//5
-            [self saveOrderReturnInfo:self.task_entity.order_id andReturnPrice:5];
+            rvc.returnPrice=5;
+            [self.navigationController pushViewController:rvc animated:YES];
         }
         else if (1 == buttonIndex){//2
-             [self saveOrderReturnInfo:self.task_entity.order_id andReturnPrice:2];
+            rvc.returnPrice=2;
+            [self.navigationController pushViewController:rvc animated:YES];
         }
+        
     }
     else if(actionSheet.tag==3889){
+        ReturnProofViewController *rvc=[[ReturnProofViewController alloc] init];
+        rvc.task_entity=self.task_entity;
+        isGotoReturnProofView=YES;
+        
         if (0 == buttonIndex){//2
-             [self saveOrderReturnInfo:self.task_entity.order_id andReturnPrice:2];
+            rvc.returnPrice=2;
+            [self.navigationController pushViewController:rvc animated:YES];
         }
+        
     }
     else if(actionSheet.tag==3890){
-        if (0 == buttonIndex){//0
-             [self saveOrderReturnInfo:self.task_entity.order_id andReturnPrice:0];
+        ReturnProofViewController *rvc=[[ReturnProofViewController alloc] init];
+        rvc.task_entity=self.task_entity;
+        isGotoReturnProofView=YES;
+        
+        if (0 == buttonIndex){//5
+            rvc.returnPrice=5;
+            [self.navigationController pushViewController:rvc animated:YES];
         }
     }
     else if(actionSheet.tag==4000){
@@ -870,12 +882,6 @@
             [self gotoOrderPriceChangeView:2];
         }
     }
-}
-
--(void)saveOrderReturnInfo:(NSString *)order_id andReturnPrice:(int)price{
-    [self startLoadingActivityIndicator];
-    return_price=price;
-    [self.model saveOrderReturnInfo:order_id andReturnPrice:price];
 }
 
 
@@ -918,6 +924,11 @@
     if(isGotoOrderChangeView){
         [self loadDeliveryInfo];
         isGotoOrderChangeView=false;
+    }
+    
+    if(isGotoReturnProofView){
+        [self loadDeliveryInfo];
+        isGotoReturnProofView=false;
     }
 }
 
