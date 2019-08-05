@@ -1,9 +1,9 @@
 //
-//  UserCenterViewController.h
+//  OrderPriceChangeViewController.h
 //  auMarket
 //
-//  Created by 吴绪伟 on 2016/12/8.
-//  Copyright © 2016年 daao. All rights reserved.
+//  Created by 吴绪伟 on 2019/07/02.
+//  Copyright © 2019年 daao. All rights reserved.
 //
 
 #import "SPBaseViewController.h"
@@ -12,9 +12,8 @@
 #import "MJPhoto.h"
 #import "SPUploadFileModel.h"
 #import "TaskModel.h"
-#import "PayCodeViewController.h"
 
-@interface PaymentViewController : SPBaseViewController<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate>
+@interface ReturnProofViewController : SPBaseViewController<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate>
 {
     UIImageView *orderInfoView;
     UIImageView *previewView;
@@ -22,12 +21,12 @@
     UILabel *lbl_packagenote;
     UIButton *_btn_doneAction;
     NSData *imageData;
+    UILabel *lbl_tip_value_1;
     UITextView *text_msg;
     NSString *msg;
 }
 @property(nonatomic,retain) TaskItemEntity *task_entity;
 @property(nonatomic,retain) TaskModel *model;
 @property(nonatomic,retain) SPUploadFileModel *upload_model;
-@property(nonatomic,retain) NSString *order_sn;
-@property(nonatomic,assign) int payment_type;
+@property(nonatomic,assign) int returnPrice;//返现金额
 @end

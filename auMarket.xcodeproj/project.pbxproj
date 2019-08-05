@@ -39,6 +39,7 @@
 		A91D843A1F665EC600DF69EF /* TaskListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A91D84391F665EC600DF69EF /* TaskListViewController.m */; };
 		A91FAC011E026F4300D6FACC /* c1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A91FABFF1E026F4300D6FACC /* c1@2x.png */; };
 		A91FAC021E026F4300D6FACC /* c2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A91FAC001E026F4300D6FACC /* c2@2x.png */; };
+		A93D98EA22F5CCCD004D5AEB /* ReturnProofViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A93D98E922F5CCCD004D5AEB /* ReturnProofViewController.m */; };
 		A940EE5F1F7127BC00A1BD4A /* OrderGoodsEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A940EE5C1F71217400A1BD4A /* OrderGoodsEntity.m */; };
 		A942999A1F72BB840078A9AE /* MemberChargeEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A94299991F72BB840078A9AE /* MemberChargeEntity.m */; };
 		A94692FA1F6AB367007537DC /* 1_29_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A94692F91F6AB367007537DC /* 1_29_gray@2x.png */; };
@@ -278,6 +279,8 @@
 		A91D84391F665EC600DF69EF /* TaskListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskListViewController.m; sourceTree = "<group>"; };
 		A91FABFF1E026F4300D6FACC /* c1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c1@2x.png"; sourceTree = "<group>"; };
 		A91FAC001E026F4300D6FACC /* c2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c2@2x.png"; sourceTree = "<group>"; };
+		A93D98E822F5CCCC004D5AEB /* ReturnProofViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnProofViewController.h; sourceTree = "<group>"; };
+		A93D98E922F5CCCD004D5AEB /* ReturnProofViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnProofViewController.m; sourceTree = "<group>"; };
 		A940EE5C1F71217400A1BD4A /* OrderGoodsEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderGoodsEntity.m; sourceTree = "<group>"; };
 		A940EE5D1F71217400A1BD4A /* OrderGoodsEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderGoodsEntity.h; sourceTree = "<group>"; };
 		A94299981F72BB840078A9AE /* MemberChargeEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemberChargeEntity.h; sourceTree = "<group>"; };
@@ -673,6 +676,8 @@
 		A9187C051DF9AB4D00A3E902 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A93D98E822F5CCCC004D5AEB /* ReturnProofViewController.h */,
+				A93D98E922F5CCCD004D5AEB /* ReturnProofViewController.m */,
 				A90F0DAD22CB6171006D6F1C /* OrderPriceChangeViewController.h */,
 				A90F0DAE22CB6171006D6F1C /* OrderPriceChangeViewController.m */,
 				A9DA916D1F67915E002033AA /* PaymentViewController.h */,
@@ -1503,6 +1508,7 @@
 				A95E10F21DF8104800660E42 /* SPUploadFileEntity.m in Sources */,
 				A976B7151F697EBC00B85C1C /* TaskModel.m in Sources */,
 				A9D354451E08FD6C006D265D /* MemberCell.m in Sources */,
+				A93D98EA22F5CCCD004D5AEB /* ReturnProofViewController.m in Sources */,
 				A95E11481DF8491600660E42 /* AccountManager.m in Sources */,
 				A95E11541DF84DDE00660E42 /* SeqIDGenerator.m in Sources */,
 				A95E114E1DF84D8600660E42 /* IPManager.m in Sources */,

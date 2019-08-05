@@ -123,7 +123,7 @@
     [_btn_exit setTitle:@"退出登录" forState:UIControlStateNormal];
     [_btn_exit setBackgroundColor:COLOR_MAIN];
     [_btn_exit setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
-    _btn_exit.frame=CGRectMake(15, IPHONE6PLUS?60:64, WIDTH_SCREEN-30, 40);
+    _btn_exit.frame=CGRectMake(15, IPHONE6PLUS?60:64, WIDTH_SCREEN-30, 42);
     _btn_exit.titleLabel.font=FONT_SIZE_MIDDLE;
     [_btn_exit addTarget:self action:@selector(exitLogin:) forControlEvents:UIControlEventTouchUpInside];
     [_btn_exit.layer setCornerRadius:4];

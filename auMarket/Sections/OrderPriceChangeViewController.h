@@ -13,7 +13,7 @@
 #import "SPUploadFileModel.h"
 #import "TaskModel.h"
 
-@interface OrderPriceChangeViewController : SPBaseViewController<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
+@interface OrderPriceChangeViewController : SPBaseViewController<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate,UITextViewDelegate>
 {
     UIImageView *orderInfoView;
     UIImageView *previewView;
@@ -25,6 +25,8 @@
     UILabel *lbl_tip_2;
     UITextField *changePriceField;
     float change_price;
+    UITextView *text_msg;
+    NSString *msg;
 }
 @property(nonatomic,retain) TaskItemEntity *task_entity;
 @property(nonatomic,retain) TaskModel *model;
