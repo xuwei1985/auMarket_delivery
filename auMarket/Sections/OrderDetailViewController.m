@@ -41,8 +41,10 @@
 
 -(void)setNavigation{
     self.title=@"订单详情";
-    UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"money_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(showAdjustPriceMenu)];
-    self.navigationItem.rightBarButtonItem=right_Item_cart;
+    if(self.task_entity!=nil){
+        UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"money_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(showAdjustPriceMenu)];
+        self.navigationItem.rightBarButtonItem=right_Item_cart;
+     }
 }
 
 -(void)createOrderInfoView{
