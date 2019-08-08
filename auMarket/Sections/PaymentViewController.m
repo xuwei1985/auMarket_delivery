@@ -57,7 +57,7 @@
     UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 148, WIDTH_SCREEN, 190)];
     blockView_1.backgroundColor=COLOR_WHITE;
 
-    if(self.payment_type==1){
+    if(self.payment_type==1){//银行
         [self.view addSubview:blockView_1];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
