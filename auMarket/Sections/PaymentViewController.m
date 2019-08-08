@@ -520,7 +520,7 @@
             }
             else{
                 if(self.order_sn.length>0){
-                    [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2" andImgPath:@"" andOrderSn:self.order_sn andMsg:msg];
+                    [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:self.payment_type andImgPath:@"" andOrderSn:self.order_sn andMsg:msg];
                 }
                 else{
                     [self showToastTopWithText:@"没有配送订单信息"];
@@ -534,7 +534,7 @@
     if(model==self.upload_model){
         if(isSuccess){
             if(self.order_sn.length>0){
-                [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2"  andImgPath:self.upload_model.uploadEntity.filepath andOrderSn:self.order_sn andMsg:msg];
+                [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:self.payment_type  andImgPath:self.upload_model.uploadEntity.filepath andOrderSn:self.order_sn andMsg:msg];
             }
             else{
                 [self showToastTopWithText:@"没有配送订单信息"];

@@ -562,7 +562,7 @@
     }
 }
 
--(void)setDeliveryDone:(NSString *)status andPayType:(NSString *)pay_type{
+-(void)setDeliveryDone:(NSString *)status andPayType:(int)pay_type{
     [self startLoadingActivityIndicator];
     
     if(lbl_orderNo.text.length>0){
@@ -801,17 +801,27 @@
             {
                 [[AlertBlockView sharedInstance] showChoiceAlert:@"确认完成订单配送吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
                     if(index==0){
-                        [self setDeliveryDone:@"1" andPayType:@"1"];//0代表线上支付 1现金 2转账
+                        [self setDeliveryDone:@"1" andPayType:1];//0代表线上支付 1现金 2转账
                     }
                 }];
             }
             else if (buttonIndex>0&&buttonIndex<4)//转账结算
             {
+                int payType=0;
+                if(buttonIndex==1){
+                    payType=2;
+                }
+                else if(buttonIndex==2){
+                    payType=4;
+                }
+                else if(buttonIndex==3){
+                    payType=5;
+                }
                 if(lbl_orderNo.text.length>0){
                     PaymentViewController *pvc=[[PaymentViewController alloc] init];
                     pvc.task_entity=self.task_entity;
                     pvc.order_sn=lbl_orderNo.text;
-                    pvc.payment_type=buttonIndex;
+                    pvc.payment_type=payType;
                     [self.navigationController pushViewController:pvc animated:YES];
                 }
                 else{
@@ -821,7 +831,7 @@
             }
             else if (4 == buttonIndex)//无法配送
             {
-                [self setDeliveryDone:@"2" andPayType:@"-1"];//0代表线上支付 1现金 2转账 -1未配送结算
+                [self setDeliveryDone:@"2" andPayType:-1];//0代表线上支付 1现金 2转账 -1未配送结算
             }
         }
         else{//显示支付
@@ -829,13 +839,13 @@
             {
                 [[AlertBlockView sharedInstance] showChoiceAlert:@"确认完成订单配送吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
                     if(index==0){
-                        [self setDeliveryDone:@"1" andPayType:@"0"];//0代表线上支付 1现金 2转账
+                        [self setDeliveryDone:@"1" andPayType:0];//0代表线上支付 1现金 2转账
                     }
                 }];
             }
             else if (1 == buttonIndex)//无法配送
             {
-                [self setDeliveryDone:@"2" andPayType:@"-1"];//0代表线上支付 1现金 2转账 -1未配送结算
+                [self setDeliveryDone:@"2" andPayType:-1];//0代表线上支付 1现金 2转账 -1未配送结算
                 
             }
         }
