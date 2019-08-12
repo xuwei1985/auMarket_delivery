@@ -569,13 +569,7 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     if(list_show_model==1){
-        TaskItemCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdetify];
-        if (cell == nil) {
-            cell=[[TaskItemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
-            cell.opaque=YES;
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-        return cell;
+        return nil;
     }
     if(tableView.tag<5000){
         TaskItemEntity *entity;
@@ -599,6 +593,28 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(list_show_model==1){
+        NSString *reuseIdetify = @"taskListItemCell";
+        TaskItemCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdetify];
+        if (cell == nil) {
+            cell=[[TaskItemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
+            cell.opaque=YES;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        if(list_status_modal==Delivery_Status_Delivering){
+            cell.entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
+        }
+        else if(list_status_modal==Delivery_Status_Finished){
+            cell.entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.row];
+        }
+        else if(list_status_modal==Delivery_Status_Failed){
+            cell.entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.row];
+        }
+        else if(list_status_modal==Delivery_Status_Multi){
+            cell.entity=[self.taskArr objectAtIndex:indexPath.row];
+        }
+        return cell;
+    }
     if(tv.tag<5000){
         NSString *reuseIdetify = @"taskListItemCell";
         TaskItemCell *cell = [tv dequeueReusableCellWithIdentifier:reuseIdetify];
@@ -675,20 +691,22 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:NO];
     
-//    TaskItemEntity *entity;
-//    if(list_status_modal==Delivery_Status_Delivering){
-//        entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
-//    }
-//    else if(list_status_modal==Delivery_Status_Finished){
-//        entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.row];
-//    }
-//    else if(list_status_modal==Delivery_Status_Failed){
-//        entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.row];
-//    }
-//    else if(list_status_modal==Delivery_Status_Multi){
-//        entity=[self.taskArr objectAtIndex:indexPath.row];
-//    }
-//    [self gotoOrderDetailView:entity];
+    if(list_show_model==1){
+        TaskItemEntity *entity;
+        if(list_status_modal==Delivery_Status_Delivering){
+            entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
+        }
+        else if(list_status_modal==Delivery_Status_Finished){
+            entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.row];
+        }
+        else if(list_status_modal==Delivery_Status_Failed){
+            entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.row];
+        }
+        else if(list_status_modal==Delivery_Status_Multi){
+            entity=[self.taskArr objectAtIndex:indexPath.row];
+        }
+        [self gotoOrderDetailView:entity];
+    }
 }
 
 -(void)refreshCategoryBtn{
