@@ -594,10 +594,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(list_show_model==1){
-        NSString *reuseIdetify = @"taskListItemCell";
-        TaskItemCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdetify];
+        NSString *reuseIdetify = @"taskconciseItemCell";
+        TaskConciseItemCell *cell = [tv dequeueReusableCellWithIdentifier:reuseIdetify];
         if (cell == nil) {
-            cell=[[TaskItemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
+            cell=[[TaskConciseItemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
             cell.opaque=YES;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
@@ -615,71 +615,73 @@
         }
         return cell;
     }
-    if(tv.tag<5000){
-        NSString *reuseIdetify = @"taskListItemCell";
-        TaskItemCell *cell = [tv dequeueReusableCellWithIdentifier:reuseIdetify];
-        if (cell == nil) {
-            cell = [[TaskItemCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdetify];
-            cell.showsReorderControl = NO;
-            cell.accessoryType=UITableViewCellAccessoryNone;
-            cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
-            cell.textLabel.backgroundColor = [UIColor clearColor];
-            cell.textLabel.font=FONT_SIZE_MIDDLE;
-            cell.textLabel.textColor=COLOR_DARKGRAY;
-        }
-        
-        TaskItemEntity *entity;
-        if(list_status_modal==Delivery_Status_Delivering){
-            entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.section];
-        }
-        else if(list_status_modal==Delivery_Status_Finished){
-            entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.section];
-        }
-        else if(list_status_modal==Delivery_Status_Failed){
-            entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.section];
-        }
-        else if(list_status_modal==Delivery_Status_Multi){
-            entity=[self.taskArr objectAtIndex:indexPath.section];
-        }
-        cell.entity=entity;
-        cell.row_index=(int)indexPath.row;
-        
-        return cell;
-    }
     else{
-        NSString *identifier=@"GoodsCellIdentifier";
-        GoodsListItemCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
-        if (cell == nil) {
-            cell = [[GoodsListItemCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-            cell.showsReorderControl = NO;
-            cell.accessoryType=UITableViewCellAccessoryNone;
-            cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
-            cell.textLabel.backgroundColor = [UIColor clearColor];
-            cell.textLabel.font=FONT_SIZE_MIDDLE;
-            cell.textLabel.textColor=COLOR_DARKGRAY;
+        if(tv.tag<5000){
+            NSString *reuseIdetify = @"taskListItemCell";
+            TaskItemCell *cell = [tv dequeueReusableCellWithIdentifier:reuseIdetify];
+            if (cell == nil) {
+                cell = [[TaskItemCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdetify];
+                cell.showsReorderControl = NO;
+                cell.accessoryType=UITableViewCellAccessoryNone;
+                cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
+                cell.textLabel.backgroundColor = [UIColor clearColor];
+                cell.textLabel.font=FONT_SIZE_MIDDLE;
+                cell.textLabel.textColor=COLOR_DARKGRAY;
+            }
+            
+            TaskItemEntity *entity;
+            if(list_status_modal==Delivery_Status_Delivering){
+                entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.section];
+            }
+            else if(list_status_modal==Delivery_Status_Finished){
+                entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:indexPath.section];
+            }
+            else if(list_status_modal==Delivery_Status_Failed){
+                entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:indexPath.section];
+            }
+            else if(list_status_modal==Delivery_Status_Multi){
+                entity=[self.taskArr objectAtIndex:indexPath.section];
+            }
+            cell.entity=entity;
+            cell.row_index=(int)indexPath.row;
+            
+            return cell;
         }
-        int s=(int)tv.tag-5000;
-        pGoodsEntity *entity;
-        if(list_status_modal==Delivery_Status_Delivering){
-            entity=[[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
+        else{
+            NSString *identifier=@"GoodsCellIdentifier";
+            GoodsListItemCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
+            if (cell == nil) {
+                cell = [[GoodsListItemCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+                cell.showsReorderControl = NO;
+                cell.accessoryType=UITableViewCellAccessoryNone;
+                cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
+                cell.textLabel.backgroundColor = [UIColor clearColor];
+                cell.textLabel.font=FONT_SIZE_MIDDLE;
+                cell.textLabel.textColor=COLOR_DARKGRAY;
+            }
+            int s=(int)tv.tag-5000;
+            pGoodsEntity *entity;
+            if(list_status_modal==Delivery_Status_Delivering){
+                entity=[[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
+            }
+            else if(list_status_modal==Delivery_Status_Finished){
+                entity=[[APP_DELEGATE.booter.tasklist_finished objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
+            }
+            else if(list_status_modal==Delivery_Status_Failed){
+                entity=[[APP_DELEGATE.booter.tasklist_failed objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
+            }
+            else if(list_status_modal==Delivery_Status_Multi){
+                entity=[[self.taskArr objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
+            }
+            cell.entity=(PackageGoodsEntity*)entity;
+            return cell;
         }
-        else if(list_status_modal==Delivery_Status_Finished){
-            entity=[[APP_DELEGATE.booter.tasklist_finished objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
-        }
-        else if(list_status_modal==Delivery_Status_Failed){
-            entity=[[APP_DELEGATE.booter.tasklist_failed objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
-        }
-        else if(list_status_modal==Delivery_Status_Multi){
-            entity=[[self.taskArr objectAtIndex:s].box_goods objectAtIndex:indexPath.row];
-        }
-        cell.entity=(PackageGoodsEntity*)entity;
-        return cell;
     }
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(list_show_model==1){
-        return 44;
+        return 54;
     }
     if(tv.tag<5000){
         return 44;
@@ -729,21 +731,26 @@
     [APP_DELEGATE.booter handlerWorkingState:sender.selected];
 }
 
--(void)gotoOrderDetailView:(UIGestureRecognizer *)sender{
-    int row=(int)sender.view.tag-7000;
+-(void)gotoOrderDetailView:(id)sender{
     TaskItemEntity *entity;
-    if(list_status_modal==Delivery_Status_Delivering){
-        entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:row];
+    if([sender isKindOfClass:[UIGestureRecognizer class]]){
+        int row=(int)((UIGestureRecognizer *)sender).view.tag-7000;
+        if(list_status_modal==Delivery_Status_Delivering){
+            entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:row];
+        }
+        else if(list_status_modal==Delivery_Status_Finished){
+            entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:row];
+        }
+        else if(list_status_modal==Delivery_Status_Failed){
+            entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:row];
+        }
+        else if(list_status_modal==Delivery_Status_Multi){
+            entity=[self.taskArr objectAtIndex:row];
+        }
+    }else{
+        entity=(TaskItemEntity *)sender;
     }
-    else if(list_status_modal==Delivery_Status_Finished){
-        entity=[APP_DELEGATE.booter.tasklist_finished objectAtIndex:row];
-    }
-    else if(list_status_modal==Delivery_Status_Failed){
-        entity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:row];
-    }
-    else if(list_status_modal==Delivery_Status_Multi){
-        entity=[self.taskArr objectAtIndex:row];
-    }
+    
     OrderDetailViewController *ovc=[[OrderDetailViewController alloc] init];
     ovc.task_entity=entity;
     [self.navigationController pushViewController:ovc animated:YES];

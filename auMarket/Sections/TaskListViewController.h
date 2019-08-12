@@ -9,6 +9,7 @@
 #import "SPBaseViewController.h"
 #import "OrderDetailViewController.h"
 #import "TaskItemCell.h"
+#import "TaskConciseItemCell.h"
 #import "GoodsListItemCell.h"
 
 @interface TaskListViewController : SPBaseViewController{
