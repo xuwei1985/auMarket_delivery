@@ -544,7 +544,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"section1:%lu",(unsigned long)indexPath.section);
     if(tv.tag<5000){
         NSString *reuseIdetify = @"taskListItemCell";
         TaskItemCell *cell = [tv dequeueReusableCellWithIdentifier:reuseIdetify];
