@@ -14,10 +14,12 @@
 @interface TaskListViewController : SPBaseViewController{
     UIButton *btn_workState;
     NSArray *taskCategory;
+    UIButton *btn_r;
     UIButton *btn_waitDelivery;
     UIButton *btn_failedDelivery;
     UIButton *btn_successDelivery;
     Delivery_Status list_status_modal;//列表模式
+    int list_show_model;//列表显示模式：0：详细视图 1：简洁视图
 }
 @property(nonatomic,retain) NSMutableArray<TaskItemEntity *>* taskArr;
 @end

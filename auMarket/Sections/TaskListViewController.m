@@ -64,8 +64,27 @@
     [btn_workState addTarget:self action:@selector(toggleWorkState:) forControlEvents:UIControlEventTouchUpInside];
     btn_workState.selected=APP_DELEGATE.isWorking;
     self.navigationItem.titleView=btn_workState;
+    
+    btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn_r.frame= CGRectMake(0, 0, 26, 22);
+    [btn_r setImage:[UIImage imageNamed:@"list_model_0"] forState:UIControlStateNormal];
+    [btn_r addTarget:self action:@selector(toggleListShowModel:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:btn_r];
+    self.navigationItem.rightBarButtonItem =btn_right;
 }
 
+-(void)toggleListShowModel:(id)sender{
+    if(list_show_model==0){
+        list_show_model=1;
+        [btn_r setImage:[UIImage imageNamed:@"list_model_1"] forState:UIControlStateNormal];
+    }
+    else{
+        list_show_model=0;
+        [btn_r setImage:[UIImage imageNamed:@"list_model_0"] forState:UIControlStateNormal];
+    }
+    [self.tableView reloadData];
+}
 
 -(void)createTaskCategoryButtons{
     UIView *taskCategoeryBar=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, SEGMENTVIEW_HEIGHT)];
@@ -158,6 +177,9 @@
 }
 
 -(UIView *)getSectionHeaderView:(TaskItemEntity *)entity andSection:(int)section{
+    if(list_show_model==1){
+        return nil;
+    }
     UILabel *lbl_contact;
     UILabel *lbl_package_num;
     UIView *section_view;
@@ -412,6 +434,9 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if(list_show_model==1){
+        return 1;
+    }
     if(tableView.tag<5000){
         if(list_status_modal==Delivery_Status_Delivering){
             return [APP_DELEGATE.booter.tasklist_delivering count];
@@ -431,8 +456,20 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"section:%lu",(unsigned long)section);
-
+    if(list_show_model==1){
+        if(list_status_modal==Delivery_Status_Delivering){
+            return [APP_DELEGATE.booter.tasklist_delivering count];
+        }
+        else if(list_status_modal==Delivery_Status_Finished){
+            return [APP_DELEGATE.booter.tasklist_finished count];
+        }
+        else if(list_status_modal==Delivery_Status_Failed){
+            return [APP_DELEGATE.booter.tasklist_failed count];
+        }
+        else if(list_status_modal==Delivery_Status_Multi){
+            return [self.taskArr count];;
+        }
+    }
     if(tv.tag<5000){//订单包含的包裹种类数据
         if(list_status_modal==Delivery_Status_Delivering){
             return [[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:section].package_arr count];
@@ -447,7 +484,7 @@
         else if(list_status_modal==Delivery_Status_Multi){
             return [[self.taskArr  objectAtIndex:section].package_arr count];;
         }
-        
+    
     }
     else{//包裹种类中商品数据
         int s=(int)tv.tag-5000;
@@ -469,6 +506,9 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if(list_show_model==1){
+        return 0;
+    }
     if(tableView.tag<5000){
         return SECTION_HEADER_HEIGHT+15;
     }
@@ -476,6 +516,9 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if(list_show_model==1){
+        return 0;
+    }
     if(tableView.tag<5000){
         TaskItemEntity *entity;
         if(list_status_modal==Delivery_Status_Delivering){
@@ -497,6 +540,9 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if(list_show_model==1){
+        return 0;
+    }
     if(tableView.tag<5000){
         int n=0;
         if(list_status_modal==Delivery_Status_Delivering){
@@ -522,6 +568,15 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if(list_show_model==1){
+        TaskItemCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdetify];
+        if (cell == nil) {
+            cell=[[TaskItemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
+            cell.opaque=YES;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        return cell;
+    }
     if(tableView.tag<5000){
         TaskItemEntity *entity;
         if(list_status_modal==Delivery_Status_Delivering){
@@ -607,6 +662,9 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(list_show_model==1){
+        return 44;
+    }
     if(tv.tag<5000){
         return 44;
     }
@@ -616,6 +674,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:NO];
+    
 //    TaskItemEntity *entity;
 //    if(list_status_modal==Delivery_Status_Delivering){
 //        entity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:indexPath.row];
