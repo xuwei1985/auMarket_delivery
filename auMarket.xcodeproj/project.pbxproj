@@ -109,6 +109,9 @@
 		A967B30020E6818000D50C46 /* predictSmsTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A967B2FE20E6818000D50C46 /* predictSmsTaskCell.m */; };
 		A967B30620E6818E00D50C46 /* PredictTaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A967B30320E6818E00D50C46 /* PredictTaskModel.m */; };
 		A976B7151F697EBC00B85C1C /* TaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A976B7141F697EBC00B85C1C /* TaskModel.m */; };
+		A9807F5A23012FB2003FB76C /* list_model_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9807F5823012FB2003FB76C /* list_model_0@2x.png */; };
+		A9807F5B23012FB2003FB76C /* list_model_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9807F5923012FB2003FB76C /* list_model_1@2x.png */; };
+		A9807F5E2301361C003FB76C /* TaskConciseItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9807F5D2301361C003FB76C /* TaskConciseItemCell.m */; };
 		A982F78F1E0FA87E00DB4C13 /* sign_weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */; };
 		A982F79A1E1107DA00DB4C13 /* grayline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F7991E1107DA00DB4C13 /* grayline@2x.png */; };
 		A99632EB21A851CC0023F539 /* c_meat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99632EA21A851CC0023F539 /* c_meat@2x.png */; };
@@ -408,6 +411,10 @@
 		A967B30420E6818E00D50C46 /* PredictTaskModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PredictTaskModel.h; sourceTree = "<group>"; };
 		A976B7131F697EBC00B85C1C /* TaskModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskModel.h; sourceTree = "<group>"; };
 		A976B7141F697EBC00B85C1C /* TaskModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskModel.m; sourceTree = "<group>"; };
+		A9807F5823012FB2003FB76C /* list_model_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list_model_0@2x.png"; sourceTree = "<group>"; };
+		A9807F5923012FB2003FB76C /* list_model_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list_model_1@2x.png"; sourceTree = "<group>"; };
+		A9807F5C2301361B003FB76C /* TaskConciseItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskConciseItemCell.h; sourceTree = "<group>"; };
+		A9807F5D2301361C003FB76C /* TaskConciseItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskConciseItemCell.m; sourceTree = "<group>"; };
 		A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign_weixin@2x.png"; sourceTree = "<group>"; };
 		A982F7991E1107DA00DB4C13 /* grayline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayline@2x.png"; sourceTree = "<group>"; };
 		A99632EA21A851CC0023F539 /* c_meat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c_meat@2x.png"; sourceTree = "<group>"; };
@@ -669,6 +676,8 @@
 				A9F4DAB51F66D4A800D71774 /* OrderDetailCell.m */,
 				A91357711F668BB4000186B0 /* TaskItemCell.h */,
 				A91357721F668BB4000186B0 /* TaskItemCell.m */,
+				A9807F5C2301361B003FB76C /* TaskConciseItemCell.h */,
+				A9807F5D2301361C003FB76C /* TaskConciseItemCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1103,6 +1112,8 @@
 		A9FBC1C61DF93838005ECDDE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A9807F5823012FB2003FB76C /* list_model_0@2x.png */,
+				A9807F5923012FB2003FB76C /* list_model_1@2x.png */,
 				A90F0DAB22CB5B17006D6F1C /* money_icon@2x.png */,
 				A9F4DA731F658AFE00D71774 /* 1_03@2x.png */,
 				A91D842E1F665B5300DF69EF /* 1_04@2x.png */,
@@ -1368,6 +1379,7 @@
 				A9F4DA871F658AFE00D71774 /* 1_09@2x.png in Resources */,
 				A9F4DA861F658AFE00D71774 /* 1_06@2x.png in Resources */,
 				A9187C1C1DF9B42400A3E902 /* home_s@2x.png in Resources */,
+				A9807F5A23012FB2003FB76C /* list_model_0@2x.png in Resources */,
 				A9D3543B1E08F1FA006D265D /* cart_white@2x.png in Resources */,
 				A982F79A1E1107DA00DB4C13 /* grayline@2x.png in Resources */,
 				A9A5B42F212C0ED60000A738 /* 1_29_up@2x.png in Resources */,
@@ -1417,6 +1429,7 @@
 				A9F4DA8E1F658AFE00D71774 /* 1_41.png in Resources */,
 				A9F4DA901F658AFE00D71774 /* 1_49.png in Resources */,
 				A9F54F0A222BCCC6005C7247 /* 1_29_color_3@2x.png in Resources */,
+				A9807F5B23012FB2003FB76C /* list_model_1@2x.png in Resources */,
 				A9F54F09222BCCC6005C7247 /* 1_29_color_0@2x.png in Resources */,
 				A9A5B42E212C0ED60000A738 /* 1_29_blue_up@2x.png in Resources */,
 				A9F5603D1FFD104400EA8116 /* memberBg@2x.jpg in Resources */,
@@ -1568,6 +1581,7 @@
 				A9AD42B71E13698D00A4B131 /* BannerModel.m in Sources */,
 				A95E11611DF8505C00660E42 /* BadgeManager.m in Sources */,
 				A90F0DAF22CB6171006D6F1C /* OrderPriceChangeViewController.m in Sources */,
+				A9807F5E2301361C003FB76C /* TaskConciseItemCell.m in Sources */,
 				A9AD42B41E13673500A4B131 /* BannerEntity.m in Sources */,
 				A95E10911DF80ED000660E42 /* main.m in Sources */,
 				A9F4DAB71F66D4A800D71774 /* OrderDetailCell.m in Sources */,

@@ -33,7 +33,18 @@
 }
 
 -(void)setNavigation{
-    self.title=@"转账信息";
+    if(self.payment_type==2){
+        self.title=@"银行转账";
+    }
+    else if(self.payment_type==4){
+        self.title=@"支付宝转账";
+    }
+    else if(self.payment_type==5){
+        self.title=@"微信转账";
+    }
+    else{
+        self.title=@"转账信息";
+    }
     
     UIButton *payBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
     [payBtn addTarget:self action:@selector(showPayCodeView) forControlEvents:UIControlEventTouchUpInside];
@@ -57,7 +68,7 @@
     UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 148, WIDTH_SCREEN, 190)];
     blockView_1.backgroundColor=COLOR_WHITE;
 
-    if(self.payment_type==1){
+    if(self.payment_type==2){//银行
         [self.view addSubview:blockView_1];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
@@ -520,7 +531,7 @@
             }
             else{
                 if(self.order_sn.length>0){
-                    [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2" andImgPath:@"" andOrderSn:self.order_sn andMsg:msg];
+                    [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:self.payment_type andImgPath:@"" andOrderSn:self.order_sn andMsg:msg];
                 }
                 else{
                     [self showToastTopWithText:@"没有配送订单信息"];
@@ -534,7 +545,7 @@
     if(model==self.upload_model){
         if(isSuccess){
             if(self.order_sn.length>0){
-                [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:@"2"  andImgPath:self.upload_model.uploadEntity.filepath andOrderSn:self.order_sn andMsg:msg];
+                [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:self.payment_type  andImgPath:self.upload_model.uploadEntity.filepath andOrderSn:self.order_sn andMsg:msg];
             }
             else{
                 [self showToastTopWithText:@"没有配送订单信息"];
