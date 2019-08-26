@@ -34,15 +34,6 @@
     [self loadInner];
 }
 
--(void)loadDeliveryTimeSection{
-    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=getDeliveryTimeSection&delivery_id=%@",user.user_id];
-    self.parseDataClassType = [TimeSectionEntity class];
-    self.params = @{};
-    self.requestTag=3003;
-    [self loadInner];
-}
-
 -(void)savePredictTime:(NSString *)ids andPredictTime:(NSString *)predict_time{
     self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderPredictTime&ids=%@&predict_time=%@",ids,[Common encodeToPercentEscapeString:predict_time]];
     self.parseDataClassType = [SPBaseEntity class];
@@ -64,6 +55,25 @@
     self.parseDataClassType = [SPBaseEntity class];
     self.params = @{};
     self.requestTag=3005;
+    [self loadInner];
+}
+
+
+-(void)loadOrderFlowInfo:(NSString *)order_id{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=order_flow_info&order_id=%@",order_id];
+    self.parseDataClassType = [OrderFlowEntity class];
+    self.params = @{};
+    self.requestTag=3006;
+    [self loadInner];
+}
+
+
+-(void)loadDeliveryTimeSection{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=getDeliveryTimeSection&delivery_id=%@",user.user_id];
+    self.parseDataClassType = [TimeSectionEntity class];
+    self.params = @{};
+    self.requestTag=3007;
     [self loadInner];
 }
 
@@ -90,6 +100,9 @@
     }
     else if ([parsedData isKindOfClass:[TimeSectionEntity class]]) {
         self.time_entity = (TimeSectionEntity*)parsedData;
+    }
+    else if ([parsedData isKindOfClass:[OrderFlowEntity class]]) {
+        self.flow_entity = (OrderFlowEntity*)parsedData;
     }
 }
 

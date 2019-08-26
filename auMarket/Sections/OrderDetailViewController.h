@@ -31,6 +31,11 @@
     UILabel *lbl_putType;
     UILabel *lbl_packagenote;
     UILabel *lbl_upstairs;
+    UILabel *lbl_state;
+    UILabel *lbl_picker;
+    UILabel *lbl_pick_time;
+    UILabel *lbl_packer;
+    UILabel *lbl_pack_time;
     UIButton *_btn_doneAction;
     UIButton *_btn_returnAction;
     CLLocationCoordinate2D coordinate;

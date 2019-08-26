@@ -34,3 +34,8 @@
 @implementation pGoodsEntity : SPBaseEntity
 
 @end
+
+@implementation OrderFlowEntity : SPBaseEntity
+
+@end
+

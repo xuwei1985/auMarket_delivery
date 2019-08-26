@@ -28,6 +28,9 @@
         [self createOrderInfoView];
         [self createDoneActionBar];
     }
+    else{
+        [self createOrderInfoView2];
+    }
     
     [self setUpTableView];
 }
@@ -36,6 +39,9 @@
     [self loadGoodsForOrder];
     if(self.task_entity!=nil){
         [self loadDeliveryInfo];
+    }
+    else{
+        [self loadOrderFlowInfo];
     }
 }
 
@@ -47,6 +53,147 @@
      }
 }
 
+-(void)createOrderInfoView2{
+    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 158)];
+    blockView_1.backgroundColor=COLOR_WHITE;
+    blockView_1.userInteractionEnabled=YES;
+    
+    orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 170)];
+    orderInfoView.userInteractionEnabled=YES;
+    orderInfoView.backgroundColor=COLOR_CLEAR;
+    
+    [orderInfoView addSubview:blockView_1];
+    
+    UILabel *lbl_tip_1=[[UILabel alloc] init];
+    lbl_tip_1.textColor=COLOR_BLACK;
+    lbl_tip_1.font=FONT_SIZE_MIDDLE;
+    lbl_tip_1.text=@"订单状态";
+    lbl_tip_1.textAlignment=NSTextAlignmentLeft;
+    [blockView_1 addSubview:lbl_tip_1];
+    
+    [lbl_tip_1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(10);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_state=[[UILabel alloc] init];
+    lbl_state.textColor=COLOR_MAIN;
+    lbl_state.font=FONT_SIZE_MIDDLE;
+    lbl_state.text=@"--";
+    lbl_state.textAlignment=NSTextAlignmentRight;
+    [blockView_1 addSubview:lbl_state];
+    
+    [lbl_state mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(10);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+    }];
+    
+    UILabel *lbl_tip_2=[[UILabel alloc] init];
+    lbl_tip_2.textColor=COLOR_BLACK;
+    lbl_tip_2.font=FONT_SIZE_MIDDLE;
+    lbl_tip_2.text=@"拣货员";
+    lbl_tip_2.textAlignment=NSTextAlignmentLeft;
+    [blockView_1 addSubview:lbl_tip_2];
+    
+    [lbl_tip_2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(40);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_picker=[[UILabel alloc] init];
+    lbl_picker.textColor=COLOR_BLACK;
+    lbl_picker.font=FONT_SIZE_MIDDLE;
+    lbl_picker.text=@"--";
+    lbl_picker.textAlignment=NSTextAlignmentRight;
+    [blockView_1 addSubview:lbl_picker];
+    
+    [lbl_picker mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(40);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+    }];
+    
+    UILabel *lbl_tip_3=[[UILabel alloc] init];
+    lbl_tip_3.textColor=COLOR_BLACK;
+    lbl_tip_3.font=FONT_SIZE_MIDDLE;
+    lbl_tip_3.text=@"拣货时间";
+    lbl_tip_3.textAlignment=NSTextAlignmentLeft;
+    [blockView_1 addSubview:lbl_tip_3];
+    
+    [lbl_tip_3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(70);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_pick_time=[[UILabel alloc] init];
+    lbl_pick_time.textColor=COLOR_BLACK;
+    lbl_pick_time.font=FONT_SIZE_MIDDLE;
+    lbl_pick_time.text=@"--";
+    lbl_pick_time.textAlignment=NSTextAlignmentRight;
+    [blockView_1 addSubview:lbl_pick_time];
+    
+    [lbl_pick_time mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(70);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+    }];
+    
+    UILabel *lbl_tip_4=[[UILabel alloc] init];
+    lbl_tip_4.textColor=COLOR_BLACK;
+    lbl_tip_4.font=FONT_SIZE_MIDDLE;
+    lbl_tip_4.text=@"打包员";
+    lbl_tip_4.textAlignment=NSTextAlignmentLeft;
+    [blockView_1 addSubview:lbl_tip_4];
+    
+    [lbl_tip_4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(100);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_packer=[[UILabel alloc] init];
+    lbl_packer.textColor=COLOR_BLACK;
+    lbl_packer.font=FONT_SIZE_MIDDLE;
+    lbl_packer.text=@"--";
+    lbl_packer.textAlignment=NSTextAlignmentRight;
+    [blockView_1 addSubview:lbl_packer];
+    
+    [lbl_packer mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(100);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+    }];
+    
+    UILabel *lbl_tip_5=[[UILabel alloc] init];
+    lbl_tip_5.textColor=COLOR_BLACK;
+    lbl_tip_5.font=FONT_SIZE_MIDDLE;
+    lbl_tip_5.text=@"打包时间";
+    lbl_tip_5.textAlignment=NSTextAlignmentLeft;
+    [blockView_1 addSubview:lbl_tip_5];
+    
+    [lbl_tip_5 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(130);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_pack_time=[[UILabel alloc] init];
+    lbl_pack_time.textColor=COLOR_BLACK;
+    lbl_pack_time.font=FONT_SIZE_MIDDLE;
+    lbl_pack_time.text=@"--";
+    lbl_pack_time.textAlignment=NSTextAlignmentRight;
+    [blockView_1 addSubview:lbl_pack_time];
+    
+    [lbl_pack_time mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(130);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+    }];
+}
 -(void)createOrderInfoView{
     UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 70)];
     blockView_1.backgroundColor=COLOR_WHITE;
@@ -477,12 +624,8 @@
     UIView *view = [UIView new];
     view.backgroundColor = COLOR_CLEAR;
     
-    if(self.task_entity!=nil){
-        [self.tableView setTableHeaderView:orderInfoView];
-    }
-    else{
-        [self.tableView setTableHeaderView:view];
-    }
+    [self.tableView setTableHeaderView:orderInfoView];
+    
     [self.tableView setTableFooterView:view];
     [self.view addSubview:self.tableView];
 }
@@ -551,6 +694,45 @@
     }
 }
 
+-(void)loadOrderFlowData:(OrderFlowEntity *)data{
+    if(data){
+        //订单状态
+        if([data.order_status intValue]==0){//待确认
+            lbl_state.text=@"待确认";
+        }
+        else if([data.order_status intValue]==1){//已确认
+            lbl_state.text=@"已确认";
+            
+            if([data.shipping_status intValue]==5||[data.shipping_status intValue]==6||[data.shipping_status intValue]==7||[data.shipping_status intValue]==8){//打包中
+                lbl_state.text=@"打包中";
+            }
+            else if([data.shipping_status intValue]==3){//已出库
+                lbl_state.text=@"已出库";
+            }
+            else if([data.shipping_status intValue]==1){//配送中
+                lbl_state.text=@"配送中";
+            }
+            else if([data.shipping_status intValue]==2){//已完成
+                lbl_state.text=@"已完成";
+            }
+        }
+        else if([data.order_status intValue]==2){//已取消
+            lbl_state.text=@"已取消";
+        }
+        lbl_picker.text=data.picker;
+        lbl_pick_time.text=[NSString stringWithFormat:@"%@ ~ %@",data.pick_begin_time,data.pick_end_time];
+        lbl_packer.text=data.packer;
+        lbl_pack_time.text=[NSString stringWithFormat:@"%@ ~ %@",data.pack_begin_time,data.pack_end_time];
+    }
+}
+
+//请求订单下在仓库的流程信息
+-(void)loadOrderFlowInfo{
+    if(self.task_entity==nil){
+        [self.model loadOrderFlowInfo:self.order_id];
+    }
+}
+
 //请求订单下的商品信息
 -(void)loadGoodsForOrder{
     [self startLoadingActivityIndicator];
@@ -584,6 +766,11 @@
         if(isSuccess){
             [self showSuccesWithText:@"操作成功"];
             [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+    else if(model==self.model&&self.model.requestTag==3006){
+        if(isSuccess){
+            [self loadOrderFlowData:self.model.flow_entity];
         }
     }
 }

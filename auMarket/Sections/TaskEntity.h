@@ -73,3 +73,16 @@
 @property (nonatomic,retain) NSString *goods_name;
 @property (nonatomic,retain) NSString *goods_image;
 @end
+
+@interface OrderFlowEntity : SPBaseEntity
+@property (nonatomic,retain) NSString *order_id;
+@property (nonatomic,retain) NSString *order_status;
+@property (nonatomic,retain) NSString *shipping_status;
+@property (nonatomic,retain) NSString *picker;
+@property (nonatomic,retain) NSString *pick_begin_time;
+@property (nonatomic,retain) NSString *pick_end_time;
+@property (nonatomic,retain) NSString *packer;
+@property (nonatomic,retain) NSString *pack_begin_time;
+@property (nonatomic,retain) NSString *pack_end_time;
+
+@end
