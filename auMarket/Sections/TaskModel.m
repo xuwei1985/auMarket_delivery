@@ -92,7 +92,6 @@
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[TaskEntity class]]) {
-//        self.entity = (TaskEntity*)parsedData;
         self.entity=[self convertDeliverydata:(TaskEntity*)parsedData];
     }
     else if ([parsedData isKindOfClass:[OrderGoodsEntity class]]) {

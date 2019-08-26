@@ -78,6 +78,7 @@
 @property (nonatomic,retain) NSString *order_id;
 @property (nonatomic,retain) NSString *order_status;
 @property (nonatomic,retain) NSString *shipping_status;
+@property (nonatomic,retain) NSString *box;
 @property (nonatomic,retain) NSString *picker;
 @property (nonatomic,retain) NSString *pick_begin_time;
 @property (nonatomic,retain) NSString *pick_end_time;
