@@ -32,6 +32,7 @@
     UILabel *lbl_packagenote;
     UILabel *lbl_upstairs;
     UILabel *lbl_state;
+    UILabel *lbl_box;
     UILabel *lbl_picker;
     UILabel *lbl_pick_time;
     UILabel *lbl_packer;

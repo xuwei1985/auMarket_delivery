@@ -40,9 +40,6 @@
     if(self.task_entity!=nil){
         [self loadDeliveryInfo];
     }
-    else{
-        [self loadOrderFlowInfo];
-    }
 }
 
 -(void)setNavigation{
@@ -54,14 +51,13 @@
 }
 
 -(void)createOrderInfoView2{
-    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 158)];
+    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 188)];
     blockView_1.backgroundColor=COLOR_WHITE;
     blockView_1.userInteractionEnabled=YES;
     
-    orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 170)];
+    orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 200)];
     orderInfoView.userInteractionEnabled=YES;
     orderInfoView.backgroundColor=COLOR_CLEAR;
-    
     [orderInfoView addSubview:blockView_1];
     
     UILabel *lbl_tip_1=[[UILabel alloc] init];
@@ -125,7 +121,7 @@
     
     [lbl_tip_3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_1.top).offset(70);
-        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.size.mas_equalTo(CGSizeMake(80, 20));
         make.left.mas_equalTo(10);
     }];
     
@@ -138,19 +134,46 @@
     
     [lbl_pick_time mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_1.top).offset(70);
-        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.size.mas_equalTo(CGSizeMake(190, 20));
         make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
     }];
     
     UILabel *lbl_tip_4=[[UILabel alloc] init];
     lbl_tip_4.textColor=COLOR_BLACK;
     lbl_tip_4.font=FONT_SIZE_MIDDLE;
-    lbl_tip_4.text=@"打包员";
+    lbl_tip_4.text=@"打包箱";
     lbl_tip_4.textAlignment=NSTextAlignmentLeft;
     [blockView_1 addSubview:lbl_tip_4];
     
     [lbl_tip_4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_1.top).offset(100);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_box=[[UILabel alloc] init];
+    lbl_box.textColor=COLOR_BLACK;
+    lbl_box.font=FONT_SIZE_MIDDLE;
+    lbl_box.text=@"--";
+    lbl_box.textAlignment=NSTextAlignmentRight;
+    [blockView_1 addSubview:lbl_box];
+    
+    [lbl_box mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(100);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+    }];
+    
+    
+    UILabel *lbl_tip_6=[[UILabel alloc] init];
+    lbl_tip_6.textColor=COLOR_BLACK;
+    lbl_tip_6.font=FONT_SIZE_MIDDLE;
+    lbl_tip_6.text=@"打包员";
+    lbl_tip_6.textAlignment=NSTextAlignmentLeft;
+    [blockView_1 addSubview:lbl_tip_6];
+    
+    [lbl_tip_6 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(130);
         make.size.mas_equalTo(CGSizeMake(100, 20));
         make.left.mas_equalTo(10);
     }];
@@ -163,21 +186,21 @@
     [blockView_1 addSubview:lbl_packer];
     
     [lbl_packer mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(100);
+        make.top.mas_equalTo(blockView_1.top).offset(130);
         make.size.mas_equalTo(CGSizeMake(100, 20));
         make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
     }];
     
-    UILabel *lbl_tip_5=[[UILabel alloc] init];
-    lbl_tip_5.textColor=COLOR_BLACK;
-    lbl_tip_5.font=FONT_SIZE_MIDDLE;
-    lbl_tip_5.text=@"打包时间";
-    lbl_tip_5.textAlignment=NSTextAlignmentLeft;
-    [blockView_1 addSubview:lbl_tip_5];
+    UILabel *lbl_tip_7=[[UILabel alloc] init];
+    lbl_tip_7.textColor=COLOR_BLACK;
+    lbl_tip_7.font=FONT_SIZE_MIDDLE;
+    lbl_tip_7.text=@"打包时间";
+    lbl_tip_7.textAlignment=NSTextAlignmentLeft;
+    [blockView_1 addSubview:lbl_tip_7];
     
-    [lbl_tip_5 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(130);
-        make.size.mas_equalTo(CGSizeMake(100, 20));
+    [lbl_tip_7 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_1.top).offset(160);
+        make.size.mas_equalTo(CGSizeMake(80, 20));
         make.left.mas_equalTo(10);
     }];
     
@@ -189,8 +212,8 @@
     [blockView_1 addSubview:lbl_pack_time];
     
     [lbl_pack_time mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(130);
-        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.top.mas_equalTo(blockView_1.top).offset(160);
+        make.size.mas_equalTo(CGSizeMake(190, 20));
         make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
     }];
 }
@@ -719,10 +742,18 @@
         else if([data.order_status intValue]==2){//已取消
             lbl_state.text=@"已取消";
         }
-        lbl_picker.text=data.picker;
-        lbl_pick_time.text=[NSString stringWithFormat:@"%@ ~ %@",data.pick_begin_time,data.pick_end_time];
-        lbl_packer.text=data.packer;
-        lbl_pack_time.text=[NSString stringWithFormat:@"%@ ~ %@",data.pack_begin_time,data.pack_end_time];
+        if(data.picker&&![data.picker isEqualToString:@"null"]){
+            lbl_picker.text=data.picker;
+            if(data.box.length>0){
+                lbl_box.text=data.box;
+            }
+            lbl_pick_time.text=[NSString stringWithFormat:@"%@ ~ %@",data.pick_begin_time,data.pick_end_time];
+        }
+
+        if(data.packer&&![data.packer isEqualToString:@"null"]){
+            lbl_packer.text=data.packer;
+            lbl_pack_time.text=[NSString stringWithFormat:@"%@ ~ %@",data.pack_begin_time,data.pack_end_time];
+        }
     }
 }
 
@@ -756,19 +787,27 @@
 }
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
-    [self stopLoadingActivityIndicator];
+    
     if(model==self.model&&self.model.requestTag==3002){
         if(isSuccess){
             [self.tableView reloadData];
+            if(self.task_entity==nil){
+                [self loadOrderFlowInfo];
+            }
+            else{
+                [self stopLoadingActivityIndicator];
+            }
         }
     }
     else if(model==self.model&&self.model.requestTag==3003){
+        [self stopLoadingActivityIndicator];
         if(isSuccess){
             [self showSuccesWithText:@"操作成功"];
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
     else if(model==self.model&&self.model.requestTag==3006){
+        [self stopLoadingActivityIndicator];
         if(isSuccess){
             [self loadOrderFlowData:self.model.flow_entity];
         }
