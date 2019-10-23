@@ -825,7 +825,7 @@
         lbl_deliverytime.text=self.task_entity.delivery_time;
         lbl_changePrice.text=[NSString stringWithFormat:@"$%@",self.task_entity.change_price];
         lbl_returnPrice.text=[NSString stringWithFormat:@"$%@",self.task_entity.return_price];
-        lbl_orderSum2.text=[NSString stringWithFormat:@"$%.2f",([self.task_entity.order_amount floatValue]+[self.task_entity.return_price floatValue]+[self.task_entity.change_price floatValue])];
+        lbl_orderSum2.text=[NSString stringWithFormat:@"$%.2f",([self.task_entity.order_amount floatValue]-[self.task_entity.return_price floatValue]+[self.task_entity.change_price floatValue])];
         if([self.task_entity.put_type intValue]==1){
             lbl_putType.text=@"放门口";
         }
