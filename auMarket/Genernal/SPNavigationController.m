@@ -30,6 +30,14 @@
     return self;
 }
 
+-(id)initWithRootViewController:(UIViewController *)rootViewController
+{
+    self = [super initWithRootViewController:rootViewController];
+       if (self) {
+           self.delegate = self;
+       }
+       return self;
+}
 
 - (void)viewDidLoad
 {
