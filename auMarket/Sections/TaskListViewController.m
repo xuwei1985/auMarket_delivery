@@ -138,10 +138,10 @@
 
 -(void)setUpTableView{
     if(!self.taskArr){
-        self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, SEGMENTVIEW_HEIGHT, WIDTH_SCREEN, HEIGHT_SCREEN-64-SEGMENTVIEW_HEIGHT-48) style:UITableViewStyleGrouped];
+        self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, SEGMENTVIEW_HEIGHT, WIDTH_SCREEN, HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR-SEGMENTVIEW_HEIGHT-HEIGHT_TAB_BAR) style:UITableViewStyleGrouped];
     }
     else{
-        self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64-48) style:UITableViewStyleGrouped];
+        self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR-HEIGHT_TAB_BAR) style:UITableViewStyleGrouped];
     }
     
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;

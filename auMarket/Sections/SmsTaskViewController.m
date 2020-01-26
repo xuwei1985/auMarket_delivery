@@ -133,12 +133,12 @@
 }
 
 -(void)createBottomView{
-    _summaryView_bottom=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 44)];
+    _summaryView_bottom=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, (IS_IPhoneX?78:44))];
     _summaryView_bottom.backgroundColor=COLOR_BG_WHITE;
     [self.view addSubview:_summaryView_bottom];
     
     [_summaryView_bottom mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view.mas_bottom).offset(-44);
+        make.top.mas_equalTo(self.view.mas_bottom).offset((IS_IPhoneX?-78:-44));
         make.left.mas_equalTo(0);
         make.width.mas_equalTo(WIDTH_SCREEN);
         make.height.mas_equalTo(44);
@@ -181,7 +181,7 @@
 }
 
 -(void)setUpTableView{
-    float table_height=HEIGHT_SCREEN-64-44-CATEGORY_BAR;
+    float table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR-HEIGHT_TAB_BAR-CATEGORY_BAR;
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, CATEGORY_BAR, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;

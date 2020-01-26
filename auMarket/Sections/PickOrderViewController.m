@@ -124,7 +124,7 @@
 }
 
 -(void)setUpTableView{
-    float table_height=HEIGHT_SCREEN-64-CATEGORY_BAR-48;
+    float table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR-CATEGORY_BAR-HEIGHT_TAB_BAR;
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, CATEGORY_BAR, WIDTH_SCREEN,table_height) style:UITableViewStyleGrouped];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;

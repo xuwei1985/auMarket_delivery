@@ -11,9 +11,12 @@
 
 #define WIDTH_SCREEN ([UIScreen mainScreen].bounds.size.width)
 #define HEIGHT_SCREEN ([UIScreen mainScreen].bounds.size.height)
-#define HEIGHT_NAVIGATION                      44.0f
-#define HEIGHT_STATUS_BAR                   20.0f
-#define HEIGHT_TAB_BAR                      48.0f
+
+#define IS_IPhoneX (WIDTH_SCREEN >=375.0f && HEIGHT_SCREEN >=812.0f)
+#define HEIGHT_NAVIGATION                   44.0f
+#define HEIGHT_STATUS_BAR                   (IS_IPhoneX?44.0f:20.0f)
+#define HEIGHT_STATUS_AND_NAVIGATION_BAR    (IS_IPhoneX?88.0f:64.0f)
+#define HEIGHT_TAB_BAR                      (IS_IPhoneX?83.0f:49.0f)
 
 #define SCALE_SCREEN [UIScreen mainScreen] scale]
 #define SCALE_WIDTH_BASED_ON_IPHONE6(v)               ((v)*(SCREEN_WIDTH/375.0))

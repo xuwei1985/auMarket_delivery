@@ -635,7 +635,7 @@
 }
 
 -(void)setUpTableView{
-    float table_height=HEIGHT_SCREEN-64-DONE_ACTION_BAR;
+    float table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR-DONE_ACTION_BAR;
     if(self.task_entity==nil||[self.task_entity.status intValue]==1||[self.task_entity.status intValue]==2){
         table_height=HEIGHT_SCREEN-64;
     }

@@ -1,5 +1,14 @@
 {
   "images" : [
+{
+      "extent" : "full-screen",
+      "idiom" : "iphone",
+      "subtype" : "2436h",
+      "filename" : "2436.png",
+      "minimum-system-version" : "11.0",
+      "orientation" : "portrait",
+      "scale" : "3x"
+    },
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
