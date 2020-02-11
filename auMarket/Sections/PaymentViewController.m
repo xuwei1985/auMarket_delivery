@@ -5,7 +5,7 @@
 //  Created by 吴绪伟 on 2016/12/8.
 //  Copyright © 2016年 daao. All rights reserved.
 //
-#define DONE_ACTION_BAR 48.0
+#define DONE_ACTION_BAR (IS_IPhoneX?68.0f:48.0f)
 #import "PaymentViewController.h"
 
 @interface PaymentViewController ()
@@ -241,19 +241,18 @@
 
 -(void)createDoneActionBar{
     _btn_doneAction=[UIButton buttonWithType:UIButtonTypeCustom];
-    [_btn_doneAction setTitle:@"完成订单" forState:UIControlStateNormal];
+    [_btn_doneAction setTitle:@"完成配送" forState:UIControlStateNormal];
     _btn_doneAction.titleLabel.textAlignment=NSTextAlignmentCenter;
     [_btn_doneAction setBackgroundColor:RGBCOLOR(240, 240, 240)];
     [_btn_doneAction setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
-    _btn_doneAction.titleLabel.font=FONT_SIZE_BIG;
+    _btn_doneAction.titleLabel.font=[UIFont systemFontOfSize:18];
     [_btn_doneAction addTarget:self action:@selector(requestFinishDelivery) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn_doneAction];
-    
     
     @weakify(self);
     [_btn_doneAction mas_makeConstraints:^(MASConstraintMaker *make) {
         @strongify(self);
-        make.top.mas_equalTo(self.view.mas_bottom).offset(-48);
+        make.top.mas_equalTo(self.view.mas_bottom).offset(DONE_ACTION_BAR*-1);
         make.left.mas_equalTo(0);
         make.width.mas_equalTo(WIDTH_SCREEN);
         make.height.mas_equalTo(DONE_ACTION_BAR);

@@ -6,7 +6,7 @@
 //  Copyright © 2016年 daao. All rights reserved.
 //
 #define ORDER_INFO_PANEL_HEIGHT 618.0
-#define DONE_ACTION_BAR 48.5
+#define DONE_ACTION_BAR (IS_IPhoneX?64.5f:48.5f)
 #import "OrderDetailViewController.h"
 
 @interface OrderDetailViewController ()
@@ -24,12 +24,13 @@
 
 -(void)initUI{
     [self setNavigation];
-    if(self.task_entity!=nil){
-        [self createOrderInfoView];
-        [self createDoneActionBar];
+    if(self.order_id!=nil&&self.order_id.length>0){
+        [self createOrderInfoView2];
     }
     else{
-        [self createOrderInfoView2];
+        
+        [self createOrderInfoView];
+        [self createDoneActionBar];
     }
     
     [self setUpTableView];
@@ -37,28 +38,37 @@
 
 -(void)initData{
     [self loadGoodsForOrder];
-    if(self.task_entity!=nil){
+    if(self.order_id==nil||self.order_id.length<=0){
         [self loadDeliveryInfo];
     }
 }
 
 -(void)setNavigation{
     self.title=@"订单详情";
-    if(self.task_entity!=nil){
+    if(self.order_id==nil||self.order_id.length<=0){
         UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"money_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(showAdjustPriceMenu)];
         self.navigationItem.rightBarButtonItem=right_Item_cart;
      }
 }
 
 -(void)createOrderInfoView2{
-    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 188)];
+    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 200)];
     blockView_1.backgroundColor=COLOR_WHITE;
     blockView_1.userInteractionEnabled=YES;
     
-    orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 200)];
+    UIView *splitView=[[UIView alloc] initWithFrame:CGRectMake(0, 200, WIDTH_SCREEN, 12)];
+    splitView.backgroundColor=COLOR_BG_TABLEVIEW;
+    
+    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 212, WIDTH_SCREEN, (self.task_entity.delivery_info.count*25+35)+12)];
+    blockView_2.backgroundColor=COLOR_WHITE;
+    blockView_2.userInteractionEnabled=YES;
+    
+    orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 212+blockView_2.frame.size.height)];
     orderInfoView.userInteractionEnabled=YES;
     orderInfoView.backgroundColor=COLOR_CLEAR;
     [orderInfoView addSubview:blockView_1];
+    [orderInfoView addSubview:splitView];
+    [orderInfoView addSubview:blockView_2];
     
     UILabel *lbl_tip_1=[[UILabel alloc] init];
     lbl_tip_1.textColor=COLOR_BLACK;
@@ -216,7 +226,53 @@
         make.size.mas_equalTo(CGSizeMake(190, 20));
         make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
     }];
+    
+    if(self.task_entity.delivery_info!=nil&&self.task_entity.delivery_info.count>0){
+        UILabel *lbl_section=[[UILabel alloc] init];
+        lbl_section.textColor=[UIColor colorWithString:@"#4085EF"];
+        lbl_section.font=FONT_SIZE_MIDDLE;
+        lbl_section.text=@"历史配送:";
+        lbl_section.textAlignment=NSTextAlignmentLeft;
+        [blockView_2 addSubview:lbl_section];
+        
+        [lbl_section mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(10);
+            make.size.mas_equalTo(CGSizeMake(100, 20));
+            make.left.mas_equalTo(10);
+        }];
+        
+        for(int i=0;i<self.task_entity.delivery_info.count;i++){
+            UILabel *lbl_tip=[[UILabel alloc] init];
+            lbl_tip.textColor=COLOR_DARKGRAY;
+            lbl_tip.font=FONT_SIZE_SMALL;
+            lbl_tip.text=[NSString stringWithFormat:@"[%@] - %@",[self.task_entity.delivery_info objectAtIndex:i].add_time,[self.task_entity.delivery_info objectAtIndex:i].staff];
+            lbl_tip.textAlignment=NSTextAlignmentLeft;
+            [blockView_2 addSubview:lbl_tip];
+           
+            [lbl_tip mas_makeConstraints:^(MASConstraintMaker *make) {
+               make.top.mas_equalTo(blockView_2.top).offset(40+(i*25));
+               make.size.mas_equalTo(CGSizeMake(190, 20));
+               make.left.mas_equalTo(10);
+            }];
+           
+            UILabel *lbl_tip_value=[[UILabel alloc] init];
+            lbl_tip_value.textColor=COLOR_DARKGRAY;
+            lbl_tip_value.font=FONT_SIZE_SMALL;
+            lbl_tip_value.text=[self.task_entity.delivery_info objectAtIndex:i].flow_name;
+            lbl_tip_value.textAlignment=NSTextAlignmentRight;
+            [blockView_2 addSubview:lbl_tip_value];
+           
+            [lbl_tip_value mas_makeConstraints:^(MASConstraintMaker *make) {
+               make.top.mas_equalTo(blockView_1.top).offset(40+(i*25));
+               make.size.mas_equalTo(CGSizeMake(100, 20));
+               make.right.mas_equalTo(blockView_2.mas_right).offset(-10);
+            }];
+               
+        }
+    }
 }
+
+
 -(void)createOrderInfoView{
     UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 70)];
     blockView_1.backgroundColor=COLOR_WHITE;
@@ -631,12 +687,13 @@
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-20, 88));
         make.left.mas_equalTo(10);
     }];
-    
 }
+
 
 -(void)setUpTableView{
     float table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR-DONE_ACTION_BAR;
-    if(self.task_entity==nil||[self.task_entity.status intValue]==1||[self.task_entity.status intValue]==2){
+    //if(self.task_entity==nil||[self.task_entity.status intValue]==1||[self.task_entity.status intValue]==2){
+    if(self.order_id!=nil&&[self.order_id length]>0){
         table_height=HEIGHT_SCREEN-64;
     }
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
@@ -685,7 +742,7 @@
 
         [_btn_returnAction mas_makeConstraints:^(MASConstraintMaker *make) {
             @strongify(self);
-            make.top.mas_equalTo(self.view.mas_bottom).offset(-48);
+            make.top.mas_equalTo(self.view.mas_bottom).offset(DONE_ACTION_BAR*-1+0.5);
             make.left.mas_equalTo(0);
             make.width.mas_equalTo(WIDTH_SCREEN/2);
             make.height.mas_equalTo(DONE_ACTION_BAR);
@@ -709,7 +766,7 @@
 
         [_btn_doneAction mas_makeConstraints:^(MASConstraintMaker *make) {
             @strongify(self);
-            make.top.mas_equalTo(self.view.mas_bottom).offset(-48);
+            make.top.mas_equalTo(self.view.mas_bottom).offset(DONE_ACTION_BAR*-1+0.5);
             make.left.mas_equalTo(WIDTH_SCREEN/2);
             make.width.mas_equalTo(WIDTH_SCREEN/2);
             make.height.mas_equalTo(DONE_ACTION_BAR);
@@ -767,7 +824,7 @@
 //请求订单下的商品信息
 -(void)loadGoodsForOrder{
     [self startLoadingActivityIndicator];
-    if(self.task_entity!=nil){
+    if(self.order_id==nil||self.order_id.length<=0){
         [self.model loadGoodsListForOrder:self.task_entity.order_id];
     }
     else{
@@ -946,12 +1003,11 @@
             tableview.contentInset = UIEdgeInsetsMake(-offsetY, 0, -(tableview.contentSize.height - tableview.frame.size.height - sectionFooterHeight), 0);
         }
     }
-    
 }
 
 
 -(void)confirmReturnPrice{
-    if(self.task_entity!=nil){
+    if(self.order_id==nil||self.order_id.length<=0){
         [self showReturnMenu];
     }
     else{

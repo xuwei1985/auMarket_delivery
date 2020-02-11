@@ -10,7 +10,7 @@
 #define TASK_CATEGORY_GAP 15
 #define TASK_CATEGORY_WIDTH (WIDTH_SCREEN-TASK_CATEGORY_EDGE*2-TASK_CATEGORY_GAP*2)/3
 #define CATEGORY_BAR 44.0
-#define SECTION_HEADER_HEIGHT 190.0
+#define SECTION_HEADER_HEIGHT 200.0
 #define GOODS_ROW_HEIGHT 72.0
 #import "TaskListViewController.h"
 
@@ -237,19 +237,19 @@
     
     UILabel *lbl_order_region=[[UILabel alloc] init];
     lbl_order_region.textColor=COLOR_GRAY;
-    lbl_order_region.font=FONT_SIZE_MIDDLE;
+    lbl_order_region.font=FONT_SIZE_SMALL;
     lbl_order_region.text=@"区域：";
     [section_view addSubview:lbl_order_region];
     
     [lbl_order_region mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(line_view.mas_bottom).offset(15);
         make.left.mas_equalTo(iconView.mas_right).offset(10);
-        make.size.mas_equalTo(CGSizeMake(58, 20));
+        make.size.mas_equalTo(CGSizeMake(70, 20));
     }];
     
     UILabel *lbl_order_region_value=[[UILabel alloc] init];
-    lbl_order_region_value.textColor=COLOR_DARKGRAY;
-    lbl_order_region_value.font=FONT_SIZE_MIDDLE;
+    lbl_order_region_value.textColor=COLOR_BLACK;
+    lbl_order_region_value.font=FONT_SIZE_SMALL;
     lbl_order_region_value.text=entity.block_name;
     [section_view addSubview:lbl_order_region_value];
     
@@ -261,99 +261,43 @@
     
     UILabel *lbl_order_sn=[[UILabel alloc] init];
     lbl_order_sn.textColor=COLOR_GRAY;
-    lbl_order_sn.font=FONT_SIZE_MIDDLE;
+    lbl_order_sn.font=FONT_SIZE_SMALL;
     lbl_order_sn.text=@"订单号：";
     [section_view addSubview:lbl_order_sn];
     
     [lbl_order_sn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lbl_order_region.mas_bottom).offset(5);
+        make.top.mas_equalTo(lbl_order_region.mas_bottom).offset(3);
         make.left.mas_equalTo(iconView.mas_right).offset(10);
-        make.size.mas_equalTo(CGSizeMake(58, 20));
+        make.size.mas_equalTo(CGSizeMake(70, 20));
     }];
     
     UILabel *lbl_order_sn_value=[[UILabel alloc] init];
-    lbl_order_sn_value.textColor=COLOR_DARKGRAY;
-    lbl_order_sn_value.font=FONT_SIZE_MIDDLE;
+    lbl_order_sn_value.textColor=COLOR_BLACK;
+    lbl_order_sn_value.font=FONT_SIZE_SMALL;
     lbl_order_sn_value.text=entity.order_sn;
     [section_view addSubview:lbl_order_sn_value];
     
     [lbl_order_sn_value mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lbl_order_region.mas_bottom).offset(5);
+        make.top.mas_equalTo(lbl_order_region.mas_bottom).offset(3);
         make.left.mas_equalTo(lbl_order_region.mas_right);
         make.size.mas_equalTo(CGSizeMake(140, 20));
     }];
     
-    UILabel *lbl_order_address=[[UILabel alloc] init];
-    lbl_order_address.textColor=COLOR_GRAY;
-    lbl_order_address.font=FONT_SIZE_MIDDLE;
-    lbl_order_address.text=@"地址：";
-    [section_view addSubview:lbl_order_address];
-    
-    [lbl_order_address mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lbl_order_sn.mas_bottom).offset(5);
-        make.left.mas_equalTo(iconView.mas_right).offset(10);
-        make.size.mas_equalTo(CGSizeMake(58, 20));
-    }];
-    
-    UILabel *lbl_order_address_value=[[UILabel alloc] init];
-    lbl_order_address_value.textColor=COLOR_DARKGRAY;
-    lbl_order_address_value.font=FONT_SIZE_MIDDLE;
-    lbl_order_address_value.text=entity.address;
-    lbl_order_address_value.lineBreakMode=NSLineBreakByTruncatingTail;
-    [section_view addSubview:lbl_order_address_value];
-    
-    [lbl_order_address_value mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lbl_order_sn.mas_bottom).offset(5);
-        make.left.mas_equalTo(lbl_order_address.mas_right);
-        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-116, 20));
-    }];
-    
-    UILabel *lbl_predict_time=[[UILabel alloc] init];
-    lbl_predict_time.textColor=COLOR_GRAY;
-    lbl_predict_time.font=FONT_SIZE_MIDDLE;
-    lbl_predict_time.text=@"预计送达：";
-    [section_view addSubview:lbl_predict_time];
-    
-    [lbl_predict_time mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lbl_order_address.mas_bottom).offset(5);
-        make.left.mas_equalTo(iconView.mas_right).offset(10);
-        make.size.mas_equalTo(CGSizeMake(76, 20));
-    }];
-    
-    UILabel *lbl_predict_time_value=[[UILabel alloc] init];
-    lbl_predict_time_value.textColor=COLOR_DARKGRAY;
-    lbl_predict_time_value.font=FONT_SIZE_MIDDLE;
-    
-    if(entity.predict_time!=nil&&![entity.predict_time isEqualToString:@"null"]&&[entity.predict_time length]>0){
-        lbl_predict_time_value.text=entity.predict_time;
-    }
-    else{
-        lbl_predict_time_value.text=@"--";
-    }
-    
-    [section_view addSubview:lbl_predict_time_value];
-    
-    [lbl_predict_time_value mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lbl_order_address.mas_bottom).offset(5);
-        make.left.mas_equalTo(lbl_predict_time.mas_right);
-        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-146, 20));
-    }];
-    
     UILabel *lbl_shelf_code=[[UILabel alloc] init];
     lbl_shelf_code.textColor=COLOR_GRAY;
-    lbl_shelf_code.font=FONT_SIZE_MIDDLE;
+    lbl_shelf_code.font=FONT_SIZE_SMALL;
     lbl_shelf_code.text=@"货架号：";
     [section_view addSubview:lbl_shelf_code];
     
     [lbl_shelf_code mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lbl_predict_time.mas_bottom).offset(5);
+        make.top.mas_equalTo(lbl_order_sn.mas_bottom).offset(3);
         make.left.mas_equalTo(iconView.mas_right).offset(10);
-        make.size.mas_equalTo(CGSizeMake(76, 20));
+        make.size.mas_equalTo(CGSizeMake(70, 20));
     }];
     
     UILabel *lbl_shelf_code_value=[[UILabel alloc] init];
     lbl_shelf_code_value.textColor=COLOR_MAIN;
-    lbl_shelf_code_value.font=FONT_SIZE_MIDDLE;
+    lbl_shelf_code_value.font=FONT_SIZE_SMALL;
     
     if(entity.shelf_code!=nil&&![entity.shelf_code isEqualToString:@"null"]&&[entity.shelf_code length]>0){
         lbl_shelf_code_value.text=entity.shelf_code;
@@ -365,9 +309,100 @@
     [section_view addSubview:lbl_shelf_code_value];
     
     [lbl_shelf_code_value mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lbl_predict_time.mas_bottom).offset(5);
+        make.top.mas_equalTo(lbl_order_sn.mas_bottom).offset(3);
         make.left.mas_equalTo(lbl_shelf_code.mas_right);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-146, 20));
+    }];
+
+    
+    UILabel *lbl_order_address=[[UILabel alloc] init];
+    lbl_order_address.textColor=COLOR_GRAY;
+    lbl_order_address.font=FONT_SIZE_SMALL;
+    lbl_order_address.text=@"地址：";
+    [section_view addSubview:lbl_order_address];
+    
+    [lbl_order_address mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_shelf_code.mas_bottom).offset(3);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
+        make.size.mas_equalTo(CGSizeMake(70, 20));
+    }];
+    
+    UILabel *lbl_order_address_value=[[UILabel alloc] init];
+    lbl_order_address_value.textColor=COLOR_BLACK;
+    lbl_order_address_value.font=FONT_SIZE_SMALL;
+    lbl_order_address_value.text=entity.address;
+    lbl_order_address_value.lineBreakMode=NSLineBreakByTruncatingTail;
+    [section_view addSubview:lbl_order_address_value];
+    
+    [lbl_order_address_value mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_shelf_code.mas_bottom).offset(3);
+        make.left.mas_equalTo(lbl_order_address.mas_right);
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-122, 20));
+    }];
+    
+    UILabel *lbl_predict_time=[[UILabel alloc] init];
+    lbl_predict_time.textColor=COLOR_GRAY;
+    lbl_predict_time.font=FONT_SIZE_SMALL;
+    lbl_predict_time.text=@"预计送达：";
+    [section_view addSubview:lbl_predict_time];
+    
+    [lbl_predict_time mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_order_address.mas_bottom).offset(3);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
+        make.size.mas_equalTo(CGSizeMake(70, 20));
+    }];
+    
+    UILabel *lbl_predict_time_value=[[UILabel alloc] init];
+    lbl_predict_time_value.textColor=COLOR_BLACK;
+    lbl_predict_time_value.font=FONT_SIZE_SMALL;
+    
+    if(entity.predict_time!=nil&&![entity.predict_time isEqualToString:@"null"]&&[entity.predict_time length]>0){
+        lbl_predict_time_value.text=entity.predict_time;
+    }
+    else{
+        lbl_predict_time_value.text=@"--";
+    }
+    
+    [section_view addSubview:lbl_predict_time_value];
+    
+    [lbl_predict_time_value mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_order_address.mas_bottom).offset(3);
+        make.left.mas_equalTo(lbl_predict_time.mas_right);
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-146, 20));
+    }];
+    
+    
+    
+    UILabel *lbl_delivery_info=[[UILabel alloc] init];
+    lbl_delivery_info.textColor=COLOR_GRAY;
+    lbl_delivery_info.font=FONT_SIZE_SMALL;
+    lbl_delivery_info.text=@"上次配送：";
+    [section_view addSubview:lbl_delivery_info];
+    
+    [lbl_delivery_info mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_predict_time.mas_bottom).offset(3);
+        make.left.mas_equalTo(iconView.mas_right).offset(10);
+        make.size.mas_equalTo(CGSizeMake(70, 20));
+    }];
+    
+    UILabel *lbl_delivery_value=[[UILabel alloc] init];
+    lbl_delivery_value.textColor=COLOR_BLACK;
+    lbl_delivery_value.font=FONT_SIZE_SMALL;
+    
+    if(entity.delivery_info!=nil&&[entity.delivery_info count]>0){
+        DeliveryInfoEntity *obj=(DeliveryInfoEntity *)[entity.delivery_info objectAtIndex:0];
+        lbl_delivery_value.text=[NSString stringWithFormat:@"%@-%@ [%@]",obj.flow_name,obj.staff,obj.add_time];
+    }
+    else{
+        lbl_delivery_value.text=@"无";
+    }
+    
+    [section_view addSubview:lbl_delivery_value];
+    
+    [lbl_delivery_value mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_predict_time.mas_bottom).offset(3);
+        make.left.mas_equalTo(lbl_delivery_info.mas_right);
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-142, 20));
     }];
     
     return section_view;

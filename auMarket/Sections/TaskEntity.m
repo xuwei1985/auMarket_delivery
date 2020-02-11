@@ -25,6 +25,7 @@
     self = [super init];
     if (self) {
         [self addMappingRuleArrayProperty:@"box_goods" class:[pGoodsEntity class]];
+        [self addMappingRuleArrayProperty:@"delivery_info" class:[DeliveryInfoEntity class]];
     }
     return self;
 }
@@ -36,6 +37,10 @@
 @end
 
 @implementation OrderFlowEntity : SPBaseEntity
+
+@end
+
+@implementation DeliveryInfoEntity : SPBaseEntity
 
 @end
 

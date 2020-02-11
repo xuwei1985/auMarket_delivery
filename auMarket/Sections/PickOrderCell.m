@@ -24,7 +24,7 @@
             [_iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.mas_equalTo(self.mas_centerY);
                 make.left.mas_equalTo(12);
-                make.size.mas_equalTo(CGSizeMake(32, 32));
+                make.size.mas_equalTo(CGSizeMake(30, 30));
             }];
         }
 
@@ -32,7 +32,7 @@
             lbl_package_number=[[UILabel alloc] init];
             lbl_package_number.textAlignment=NSTextAlignmentRight;
             lbl_package_number.textColor=COLOR_DARKGRAY;
-            lbl_package_number.font=FONT_SIZE_SMALL;
+            lbl_package_number.font=FONT_SIZE_MIDDLE;
             lbl_package_number.text=@"x0";
             [self.contentView addSubview:lbl_package_number];
             

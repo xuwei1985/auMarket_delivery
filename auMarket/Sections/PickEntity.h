@@ -7,7 +7,7 @@
 //
 
 #import "SPBaseEntity.h"
-@class PickItemEntity,PackageGoodsEntity;
+@class PickItemEntity,PackageGoodsEntity,DeliveryInfoEntity;
 
 @interface PickEntity : SPBaseEntity
 @property (nonatomic,retain) NSMutableArray<PickItemEntity*> *list;
@@ -49,6 +49,8 @@
 @property (nonatomic,retain) NSString *default_code;
 @property (nonatomic,retain) NSString *is_ready;
 @property (nonatomic,retain) NSArray *package_arr;
+@property (nonatomic,retain) NSArray<DeliveryInfoEntity*> *delivery_info;
+
 @end
 
 
@@ -57,3 +59,4 @@
 @property (nonatomic,retain) NSString *goods_name;
 @property (nonatomic,retain) NSString *goods_image;
 @end
+

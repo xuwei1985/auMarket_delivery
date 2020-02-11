@@ -9,7 +9,7 @@
 #import "SPBaseEntity.h"
 #import "PredictTimeEntity.h"
 
-@class TaskItemEntity,pGoodsEntity;
+@class TaskItemEntity,pGoodsEntity,DeliveryInfoEntity;
 
 @interface TaskEntity : SPBaseEntity
 @property(nonatomic,retain)NSMutableArray <TaskItemEntity*> *list;
@@ -64,6 +64,7 @@
 
 @property (nonatomic,retain) NSString *default_code;
 @property (nonatomic,retain) NSArray *package_arr;
+@property (nonatomic,retain) NSArray<DeliveryInfoEntity*> *delivery_info;
 @end
 
 
@@ -86,4 +87,12 @@
 @property (nonatomic,retain) NSString *pack_begin_time;
 @property (nonatomic,retain) NSString *pack_end_time;
 
+@end
+
+
+
+@interface DeliveryInfoEntity : SPBaseEntity
+@property (nonatomic,retain) NSString *flow_name;
+@property (nonatomic,retain) NSString *add_time;
+@property (nonatomic,retain) NSString *staff;
 @end

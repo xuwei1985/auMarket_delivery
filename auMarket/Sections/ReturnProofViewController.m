@@ -5,7 +5,7 @@
 //  Created by 吴绪伟 on 2019/07/02.
 //  Copyright © 2019年 daao. All rights reserved.
 //
-#define DONE_ACTION_BAR 48.0
+#define DONE_ACTION_BAR (IS_IPhoneX?64.0f:48.0f)
 #import "ReturnProofViewController.h"
 
 @interface ReturnProofViewController ()
@@ -165,7 +165,7 @@
     @weakify(self);
     [_btn_doneAction mas_makeConstraints:^(MASConstraintMaker *make) {
         @strongify(self);
-        make.top.mas_equalTo(self.view.mas_bottom).offset(-48);
+        make.top.mas_equalTo(self.view.mas_bottom).offset(DONE_ACTION_BAR*-1);
         make.left.mas_equalTo(0);
         make.width.mas_equalTo(WIDTH_SCREEN);
         make.height.mas_equalTo(DONE_ACTION_BAR);
