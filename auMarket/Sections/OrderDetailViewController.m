@@ -227,20 +227,21 @@
         make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
     }];
     
+    
+    UILabel *lbl_section=[[UILabel alloc] init];
+    lbl_section.textColor=[UIColor colorWithString:@"#4085EF"];
+    lbl_section.font=FONT_SIZE_MIDDLE;
+    lbl_section.text=@"历史配送:";
+    lbl_section.textAlignment=NSTextAlignmentLeft;
+    [blockView_2 addSubview:lbl_section];
+    
+    [lbl_section mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(10);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
     if(self.task_entity.delivery_info!=nil&&self.task_entity.delivery_info.count>0){
-        UILabel *lbl_section=[[UILabel alloc] init];
-        lbl_section.textColor=[UIColor colorWithString:@"#4085EF"];
-        lbl_section.font=FONT_SIZE_MIDDLE;
-        lbl_section.text=@"历史配送:";
-        lbl_section.textAlignment=NSTextAlignmentLeft;
-        [blockView_2 addSubview:lbl_section];
-        
-        [lbl_section mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(10);
-            make.size.mas_equalTo(CGSizeMake(100, 20));
-            make.left.mas_equalTo(10);
-        }];
-        
         for(int i=0;i<self.task_entity.delivery_info.count;i++){
             UILabel *lbl_tip=[[UILabel alloc] init];
             lbl_tip.textColor=COLOR_DARKGRAY;
@@ -816,7 +817,7 @@
 
 //请求订单下在仓库的流程信息
 -(void)loadOrderFlowInfo{
-    if(self.task_entity==nil){
+     if(self.order_id!=nil&&self.order_id.length>0){
         [self.model loadOrderFlowInfo:self.order_id];
     }
 }
@@ -848,7 +849,7 @@
     if(model==self.model&&self.model.requestTag==3002){
         if(isSuccess){
             [self.tableView reloadData];
-            if(self.task_entity==nil){
+            if(self.order_id!=nil&&self.order_id.length>0){
                 [self loadOrderFlowInfo];
             }
             else{

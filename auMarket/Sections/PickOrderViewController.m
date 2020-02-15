@@ -731,7 +731,7 @@
     
     OrderDetailViewController *ovc=[[OrderDetailViewController alloc] init];
     ovc.order_id=entity.order_id;
-    ovc.task_entity=entity;
+    ovc.task_entity=(TaskItemEntity *)entity;
     [self.navigationController pushViewController:ovc animated:YES];
 }
 
