@@ -13,6 +13,7 @@
 #import "TaskModel.h"
 #import "OrderPriceChangeViewController.h"
 #import "ReturnProofViewController.h"
+#import "BankListViewController.h"
 
 @interface OrderDetailViewController : SPBaseViewController<UIActionSheetDelegate>
 {

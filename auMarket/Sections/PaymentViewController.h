@@ -30,4 +30,5 @@
 @property(nonatomic,retain) SPUploadFileModel *upload_model;
 @property(nonatomic,retain) NSString *order_sn;
 @property(nonatomic,assign) int payment_type;
+@property(nonatomic,retain) NSDictionary *bank_info;
 @end

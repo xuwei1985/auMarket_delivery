@@ -837,7 +837,7 @@
     [self startLoadingActivityIndicator];
     
     if(lbl_orderNo.text.length>0){
-        [self.model order_delivery_done:self.task_entity.delivery_id andStatus:status andPayType:pay_type andImgPath:@"" andOrderSn:lbl_orderNo.text andMsg:@""];
+        [self.model order_delivery_done:self.task_entity.delivery_id andStatus:status andPayType:pay_type andImgPath:@"" andOrderSn:lbl_orderNo.text andMsg:@"" andBank:@"0"];
     }
     else{
         [self showToastTopWithText:@"没有配送订单信息"];
@@ -1101,11 +1101,20 @@
                     payType=5;
                 }
                 if(lbl_orderNo.text.length>0){
-                    PaymentViewController *pvc=[[PaymentViewController alloc] init];
-                    pvc.task_entity=self.task_entity;
-                    pvc.order_sn=lbl_orderNo.text;
-                    pvc.payment_type=payType;
-                    [self.navigationController pushViewController:pvc animated:YES];
+                    if(payType!=2){
+                        PaymentViewController *pvc=[[PaymentViewController alloc] init];
+                        pvc.task_entity=self.task_entity;
+                        pvc.order_sn=lbl_orderNo.text;
+                        pvc.payment_type=payType;
+                        [self.navigationController pushViewController:pvc animated:YES];
+                    }
+                    else{
+                        BankListViewController *pvc=[[BankListViewController alloc] init];
+                        pvc.task_entity=self.task_entity;
+                        pvc.order_sn=lbl_orderNo.text;
+                        pvc.payment_type=payType;
+                        [self.navigationController pushViewController:pvc animated:YES];
+                    }
                 }
                 else{
                     [self showToastTopWithText:@"没有配送订单信息"];

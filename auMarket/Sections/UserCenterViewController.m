@@ -34,12 +34,16 @@
 }
 
 -(void)initData{
-    NSDictionary *dic1,*dic2,*dic3;
+    NSDictionary *dic1,*dic2,*dic3,*dic4,*dic5,*dic6;
     _itemArr=[[NSMutableArray alloc] init];
     
     dic1=[[NSDictionary alloc] initWithObjectsAndKeys:@"待结算现金",@"item_name", nil];
     dic2=[[NSDictionary alloc] initWithObjectsAndKeys:@"待结算转账",@"item_name", nil];
-    [_itemArr addObject:[NSArray arrayWithObjects:dic1,dic2, nil]];
+    dic3=[[NSDictionary alloc] initWithObjectsAndKeys:@"待结算支付宝",@"item_name", nil];
+    dic4=[[NSDictionary alloc] initWithObjectsAndKeys:@"待结算微信",@"item_name", nil];
+    dic5=[[NSDictionary alloc] initWithObjectsAndKeys:@"待结算差额(公司)",@"item_name", nil];
+    dic6=[[NSDictionary alloc] initWithObjectsAndKeys:@"待结算差额(配送员)",@"item_name", nil];
+    [_itemArr addObject:[NSArray arrayWithObjects:dic1,dic2,dic3,dic4,dic5,dic6, nil]];
 
     dic3=[[NSDictionary alloc] initWithObjectsAndKeys:@"是否开启接单",@"item_name", nil];
     [_itemArr addObject:[NSArray arrayWithObjects:dic3,nil]];
@@ -212,6 +216,18 @@
         else if(indexPath.row==1){
             cell.itemPrice=[NSString stringWithFormat:@"$%.2f",[self.model.charge_entity.transfer_charge floatValue]];;
         }
+        else if(indexPath.row==2){
+            cell.itemPrice=[NSString stringWithFormat:@"$%.2f",[self.model.charge_entity.alipay_charge floatValue]];;
+        }
+        else if(indexPath.row==3){
+            cell.itemPrice=[NSString stringWithFormat:@"$%.2f",[self.model.charge_entity.wechat_charge floatValue]];;
+        }
+        else if(indexPath.row==4){
+            cell.itemPrice=[NSString stringWithFormat:@"$%.2f",[self.model.charge_entity.change_company floatValue]];;
+        }
+        else if(indexPath.row==5){
+            cell.itemPrice=[NSString stringWithFormat:@"$%.2f",[self.model.charge_entity.change_personal floatValue]];;
+        }
     }
     return cell;
 }
@@ -233,6 +249,12 @@
     }
     else if(indexPath.section==0&& indexPath.row==1){
         [[SPRedirect sharedInstance] jumpByUrl:[NSString stringWithFormat:@"%@/delivery_orders_app.php?deliver_id=%@&settle_type=2",SERVER_HTTP_ADDRESS,user.user_id] andModal:0];
+    }
+    else if(indexPath.section==0&& indexPath.row==2){
+        [[SPRedirect sharedInstance] jumpByUrl:[NSString stringWithFormat:@"%@/delivery_orders_app.php?deliver_id=%@&settle_type=4",SERVER_HTTP_ADDRESS,user.user_id] andModal:0];
+    }
+    else if(indexPath.section==0&& indexPath.row==3){
+        [[SPRedirect sharedInstance] jumpByUrl:[NSString stringWithFormat:@"%@/delivery_orders_app.php?deliver_id=%@&settle_type=5",SERVER_HTTP_ADDRESS,user.user_id] andModal:0];
     }
 }
 

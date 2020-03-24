@@ -42,7 +42,7 @@
 -(void)layoutSubviews{
     [super layoutSubviews];
     
-    self.textLabel.frame=CGRectMake(12, 0, 100, 44);
+    self.textLabel.frame=CGRectMake(12, 0, 150, 44);
     self.textLabel.text=self.itemName;
     if(self.itemPrice==nil||self.itemPrice.length<=0){
         _itemLbl.hidden=YES;

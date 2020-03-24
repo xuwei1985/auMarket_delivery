@@ -80,10 +80,10 @@
 /**
  请求订单配送完成操作
  */
--(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(int)pay_type andImgPath:(NSString *)img_path andOrderSn:(NSString *)order_sn andMsg:(NSString *)msg{
+-(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(int)pay_type andImgPath:(NSString *)img_path andOrderSn:(NSString *)order_sn andMsg:(NSString *)msg andBank:(NSString *)bank_id{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
 
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=order_delivery_done&delivery_id=%@&status=%@&pay_type=%d&user_id=%@&img_path=%@&order_sn=%@&msg=%@",delivery_id,status,pay_type,user.user_id,img_path,order_sn,[Common encodeToPercentEscapeString:msg]];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=order_delivery_done&delivery_id=%@&status=%@&pay_type=%d&user_id=%@&img_path=%@&order_sn=%@&msg=%@&bank=%@",delivery_id,status,pay_type,user.user_id,img_path,order_sn,[Common encodeToPercentEscapeString:msg],bank_id];
     self.parseDataClassType = [TaskEntity class];
     self.params = @{};
     self.requestTag=3003;

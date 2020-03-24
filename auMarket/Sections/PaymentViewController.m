@@ -46,16 +46,18 @@
         self.title=@"转账信息";
     }
     
-    UIButton *payBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
-    [payBtn addTarget:self action:@selector(showPayCodeView) forControlEvents:UIControlEventTouchUpInside];
-    [payBtn setTitle:@"支付码" forState:UIControlStateNormal];
-    [payBtn setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
-    [payBtn setTitleColor:COLOR_WHITE forState:UIControlStateHighlighted];
-    payBtn.titleLabel.font=FONT_SIZE_BIG;
-    payBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
-    
-    UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithCustomView:payBtn];
-    self.navigationItem.rightBarButtonItem=right_Item_cart;
+    if(self.payment_type!=2){
+        UIButton *payBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
+        [payBtn addTarget:self action:@selector(showPayCodeView) forControlEvents:UIControlEventTouchUpInside];
+        [payBtn setTitle:@"支付码" forState:UIControlStateNormal];
+        [payBtn setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+        [payBtn setTitleColor:COLOR_WHITE forState:UIControlStateHighlighted];
+        payBtn.titleLabel.font=FONT_SIZE_BIG;
+        payBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
+        
+        UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithCustomView:payBtn];
+        self.navigationItem.rightBarButtonItem=right_Item_cart;
+    }
 }
 
 -(void)showPayCodeView{
@@ -64,8 +66,8 @@
 }
 
 -(void)createPaymentInfoView{
-    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 125)];
-    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 148, WIDTH_SCREEN, 190)];
+    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 150)];
+    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 173, WIDTH_SCREEN, 190)];
     blockView_1.backgroundColor=COLOR_WHITE;
 
     if(self.payment_type==2){//银行
@@ -97,7 +99,7 @@
     UILabel *lbl_tip_2=[[UILabel alloc] init];
     lbl_tip_2.textColor=COLOR_MAIN;
     lbl_tip_2.font=FONT_SIZE_MIDDLE;
-    lbl_tip_2.text=@"Account Name:Transcity Trading\nBSB:033172\nAccount Number:867082";
+    lbl_tip_2.text=[NSString stringWithFormat:@"Bank: %@\nAccount Name: Transcity Trading\nBSB: %@\nAccount Number: %@",[self.bank_info objectForKey:@"bank_name"],[self.bank_info objectForKey:@"bsb"],[self.bank_info objectForKey:@"account"]];
     lbl_tip_2.textAlignment=NSTextAlignmentLeft;
     lbl_tip_2.numberOfLines=0;
     [blockView_1 addSubview:lbl_tip_2];
@@ -530,7 +532,7 @@
             }
             else{
                 if(self.order_sn.length>0){
-                    [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:self.payment_type andImgPath:@"" andOrderSn:self.order_sn andMsg:msg];
+                    [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:self.payment_type andImgPath:@"" andOrderSn:self.order_sn andMsg:msg andBank:[self.bank_info objectForKey:@"bank_id"]];
                 }
                 else{
                     [self showToastTopWithText:@"没有配送订单信息"];
@@ -544,7 +546,7 @@
     if(model==self.upload_model){
         if(isSuccess){
             if(self.order_sn.length>0){
-                [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:self.payment_type  andImgPath:self.upload_model.uploadEntity.filepath andOrderSn:self.order_sn andMsg:msg];
+                [self.model order_delivery_done:self.task_entity.delivery_id andStatus:@"1" andPayType:self.payment_type  andImgPath:self.upload_model.uploadEntity.filepath andOrderSn:self.order_sn andMsg:msg andBank:[self.bank_info objectForKey:@"bank_id"]];
             }
             else{
                 [self showToastTopWithText:@"没有配送订单信息"];

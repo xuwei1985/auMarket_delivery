@@ -12,7 +12,10 @@
 
 @property(nonatomic,retain) NSString *cash_charge;
 @property(nonatomic,retain) NSString *transfer_charge;
-
+@property(nonatomic,retain) NSString *alipay_charge;
+@property(nonatomic,retain) NSString *wechat_charge;
+@property(nonatomic,retain) NSString *change_company;
+@property(nonatomic,retain) NSString *change_personal;
 @end
 
 
