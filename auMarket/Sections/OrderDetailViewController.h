@@ -18,6 +18,7 @@
 @interface OrderDetailViewController : SPBaseViewController<UIActionSheetDelegate>
 {
     UIImageView *orderInfoView;
+    UILabel *lbl_packageNum;
     UILabel *lbl_payType;
     UILabel *lbl_returnPrice;
     UILabel *lbl_changePrice;
