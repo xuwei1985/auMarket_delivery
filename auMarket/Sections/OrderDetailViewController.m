@@ -5,7 +5,7 @@
 //  Created by 吴绪伟 on 2016/12/8.
 //  Copyright © 2016年 daao. All rights reserved.
 //
-#define ORDER_INFO_PANEL_HEIGHT 618.0
+#define ORDER_INFO_PANEL_HEIGHT 704
 #define DONE_ACTION_BAR (IS_IPhoneX?64.5f:48.5f)
 #import "OrderDetailViewController.h"
 
@@ -275,34 +275,83 @@
 
 
 -(void)createOrderInfoView{
-    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 70)];
-    blockView_1.backgroundColor=COLOR_WHITE;
+   UIView *blockView_0=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 75)];
+   blockView_0.backgroundColor=COLOR_WHITE;
+   
+   UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 96, WIDTH_SCREEN, 75)];
+   blockView_1.backgroundColor=COLOR_WHITE;
 
-    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 94, WIDTH_SCREEN, 100)];
-    blockView_2.backgroundColor=COLOR_WHITE;
-    blockView_2.userInteractionEnabled=YES;
+   UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 183, WIDTH_SCREEN, 100)];
+   blockView_2.backgroundColor=COLOR_WHITE;
+   blockView_2.userInteractionEnabled=YES;
+   
+   UIView *blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 295, WIDTH_SCREEN, 210)];
+   blockView_3.backgroundColor=COLOR_WHITE;
+   blockView_3.userInteractionEnabled=YES;
+   
+   UIView *blockView_4=[[UIView alloc] initWithFrame:CGRectMake(0, 517, WIDTH_SCREEN, 45)];
+   blockView_4.clipsToBounds=YES;
+   blockView_4.backgroundColor=COLOR_WHITE;
+   
+   UIView *blockView_5=[[UIView alloc] initWithFrame:CGRectMake(0, 574, WIDTH_SCREEN, 130)];
+   blockView_5.backgroundColor=COLOR_WHITE;
+   blockView_5.userInteractionEnabled=YES;
+   
+   orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, ORDER_INFO_PANEL_HEIGHT)];
+   orderInfoView.userInteractionEnabled=YES;
+   orderInfoView.backgroundColor=COLOR_CLEAR;
+   
+   [orderInfoView addSubview:blockView_0];
+   [orderInfoView addSubview:blockView_1];
+   [orderInfoView addSubview:blockView_2];
+   [orderInfoView addSubview:blockView_3];
+   [orderInfoView addSubview:blockView_4];
+   [orderInfoView addSubview:blockView_5];
+   
+   
+   ////////////////blockView_0///////////////
+   UILabel *lbl_tip_0=[[UILabel alloc] init];
+   lbl_tip_0.textColor=COLOR_BLACK;
+   lbl_tip_0.font=FONT_SIZE_MIDDLE;
+   lbl_tip_0.text=@"包裹总数";
+   lbl_tip_0.textAlignment=NSTextAlignmentLeft;
+   [blockView_0 addSubview:lbl_tip_0];
+   
+   [lbl_tip_0 mas_makeConstraints:^(MASConstraintMaker *make) {
+       make.top.mas_equalTo(blockView_1.top).offset(10);
+       make.size.mas_equalTo(CGSizeMake(100, 20));
+       make.left.mas_equalTo(10);
+   }];
     
-    UIView *blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 206, WIDTH_SCREEN, 210)];
-    blockView_3.backgroundColor=COLOR_WHITE;
-    blockView_3.userInteractionEnabled=YES;
+    lbl_packageNum=[[UILabel alloc] init];
+    lbl_packageNum.textColor=COLOR_WHITE;
+    lbl_packageNum.font=[UIFont boldSystemFontOfSize:14.0];
+    lbl_packageNum.text=@"0";
+    lbl_packageNum.backgroundColor=COLOR_MAIN;
+    lbl_packageNum.textAlignment=NSTextAlignmentCenter;
+    lbl_packageNum.clipsToBounds=YES;
+    [lbl_packageNum.layer setCornerRadius:10.0f];
+    [blockView_0 addSubview:lbl_packageNum];
     
-    UIView *blockView_4=[[UIView alloc] initWithFrame:CGRectMake(0, 428, WIDTH_SCREEN, 48)];
-    blockView_4.clipsToBounds=YES;
-    blockView_4.backgroundColor=COLOR_WHITE;
+    [lbl_packageNum mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_0.top).offset(10);
+        make.size.mas_equalTo(CGSizeMake(40, 20));
+        make.right.mas_equalTo(blockView_0.mas_right).offset(-10);
+    }];
     
-    UIView *blockView_5=[[UIView alloc] initWithFrame:CGRectMake(0, 488, WIDTH_SCREEN, 130)];
-    blockView_5.backgroundColor=COLOR_WHITE;
-    blockView_5.userInteractionEnabled=YES;
-    
-    orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, ORDER_INFO_PANEL_HEIGHT)];
-    orderInfoView.userInteractionEnabled=YES;
-    orderInfoView.backgroundColor=COLOR_CLEAR;
-    
-    [orderInfoView addSubview:blockView_1];
-    [orderInfoView addSubview:blockView_2];
-    [orderInfoView addSubview:blockView_3];
-    [orderInfoView addSubview:blockView_4];
-    [orderInfoView addSubview:blockView_5];
+    //创建动态包裹标签
+    NSArray *p_color= [[NSArray alloc]initWithObjects:@"#7437F5",@"#F1A46E",@"#3696FF",@"#AAA3FF",@"#FF6DD2",nil];
+    for (int i=0; i<self.task_entity.package_arr.count; i++) {
+        UILabel *lbl_package_item=[[UILabel alloc] initWithFrame:CGRectMake(i*(9+82)+9, 42, 82, 22)];
+        lbl_package_item.textColor=COLOR_WHITE;
+        lbl_package_item.font=[UIFont boldSystemFontOfSize:12.0];
+        lbl_package_item.text=[NSString stringWithFormat:@"%@(%@)",[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"],[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"number"]];
+        lbl_package_item.backgroundColor=[UIColor colorWithString:[p_color objectAtIndex:i]];
+        lbl_package_item.textAlignment=NSTextAlignmentCenter;
+        lbl_package_item.clipsToBounds=YES;
+        [lbl_package_item.layer setCornerRadius:10.0f];
+        [blockView_0 addSubview:lbl_package_item];
+    }
     
     ////////////////blockView_1///////////////
     UILabel *lbl_tip_1=[[UILabel alloc] init];
@@ -874,6 +923,11 @@
 
 -(void)loadDeliveryInfo{
     if(self.task_entity){
+        int n=0;
+        for (int i=0; i<self.task_entity.package_arr.count; i++) {
+            n+=[[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"number"] intValue];
+        }
+        lbl_packageNum.text=[NSString stringWithFormat:@"%d",n];
         lbl_payType.text=self.task_entity.pay_name;
         lbl_orderSum.text=[NSString stringWithFormat:@"$%@",self.task_entity.order_amount];
         lbl_orderNo.text=self.task_entity.order_sn;
