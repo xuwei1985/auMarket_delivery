@@ -709,9 +709,9 @@
 				A91AEDD62411564E00988A87 /* BankListViewController.h */,
 				A91AEDD52411564E00988A87 /* BankListViewController.m */,
 				A9F4DAA41F66CA6400D71774 /* OrderDetailViewController.h */,
-				A91D84391F665EC600DF69EF /* TaskListViewController.m */,
 				A9F4DAA31F66CA6400D71774 /* OrderDetailViewController.m */,
 				A91D84381F665EC600DF69EF /* TaskListViewController.h */,
+				A91D84391F665EC600DF69EF /* TaskListViewController.m */,
 				A9DDB8172213C63B00D65020 /* PayCodeViewController.h */,
 				A9DDB8182213C63B00D65020 /* PayCodeViewController.m */,
 			);
