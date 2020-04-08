@@ -9,13 +9,13 @@
 #define SECTION_HEADER_HEIGHT 200.0
 #define GOODS_ROW_HEIGHT 72.0
 
-#import "PickOrderViewController.h"
+#import "PickFreezeOrderViewController.h"
 
-@interface PickOrderViewController ()
+@interface PickFreezeOrderViewController ()
 
 @end
 
-@implementation PickOrderViewController
+@implementation PickFreezeOrderViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,7 +36,7 @@
 }
 
 -(void)setNavigation{
-    self.title=@"普通上货";
+    self.title=@"生鲜上货";
     
     doneBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
     [doneBtn addTarget:self action:@selector(finishPicking) forControlEvents:UIControlEventTouchUpInside];
@@ -180,7 +180,7 @@
     [section_view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoOrderDetailView:)]];
     
     if([entity.is_ready intValue]==0){//订单未准备好
-        section_view.backgroundColor=COLOR_LIGHTGRAY;
+        section_view.backgroundColor=COLOR_BG_IMAGEVIEW;
     }
     else{
         section_view.backgroundColor=COLOR_BG_WHITE;
@@ -362,6 +362,7 @@
     }];
     
     
+    
     UILabel *lbl_delivery_info=[[UILabel alloc] init];
     lbl_delivery_info.textColor=COLOR_GRAY;
     lbl_delivery_info.font=FONT_SIZE_SMALL;
@@ -411,7 +412,7 @@
 //请求订单下的要拣货的订单
 -(void)loadPickOrderList{
     [self startLoadingActivityIndicator];
-    [self.model loadPickOrderWithListType:self.list_type andModel:@"1"];
+    [self.model loadPickOrderWithListType:self.list_type andModel:@"2"];
 }
 
 -(void)finishGoodsPick:(PickItemEntity *)entity{
@@ -430,7 +431,7 @@
         type=0;
     }
     [self.tableView reloadData];
-    [self.model finishPickPackage:type andOrderId:entity.order_id andDeliveryId:entity.sid andPackageType:package_type andModel:@"1"];
+    [self.model finishPickPackage:type andOrderId:entity.order_id andDeliveryId:entity.sid andPackageType:package_type andModel:@"2"];
 }
 
 //判断是否这是最后一个上货包裹
@@ -490,7 +491,7 @@
             }
             else{
                 [self startLoadingActivityIndicator];
-                [self.model finishAllPackagePick:all_order_ids andDeliveryId:all_delivery_ids andModel:@"1"];
+                [self.model finishAllPackagePick:all_order_ids andDeliveryId:all_delivery_ids andModel:@"2"];
             }
             
         }
@@ -621,30 +622,30 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if(tableView.tag<5000){
-        int n=(int)[self.model.entity.list objectAtIndex:section].box_goods.count;
-        float height=GOODS_ROW_HEIGHT*n;
-        if(height<=0){
-            height=CGFLOAT_MIN;
-        }
-        return height;
-    }
+//    if(tableView.tag<5000){
+//        int n=(int)[self.model.entity.list objectAtIndex:section].box_goods.count;
+//        float height=GOODS_ROW_HEIGHT*n;
+//        if(height<=0){
+//            height=CGFLOAT_MIN;
+//        }
+//        return height;
+//    }
     return 0;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    if(tableView.tag<5000){
-        PickItemEntity *entity=[self.model.entity.list objectAtIndex:section];
-        UITableView *goodsTableView=[self getSectionFooterView:(int)section andEntity:entity];
-        return goodsTableView;
-    }
+//    if(tableView.tag<5000){
+//        PickItemEntity *entity=[self.model.entity.list objectAtIndex:section];
+//        UITableView *goodsTableView=[self getSectionFooterView:(int)section andEntity:entity];
+//        return goodsTableView;
+//    }
     return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(tv.tag<5000){
-        NSString *identifier=@"PickCellIdentifier";
+        NSString *identifier=@"PickCellIdentifier2";
         PickOrderCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             cell = [[PickOrderCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
@@ -664,7 +665,7 @@
         return cell;
     }
     else{
-        NSString *identifier=@"GoodsCellIdentifier";
+        NSString *identifier=@"GoodsCellIdentifier2";
         GoodsListItemCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             cell = [[GoodsListItemCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];

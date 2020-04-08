@@ -18,29 +18,31 @@
     return self;
 }
 
-//加载待拣货的订单列表
--(void)loadPickOrderWithListType:(int)list_type{
+/**加载待拣货的订单列表
+ goodsModel   0：普通商品上货 1：普通商品上货 2：生鲜商品（即冷冻）上货
+ */
+-(void)loadPickOrderWithListType:(int)list_type andModel:(NSString *)goodsModel{
     self.parseDataClassType = [PickEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress= [NSString stringWithFormat:@"apiv1.php?act=pick_list&page=%@&list_type=%d&delivery_id=%@",(self.entity.next==nil?@"1":self.entity.next),list_type,user.user_id];
+    self.shortRequestAddress= [NSString stringWithFormat:@"apiv1.php?act=pick_list&page=%@&list_type=%d&delivery_id=%@&goods_model=%@",(self.entity.next==nil?@"1":self.entity.next),list_type,user.user_id,goodsModel];
     self.params = @{};
     self.requestTag=1001;
     [self loadInner];
 }
 
 //完成包裹的上货
--(void)finishPickPackage:(int)type andOrderId:(NSString *)order_id andDeliveryId:(NSString *)delivery_id andPackageType:(NSString *)package_type{
+-(void)finishPickPackage:(int)type andOrderId:(NSString *)order_id andDeliveryId:(NSString *)delivery_id andPackageType:(NSString *)package_type andModel:(NSString *)goodsModel{
     self.parseDataClassType = [SPBaseEntity class];
 //    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress= [NSString stringWithFormat:@"apiv1.php?act=package_pick_done&order_id=%@&delivery_id=%@&package_type=%@&type=%d",order_id,delivery_id,package_type,type];
+    self.shortRequestAddress= [NSString stringWithFormat:@"apiv1.php?act=package_pick_done&order_id=%@&delivery_id=%@&package_type=%@&type=%d&goods_model=%@",order_id,delivery_id,package_type,type,goodsModel];
     self.params = @{};
     self.requestTag=1002;
     [self loadInner];
 }
 
--(void)finishAllPackagePick:(NSString *)order_ids andDeliveryId:(NSString *)delivery_ids{
+-(void)finishAllPackagePick:(NSString *)order_ids andDeliveryId:(NSString *)delivery_ids andModel:(NSString *)goodsModel{
     self.parseDataClassType = [SPBaseEntity class];
-    self.shortRequestAddress= [NSString stringWithFormat:@"apiv1.php?act=package_pick_all_done&order_ids=%@&delivery_ids=%@",order_ids,delivery_ids];
+    self.shortRequestAddress= [NSString stringWithFormat:@"apiv1.php?act=package_pick_all_done&order_ids=%@&delivery_ids=%@&goods_model=%@",order_ids,delivery_ids,goodsModel];
     self.params = @{};
     self.requestTag=1003;
     [self loadInner];

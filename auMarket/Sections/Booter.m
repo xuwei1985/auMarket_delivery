@@ -12,6 +12,7 @@
 #import "AdPageViewController.h"
 #import "TaskListViewController.h"
 #import "PickOrderViewController.h"
+#import "PickFreezeOrderViewController.h"
 
 @interface Booter() 
 {
@@ -19,6 +20,7 @@
     TaskListViewController* taskListViewController;
     PickOrderViewController* pickOrderViewController;
     UserCenterViewController* userCenterViewController;
+    PickFreezeOrderViewController *pickFreezeOrderViewController;
 }
 @end
 
@@ -51,11 +53,11 @@
 {
     homeViewController = [[HomeViewController alloc] init];
     homeViewController.hidesBottomBarWhenPushed = NO;
-    homeViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"地图模式" image:[UIImage imageNamed:@"1_53"] selectedImage:[UIImage imageNamed:@"1_72"]];
+    homeViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"配送地图" image:[UIImage imageNamed:@"1_53"] selectedImage:[UIImage imageNamed:@"1_72"]];
     
     taskListViewController = [[TaskListViewController alloc] init];
     taskListViewController.hidesBottomBarWhenPushed = NO;
-    taskListViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"列表模式" image:[UIImage imageNamed:@"1_56"] selectedImage:[UIImage imageNamed:@"1_65"]];
+    taskListViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"配送列表" image:[UIImage imageNamed:@"1_56"] selectedImage:[UIImage imageNamed:@"1_65"]];
     
     userCenterViewController = [[UserCenterViewController alloc] init];
     userCenterViewController.hidesBottomBarWhenPushed = NO;
@@ -63,17 +65,22 @@
     
     pickOrderViewController = [[PickOrderViewController alloc] init];
     pickOrderViewController.hidesBottomBarWhenPushed = NO;
-    pickOrderViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"上货" image:[UIImage imageNamed:@"sh"] selectedImage:[UIImage imageNamed:@"sh_on"]];
+    pickOrderViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"普通上货" image:[UIImage imageNamed:@"sh"] selectedImage:[UIImage imageNamed:@"sh_on"]];
+    
+    pickFreezeOrderViewController = [[PickFreezeOrderViewController alloc] init];
+    pickFreezeOrderViewController.hidesBottomBarWhenPushed = NO;
+    pickFreezeOrderViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"生鲜上货" image:[UIImage imageNamed:@"sh"] selectedImage:[UIImage imageNamed:@"sh_on"]];
     
     SPNavigationController *navHomeViewController = [[SPNavigationController alloc] initWithRootViewController:homeViewController];
     SPNavigationController *navTaskListViewController = [[SPNavigationController alloc] initWithRootViewController:taskListViewController];
     SPNavigationController *navUserCenterViewController = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
     SPNavigationController *navPickViewController = [[SPNavigationController alloc] initWithRootViewController:pickOrderViewController];
+    SPNavigationController *navPickFreezeViewController = [[SPNavigationController alloc] initWithRootViewController:pickFreezeOrderViewController];
   
     self.tabBarController = [[SPTabBarController alloc] init];
     self.tabBarController.tabBar.translucent = NO;
     self.tabBarController.tabBar.tintColor = COLOR_FONT_MAIN;
-    [self.tabBarController setViewControllers:@[navHomeViewController,navTaskListViewController,navPickViewController,navUserCenterViewController]];
+    [self.tabBarController setViewControllers:@[navHomeViewController,navTaskListViewController,navPickViewController,navPickFreezeViewController,navUserCenterViewController]];
     self.tabBarController.selectedIndex = 0;
     self.tabBarController.delegate = self;
     

@@ -35,7 +35,8 @@ return __singleton__; \
 #else//正式
     #define SERVER_ADDRESS          @"https://api.bigau.com"
     #define SERVER_HTTP_ADDRESS     @"https://api.bigau.com"
-
+//    #define SERVER_ADDRESS        @"http://api_dev.kouzibuy.com"
+//    #define SERVER_HTTP_ADDRESS   @"http://api_dev.kouzibuy.com"
 #endif
 
 //系统相关
