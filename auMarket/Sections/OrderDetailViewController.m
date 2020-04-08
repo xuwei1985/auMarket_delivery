@@ -356,7 +356,7 @@
     
     ////////////////blockView_5///////////////
     lbl_service_title=[[UILabel alloc] init];
-    lbl_service_title.textColor=COLOR_BLACK;
+    lbl_service_title.textColor=COLOR_GRAY;
     lbl_service_title.font=FONT_SIZE_MIDDLE;
     lbl_service_title.text=@"客服留言:";
     lbl_service_title.textAlignment=NSTextAlignmentLeft;
@@ -369,7 +369,7 @@
     }];
     
     lbl_servicenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 32, WIDTH_SCREEN-20, 20)];
-    lbl_servicenote.textColor=COLOR_DARKGRAY;
+    lbl_servicenote.textColor=COLOR_BLACK;
     lbl_servicenote.font=FONT_SIZE_MIDDLE;
     lbl_servicenote.numberOfLines=0;
     lbl_servicenote.text=@"暂无留言";
@@ -377,7 +377,7 @@
     [blockView_5 addSubview:lbl_servicenote];
     
     lbl_package_title=[[UILabel alloc] init];
-    lbl_package_title.textColor=COLOR_BLACK;
+    lbl_package_title.textColor=COLOR_GRAY;
     lbl_package_title.font=FONT_SIZE_MIDDLE;
     lbl_package_title.text=@"普通打包留言:";
     lbl_package_title.textAlignment=NSTextAlignmentLeft;
@@ -390,7 +390,7 @@
     }];
     
     lbl_packagenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 92, WIDTH_SCREEN-20, 20)];
-    lbl_packagenote.textColor=COLOR_DARKGRAY;
+    lbl_packagenote.textColor=COLOR_BLACK;
     lbl_packagenote.font=FONT_SIZE_MIDDLE;
     lbl_packagenote.numberOfLines=0;
     lbl_packagenote.lineBreakMode = NSLineBreakByWordWrapping;
@@ -399,7 +399,7 @@
     [blockView_5 addSubview:lbl_packagenote];
     
     lbl_freeze_package_title=[[UILabel alloc] init];
-    lbl_freeze_package_title.textColor=COLOR_BLACK;
+    lbl_freeze_package_title.textColor=COLOR_GRAY;
     lbl_freeze_package_title.font=FONT_SIZE_MIDDLE;
     lbl_freeze_package_title.text=@"生鲜打包留言:";
     lbl_freeze_package_title.textAlignment=NSTextAlignmentLeft;
@@ -412,7 +412,7 @@
     }];
     
     lbl_freeze_packagenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 153, WIDTH_SCREEN-20, 20)];
-    lbl_freeze_packagenote.textColor=COLOR_DARKGRAY;
+    lbl_freeze_packagenote.textColor=COLOR_BLACK;
     lbl_freeze_packagenote.font=FONT_SIZE_MIDDLE;
     lbl_freeze_packagenote.numberOfLines=0;
     lbl_freeze_packagenote.text=@"暂无留言";
