@@ -32,6 +32,11 @@
     UILabel *lbl_deliverytime;
     UILabel *lbl_putType;
     UILabel *lbl_packagenote;
+    UILabel *lbl_servicenote;
+    UILabel *lbl_freeze_packagenote;
+    UILabel *lbl_service_title;
+    UILabel *lbl_package_title;
+    UILabel *lbl_freeze_package_title;
     UILabel *lbl_upstairs;
     UILabel *lbl_state;
     UILabel *lbl_box;
@@ -41,6 +46,12 @@
     UILabel *lbl_pack_time;
     UIButton *_btn_doneAction;
     UIButton *_btn_returnAction;
+    UIView *blockView_0;
+    UIView *blockView_1;
+    UIView *blockView_2;
+    UIView *blockView_3;
+    UIView *blockView_4;
+    UIView *blockView_5;
     CLLocationCoordinate2D coordinate;
     float return_price;
     BOOL isGotoOrderChangeView;

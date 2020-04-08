@@ -754,11 +754,17 @@
 
 //配送数据更新
 - (void)onTaskUpdate:(NSNotification*)aNotitification{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self refreshCategoryBtn];
         [self.tableView reloadData];
+        if(btn_waitDelivery.selected){
+            [btn_waitDelivery sendActionsForControlEvents:UIControlEventTouchUpInside];
+        }else if(btn_successDelivery.selected){
+            [btn_successDelivery sendActionsForControlEvents:UIControlEventTouchUpInside];
+        }else if(btn_failedDelivery.selected){
+            [btn_failedDelivery sendActionsForControlEvents:UIControlEventTouchUpInside];
+        }
     });
-    
 }
 
 -(void)toggleWorkState:(UIButton *)sender{

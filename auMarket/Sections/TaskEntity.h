@@ -23,7 +23,9 @@
 @property(nonatomic,retain)NSString *pay_type;
 @property(nonatomic,retain)NSString *address_replenish;
 @property(nonatomic,retain)NSString *delivery_id;
+@property(nonatomic,retain)NSString *service_note;
 @property(nonatomic,retain)NSString *package_note;
+@property(nonatomic,retain)NSString *package_freeze_note;
 @property(nonatomic,retain)NSString *add_time;
 @property(nonatomic,retain)NSString *longitude;
 @property(nonatomic,retain)NSString *latitude;
