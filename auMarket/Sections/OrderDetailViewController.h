@@ -52,6 +52,10 @@
     UIView *blockView_3;
     UIView *blockView_4;
     UIView *blockView_5;
+    
+    UIView *blockView_21;
+    UIView *blockView_22;
+    UIView *blockView_23;
     CLLocationCoordinate2D coordinate;
     float return_price;
     BOOL isGotoOrderChangeView;

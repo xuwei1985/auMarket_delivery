@@ -28,7 +28,6 @@
         [self createOrderInfoView2];
     }
     else{
-        
         [self createOrderInfoView];
         [self createDoneActionBar];
     }
@@ -53,33 +52,102 @@
 
 //上货列表点击订单详情的信息板
 -(void)createOrderInfoView2{
-    UIView *blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 200)];
-    blockView_1.backgroundColor=COLOR_WHITE;
-    blockView_1.userInteractionEnabled=YES;
+    ////////////////blockView_21///////////////
+    blockView_21=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 160)];
+    blockView_21.backgroundColor=COLOR_WHITE;
+    
+    lbl_service_title=[[UILabel alloc] init];
+    lbl_service_title.textColor=COLOR_GRAY;
+    lbl_service_title.font=FONT_SIZE_MIDDLE;
+    lbl_service_title.text=@"客服留言:";
+    lbl_service_title.textAlignment=NSTextAlignmentLeft;
+    [blockView_21 addSubview:lbl_service_title];
+    
+    [lbl_service_title mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_21.top).offset(10);
+        make.size.mas_equalTo(CGSizeMake(120, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_servicenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 32, WIDTH_SCREEN-20, 20)];
+    lbl_servicenote.textColor=COLOR_BLACK;
+    lbl_servicenote.font=FONT_SIZE_MIDDLE;
+    lbl_servicenote.numberOfLines=0;
+    lbl_servicenote.text=@"暂无留言";
+    lbl_servicenote.textAlignment=NSTextAlignmentLeft;
+    [blockView_21 addSubview:lbl_servicenote];
+    
+    lbl_package_title=[[UILabel alloc] init];
+    lbl_package_title.textColor=COLOR_GRAY;
+    lbl_package_title.font=FONT_SIZE_MIDDLE;
+    lbl_package_title.text=@"普通打包留言:";
+    lbl_package_title.textAlignment=NSTextAlignmentLeft;
+    [blockView_21 addSubview:lbl_package_title];
+    
+    [lbl_package_title mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_servicenote.mas_bottom).offset(5);
+        make.size.mas_equalTo(CGSizeMake(120, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_packagenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 82, WIDTH_SCREEN-20, 20)];
+    lbl_packagenote.textColor=COLOR_BLACK;
+    lbl_packagenote.font=FONT_SIZE_MIDDLE;
+    lbl_packagenote.numberOfLines=0;
+    lbl_packagenote.lineBreakMode = NSLineBreakByWordWrapping;
+    lbl_packagenote.text=@"暂无留言";
+    lbl_packagenote.textAlignment=NSTextAlignmentLeft;
+    [blockView_21 addSubview:lbl_packagenote];
+    
+    lbl_freeze_package_title=[[UILabel alloc] init];
+    lbl_freeze_package_title.textColor=COLOR_GRAY;
+    lbl_freeze_package_title.font=FONT_SIZE_MIDDLE;
+    lbl_freeze_package_title.text=@"生鲜打包留言:";
+    lbl_freeze_package_title.textAlignment=NSTextAlignmentLeft;
+    [blockView_21 addSubview:lbl_freeze_package_title];
+    
+    [lbl_freeze_package_title mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_packagenote.mas_bottom).offset(5);
+        make.size.mas_equalTo(CGSizeMake(120, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_freeze_packagenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 130, WIDTH_SCREEN-20, 20)];
+    lbl_freeze_packagenote.textColor=COLOR_BLACK;
+    lbl_freeze_packagenote.font=FONT_SIZE_MIDDLE;
+    lbl_freeze_packagenote.numberOfLines=0;
+    lbl_freeze_packagenote.text=@"暂无留言";
+    lbl_freeze_packagenote.textAlignment=NSTextAlignmentLeft;
+    [blockView_21 addSubview:lbl_freeze_packagenote];
+    
+    blockView_22=[[UIView alloc] initWithFrame:CGRectMake(0, blockView_21.frame.size.height+12+12, WIDTH_SCREEN, 200)];
+    blockView_22.backgroundColor=COLOR_WHITE;
+    blockView_22.userInteractionEnabled=YES;
     
     UIView *splitView=[[UIView alloc] initWithFrame:CGRectMake(0, 200, WIDTH_SCREEN, 12)];
     splitView.backgroundColor=COLOR_BG_TABLEVIEW;
     
-    UIView *blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 212, WIDTH_SCREEN, (self.task_entity.delivery_info.count*25+35)+12)];
-    blockView_2.backgroundColor=COLOR_WHITE;
-    blockView_2.userInteractionEnabled=YES;
+    blockView_23=[[UIView alloc] initWithFrame:CGRectMake(0, blockView_21.frame.size.height+12+212, WIDTH_SCREEN, (self.task_entity.delivery_info.count*25+35)+12)];
+    blockView_23.backgroundColor=COLOR_WHITE;
+    blockView_23.userInteractionEnabled=YES;
     
     orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 212+blockView_2.frame.size.height)];
     orderInfoView.userInteractionEnabled=YES;
     orderInfoView.backgroundColor=COLOR_CLEAR;
-    [orderInfoView addSubview:blockView_1];
-    [orderInfoView addSubview:splitView];
-    [orderInfoView addSubview:blockView_2];
+    [orderInfoView addSubview:blockView_21];
+    [orderInfoView addSubview:blockView_22];
+    [blockView_22 addSubview:splitView];
+    [orderInfoView addSubview:blockView_23];
     
     UILabel *lbl_tip_1=[[UILabel alloc] init];
     lbl_tip_1.textColor=COLOR_BLACK;
     lbl_tip_1.font=FONT_SIZE_MIDDLE;
     lbl_tip_1.text=@"订单状态";
     lbl_tip_1.textAlignment=NSTextAlignmentLeft;
-    [blockView_1 addSubview:lbl_tip_1];
+    [blockView_22 addSubview:lbl_tip_1];
     
     [lbl_tip_1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(10);
+        make.top.mas_equalTo(blockView_22.top).offset(10);
         make.size.mas_equalTo(CGSizeMake(100, 20));
         make.left.mas_equalTo(10);
     }];
@@ -89,12 +157,12 @@
     lbl_state.font=FONT_SIZE_MIDDLE;
     lbl_state.text=@"--";
     lbl_state.textAlignment=NSTextAlignmentRight;
-    [blockView_1 addSubview:lbl_state];
+    [blockView_22 addSubview:lbl_state];
     
     [lbl_state mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(10);
+        make.top.mas_equalTo(blockView_22.top).offset(10);
         make.size.mas_equalTo(CGSizeMake(100, 20));
-        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+        make.right.mas_equalTo(blockView_22.mas_right).offset(-10);
     }];
     
     UILabel *lbl_tip_2=[[UILabel alloc] init];
@@ -102,10 +170,10 @@
     lbl_tip_2.font=FONT_SIZE_MIDDLE;
     lbl_tip_2.text=@"拣货员";
     lbl_tip_2.textAlignment=NSTextAlignmentLeft;
-    [blockView_1 addSubview:lbl_tip_2];
+    [blockView_22 addSubview:lbl_tip_2];
     
     [lbl_tip_2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(40);
+        make.top.mas_equalTo(blockView_22.top).offset(40);
         make.size.mas_equalTo(CGSizeMake(100, 20));
         make.left.mas_equalTo(10);
     }];
@@ -115,12 +183,12 @@
     lbl_picker.font=FONT_SIZE_MIDDLE;
     lbl_picker.text=@"--";
     lbl_picker.textAlignment=NSTextAlignmentRight;
-    [blockView_1 addSubview:lbl_picker];
+    [blockView_22 addSubview:lbl_picker];
     
     [lbl_picker mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(40);
+        make.top.mas_equalTo(blockView_22.top).offset(40);
         make.size.mas_equalTo(CGSizeMake(100, 20));
-        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+        make.right.mas_equalTo(blockView_22.mas_right).offset(-10);
     }];
     
     UILabel *lbl_tip_3=[[UILabel alloc] init];
@@ -128,10 +196,10 @@
     lbl_tip_3.font=FONT_SIZE_MIDDLE;
     lbl_tip_3.text=@"拣货时间";
     lbl_tip_3.textAlignment=NSTextAlignmentLeft;
-    [blockView_1 addSubview:lbl_tip_3];
+    [blockView_22 addSubview:lbl_tip_3];
     
     [lbl_tip_3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(70);
+        make.top.mas_equalTo(blockView_22.top).offset(70);
         make.size.mas_equalTo(CGSizeMake(80, 20));
         make.left.mas_equalTo(10);
     }];
@@ -141,12 +209,12 @@
     lbl_pick_time.font=FONT_SIZE_MIDDLE;
     lbl_pick_time.text=@"--";
     lbl_pick_time.textAlignment=NSTextAlignmentRight;
-    [blockView_1 addSubview:lbl_pick_time];
+    [blockView_22 addSubview:lbl_pick_time];
     
     [lbl_pick_time mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(70);
+        make.top.mas_equalTo(blockView_22.top).offset(70);
         make.size.mas_equalTo(CGSizeMake(190, 20));
-        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+        make.right.mas_equalTo(blockView_22.mas_right).offset(-10);
     }];
     
     UILabel *lbl_tip_4=[[UILabel alloc] init];
@@ -154,10 +222,10 @@
     lbl_tip_4.font=FONT_SIZE_MIDDLE;
     lbl_tip_4.text=@"打包箱";
     lbl_tip_4.textAlignment=NSTextAlignmentLeft;
-    [blockView_1 addSubview:lbl_tip_4];
+    [blockView_22 addSubview:lbl_tip_4];
     
     [lbl_tip_4 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(100);
+        make.top.mas_equalTo(blockView_22.top).offset(100);
         make.size.mas_equalTo(CGSizeMake(100, 20));
         make.left.mas_equalTo(10);
     }];
@@ -167,12 +235,12 @@
     lbl_box.font=FONT_SIZE_MIDDLE;
     lbl_box.text=@"--";
     lbl_box.textAlignment=NSTextAlignmentRight;
-    [blockView_1 addSubview:lbl_box];
+    [blockView_22 addSubview:lbl_box];
     
     [lbl_box mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(100);
+        make.top.mas_equalTo(blockView_22.top).offset(100);
         make.size.mas_equalTo(CGSizeMake(100, 20));
-        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+        make.right.mas_equalTo(blockView_22.mas_right).offset(-10);
     }];
     
     
@@ -181,10 +249,10 @@
     lbl_tip_6.font=FONT_SIZE_MIDDLE;
     lbl_tip_6.text=@"打包员";
     lbl_tip_6.textAlignment=NSTextAlignmentLeft;
-    [blockView_1 addSubview:lbl_tip_6];
+    [blockView_22 addSubview:lbl_tip_6];
     
     [lbl_tip_6 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(130);
+        make.top.mas_equalTo(blockView_22.top).offset(130);
         make.size.mas_equalTo(CGSizeMake(100, 20));
         make.left.mas_equalTo(10);
     }];
@@ -194,12 +262,12 @@
     lbl_packer.font=FONT_SIZE_MIDDLE;
     lbl_packer.text=@"--";
     lbl_packer.textAlignment=NSTextAlignmentRight;
-    [blockView_1 addSubview:lbl_packer];
+    [blockView_22 addSubview:lbl_packer];
     
     [lbl_packer mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(130);
+        make.top.mas_equalTo(blockView_22.top).offset(130);
         make.size.mas_equalTo(CGSizeMake(100, 20));
-        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+        make.right.mas_equalTo(blockView_22.mas_right).offset(-10);
     }];
     
     UILabel *lbl_tip_7=[[UILabel alloc] init];
@@ -207,10 +275,10 @@
     lbl_tip_7.font=FONT_SIZE_MIDDLE;
     lbl_tip_7.text=@"打包时间";
     lbl_tip_7.textAlignment=NSTextAlignmentLeft;
-    [blockView_1 addSubview:lbl_tip_7];
+    [blockView_22 addSubview:lbl_tip_7];
     
     [lbl_tip_7 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(160);
+        make.top.mas_equalTo(blockView_22.top).offset(160);
         make.size.mas_equalTo(CGSizeMake(80, 20));
         make.left.mas_equalTo(10);
     }];
@@ -220,12 +288,12 @@
     lbl_pack_time.font=FONT_SIZE_MIDDLE;
     lbl_pack_time.text=@"--";
     lbl_pack_time.textAlignment=NSTextAlignmentRight;
-    [blockView_1 addSubview:lbl_pack_time];
+    [blockView_22 addSubview:lbl_pack_time];
     
     [lbl_pack_time mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(160);
+        make.top.mas_equalTo(blockView_22.top).offset(160);
         make.size.mas_equalTo(CGSizeMake(190, 20));
-        make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
+        make.right.mas_equalTo(blockView_22.mas_right).offset(-10);
     }];
     
     
@@ -234,7 +302,7 @@
     lbl_section.font=FONT_SIZE_MIDDLE;
     lbl_section.text=@"历史配送:";
     lbl_section.textAlignment=NSTextAlignmentLeft;
-    [blockView_2 addSubview:lbl_section];
+    [blockView_23 addSubview:lbl_section];
     
     [lbl_section mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(10);
@@ -249,10 +317,10 @@
             lbl_tip.font=FONT_SIZE_SMALL;
             lbl_tip.text=[NSString stringWithFormat:@"[%@] - %@",[self.task_entity.delivery_info objectAtIndex:i].add_time,[self.task_entity.delivery_info objectAtIndex:i].staff];
             lbl_tip.textAlignment=NSTextAlignmentLeft;
-            [blockView_2 addSubview:lbl_tip];
+            [blockView_23 addSubview:lbl_tip];
            
             [lbl_tip mas_makeConstraints:^(MASConstraintMaker *make) {
-               make.top.mas_equalTo(blockView_2.top).offset(40+(i*25));
+               make.top.mas_equalTo(blockView_23.top).offset(40+(i*25));
                make.size.mas_equalTo(CGSizeMake(190, 20));
                make.left.mas_equalTo(10);
             }];
@@ -262,12 +330,12 @@
             lbl_tip_value.font=FONT_SIZE_SMALL;
             lbl_tip_value.text=[self.task_entity.delivery_info objectAtIndex:i].flow_name;
             lbl_tip_value.textAlignment=NSTextAlignmentRight;
-            [blockView_2 addSubview:lbl_tip_value];
+            [blockView_23 addSubview:lbl_tip_value];
            
             [lbl_tip_value mas_makeConstraints:^(MASConstraintMaker *make) {
-               make.top.mas_equalTo(blockView_1.top).offset(40+(i*25));
+               make.top.mas_equalTo(blockView_22.top).offset(40+(i*25));
                make.size.mas_equalTo(CGSizeMake(100, 20));
-               make.right.mas_equalTo(blockView_2.mas_right).offset(-10);
+               make.right.mas_equalTo(blockView_23.mas_right).offset(-10);
             }];
         }
     }
