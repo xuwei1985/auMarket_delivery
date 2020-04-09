@@ -62,6 +62,7 @@
     Boolean isGotoReturnProofView;
 }
 @property(nonatomic,retain) NSString *order_id;
+@property(nonatomic,assign) int goods_model;//商品模式（上货那边传值）0：加载全部商品 1：加载普通商品 2：加载冷冻商品
 @property(nonatomic,retain) TaskItemEntity *task_entity;
 @property(nonatomic,retain) TaskModel *model;
 @end

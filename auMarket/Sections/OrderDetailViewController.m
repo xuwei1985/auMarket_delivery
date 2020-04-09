@@ -124,19 +124,15 @@
     blockView_22.backgroundColor=COLOR_WHITE;
     blockView_22.userInteractionEnabled=YES;
     
-    UIView *splitView=[[UIView alloc] initWithFrame:CGRectMake(0, 200, WIDTH_SCREEN, 12)];
-    splitView.backgroundColor=COLOR_BG_TABLEVIEW;
-    
-    blockView_23=[[UIView alloc] initWithFrame:CGRectMake(0, blockView_21.frame.size.height+12+212, WIDTH_SCREEN, (self.task_entity.delivery_info.count*25+35)+12)];
+    blockView_23=[[UIView alloc] initWithFrame:CGRectMake(0, blockView_22.frame.origin.y+blockView_22.frame.size.height+12, WIDTH_SCREEN, (self.task_entity.delivery_info.count*25+35)+12)];
     blockView_23.backgroundColor=COLOR_WHITE;
     blockView_23.userInteractionEnabled=YES;
     
-    orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 212+blockView_2.frame.size.height)];
+    orderInfoView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,blockView_23.frame.origin.y+blockView_23.frame.size.height)];
     orderInfoView.userInteractionEnabled=YES;
     orderInfoView.backgroundColor=COLOR_CLEAR;
     [orderInfoView addSubview:blockView_21];
     [orderInfoView addSubview:blockView_22];
-    [blockView_22 addSubview:splitView];
     [orderInfoView addSubview:blockView_23];
     
     UILabel *lbl_tip_1=[[UILabel alloc] init];
@@ -1053,32 +1049,36 @@
         lbl_address_replenish.text=self.task_entity.address_replenish;
         lbl_upstairs.text=self.task_entity.option_title;
         
-        if(self.task_entity.service_note.length>0){
-            lbl_servicenote.text=[NSString stringWithFormat:@"%@",self.task_entity.service_note];
-        }
-        lbl_servicenote.frame=CGRectMake(10, (35), WIDTH_SCREEN-20, 20);
-        [lbl_servicenote sizeToFit];
-
-        if(self.task_entity.package_note.length>0){
-            lbl_packagenote.text=[NSString stringWithFormat:@"%@",self.task_entity.package_note];
-        }
-        lbl_packagenote.frame=CGRectMake(10, (lbl_servicenote.frame.origin.y+lbl_servicenote.frame.size.height+25+5), WIDTH_SCREEN-20, 20);
-        [lbl_packagenote sizeToFit];
-        
-        if(self.task_entity.package_freeze_note.length>0){
-            lbl_freeze_packagenote.text=[NSString stringWithFormat:@"%@",self.task_entity.package_freeze_note];
-        }
-        lbl_freeze_packagenote.frame=CGRectMake(10, (lbl_packagenote.frame.origin.y+lbl_packagenote.frame.size.height+25+5), WIDTH_SCREEN-20, 20);
-        [lbl_packagenote sizeToFit];
-        
-        
-        blockView_5.frame= CGRectMake(0, 99, WIDTH_SCREEN,(lbl_freeze_packagenote.frame.origin.y+lbl_freeze_packagenote.frame.size.height+12));
-        blockView_1.frame= CGRectMake(0, (blockView_5.frame.origin.y+blockView_5.size.height+12), WIDTH_SCREEN, 75);
-        blockView_2.frame= CGRectMake(0, (blockView_1.frame.origin.y+blockView_1.size.height+12), WIDTH_SCREEN, 100);
-        blockView_3.frame= CGRectMake(0, (blockView_2.frame.origin.y+blockView_2.size.height+12), WIDTH_SCREEN, 210);
-        blockView_4.frame= CGRectMake(0, (blockView_3.frame.origin.y+blockView_3.size.height+12), WIDTH_SCREEN, 45);
+        [self loadNoteInfo];
         
     }
+}
+
+-(void)loadNoteInfo{
+    if(self.task_entity.service_note.length>0){
+       lbl_servicenote.text=[NSString stringWithFormat:@"%@",self.task_entity.service_note];
+    }
+    lbl_servicenote.frame=CGRectMake(10, (35), WIDTH_SCREEN-20, 20);
+    [lbl_servicenote sizeToFit];
+
+    if(self.task_entity.package_note.length>0){
+       lbl_packagenote.text=[NSString stringWithFormat:@"%@",self.task_entity.package_note];
+    }
+    lbl_packagenote.frame=CGRectMake(10, (lbl_servicenote.frame.origin.y+lbl_servicenote.frame.size.height+25+5), WIDTH_SCREEN-20, 20);
+    [lbl_packagenote sizeToFit];
+
+    if(self.task_entity.package_freeze_note.length>0){
+       lbl_freeze_packagenote.text=[NSString stringWithFormat:@"%@",self.task_entity.package_freeze_note];
+    }
+    lbl_freeze_packagenote.frame=CGRectMake(10, (lbl_packagenote.frame.origin.y+lbl_packagenote.frame.size.height+25+5), WIDTH_SCREEN-20, 20);
+    [lbl_packagenote sizeToFit];
+
+
+    blockView_5.frame= CGRectMake(0, 99, WIDTH_SCREEN,(lbl_freeze_packagenote.frame.origin.y+lbl_freeze_packagenote.frame.size.height+12));
+    blockView_1.frame= CGRectMake(0, (blockView_5.frame.origin.y+blockView_5.size.height+12), WIDTH_SCREEN, 75);
+    blockView_2.frame= CGRectMake(0, (blockView_1.frame.origin.y+blockView_1.size.height+12), WIDTH_SCREEN, 100);
+    blockView_3.frame= CGRectMake(0, (blockView_2.frame.origin.y+blockView_2.size.height+12), WIDTH_SCREEN, 210);
+    blockView_4.frame= CGRectMake(0, (blockView_3.frame.origin.y+blockView_3.size.height+12), WIDTH_SCREEN, 45);
 }
 
 #pragma mark - Table view delegate
@@ -1167,7 +1167,6 @@
     
     
     CGFloat offsetY = tableview.contentOffset.y;
-    NSLog(@"offsetY:%f",offsetY);
     
     if (offsetY >= 0 && offsetY <= sectionHeaderHeight)
     {
