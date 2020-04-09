@@ -39,6 +39,8 @@
     [self loadGoodsForOrder];
     if(self.order_id==nil||self.order_id.length<=0){
         [self loadDeliveryInfo];
+    }else{
+        [self loadNoteInfo];
     }
 }
 
@@ -57,7 +59,7 @@
     blockView_21.backgroundColor=COLOR_WHITE;
     
     lbl_service_title=[[UILabel alloc] init];
-    lbl_service_title.textColor=COLOR_GRAY;
+    lbl_service_title.textColor=COLOR_BLACK;
     lbl_service_title.font=FONT_SIZE_MIDDLE;
     lbl_service_title.text=@"客服留言:";
     lbl_service_title.textAlignment=NSTextAlignmentLeft;
@@ -70,7 +72,7 @@
     }];
     
     lbl_servicenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 32, WIDTH_SCREEN-20, 20)];
-    lbl_servicenote.textColor=COLOR_BLACK;
+    lbl_servicenote.textColor=COLOR_GRAY;
     lbl_servicenote.font=FONT_SIZE_MIDDLE;
     lbl_servicenote.numberOfLines=0;
     lbl_servicenote.text=@"暂无留言";
@@ -78,7 +80,7 @@
     [blockView_21 addSubview:lbl_servicenote];
     
     lbl_package_title=[[UILabel alloc] init];
-    lbl_package_title.textColor=COLOR_GRAY;
+    lbl_package_title.textColor=COLOR_BLACK;
     lbl_package_title.font=FONT_SIZE_MIDDLE;
     lbl_package_title.text=@"普通打包留言:";
     lbl_package_title.textAlignment=NSTextAlignmentLeft;
@@ -91,7 +93,7 @@
     }];
     
     lbl_packagenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 82, WIDTH_SCREEN-20, 20)];
-    lbl_packagenote.textColor=COLOR_BLACK;
+    lbl_packagenote.textColor=COLOR_GRAY;
     lbl_packagenote.font=FONT_SIZE_MIDDLE;
     lbl_packagenote.numberOfLines=0;
     lbl_packagenote.lineBreakMode = NSLineBreakByWordWrapping;
@@ -100,7 +102,7 @@
     [blockView_21 addSubview:lbl_packagenote];
     
     lbl_freeze_package_title=[[UILabel alloc] init];
-    lbl_freeze_package_title.textColor=COLOR_GRAY;
+    lbl_freeze_package_title.textColor=COLOR_BLACK;
     lbl_freeze_package_title.font=FONT_SIZE_MIDDLE;
     lbl_freeze_package_title.text=@"生鲜打包留言:";
     lbl_freeze_package_title.textAlignment=NSTextAlignmentLeft;
@@ -113,7 +115,7 @@
     }];
     
     lbl_freeze_packagenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 130, WIDTH_SCREEN-20, 20)];
-    lbl_freeze_packagenote.textColor=COLOR_BLACK;
+    lbl_freeze_packagenote.textColor=COLOR_GRAY;
     lbl_freeze_packagenote.font=FONT_SIZE_MIDDLE;
     lbl_freeze_packagenote.numberOfLines=0;
     lbl_freeze_packagenote.text=@"暂无留言";
@@ -420,7 +422,7 @@
     
     ////////////////blockView_5///////////////
     lbl_service_title=[[UILabel alloc] init];
-    lbl_service_title.textColor=COLOR_GRAY;
+    lbl_service_title.textColor=COLOR_BLACK;
     lbl_service_title.font=FONT_SIZE_MIDDLE;
     lbl_service_title.text=@"客服留言:";
     lbl_service_title.textAlignment=NSTextAlignmentLeft;
@@ -433,7 +435,7 @@
     }];
     
     lbl_servicenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 32, WIDTH_SCREEN-20, 20)];
-    lbl_servicenote.textColor=COLOR_BLACK;
+    lbl_servicenote.textColor=COLOR_GRAY;
     lbl_servicenote.font=FONT_SIZE_MIDDLE;
     lbl_servicenote.numberOfLines=0;
     lbl_servicenote.text=@"暂无留言";
@@ -441,7 +443,7 @@
     [blockView_5 addSubview:lbl_servicenote];
     
     lbl_package_title=[[UILabel alloc] init];
-    lbl_package_title.textColor=COLOR_GRAY;
+    lbl_package_title.textColor=COLOR_BLACK;
     lbl_package_title.font=FONT_SIZE_MIDDLE;
     lbl_package_title.text=@"普通打包留言:";
     lbl_package_title.textAlignment=NSTextAlignmentLeft;
@@ -454,7 +456,7 @@
     }];
     
     lbl_packagenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 92, WIDTH_SCREEN-20, 20)];
-    lbl_packagenote.textColor=COLOR_BLACK;
+    lbl_packagenote.textColor=COLOR_GRAY;
     lbl_packagenote.font=FONT_SIZE_MIDDLE;
     lbl_packagenote.numberOfLines=0;
     lbl_packagenote.lineBreakMode = NSLineBreakByWordWrapping;
@@ -463,7 +465,7 @@
     [blockView_5 addSubview:lbl_packagenote];
     
     lbl_freeze_package_title=[[UILabel alloc] init];
-    lbl_freeze_package_title.textColor=COLOR_GRAY;
+    lbl_freeze_package_title.textColor=COLOR_BLACK;
     lbl_freeze_package_title.font=FONT_SIZE_MIDDLE;
     lbl_freeze_package_title.text=@"生鲜打包留言:";
     lbl_freeze_package_title.textAlignment=NSTextAlignmentLeft;
@@ -476,7 +478,7 @@
     }];
     
     lbl_freeze_packagenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 153, WIDTH_SCREEN-20, 20)];
-    lbl_freeze_packagenote.textColor=COLOR_BLACK;
+    lbl_freeze_packagenote.textColor=COLOR_GRAY;
     lbl_freeze_packagenote.font=FONT_SIZE_MIDDLE;
     lbl_freeze_packagenote.numberOfLines=0;
     lbl_freeze_packagenote.text=@"暂无留言";
@@ -1055,30 +1057,43 @@
 }
 
 -(void)loadNoteInfo{
+    
     if(self.task_entity.service_note.length>0){
-       lbl_servicenote.text=[NSString stringWithFormat:@"%@",self.task_entity.service_note];
+        lbl_servicenote.textColor=[Common hexColor:@"#E4484A"];
+        lbl_servicenote.text=[NSString stringWithFormat:@"%@",self.task_entity.service_note];
     }
     lbl_servicenote.frame=CGRectMake(10, (35), WIDTH_SCREEN-20, 20);
     [lbl_servicenote sizeToFit];
 
     if(self.task_entity.package_note.length>0){
-       lbl_packagenote.text=[NSString stringWithFormat:@"%@",self.task_entity.package_note];
+        lbl_packagenote.textColor=[Common hexColor:@"#E4484A"];
+        lbl_packagenote.text=[NSString stringWithFormat:@"%@",self.task_entity.package_note];
     }
     lbl_packagenote.frame=CGRectMake(10, (lbl_servicenote.frame.origin.y+lbl_servicenote.frame.size.height+25+5), WIDTH_SCREEN-20, 20);
     [lbl_packagenote sizeToFit];
 
     if(self.task_entity.package_freeze_note.length>0){
-       lbl_freeze_packagenote.text=[NSString stringWithFormat:@"%@",self.task_entity.package_freeze_note];
+        lbl_freeze_packagenote.textColor=[Common hexColor:@"#E4484A"];
+        lbl_freeze_packagenote.text=[NSString stringWithFormat:@"%@",self.task_entity.package_freeze_note];
     }
     lbl_freeze_packagenote.frame=CGRectMake(10, (lbl_packagenote.frame.origin.y+lbl_packagenote.frame.size.height+25+5), WIDTH_SCREEN-20, 20);
     [lbl_packagenote sizeToFit];
+    
+    if(self.order_id!=nil&&[self.order_id length]>0){
+        blockView_21.frame= CGRectMake(0, 12, WIDTH_SCREEN,(lbl_freeze_packagenote.frame.origin.y+lbl_freeze_packagenote.frame.size.height+12));
+        blockView_22.frame= CGRectMake(0, (blockView_21.frame.origin.y+blockView_21.size.height+12), WIDTH_SCREEN, 200);
+        blockView_23.frame= CGRectMake(0, (blockView_22.frame.origin.y+blockView_22.size.height+12), WIDTH_SCREEN, (self.task_entity.delivery_info.count*25+35)+12);
+    }else{
+        blockView_5.frame= CGRectMake(0, 99, WIDTH_SCREEN,(lbl_freeze_packagenote.frame.origin.y+lbl_freeze_packagenote.frame.size.height+12));
+        blockView_1.frame= CGRectMake(0, (blockView_5.frame.origin.y+blockView_5.size.height+12), WIDTH_SCREEN, 75);
+        blockView_2.frame= CGRectMake(0, (blockView_1.frame.origin.y+blockView_1.size.height+12), WIDTH_SCREEN, 100);
+        blockView_3.frame= CGRectMake(0, (blockView_2.frame.origin.y+blockView_2.size.height+12), WIDTH_SCREEN, 210);
+        blockView_4.frame= CGRectMake(0, (blockView_3.frame.origin.y+blockView_3.size.height+12), WIDTH_SCREEN, 45);
+    }
+    
 
 
-    blockView_5.frame= CGRectMake(0, 99, WIDTH_SCREEN,(lbl_freeze_packagenote.frame.origin.y+lbl_freeze_packagenote.frame.size.height+12));
-    blockView_1.frame= CGRectMake(0, (blockView_5.frame.origin.y+blockView_5.size.height+12), WIDTH_SCREEN, 75);
-    blockView_2.frame= CGRectMake(0, (blockView_1.frame.origin.y+blockView_1.size.height+12), WIDTH_SCREEN, 100);
-    blockView_3.frame= CGRectMake(0, (blockView_2.frame.origin.y+blockView_2.size.height+12), WIDTH_SCREEN, 210);
-    blockView_4.frame= CGRectMake(0, (blockView_3.frame.origin.y+blockView_3.size.height+12), WIDTH_SCREEN, 45);
+    
 }
 
 #pragma mark - Table view delegate

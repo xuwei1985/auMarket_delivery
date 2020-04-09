@@ -49,6 +49,9 @@
 @property (nonatomic,retain) NSString *default_code;
 @property (nonatomic,retain) NSString *is_ready;
 @property (nonatomic,retain) NSArray *package_arr;
+@property (nonatomic,retain) NSString *package_note;
+@property (nonatomic,retain) NSString *service_note;
+@property (nonatomic,retain) NSString *package_freeze_note;
 @property (nonatomic,retain) NSArray<DeliveryInfoEntity*> *delivery_info;
 
 @end
