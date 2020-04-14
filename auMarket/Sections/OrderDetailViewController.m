@@ -482,6 +482,7 @@
     lbl_freeze_packagenote.font=FONT_SIZE_MIDDLE;
     lbl_freeze_packagenote.numberOfLines=0;
     lbl_freeze_packagenote.text=@"暂无留言";
+    lbl_freeze_packagenote.lineBreakMode = NSLineBreakByWordWrapping;
     lbl_freeze_packagenote.textAlignment=NSTextAlignmentLeft;
     [blockView_5 addSubview:lbl_freeze_packagenote];
     
@@ -1077,23 +1078,21 @@
         lbl_freeze_packagenote.text=[NSString stringWithFormat:@"%@",self.task_entity.package_freeze_note];
     }
     lbl_freeze_packagenote.frame=CGRectMake(10, (lbl_packagenote.frame.origin.y+lbl_packagenote.frame.size.height+25+5), WIDTH_SCREEN-20, 20);
-    [lbl_packagenote sizeToFit];
+    [lbl_freeze_packagenote sizeToFit];
     
     if(self.order_id!=nil&&[self.order_id length]>0){
         blockView_21.frame= CGRectMake(0, 12, WIDTH_SCREEN,(lbl_freeze_packagenote.frame.origin.y+lbl_freeze_packagenote.frame.size.height+12));
         blockView_22.frame= CGRectMake(0, (blockView_21.frame.origin.y+blockView_21.size.height+12), WIDTH_SCREEN, 200);
         blockView_23.frame= CGRectMake(0, (blockView_22.frame.origin.y+blockView_22.size.height+12), WIDTH_SCREEN, (self.task_entity.delivery_info.count*25+35)+12);
+        orderInfoView.frame=CGRectMake(0, 0, WIDTH_SCREEN, blockView_23.frame.origin.y+blockView_23.frame.size.height);
     }else{
         blockView_5.frame= CGRectMake(0, 99, WIDTH_SCREEN,(lbl_freeze_packagenote.frame.origin.y+lbl_freeze_packagenote.frame.size.height+12));
         blockView_1.frame= CGRectMake(0, (blockView_5.frame.origin.y+blockView_5.size.height+12), WIDTH_SCREEN, 75);
         blockView_2.frame= CGRectMake(0, (blockView_1.frame.origin.y+blockView_1.size.height+12), WIDTH_SCREEN, 100);
         blockView_3.frame= CGRectMake(0, (blockView_2.frame.origin.y+blockView_2.size.height+12), WIDTH_SCREEN, 210);
         blockView_4.frame= CGRectMake(0, (blockView_3.frame.origin.y+blockView_3.size.height+12), WIDTH_SCREEN, 45);
+        orderInfoView.frame=CGRectMake(0, 0, WIDTH_SCREEN, blockView_4.frame.origin.y+blockView_4.frame.size.height);
     }
-    
-
-
-    
 }
 
 #pragma mark - Table view delegate
