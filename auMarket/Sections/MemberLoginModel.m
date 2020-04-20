@@ -13,19 +13,22 @@
 -(instancetype)init{
     self = [super init];
     if (self) {
-        self.parseDataClassType = [MemberLoginEntity class];
+        
     }
     return self;
 }
 
 //普通登录
--(void)loginWithUsername:(NSString *)uname andPassword:(NSString *)upass{
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=deliver_login&username=%@&password=%@",uname,upass];
+-(void)loginWithUsername:(NSString *)uname andPassword:(NSString *)upass andMobile:(NSString *)mobile andCode:(NSString *)code{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=deliver_login&username=%@&password=%@&mobile=%@&code=%@",uname,upass,mobile,code];
+    self.parseDataClassType = [MemberLoginEntity class];
     self.params = @{
     };
     self.requestTag=1001;
     [self loadInner];
 }
+
+
 
 //设置工作状态
 -(void)setDeliverStatus:(NSString *)status{
@@ -46,6 +49,23 @@
     [self loadInner];
 }
 
+-(void)getVerifyMobiles{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=login_verify_account"];
+    self.parseDataClassType = [VerifyMobileListEntity class];
+    self.params = @{
+    };
+    self.requestTag=1004;
+    [self loadInner];
+}
+
+//校验短信验证码
+-(void)getSmsCode:(NSString *)mobile{
+    self.parseDataClassType = [OrderVerifyEntity class];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=getSmsCodeForClient&mobile=%@",mobile];
+    self.requestTag=1005;
+    [self loadInner];
+}
+
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[MemberLoginEntity class]]) {
@@ -54,6 +74,13 @@
     else if ([parsedData isKindOfClass:[MemberChargeEntity class]]) {
         self.charge_entity = (MemberChargeEntity*)parsedData;
     }
+    else if ([parsedData isKindOfClass:[VerifyMobileListEntity class]]) {
+        self.verify_entity = (VerifyMobileListEntity*)parsedData;
+    }
+    else if ([parsedData isKindOfClass:[OrderVerifyEntity class]]) {
+        self.sEntity = (OrderVerifyEntity*)parsedData;
+    }
+    
 }
 
 -(SPAccount *)convertToSpAccount:(MemberEntity*)mEntity{
@@ -63,6 +90,7 @@
     _account.user_nickname=mEntity.nickname;
     _account.user_mobile=mEntity.mobile;
     _account.user_pwd=mEntity.password;
+    _account.user_token=mEntity.token;
     return _account;
 }
 
@@ -81,5 +109,22 @@
     
     return _charge_entity;
 }
+
+-(VerifyMobileListEntity *)verify_entity{
+    if(!_verify_entity){
+        _verify_entity=[[VerifyMobileListEntity alloc] init];
+    }
+    
+    return _verify_entity;
+}
+
+-(OrderVerifyEntity *)sEntity{
+    if(!_sEntity){
+        _sEntity=[[OrderVerifyEntity alloc] init];
+    }
+    
+    return _sEntity;
+}
+
 
 @end

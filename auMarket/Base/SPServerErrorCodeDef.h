@@ -11,6 +11,7 @@
 
 typedef enum {
     SPServerErrorCodeDefUserNotLogin = 110000,
+    SPServerErrorCodeDefTokenExpired = 4,
 } SPServerErrorCodeDef;
 
 #endif

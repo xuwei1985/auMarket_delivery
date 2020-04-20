@@ -69,7 +69,7 @@
     
     pickFreezeOrderViewController = [[PickFreezeOrderViewController alloc] init];
     pickFreezeOrderViewController.hidesBottomBarWhenPushed = NO;
-    pickFreezeOrderViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"生鲜上货" image:[UIImage imageNamed:@"sh"] selectedImage:[UIImage imageNamed:@"sh_on"]];
+    pickFreezeOrderViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"生鲜上货" image:[UIImage imageNamed:@"sssh"] selectedImage:[UIImage imageNamed:@"sssh_on"]];
     
     SPNavigationController *navHomeViewController = [[SPNavigationController alloc] initWithRootViewController:homeViewController];
     SPNavigationController *navTaskListViewController = [[SPNavigationController alloc] initWithRootViewController:taskListViewController];

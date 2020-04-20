@@ -20,6 +20,7 @@
     UILabel *_nicknameLbl;
     UILabel *_loginLbl;
     UIButton *_btn_exit;
+    
 }
 @property (nonatomic, retain) MemberLoginModel *model;
 @end

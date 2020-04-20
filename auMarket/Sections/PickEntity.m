@@ -26,8 +26,6 @@
     if (self) {
         [self addMappingRuleArrayProperty:@"box_goods" class:[PackageGoodsEntity class]];
         [self addMappingRuleArrayProperty:@"delivery_info" class:[DeliveryInfoEntity class]];
-         
-        
     }
     return self;
 }

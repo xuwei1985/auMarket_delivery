@@ -50,6 +50,7 @@
 		A94692FA1F6AB367007537DC /* 1_29_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A94692F91F6AB367007537DC /* 1_29_gray@2x.png */; };
 		A946CAE42221211700A7B188 /* TimeSectionEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A946CAE32221211700A7B188 /* TimeSectionEntity.m */; };
 		A9485A2C2213C77400D17D8A /* pay_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A9485A2B2213C77400D17D8A /* pay_code.jpg */; };
+		A9495E67244AD47200CD81D9 /* VerifyMobileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A9495E65244AD47200CD81D9 /* VerifyMobileEntity.m */; };
 		A95E10911DF80ED000660E42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10901DF80ED000660E42 /* main.m */; };
 		A95E10941DF80ED000660E42 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10931DF80ED000660E42 /* AppDelegate.m */; };
 		A95E109C1DF80ED000660E42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A95E109B1DF80ED000660E42 /* Assets.xcassets */; };
@@ -120,6 +121,8 @@
 		A982F78F1E0FA87E00DB4C13 /* sign_weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */; };
 		A982F79A1E1107DA00DB4C13 /* grayline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F7991E1107DA00DB4C13 /* grayline@2x.png */; };
 		A98C7B07243C52F40084543A /* PickFreezeOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98C7B06243C52F40084543A /* PickFreezeOrderViewController.m */; };
+		A992D87D2445EF5F003C8DFA /* sssh_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A992D87B2445EF5E003C8DFA /* sssh_on@2x.png */; };
+		A992D87E2445EF5F003C8DFA /* sssh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A992D87C2445EF5E003C8DFA /* sssh@2x.png */; };
 		A99632EB21A851CC0023F539 /* c_meat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99632EA21A851CC0023F539 /* c_meat@2x.png */; };
 		A99FD1BB2119654200AC4BC1 /* sh_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FD1B92119654100AC4BC1 /* sh_on@2x.png */; };
 		A99FD1BC2119654200AC4BC1 /* sh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FD1BA2119654100AC4BC1 /* sh@2x.png */; };
@@ -306,6 +309,8 @@
 		A946CAE22221211700A7B188 /* TimeSectionEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeSectionEntity.h; sourceTree = "<group>"; };
 		A946CAE32221211700A7B188 /* TimeSectionEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeSectionEntity.m; sourceTree = "<group>"; };
 		A9485A2B2213C77400D17D8A /* pay_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pay_code.jpg; sourceTree = "<group>"; };
+		A9495E65244AD47200CD81D9 /* VerifyMobileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyMobileEntity.m; sourceTree = "<group>"; };
+		A9495E66244AD47200CD81D9 /* VerifyMobileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyMobileEntity.h; sourceTree = "<group>"; };
 		A95E108C1DF80ED000660E42 /* auMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = auMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95E10901DF80ED000660E42 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A95E10921DF80ED000660E42 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -433,6 +438,8 @@
 		A982F7991E1107DA00DB4C13 /* grayline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayline@2x.png"; sourceTree = "<group>"; };
 		A98C7B05243C52F40084543A /* PickFreezeOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickFreezeOrderViewController.h; sourceTree = "<group>"; };
 		A98C7B06243C52F40084543A /* PickFreezeOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickFreezeOrderViewController.m; sourceTree = "<group>"; };
+		A992D87B2445EF5E003C8DFA /* sssh_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sssh_on@2x.png"; sourceTree = "<group>"; };
+		A992D87C2445EF5E003C8DFA /* sssh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sssh@2x.png"; sourceTree = "<group>"; };
 		A99632EA21A851CC0023F539 /* c_meat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c_meat@2x.png"; sourceTree = "<group>"; };
 		A99FD1B92119654100AC4BC1 /* sh_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sh_on@2x.png"; sourceTree = "<group>"; };
 		A99FD1BA2119654100AC4BC1 /* sh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sh@2x.png"; sourceTree = "<group>"; };
@@ -748,6 +755,8 @@
 		A9187C0E1DF9AB7F00A3E902 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A9495E66244AD47200CD81D9 /* VerifyMobileEntity.h */,
+				A9495E65244AD47200CD81D9 /* VerifyMobileEntity.m */,
 				A94299981F72BB840078A9AE /* MemberChargeEntity.h */,
 				A94299991F72BB840078A9AE /* MemberChargeEntity.m */,
 				A96474201E1111E500A5A39B /* MemberLoginModel.h */,
@@ -1134,6 +1143,8 @@
 		A9FBC1C61DF93838005ECDDE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A992D87B2445EF5E003C8DFA /* sssh_on@2x.png */,
+				A992D87C2445EF5E003C8DFA /* sssh@2x.png */,
 				A91AEDDB2412A79E00988A87 /* 01_03.png */,
 				A91AEDDC2412A79E00988A87 /* 01_10.png */,
 				A91AEDDE2412A79E00988A87 /* 01_12.png */,
@@ -1392,6 +1403,7 @@
 				A967B2F020E67A3000D50C46 /* done_on@2x.png in Resources */,
 				A91357781F6783EF000186B0 /* defaut_list@2x.png in Resources */,
 				A9FBC1E61DF94A91005ECDDE /* noContent@3x.png in Resources */,
+				A992D87E2445EF5F003C8DFA /* sssh@2x.png in Resources */,
 				A9D354681E0976CB006D265D /* icon_comment@2x.png in Resources */,
 				A91FAC011E026F4300D6FACC /* c1@2x.png in Resources */,
 				A967B2F120E67A3000D50C46 /* send_off@2x.png in Resources */,
@@ -1444,6 +1456,7 @@
 				A9187C261DF9B62700A3E902 /* cart_s@3x.png in Resources */,
 				A96474191E11084A00A5A39B /* pwd_icon_black@2x.png in Resources */,
 				A967B2F420E67A3000D50C46 /* del@2x.png in Resources */,
+				A992D87D2445EF5F003C8DFA /* sssh_on@2x.png in Resources */,
 				A967B2F220E67A3000D50C46 /* send_on@2x.png in Resources */,
 				A9BAD9E92230ED9F009E1311 /* 1_29_color_5_down@2x.png in Resources */,
 				A9F4DA941F658AFE00D71774 /* 1_65@2x.png in Resources */,
@@ -1575,6 +1588,7 @@
 				A9F4DAD51F68390F00D71774 /* SDWebImageManager+MJ.m in Sources */,
 				A91D539D1DFE99E600A6BB37 /* AdPageViewController.m in Sources */,
 				A942999A1F72BB840078A9AE /* MemberChargeEntity.m in Sources */,
+				A9495E67244AD47200CD81D9 /* VerifyMobileEntity.m in Sources */,
 				A967B2E220E672A600D50C46 /* Common.m in Sources */,
 				A95E113D1DF8491600660E42 /* IDPLog.m in Sources */,
 				A95E11411DF8491600660E42 /* NSDateFormatter+IDPExtension.m in Sources */,
@@ -1738,7 +1752,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = K44WC33LW2;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1750,7 +1764,7 @@
 				INFOPLIST_FILE = auMarket/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.3.7;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.delivery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1768,7 +1782,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = K44WC33LW2;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1780,7 +1794,7 @@
 				INFOPLIST_FILE = auMarket/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.3.7;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.delivery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
