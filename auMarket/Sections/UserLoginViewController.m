@@ -30,8 +30,12 @@
 
 -(void)initData{
     canGetCode=YES;
-    [self startLoadingActivityIndicator];
-    [self.model getVerifyMobiles];
+    
+    Boolean isLogin=[[AccountManager sharedInstance] isLogin];
+    if(!isLogin){
+        [self startLoadingActivityIndicator];
+        [self.model getVerifyMobiles];
+    }
 }
 
 
@@ -284,7 +288,7 @@
     
     if ([self checkForm]) {
         [self startLoadingActivityIndicatorWithText:@"正在请求登录..."];
-        [self.model loginWithUsername:_account andPassword:_password andCode:_code];
+        [self.model loginWithUsername:_account andPassword:_password andMobile:verify_mobile andCode:_code];
     }
 }
 
@@ -320,8 +324,6 @@
            _codeText.text=@"";
             verify_mobile=@"";
            [self gotoHomeView];
-        }else{
-            [self showSuccesWithText:@"登录失败"];
         }
         
     }else if(model.requestTag==1004){
@@ -558,10 +560,15 @@
     Boolean isLogin=[[AccountManager sharedInstance] isLogin];
     if(isLogin){
         SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-        _accountText.text=user.user_account;
-        _passwordText.text=user.user_pwd;
-        
-        [self performSelector:@selector(postPersonLogin) withObject:nil afterDelay:0.1];
+        self.model.entity.userinfo=[MemberEntity new];
+        self.model.entity.userinfo.nickname=user.user_nickname;
+        self.model.entity.userinfo.account=user.user_account;
+        self.model.entity.userinfo.password=user.user_pwd;
+        self.model.entity.userinfo.userid=user.user_id;
+        self.model.entity.userinfo.token=user.user_token;
+        SPAccount *_account =[self.model convertToSpAccount:self.model.entity.userinfo];
+        [[AccountManager sharedInstance] registerLoginUser:_account];
+        [self gotoHomeView];
     }
     
 }

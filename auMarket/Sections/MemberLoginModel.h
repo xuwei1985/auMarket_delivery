@@ -18,7 +18,7 @@
 @property(nonatomic,retain) OrderVerifyEntity *sEntity;
 
 //普通登录
--(void)loginWithUsername:(NSString *)uname andPassword:(NSString *)upass andCode:(NSString *)code;
+-(void)loginWithUsername:(NSString *)uname andPassword:(NSString *)upass andMobile:(NSString *)mobile andCode:(NSString *)code;
 -(void)setDeliverStatus:(NSString *)status;
 -(void)getChargeInfo;
 -(void)getVerifyMobiles;

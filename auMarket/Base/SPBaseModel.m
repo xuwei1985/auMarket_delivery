@@ -197,7 +197,7 @@
         if (self.errorCode!=0) {
             isSuccess = NO;
             
-            if (SPServerErrorCodeDefUserNotLogin == self.errorCode) {
+            if (SPServerErrorCodeDefUserNotLogin == self.errorCode||SPServerErrorCodeDefTokenExpired== self.errorCode) {
                 if ([[AccountManager sharedInstance] isLogin]) {
                     [[AccountManager sharedInstance] unRegisterLoginUser];
                 }
@@ -258,7 +258,7 @@
     
     NSString* uToken = [[AccountManager sharedInstance] getCurrentUser].user_token;
     if (uToken && ![uToken isEmpty]) {
-        [dict setObject:uToken forKey:@"utoken"];
+        [dict setObject:uToken forKey:@"token"];
     }
     
     [dict setObject:[SPBaseModel getDeviceID] forKey:@"devid"];

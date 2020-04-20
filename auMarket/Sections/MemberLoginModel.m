@@ -19,8 +19,8 @@
 }
 
 //普通登录
--(void)loginWithUsername:(NSString *)uname andPassword:(NSString *)upass andCode:(NSString *)code{
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=deliver_login&username=%@&password=%@&code=%@",uname,upass,code];
+-(void)loginWithUsername:(NSString *)uname andPassword:(NSString *)upass andMobile:(NSString *)mobile andCode:(NSString *)code{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=deliver_login&username=%@&password=%@&mobile=%@&code=%@",uname,upass,mobile,code];
     self.parseDataClassType = [MemberLoginEntity class];
     self.params = @{
     };
@@ -90,6 +90,7 @@
     _account.user_nickname=mEntity.nickname;
     _account.user_mobile=mEntity.mobile;
     _account.user_pwd=mEntity.password;
+    _account.user_token=mEntity.token;
     return _account;
 }
 
