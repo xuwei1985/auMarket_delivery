@@ -232,7 +232,11 @@
 }
 
 -(void)pickVerifyMobile:(id)sender{
-    [_verifyText becomeFirstResponder];
+    if(_mobileArray!=nil&&_mobileArray.count>0){
+        [_verifyText becomeFirstResponder];
+    }else{
+        [self showToastWithText:@"无验证手机数据"];
+    }
 }
 
 - (void)tagsAliasCallback:(int)iResCode tags:(NSSet *)tags alias:(NSString *)alias {
