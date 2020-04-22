@@ -61,7 +61,7 @@
 //校验短信验证码
 -(void)getSmsCode:(NSString *)mobile{
     self.parseDataClassType = [OrderVerifyEntity class];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=getSmsCodeForClient&mobile=%@",mobile];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=getSmsCodeForClient&mobile=%@&type=9",mobile];
     self.requestTag=1005;
     [self loadInner];
 }
