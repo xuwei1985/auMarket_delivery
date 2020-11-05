@@ -13,9 +13,13 @@
     UIImageView *_iconImageView;
     UILabel *_itemLbl;
     UILabel *_numLbl;
+    UILabel *_priceLbl;
+    UILabel *_promoteMarkLbl;
 }
 
 @property(nonatomic,retain) NSString *itemImage;
 @property(nonatomic,retain) NSString *itemName;
 @property(nonatomic,retain) NSString *itemNum;
+@property(nonatomic,assign) float itemPrice;
+@property(nonatomic,assign) BOOL isPromote;
 @end

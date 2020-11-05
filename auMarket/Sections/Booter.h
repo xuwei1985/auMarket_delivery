@@ -41,6 +41,7 @@
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_unknown;//没有配送坐标的订单
 @property (nonatomic,strong) NSArray *sectionArr;//配送时间段数组
 @property (nonatomic,strong) NSArray<ParkingItemEntity *> *parkinglist;
+@property (nonatomic,strong) LineEntity *lineEntity;//线路数据
 @property(nonatomic,assign) Boolean hasNetWork;
 
 // 获取引导页
@@ -67,4 +68,5 @@
 -(void)loadParkingList;
 -(void)postLocation:(CLLocationCoordinate2D)coordinate;
 -(void)getToken;
+-(void)loadLineList;
 @end

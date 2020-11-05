@@ -113,6 +113,9 @@
 
 -(NSString*)getHost
 {
+    if(APP_DELEGATE.hotLine!=nil){
+        return APP_DELEGATE.hotLine;
+    }
     return [[IPManager sharedInstance] getAvaliableIp];
 }
 

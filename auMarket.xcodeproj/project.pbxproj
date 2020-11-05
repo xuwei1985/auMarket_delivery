@@ -51,6 +51,7 @@
 		A946CAE42221211700A7B188 /* TimeSectionEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A946CAE32221211700A7B188 /* TimeSectionEntity.m */; };
 		A9485A2C2213C77400D17D8A /* pay_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A9485A2B2213C77400D17D8A /* pay_code.jpg */; };
 		A9495E67244AD47200CD81D9 /* VerifyMobileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A9495E65244AD47200CD81D9 /* VerifyMobileEntity.m */; };
+		A952A9A32552F8DA0055D604 /* LineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A952A9A22552F8DA0055D604 /* LineViewController.m */; };
 		A95E10911DF80ED000660E42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10901DF80ED000660E42 /* main.m */; };
 		A95E10941DF80ED000660E42 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10931DF80ED000660E42 /* AppDelegate.m */; };
 		A95E109C1DF80ED000660E42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A95E109B1DF80ED000660E42 /* Assets.xcassets */; };
@@ -311,6 +312,8 @@
 		A9485A2B2213C77400D17D8A /* pay_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pay_code.jpg; sourceTree = "<group>"; };
 		A9495E65244AD47200CD81D9 /* VerifyMobileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyMobileEntity.m; sourceTree = "<group>"; };
 		A9495E66244AD47200CD81D9 /* VerifyMobileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyMobileEntity.h; sourceTree = "<group>"; };
+		A952A9A12552F8DA0055D604 /* LineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineViewController.h; sourceTree = "<group>"; };
+		A952A9A22552F8DA0055D604 /* LineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineViewController.m; sourceTree = "<group>"; };
 		A95E108C1DF80ED000660E42 /* auMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = auMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95E10901DF80ED000660E42 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A95E10921DF80ED000660E42 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -731,6 +734,8 @@
 		A9187C081DF9AB6300A3E902 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A952A9A12552F8DA0055D604 /* LineViewController.h */,
+				A952A9A22552F8DA0055D604 /* LineViewController.m */,
 				A9F5603A1FFBCC8900EA8116 /* WebViewController.h */,
 				A9F560391FFBCC8900EA8116 /* WebViewController.m */,
 				A96474261E1111FB00A5A39B /* UserLoginViewController.h */,
@@ -1564,6 +1569,7 @@
 				A976B7151F697EBC00B85C1C /* TaskModel.m in Sources */,
 				A9D354451E08FD6C006D265D /* MemberCell.m in Sources */,
 				A93D98EA22F5CCCD004D5AEB /* ReturnProofViewController.m in Sources */,
+				A952A9A32552F8DA0055D604 /* LineViewController.m in Sources */,
 				A95E11481DF8491600660E42 /* AccountManager.m in Sources */,
 				A95E11541DF84DDE00660E42 /* SeqIDGenerator.m in Sources */,
 				A95E114E1DF84D8600660E42 /* IPManager.m in Sources */,

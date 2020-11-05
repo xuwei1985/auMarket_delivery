@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSString *token;
 @property (nonatomic,assign) BOOL isTokenRequestFaild;//定时请求token失败后标识这个标记，在请求成功前加快请求频率
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) NSString *hotLine;//当前选择的数据线路
 
 + (UINavigationController *)getNavigationController;
 + (UITabBarController *)getTabbarController;
