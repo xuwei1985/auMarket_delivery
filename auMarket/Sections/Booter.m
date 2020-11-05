@@ -301,6 +301,12 @@
     [self.taskModel loadTaskList];
 }
 
+//获取线路
+-(void)loadLineList
+{
+    [self.model getDataLines];
+}
+
 //获取停车位数据
 -(void)loadParkingList
 {
@@ -336,6 +342,7 @@
             self.tasklist_finished= [[NSArray alloc] init];
             self.tasklist_failed= [[NSArray alloc] init];
         }
+        [self.model getDataLines];
         [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
     }
     else if(model==self.model&&self.model.requestTag==1002){
@@ -370,6 +377,14 @@
             //}
             [APP_DELEGATE initTokenTimer:1];
             APP_DELEGATE.isTokenRequestFaild=YES;
+        }
+    }
+    else if(model==self.model&&self.model.requestTag==1004){
+        if(isSuccess){
+            self.lineEntity=self.model.lineEntity;
+        }
+        else{
+            self.lineEntity = [[LineEntity alloc] init];
         }
     }
 }

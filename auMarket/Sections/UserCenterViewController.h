@@ -11,6 +11,7 @@
 #import "MemberCell.h"
 #import "MemberLoginModel.h"
 #import "WebViewController.h"
+#import "LineViewController.h"
 
 @interface UserCenterViewController : SPBaseViewController
 {

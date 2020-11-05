@@ -17,6 +17,16 @@
     return self;
 }
 
+-(void)getDataLines{
+    self.parseDataClassType = [LineEntity class];
+    
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=dataLine&os=ios"];
+    self.params = @{};
+    self.requestTag=1004;
+    [self loadInner];
+}
+
+
 -(void)loadParkingList{
     self.parseDataClassType = [ParkingEntity class];
     self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=parking_list"];
@@ -115,6 +125,9 @@
     else if (self.requestTag==1002&&[parsedData isKindOfClass:[ParkingEntity class]]) {
         self.parking_entity = (ParkingEntity*)parsedData;
     }
+    else if (self.requestTag==1004&&[parsedData isKindOfClass:[LineEntity class]]) {
+        self.lineEntity = (LineEntity*)parsedData;
+    }
 }
 
 
@@ -130,3 +143,19 @@
 @implementation UserTokenEntity
 
 @end
+
+@implementation LineEntity
+-(id)init{
+    self = [super init];
+    if (self) {
+        [self addMappingRuleArrayProperty:@"list" class:[LineItemEntity class]];
+    }
+    return self;
+}
+@end
+
+@implementation LineItemEntity
+
+
+@end
+

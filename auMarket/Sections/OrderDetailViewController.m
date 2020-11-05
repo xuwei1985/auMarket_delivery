@@ -859,7 +859,7 @@
     float table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR-DONE_ACTION_BAR;
     //if(self.task_entity==nil||[self.task_entity.status intValue]==1||[self.task_entity.status intValue]==2){
     if(self.order_id!=nil&&[self.order_id length]>0){
-        table_height=HEIGHT_SCREEN-64;
+        table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR;
     }
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
@@ -1165,18 +1165,20 @@
         cell.itemName=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].goods_name;
         cell.itemNum=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].goods_number;
         cell.itemImage=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].thumb_url;
+        cell.itemPrice=[[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].shop_price floatValue];
     }
     else if(indexPath.section==1){
         cell.itemName=[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].goods_name;
         cell.itemNum=[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].goods_number;
         cell.itemImage=[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].thumb_url;
+        cell.itemPrice=[[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].shop_price floatValue];
     }
     
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 70;
+    return 75;
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath

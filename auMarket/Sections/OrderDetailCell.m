@@ -44,6 +44,21 @@
             }];
         }
         
+        if (_priceLbl==nil) {
+            _priceLbl=[[UILabel alloc] init];
+            _priceLbl.textAlignment=NSTextAlignmentLeft;
+            _priceLbl.textColor= RGBCOLOR(33, 33, 33);
+            _priceLbl.font=FONT_SIZE_MIDDLE;
+            _priceLbl.text=@"$0.00";
+            [self.contentView addSubview:_priceLbl];
+            
+            [_priceLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(50);
+                make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
+                make.size.mas_equalTo(CGSizeMake(50, 20));
+            }];
+        }
+        
         if (_numLbl==nil) {
             _numLbl=[[UILabel alloc] init];
             _numLbl.textAlignment=NSTextAlignmentLeft;
@@ -52,9 +67,28 @@
             [self.contentView addSubview:_numLbl];
             
             [_numLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(45);
-                make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
+                make.top.mas_equalTo(50);
+                make.left.mas_equalTo(_priceLbl.mas_right).offset(5);
                 make.size.mas_equalTo(CGSizeMake(40, 20));
+            }];
+        }
+        
+        if (_promoteMarkLbl==nil) {
+            _promoteMarkLbl=[[UILabel alloc] init];
+            _promoteMarkLbl.text=@"特价";
+            _promoteMarkLbl.font=DEFAULT_FONT(11);
+            _promoteMarkLbl.textColor=COLOR_WHITE;
+            _promoteMarkLbl.hidden=NO;
+            _promoteMarkLbl.backgroundColor=RGBCOLOR(233, 76, 75);
+            _promoteMarkLbl.textAlignment=NSTextAlignmentCenter;
+            _promoteMarkLbl.clipsToBounds=YES;
+            [_promoteMarkLbl.layer setCornerRadius:2];
+            [self addSubview:_promoteMarkLbl];
+            
+            [_promoteMarkLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(46);
+                make.right.mas_equalTo(self.mas_right).offset(-10);
+                make.size.mas_equalTo(CGSizeMake(36, 20));
             }];
         }
     }
@@ -65,6 +99,7 @@
     [super layoutSubviews];
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:self.itemImage] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
     _itemLbl.text=self.itemName;
+    _priceLbl.text=[NSString stringWithFormat:@"$%.2f",self.itemPrice*[self.itemNum intValue]];
     _numLbl.text=[NSString stringWithFormat:@"%@件",self.itemNum];
 }
 

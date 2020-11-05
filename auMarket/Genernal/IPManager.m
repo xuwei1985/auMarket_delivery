@@ -51,6 +51,7 @@ DEF_SINGLETON(IPManager)
     }
 
     if (self.ipList.count == 0) {
+        
         return SERVER_ADDRESS;
     }
     return self.ipList.firstObject;
