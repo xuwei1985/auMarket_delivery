@@ -861,6 +861,10 @@
     if(self.order_id!=nil&&[self.order_id length]>0){
         table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR;
     }
+    
+    if([self.task_entity.status intValue]==1||[self.task_entity.status intValue]==2){
+        table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR;
+    }
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
@@ -880,20 +884,21 @@
  */
 -(void)createDoneActionBar{
     @weakify(self);
-    
-    UIView *top_line=[[UIView alloc] init];
-    top_line.backgroundColor=COLOR_LIGHTGRAY;
-    [self.view addSubview:top_line];
-    
-    [top_line mas_makeConstraints:^(MASConstraintMaker *make) {
-        @strongify(self);
-        make.top.mas_equalTo(self.view.mas_bottom).offset(-DONE_ACTION_BAR);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(WIDTH_SCREEN);
-        make.height.mas_equalTo(0.5);
-    }];
+
     
     if([self.task_entity.status intValue]!=1&&[self.task_entity.status intValue]!=2){
+        UIView *top_line=[[UIView alloc] init];
+        top_line.backgroundColor=COLOR_LIGHTGRAY;
+        [self.view addSubview:top_line];
+        
+        [top_line mas_makeConstraints:^(MASConstraintMaker *make) {
+            @strongify(self);
+            make.top.mas_equalTo(self.view.mas_bottom).offset(-DONE_ACTION_BAR);
+            make.left.mas_equalTo(0);
+            make.width.mas_equalTo(WIDTH_SCREEN);
+            make.height.mas_equalTo(0.5);
+        }];
+        
         _btn_returnAction=[UIButton buttonWithType:UIButtonTypeCustom];
         [_btn_returnAction setTitle:@"订单返现" forState:UIControlStateNormal];
         _btn_returnAction.titleLabel.textAlignment=NSTextAlignmentCenter;

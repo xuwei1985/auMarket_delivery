@@ -30,7 +30,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    
+    self.hotLine=SERVER_ADDRESS;
     self.booter = [[Booter alloc] init];
     //[self initTokenTimer:0];
     [self updateToken];

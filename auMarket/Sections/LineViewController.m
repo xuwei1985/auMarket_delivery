@@ -36,8 +36,9 @@
         line_2.url=@"http://api.bigausyd.com";
         
         NSArray<LineItemEntity*> *list=[[NSArray<LineItemEntity*> alloc] initWithObjects:line_1,line_2, nil];
-        
-        APP_DELEGATE.booter.lineEntity.list=list;
+        LineEntity *entity=[LineEntity new];
+        entity.list=list;
+        APP_DELEGATE.booter.lineEntity=entity;
     }
 }
 
@@ -58,7 +59,9 @@
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
     self.tableView.backgroundColor=COLOR_BG_TABLEVIEW;
     
-    
+    UIView*view = [UIView new];
+    view.backgroundColor= [UIColor clearColor];
+    [self.tableView setTableFooterView:view];
     [self.view addSubview:self.tableView];
 }
 
@@ -68,6 +71,8 @@
     [[AlertBlockView sharedInstance] showChoiceAlert:@"您确定要切换线路吗？" button1Title:@"确认" button2Title:@"取消" completion:^(int index) {
         if(index==0){
             APP_DELEGATE.hotLine=[APP_DELEGATE.booter.lineEntity.list objectAtIndex:row].url;
+            [self.tableView reloadData];
+            [[AlertBlockView sharedInstance] showTipAlert:@"切换成功"];
         }
     }];
     
@@ -97,11 +102,16 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
         cell.showsReorderControl = NO;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.accessoryType = UITableViewCellAccessoryNone;
         cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.textLabel.font=DEFAULT_FONT(16.0);
         cell.textLabel.textColor=COLOR_DARKGRAY;
+    }
+    if([APP_DELEGATE.hotLine isEqualToString:[APP_DELEGATE.booter.lineEntity.list objectAtIndex:indexPath.row].url]){
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }else{
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
     cell.textLabel.text =[APP_DELEGATE.booter.lineEntity.list objectAtIndex:indexPath.row].title;
