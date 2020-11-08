@@ -101,6 +101,9 @@
     _itemLbl.text=self.itemName;
     _priceLbl.text=[NSString stringWithFormat:@"$%.2f",self.itemPrice*[self.itemNum intValue]];
     _numLbl.text=[NSString stringWithFormat:@"%@件",self.itemNum];
+    
+    [_promoteMarkLbl setHidden:!self.isPromote];
+    
 }
 
 

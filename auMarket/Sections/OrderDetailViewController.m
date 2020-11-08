@@ -888,7 +888,7 @@
         table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR;
     }
     
-    if([self.task_entity.status intValue]==1||[self.task_entity.status intValue]==2){
+    if([self.task_entity respondsToSelector:@selector(status)]&&([self.task_entity.status intValue]==1||[self.task_entity.status intValue]==2)){
         table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR;
     }
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
@@ -1197,13 +1197,35 @@
         cell.itemName=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].goods_name;
         cell.itemNum=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].goods_number;
         cell.itemImage=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].thumb_url;
-        cell.itemPrice=[[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].shop_price floatValue];
+        if([[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row] isPromote]){
+            cell.itemPrice=[[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].promote_price floatValue];
+            cell.isPromote=YES;
+        }else{
+            cell.itemPrice=[[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].shop_price floatValue];
+            cell.isPromote=NO;
+        }
+        
+        if([[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].is_fixed_point intValue]==1){
+            cell.isPromote=YES;
+        }
+        
     }
     else if(indexPath.section==1){
         cell.itemName=[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].goods_name;
         cell.itemNum=[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].goods_number;
         cell.itemImage=[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].thumb_url;
-        cell.itemPrice=[[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].shop_price floatValue];
+
+        if([[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row] isPromote]){
+            cell.itemPrice=[[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].promote_price floatValue];
+            cell.isPromote=YES;
+        }else{
+            cell.itemPrice=[[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].shop_price floatValue];
+            cell.isPromote=NO;
+        }
+        
+        if([[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].is_fixed_point intValue]==1){
+            cell.isPromote=YES;
+        }
     }
     
     return cell;

@@ -30,4 +30,7 @@
 @property(nonatomic,retain)NSString *promote_end_date;//促销结束时间
 @property(nonatomic,retain)NSString *is_promote;//是否促销
 
+
+//是否是促销商品
+-(BOOL)isPromote;
 @end
