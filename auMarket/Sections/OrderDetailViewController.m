@@ -351,15 +351,15 @@
    blockView_1=[[UIView alloc] initWithFrame:CGRectMake(0, 261, WIDTH_SCREEN, 75)];
    blockView_1.backgroundColor=COLOR_WHITE;
 
-   blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 348, WIDTH_SCREEN, 100)];
+   blockView_2=[[UIView alloc] initWithFrame:CGRectMake(0, 348, WIDTH_SCREEN, 130)];
    blockView_2.backgroundColor=COLOR_WHITE;
    blockView_2.userInteractionEnabled=YES;
    
-   blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 460, WIDTH_SCREEN, 210)];
+   blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 490, WIDTH_SCREEN, 210)];
    blockView_3.backgroundColor=COLOR_WHITE;
    blockView_3.userInteractionEnabled=YES;
    
-   blockView_4=[[UIView alloc] initWithFrame:CGRectMake(0, 682, WIDTH_SCREEN, 45)];
+   blockView_4=[[UIView alloc] initWithFrame:CGRectMake(0, 712, WIDTH_SCREEN, 45)];
    blockView_4.clipsToBounds=YES;
    blockView_4.backgroundColor=COLOR_WHITE;
    
@@ -606,6 +606,32 @@
     }];
     
     
+    UILabel *lbl_tip_222=[[UILabel alloc] init];
+    lbl_tip_222.textColor=COLOR_BLACK;
+    lbl_tip_222.font=FONT_SIZE_MIDDLE;
+    lbl_tip_222.text=@"配送费";
+    lbl_tip_222.textAlignment=NSTextAlignmentLeft;
+    [blockView_2 addSubview:lbl_tip_222];
+    
+    [lbl_tip_222 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_2.top).offset(70);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_shippingPrice=[[UILabel alloc] init];
+    lbl_shippingPrice.textColor=COLOR_BLACK;
+    lbl_shippingPrice.font=FONT_SIZE_MIDDLE;
+    lbl_shippingPrice.text=@"";
+    lbl_shippingPrice.textAlignment=NSTextAlignmentRight;
+    [blockView_2 addSubview:lbl_shippingPrice];
+    
+    [lbl_shippingPrice mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_2.top).offset(70);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.right.mas_equalTo(blockView_2.mas_right).offset(-10);
+    }];
+    
     UILabel *lbl_tip_33=[[UILabel alloc] init];
     lbl_tip_33.textColor=COLOR_BLACK;
     lbl_tip_33.font=FONT_SIZE_MIDDLE;
@@ -614,7 +640,7 @@
     [blockView_2 addSubview:lbl_tip_33];
     
     [lbl_tip_33 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_2.top).offset(70);
+        make.top.mas_equalTo(blockView_2.top).offset(100);
         make.size.mas_equalTo(CGSizeMake(100, 20));
         make.left.mas_equalTo(10);
     }];
@@ -627,7 +653,7 @@
     [blockView_2 addSubview:lbl_orderSum2];
     
     [lbl_orderSum2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_1.top).offset(70);
+        make.top.mas_equalTo(blockView_1.top).offset(100);
         make.size.mas_equalTo(CGSizeMake(100, 20));
         make.right.mas_equalTo(blockView_2.mas_right).offset(-10);
     }];
@@ -862,7 +888,7 @@
         table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR;
     }
     
-    if([self.task_entity.status intValue]==1||[self.task_entity.status intValue]==2){
+    if([self.task_entity respondsToSelector:@selector(status)]&&([self.task_entity.status intValue]==1||[self.task_entity.status intValue]==2)){
         table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR;
     }
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
@@ -1056,6 +1082,7 @@
         lbl_address.text=self.task_entity.address;
         lbl_deliverytime.text=self.task_entity.delivery_time;
         lbl_changePrice.text=[NSString stringWithFormat:@"$%@",self.task_entity.change_price];
+        lbl_shippingPrice.text=[NSString stringWithFormat:@"$%@",self.task_entity.shipping_fee];
         lbl_returnPrice.text=[NSString stringWithFormat:@"$%@",self.task_entity.return_price];
         lbl_orderSum2.text=[NSString stringWithFormat:@"$%.2f",([self.task_entity.order_amount floatValue]-[self.task_entity.return_price floatValue]+[self.task_entity.change_price floatValue])];
         if([self.task_entity.put_type intValue]==1){
@@ -1104,7 +1131,7 @@
     }else{
         blockView_5.frame= CGRectMake(0, 99, WIDTH_SCREEN,(lbl_freeze_packagenote.frame.origin.y+lbl_freeze_packagenote.frame.size.height+12));
         blockView_1.frame= CGRectMake(0, (blockView_5.frame.origin.y+blockView_5.size.height+12), WIDTH_SCREEN, 75);
-        blockView_2.frame= CGRectMake(0, (blockView_1.frame.origin.y+blockView_1.size.height+12), WIDTH_SCREEN, 100);
+        blockView_2.frame= CGRectMake(0, (blockView_1.frame.origin.y+blockView_1.size.height+12), WIDTH_SCREEN, 130);
         blockView_3.frame= CGRectMake(0, (blockView_2.frame.origin.y+blockView_2.size.height+12), WIDTH_SCREEN, 210);
         blockView_4.frame= CGRectMake(0, (blockView_3.frame.origin.y+blockView_3.size.height+12), WIDTH_SCREEN, 45);
         orderInfoView.frame=CGRectMake(0, 0, WIDTH_SCREEN, blockView_4.frame.origin.y+blockView_4.frame.size.height);
@@ -1170,13 +1197,35 @@
         cell.itemName=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].goods_name;
         cell.itemNum=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].goods_number;
         cell.itemImage=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].thumb_url;
-        cell.itemPrice=[[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].shop_price floatValue];
+        if([[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row] isPromote]){
+            cell.itemPrice=[[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].promote_price floatValue];
+            cell.isPromote=YES;
+        }else{
+            cell.itemPrice=[[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].shop_price floatValue];
+            cell.isPromote=NO;
+        }
+        
+        if([[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].is_fixed_point intValue]==1){
+            cell.isPromote=YES;
+        }
+        
     }
     else if(indexPath.section==1){
         cell.itemName=[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].goods_name;
         cell.itemNum=[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].goods_number;
         cell.itemImage=[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].thumb_url;
-        cell.itemPrice=[[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].shop_price floatValue];
+
+        if([[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row] isPromote]){
+            cell.itemPrice=[[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].promote_price floatValue];
+            cell.isPromote=YES;
+        }else{
+            cell.itemPrice=[[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].shop_price floatValue];
+            cell.isPromote=NO;
+        }
+        
+        if([[self.model.goods_entity.goods_list_alone objectAtIndex:indexPath.row].is_fixed_point intValue]==1){
+            cell.isPromote=YES;
+        }
     }
     
     return cell;

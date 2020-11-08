@@ -26,20 +26,7 @@
 }
 
 -(void)initData{
-    if(APP_DELEGATE.booter.lineEntity.list==nil){
-        LineItemEntity *line_1=[[LineItemEntity alloc] init];
-        line_1.title=@"主力线路";
-        line_1.url=@"http://api.bigau.com";
-        
-        LineItemEntity *line_2=[[LineItemEntity alloc] init];
-        line_2.title=@"备用线路";
-        line_2.url=@"http://api.bigausyd.com";
-        
-        NSArray<LineItemEntity*> *list=[[NSArray<LineItemEntity*> alloc] initWithObjects:line_1,line_2, nil];
-        LineEntity *entity=[LineEntity new];
-        entity.list=list;
-        APP_DELEGATE.booter.lineEntity=entity;
-    }
+    
 }
 
 -(void)initUI{

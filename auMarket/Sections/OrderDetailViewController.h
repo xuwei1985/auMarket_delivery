@@ -22,6 +22,7 @@
     UILabel *lbl_payType;
     UILabel *lbl_returnPrice;
     UILabel *lbl_changePrice;
+    UILabel *lbl_shippingPrice;
     UILabel *lbl_orderSum;
     UILabel *lbl_orderSum2;
     UILabel *lbl_orderNo;

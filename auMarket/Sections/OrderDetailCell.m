@@ -99,8 +99,11 @@
     [super layoutSubviews];
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:self.itemImage] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
     _itemLbl.text=self.itemName;
-    _priceLbl.text=[NSString stringWithFormat:@"$%.2f",self.itemPrice*[self.itemNum intValue]];
+    _priceLbl.text=[NSString stringWithFormat:@"$%.2f",self.itemPrice];
     _numLbl.text=[NSString stringWithFormat:@"%@件",self.itemNum];
+    
+    [_promoteMarkLbl setHidden:!self.isPromote];
+    
 }
 
 

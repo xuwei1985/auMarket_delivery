@@ -32,6 +32,7 @@
 @property (nonatomic,retain)NSString *return_price;
 @property (nonatomic,retain)NSString *return_price_pre;//系统根据订单金额计算的理论返现金额
 @property (nonatomic,retain)NSString *change_price;
+@property (nonatomic,retain)NSString *shipping_fee;
 @property(nonatomic,assign)CLLocationCoordinate2D coordinate;
 @property(nonatomic,retain)NSString *status;
 @property(nonatomic,retain)NSString *predict_sms_send;
