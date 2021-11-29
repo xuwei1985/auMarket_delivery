@@ -236,6 +236,8 @@
                     if([APP_DELEGATE.hotLine isEqualToString:[APP_DELEGATE.booter.lineEntity.list objectAtIndex:i].url]){
                         cell.itemPrice=[APP_DELEGATE.booter.lineEntity.list objectAtIndex:i].title;
                         break;
+                    }else{
+                        cell.itemPrice=@" ";
                     }
                 }
             }
