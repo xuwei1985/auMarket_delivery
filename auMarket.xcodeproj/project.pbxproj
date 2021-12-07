@@ -1307,7 +1307,7 @@
 				A95E10881DF80ED000660E42 /* Sources */,
 				A95E10891DF80ED000660E42 /* Frameworks */,
 				A95E108A1DF80ED000660E42 /* Resources */,
-				6D7515FF1EFEFF608DE7B4F7 /* [CP] Copy Pods Resources */,
+				4F0C4487C42343FFF34BD8CF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1499,7 +1499,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6D7515FF1EFEFF608DE7B4F7 /* [CP] Copy Pods Resources */ = {
+		4F0C4487C42343FFF34BD8CF /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1759,6 +1759,7 @@
 				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = K44WC33LW2;
 				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1766,10 +1767,10 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/auMarket/PrefixHeader.pch";
 				INFOPLIST_FILE = auMarket/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.4.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.delivery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1790,6 +1791,7 @@
 				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = K44WC33LW2;
 				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1797,7 +1799,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/auMarket/PrefixHeader.pch";
 				INFOPLIST_FILE = auMarket/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.delivery;

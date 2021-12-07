@@ -51,6 +51,21 @@
     [self.navigationController.navigationBar setShadowImage:nil];
     [self.navigationController.navigationBar setBarTintColor:COLOR_BG_NAVIGATION];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:COLOR_WHITE,NSFontAttributeName:FONT_SIZE_NAVIGATION}];
+    
+    //ios 15系统
+    if (@available(iOS 15.0, *)) {
+        UINavigationBarAppearance *appperance = [[UINavigationBarAppearance alloc]init];
+        //添加背景色
+        appperance.backgroundColor = COLOR_BG_NAVIGATION;
+        appperance.shadowImage = [[UIImage alloc]init];
+        appperance.shadowColor = nil;
+        //设置字体颜色大小
+        [appperance setTitleTextAttributes:@{NSForegroundColorAttributeName:COLOR_WHITE,NSFontAttributeName:FONT_SIZE_NAVIGATION}];
+ 
+        self.navigationController.navigationBar.standardAppearance = appperance;
+        self.navigationController.navigationBar.scrollEdgeAppearance = appperance;
+ 
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -282,7 +297,7 @@
             UILabel* subTitleLabel = [[UILabel alloc] init];
             subTitleLabel.textAlignment = NSTextAlignmentCenter;
             subTitleLabel.font = DEFAULT_FONT(12);
-            subTitleLabel.textColor = COLOR_FONT_GRAY;
+            subTitleLabel.textColor =  [UIColor colorWithRed:133./255. green:133./255. blue:133./255. alpha:1];
             subTitleLabel.numberOfLines = 0;
             subTitleLabel.tag = 103;
             [container addSubview:subTitleLabel];

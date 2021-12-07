@@ -158,7 +158,7 @@
     
     NSDictionary *params = self.params;
     if (self.contentTypes && self.contentTypes.count > 0) {//二进制提交
-        self.requestTask =[manager POST:requestAddress parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        self.requestTask =[manager POST:requestAddress parameters:nil headers:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             for (NSString *key in [self.params allKeys]) {
                 id value = [self.params objectForKey:key];
                 if ([value isKindOfClass:[NSData class]]) {
@@ -169,21 +169,45 @@
             }
         } progress:^(NSProgress * _Nonnull uploadProgress) {
             
-            
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [self onSuccess:task responseObject:responseObject];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [self onFailure:task error:error];
         }];
         
+//        self.requestTask =[manager POST:requestAddress parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//            for (NSString *key in [self.params allKeys]) {
+//                id value = [self.params objectForKey:key];
+//                if ([value isKindOfClass:[NSData class]]) {
+//                    [formData appendPartWithFileData:value name:key fileName:@"file" mimeType:[self.contentTypes objectForKey:key]];
+//                } else {
+//                    [formData appendPartWithFormData:[[NSString stringWithFormat:@"%@", value] dataUsingEncoding:NSUTF8StringEncoding] name:key];
+//                }
+//            }
+//        } progress:^(NSProgress * _Nonnull uploadProgress) {
+//            
+//            
+//        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//            [self onSuccess:task responseObject:responseObject];
+//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//            [self onFailure:task error:error];
+//        }];
+//        
     } else {
-        self.requestTask = [manager POST:requestAddress parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+        self.requestTask =[manager POST:requestAddress parameters:params headers:nil progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [self onSuccess:task responseObject:responseObject];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [self onFailure:task error:error];
         }];
+//        self.requestTask = [manager POST:requestAddress parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+//
+//        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//            [self onSuccess:task responseObject:responseObject];
+//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//            [self onFailure:task error:error];
+//        }];
     }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(onStartRequest:)])

@@ -32,6 +32,11 @@
     if (self) {
         self.hasNetWork=YES;
         [self checkIfLoginAccountIsValid];
+        if (@available(iOS 15.0, *)) {
+            [UITableView appearance].sectionHeaderTopPadding=0;
+        } else {
+            // Fallback on earlier versions
+        }
         APP_DELEGATE.isWorking=[USER_DEFAULT boolForKey:@"isWorking"];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAccountUpdate:) name:ACCOUNT_UPDATE_NOTIFICATION object:nil];
     }
