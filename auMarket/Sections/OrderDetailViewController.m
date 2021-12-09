@@ -521,7 +521,7 @@
     
     [lbl_payType mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_1.top).offset(10);
-        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.size.mas_equalTo(CGSizeMake(150, 20));
         make.right.mas_equalTo(blockView_1.mas_right).offset(-10);
     }];
     

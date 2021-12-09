@@ -26,6 +26,9 @@
     self = [super init];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
+        
+        
+              
     }
     return self;
 }
@@ -51,6 +54,7 @@
     [self.navigationController.navigationBar setShadowImage:nil];
     [self.navigationController.navigationBar setBarTintColor:COLOR_BG_NAVIGATION];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:COLOR_WHITE,NSFontAttributeName:FONT_SIZE_NAVIGATION}];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
