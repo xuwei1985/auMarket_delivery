@@ -14,7 +14,7 @@
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright (c) 2011–2016 Alamofire Software Foundation (http://alamofire.org/)
+			<string>Copyright (c) 2011-2020 Alamofire Software Foundation (http://alamofire.org/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright 2018 Google</string>
+			<string>Copyright 2021 Google</string>
 			<key>License</key>
 			<string>Copyright</string>
 			<key>Title</key>
@@ -87,16 +87,6 @@ THE SOFTWARE.
 			<string>MIT</string>
 			<key>Title</key>
 			<string>MJRefresh</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>Copyright © 2012-2018 mob</string>
-			<key>License</key>
-			<string>Copyright © 2012-2018 mob.com</string>
-			<key>Title</key>
-			<string>MOBFoundation</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -191,17 +181,6 @@ respective headers for the terms of their individual licenses.
 			<string>MIT</string>
 			<key>Title</key>
 			<string>SVProgressHUD</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>Copyright © 2012-2016 mob
-</string>
-			<key>License</key>
-			<string>MIT</string>
-			<key>Title</key>
-			<string>ShareSDK3</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -431,17 +410,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 			<string>MIT</string>
 			<key>Title</key>
 			<string>UICKeyChainStore</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>Copyright 2011 - 2015 UMeng.com. All rights reserved.
-</string>
-			<key>License</key>
-			<string>Copyright</string>
-			<key>Title</key>
-			<string>UMengAnalytics-NO-IDFA</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>

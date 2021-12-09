@@ -32,6 +32,11 @@
     if (self) {
         self.hasNetWork=YES;
         [self checkIfLoginAccountIsValid];
+        if (@available(iOS 15.0, *)) {
+            [UITableView appearance].sectionHeaderTopPadding=0;
+        } else {
+            // Fallback on earlier versions
+        }
         APP_DELEGATE.isWorking=[USER_DEFAULT boolForKey:@"isWorking"];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAccountUpdate:) name:ACCOUNT_UPDATE_NOTIFICATION object:nil];
     }
@@ -168,24 +173,6 @@
     }
 }
 
-//启动友盟
--(void)bootUMeng
-{
-    #ifdef DEBUG
-    [UMAnalyticsConfig sharedInstance].ePolicy=REALTIME;
-    #else
-    [UMAnalyticsConfig sharedInstance].ePolicy=BATCH;
-    //加密
-    //[[UMAnalyticsConfig sharedInstance] setEncryptEnabled:YES];
-    #endif
-    
-    [MobClick setCrashReportEnabled:YES];
-    UMConfigInstance.appKey = UMENG_KEY;
-    UMConfigInstance.channelId = UMENG_CHANNEL_ID;
-    [MobClick setAppVersion:SYSTEM_VERSION_STRING];
-    [MobClick startWithConfigure:UMConfigInstance];//配置以上参数后调用此方法初始化SDK！
-
-}
 
 //启动极光推送
 -(void)bootJPush:(NSDictionary *)launchOptions{

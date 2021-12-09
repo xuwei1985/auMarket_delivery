@@ -213,7 +213,7 @@
         cell.accessoryType=UITableViewCellAccessoryNone;
         cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
         cell.textLabel.backgroundColor = [UIColor clearColor];
-        cell.textLabel.font=DEFAULT_FONT(16.0);
+        cell.textLabel.font=DEFAULT_FONT(14.0);
         cell.textLabel.textColor=COLOR_DARKGRAY;
     }
     

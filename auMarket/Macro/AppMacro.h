@@ -29,14 +29,10 @@ return __singleton__; \
 #ifdef DEBUG//测试
     #define SERVER_ADDRESS        @"http://dev.kouzibuy.com"
     #define SERVER_HTTP_ADDRESS   @"http://dev.kouzibuy.com"
-//    #define SERVER_ADDRESS        @"http://api_dev.kouzibuy.com"
-//    #define SERVER_HTTP_ADDRESS   @"http://api_dev.kouzibuy.com"
 
 #else//正式
-    #define SERVER_ADDRESS        @"http://dev.kouzibuy.com"
-    #define SERVER_HTTP_ADDRESS   @"http://dev.kouzibuy.com"
-//    #define SERVER_ADDRESS          @"https://api.bigau.com"
-//    #define SERVER_HTTP_ADDRESS     @"https://api.bigau.com"
+    #define SERVER_ADDRESS          @"https://api.bigau.com"
+    #define SERVER_HTTP_ADDRESS     @"https://api.bigau.com"
 
 #endif
 

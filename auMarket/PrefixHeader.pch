@@ -33,7 +33,6 @@
 #import "NSArray+IDPExtension.h"
 #import "NSDictionary+IDPExtension.h"
 #import "NSString+YP.h"
-#import "UMMobClick/MobClick.h"
 #import "SPBaseViewController.h"
 #import "SPBaseTableViewCell.h"
 #import "SPBaseTableView.h"

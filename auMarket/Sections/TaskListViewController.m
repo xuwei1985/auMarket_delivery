@@ -88,7 +88,7 @@
 
 -(void)createTaskCategoryButtons{
     UIView *taskCategoeryBar=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, SEGMENTVIEW_HEIGHT)];
-    taskCategoeryBar.backgroundColor=RGBCOLOR(240, 240, 240);
+    taskCategoeryBar.backgroundColor=RGBCOLOR(255, 255, 255);
     [self.view addSubview:taskCategoeryBar];
     
     btn_waitDelivery=[[UIButton alloc] initWithFrame:CGRectMake(TASK_CATEGORY_EDGE+TASK_CATEGORY_GAP*0+TASK_CATEGORY_WIDTH*0, 0, TASK_CATEGORY_WIDTH, SEGMENTVIEW_HEIGHT)];
@@ -148,10 +148,13 @@
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
     self.tableView.backgroundColor=COLOR_BG_TABLEVIEW;
     self.tableView.tag=999;
+    self.tableView.sectionFooterHeight = 0;
+    self.tableView.sectionHeaderHeight = 0;
     
     UIView *view = [UIView new];
     view.backgroundColor = COLOR_CLEAR;
     [self.tableView setTableFooterView:view];
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, CGFLOAT_MIN)];
     [self.view addSubview:self.tableView];
 }
 
@@ -416,6 +419,7 @@
     
     list_status_modal=(int)sender.tag-1000;
     if(list_status_modal==Delivery_Status_Delivering){
+        NSLog(@"tasklist_delivering=>%@",APP_DELEGATE.booter.tasklist_delivering);
         if([APP_DELEGATE.booter.tasklist_delivering count]<=0){
             [self showNoContentView];
         }
@@ -542,17 +546,17 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if(list_show_model==1){
-        return 0;
+        return 0.1;
     }
     if(tableView.tag<5000){
         return SECTION_HEADER_HEIGHT+15;
     }
-    return 0;
+    return 0.1;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if(list_show_model==1){
-        return 0;
+        return nil;
     }
     if(tableView.tag<5000){
         TaskItemEntity *entity;
@@ -576,7 +580,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     if(list_show_model==1){
-        return 0;
+        return 0.1;
     }
     if(tableView.tag<5000){
         int n=0;
@@ -599,7 +603,7 @@
         }
         return height;
     }
-    return 0;
+    return 0.1;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
