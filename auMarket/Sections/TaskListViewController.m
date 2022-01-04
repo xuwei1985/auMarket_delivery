@@ -24,7 +24,7 @@
     [super viewDidLoad];
     [self initData];
     [self initUI];
-    [self addNotification];
+    //[self addNotification];
 }
 
 
@@ -155,6 +155,20 @@
     view.backgroundColor = COLOR_CLEAR;
     [self.tableView setTableFooterView:view];
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, CGFLOAT_MIN)];
+    
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self loadTaskList];
+    }];
+    [header setTitle:@"已经全部加载" forState:MJRefreshStateNoMoreData];
+    [header setTitle:@"正在加载数据" forState:MJRefreshStateRefreshing];
+    [header setTitle:@"更新完成" forState:MJRefreshStatePulling];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.tableView.mj_header = header;
+    //写在成功失败请求数据回来
+    [self.tableView.mj_header endRefreshing];
+    [self.tableView setEstimatedRowHeight: 0.0];
+    [self.tableView setEstimatedSectionHeaderHeight:0.0];
+    [self.tableView setEstimatedSectionFooterHeight:0.0];
     [self.view addSubview:self.tableView];
 }
 

@@ -275,10 +275,10 @@
         [SVProgressHUD showInfoWithStatus:@"请输入密码"];
         return NO;
     }
-//    else if ([_codeText.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].length<=0) {
-//        [SVProgressHUD showInfoWithStatus:@"请输入验证码"];
-//        return NO;
-//    }
+    else if ([_codeText.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].length<=0) {
+        [SVProgressHUD showInfoWithStatus:@"请输入验证码"];
+        return NO;
+    }
     return YES;
 }
 
