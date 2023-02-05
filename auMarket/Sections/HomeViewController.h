@@ -13,6 +13,7 @@
 #import "TaskListViewController.h"
 #import "TaskModel.h"
 #import "SmsTaskViewController.h"
+#import "UserCenterViewController.h"
 
 @interface HomeViewController : SPBaseViewController<GMSMapViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate>
 {

@@ -88,26 +88,40 @@
 }
 
 -(void)setNavigation{
-    UIButton *btn_l = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_l.frame= CGRectMake(0, 0, 32, 32);
-    [btn_l setImage:[UIImage imageNamed:@"task"] forState:UIControlStateNormal];
-    [btn_l addTarget:self action:@selector(gotoSmsTaskView) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *btn_l_1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn_l_1.frame= CGRectMake(0, 0, 24, 24);
+    [btn_l_1 setImage:[UIImage imageNamed:@"task"] forState:UIControlStateNormal];
+    [btn_l_1 addTarget:self action:@selector(gotoSmsTaskView) forControlEvents:UIControlEventTouchUpInside];
     
+    
+    UIButton *btn_l_2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn_l_2.frame= CGRectMake(0, 0, 24, 24);
+    [btn_l_2 setImage:[UIImage imageNamed:@"section_time_0"] forState:UIControlStateNormal];
+    btn_l_2.imageEdgeInsets = UIEdgeInsetsMake(2, 10, 2, 0);
+    [btn_l_2 addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
 //    UIButton *btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
 //    btn_r.frame= CGRectMake(0, 0, 32, 32);
 //    [btn_r setImage:[UIImage imageNamed:@"1_09"] forState:UIControlStateNormal];
 //    [btn_r setImage:[UIImage imageNamed:@"1_21"] forState:UIControlStateSelected];
 //    [btn_r addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem *btn_left = [[UIBarButtonItem alloc] initWithCustomView:btn_l];
-    self.navigationItem.leftBarButtonItem =btn_left;
+    UIBarButtonItem *btn_left_1 = [[UIBarButtonItem alloc] initWithCustomView:btn_l_1];
+    UIBarButtonItem *btn_left_2 = [[UIBarButtonItem alloc] initWithCustomView:btn_l_2];
+    NSArray *leftButtonItems = @[btn_left_1, btn_left_2];
+    self.navigationItem.leftBarButtonItems =leftButtonItems;
+    
+//    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:nil];
+//    UIBarButtonItem *cameraItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:nil];
+//
+//    NSArray *actionButtonItems = @[shareItem, cameraItem];
+//    self.navigationItem.rightBarButtonItems = actionButtonItems;
     
     
     btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_r.frame= CGRectMake(0, 0, 32, 32);
-    [btn_r setImage:[UIImage imageNamed:@"section_time_0"] forState:UIControlStateNormal];
-    btn_r.imageEdgeInsets = UIEdgeInsetsMake(2, 10, 2, 0);
-    [btn_r addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
+    btn_r.frame= CGRectMake(0, 0, 30, 30);
+    [btn_r setImage:[UIImage imageNamed:@"member"] forState:UIControlStateNormal];
+    btn_r.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    [btn_r addTarget:self action:@selector(gotoMemberView:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:btn_r];
     self.navigationItem.rightBarButtonItem =btn_right;
@@ -995,6 +1009,12 @@
     SmsTaskViewController *svc=[[SmsTaskViewController alloc] init];
     [self.navigationController pushViewController:svc animated:YES];
 }
+
+-(void)gotoMemberView{
+    UserCenterViewController *svc=[[UserCenterViewController alloc] init];
+    [self.navigationController pushViewController:svc animated:YES];
+}
+
 
 -(void)cacheDeliveryData{
     NSUserDefaults *cache=USER_DEFAULT;
