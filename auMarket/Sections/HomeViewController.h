@@ -30,6 +30,8 @@
     UIPickerView *predictTimePicker;
     Boolean isShowing;
     Boolean isExchangeModel;
+    UIButton *btn_l_1;
+    UIButton *btn_l_2;
     UIButton *btn_r;
     UITextField *_txt_predict;
     int predict_select_index;

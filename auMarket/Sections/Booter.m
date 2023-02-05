@@ -13,6 +13,7 @@
 #import "TaskListViewController.h"
 #import "PickOrderViewController.h"
 #import "PickFreezeOrderViewController.h"
+#import "PickFoodOrderViewController.h"
 
 @interface Booter() 
 {
@@ -21,6 +22,7 @@
     PickOrderViewController* pickOrderViewController;
     UserCenterViewController* userCenterViewController;
     PickFreezeOrderViewController *pickFreezeOrderViewController;
+    PickFoodOrderViewController *pickFoodOrderViewController;
 }
 @end
 
@@ -74,18 +76,23 @@
     
     pickFreezeOrderViewController = [[PickFreezeOrderViewController alloc] init];
     pickFreezeOrderViewController.hidesBottomBarWhenPushed = NO;
-    pickFreezeOrderViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"生鲜上货" image:[UIImage imageNamed:@"sssh"] selectedImage:[UIImage imageNamed:@"sssh_on"]];
+    pickFreezeOrderViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"冷冻上货" image:[UIImage imageNamed:@"sssh"] selectedImage:[UIImage imageNamed:@"sssh_on"]];
+    
+    pickFoodOrderViewController = [[PickFoodOrderViewController alloc] init];
+    pickFoodOrderViewController.hidesBottomBarWhenPushed = NO;
+    pickFoodOrderViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"熟食上货" image:[UIImage imageNamed:@"ssssh"] selectedImage:[UIImage imageNamed:@"ssssh_on"]];
     
     SPNavigationController *navHomeViewController = [[SPNavigationController alloc] initWithRootViewController:homeViewController];
     SPNavigationController *navTaskListViewController = [[SPNavigationController alloc] initWithRootViewController:taskListViewController];
     SPNavigationController *navUserCenterViewController = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
     SPNavigationController *navPickViewController = [[SPNavigationController alloc] initWithRootViewController:pickOrderViewController];
     SPNavigationController *navPickFreezeViewController = [[SPNavigationController alloc] initWithRootViewController:pickFreezeOrderViewController];
+    SPNavigationController *navPickFoodViewController = [[SPNavigationController alloc] initWithRootViewController:pickFoodOrderViewController];
   
     self.tabBarController = [[SPTabBarController alloc] init];
     self.tabBarController.tabBar.translucent = NO;
     self.tabBarController.tabBar.tintColor = COLOR_FONT_MAIN;
-    [self.tabBarController setViewControllers:@[navHomeViewController,navTaskListViewController,navPickViewController,navPickFreezeViewController,navUserCenterViewController]];
+    [self.tabBarController setViewControllers:@[navHomeViewController,navTaskListViewController,navPickViewController,navPickFreezeViewController,navPickFoodViewController]];
     self.tabBarController.selectedIndex = 0;
     self.tabBarController.delegate = self;
     

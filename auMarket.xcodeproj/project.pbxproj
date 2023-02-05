@@ -44,6 +44,10 @@
 		A91D843A1F665EC600DF69EF /* TaskListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A91D84391F665EC600DF69EF /* TaskListViewController.m */; };
 		A91FAC011E026F4300D6FACC /* c1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A91FABFF1E026F4300D6FACC /* c1@2x.png */; };
 		A91FAC021E026F4300D6FACC /* c2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A91FAC001E026F4300D6FACC /* c2@2x.png */; };
+		A9297F15298FA2EB006DE3AC /* yonghu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9297F14298FA2EB006DE3AC /* yonghu@2x.png */; };
+		A9297F18298FA6DC006DE3AC /* PickFoodOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9297F16298FA6DC006DE3AC /* PickFoodOrderViewController.m */; };
+		A9297F1A298FA9B2006DE3AC /* ssssh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9297F19298FA9B2006DE3AC /* ssssh@2x.png */; };
+		A9297F1C298FF0F7006DE3AC /* ssssh_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9297F1B298FF0F7006DE3AC /* ssssh_on@2x.png */; };
 		A93D98EA22F5CCCD004D5AEB /* ReturnProofViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A93D98E922F5CCCD004D5AEB /* ReturnProofViewController.m */; };
 		A940EE5F1F7127BC00A1BD4A /* OrderGoodsEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A940EE5C1F71217400A1BD4A /* OrderGoodsEntity.m */; };
 		A942999A1F72BB840078A9AE /* MemberChargeEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A94299991F72BB840078A9AE /* MemberChargeEntity.m */; };
@@ -300,6 +304,11 @@
 		A91D84391F665EC600DF69EF /* TaskListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskListViewController.m; sourceTree = "<group>"; };
 		A91FABFF1E026F4300D6FACC /* c1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c1@2x.png"; sourceTree = "<group>"; };
 		A91FAC001E026F4300D6FACC /* c2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c2@2x.png"; sourceTree = "<group>"; };
+		A9297F14298FA2EB006DE3AC /* yonghu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yonghu@2x.png"; sourceTree = "<group>"; };
+		A9297F16298FA6DC006DE3AC /* PickFoodOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickFoodOrderViewController.m; sourceTree = "<group>"; };
+		A9297F17298FA6DC006DE3AC /* PickFoodOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickFoodOrderViewController.h; sourceTree = "<group>"; };
+		A9297F19298FA9B2006DE3AC /* ssssh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ssssh@2x.png"; sourceTree = "<group>"; };
+		A9297F1B298FF0F7006DE3AC /* ssssh_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ssssh_on@2x.png"; sourceTree = "<group>"; };
 		A93D98E822F5CCCC004D5AEB /* ReturnProofViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnProofViewController.h; sourceTree = "<group>"; };
 		A93D98E922F5CCCD004D5AEB /* ReturnProofViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnProofViewController.m; sourceTree = "<group>"; };
 		A940EE5C1F71217400A1BD4A /* OrderGoodsEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderGoodsEntity.m; sourceTree = "<group>"; };
@@ -1040,6 +1049,8 @@
 		A9E0C1FA20E9D53400874609 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A9297F17298FA6DC006DE3AC /* PickFoodOrderViewController.h */,
+				A9297F16298FA6DC006DE3AC /* PickFoodOrderViewController.m */,
 				A98C7B05243C52F40084543A /* PickFreezeOrderViewController.h */,
 				A98C7B06243C52F40084543A /* PickFreezeOrderViewController.m */,
 				A9E0C1FE20E9D54F00874609 /* PickOrderViewController.h */,
@@ -1148,8 +1159,11 @@
 		A9FBC1C61DF93838005ECDDE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A9297F19298FA9B2006DE3AC /* ssssh@2x.png */,
+				A9297F14298FA2EB006DE3AC /* yonghu@2x.png */,
 				A992D87B2445EF5E003C8DFA /* sssh_on@2x.png */,
 				A992D87C2445EF5E003C8DFA /* sssh@2x.png */,
+				A9297F1B298FF0F7006DE3AC /* ssssh_on@2x.png */,
 				A91AEDDB2412A79E00988A87 /* 01_03.png */,
 				A91AEDDC2412A79E00988A87 /* 01_10.png */,
 				A91AEDDE2412A79E00988A87 /* 01_12.png */,
@@ -1425,6 +1439,7 @@
 				A9187C1C1DF9B42400A3E902 /* home_s@2x.png in Resources */,
 				A9807F5A23012FB2003FB76C /* list_model_0@2x.png in Resources */,
 				A9D3543B1E08F1FA006D265D /* cart_white@2x.png in Resources */,
+				A9297F15298FA2EB006DE3AC /* yonghu@2x.png in Resources */,
 				A982F79A1E1107DA00DB4C13 /* grayline@2x.png in Resources */,
 				A9A5B42F212C0ED60000A738 /* 1_29_up@2x.png in Resources */,
 				A900772B20EB6D4000F269D7 /* c_box@2x.png in Resources */,
@@ -1482,7 +1497,9 @@
 				A9BAD9D42230EC02009E1311 /* 1_29_color_1_up@2x.png in Resources */,
 				A9187C1E1DF9B42400A3E902 /* home@3x.png in Resources */,
 				A9F4DACF1F68390F00D71774 /* MJPhotoBrowser.bundle in Resources */,
+				A9297F1C298FF0F7006DE3AC /* ssssh_on@2x.png in Resources */,
 				A9D3546F1E0976E6006D265D /* icon_infomation@2x.png in Resources */,
+				A9297F1A298FA9B2006DE3AC /* ssssh@2x.png in Resources */,
 				A9187C2D1DF9B6B900A3E902 /* member@3x.png in Resources */,
 				A9187C1F1DF9B42400A3E902 /* home@2x.png in Resources */,
 				A9BAD9F22230F3D6009E1311 /* section_time_1@2x.png in Resources */,
@@ -1548,6 +1565,7 @@
 			files = (
 				A95E116E1DF851EA00660E42 /* SPTabBarItem.m in Sources */,
 				A9F5603B1FFBCC8900EA8116 /* WebViewController.m in Sources */,
+				A9297F18298FA6DC006DE3AC /* PickFoodOrderViewController.m in Sources */,
 				A90BF2911F6FDA570001A49E /* BooterModel.m in Sources */,
 				A9F4DAD21F68390F00D71774 /* MJPhotoProgressView.m in Sources */,
 				A95E113F1DF8491600660E42 /* NSData+IDPExtension.m in Sources */,

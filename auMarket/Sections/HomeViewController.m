@@ -88,16 +88,17 @@
 }
 
 -(void)setNavigation{
-    UIButton *btn_l_1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn_l_1 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_l_1.frame= CGRectMake(0, 0, 24, 24);
+    btn_l_2.imageEdgeInsets = UIEdgeInsetsMake(0, -2, 4, 0);
     [btn_l_1 setImage:[UIImage imageNamed:@"task"] forState:UIControlStateNormal];
     [btn_l_1 addTarget:self action:@selector(gotoSmsTaskView) forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton *btn_l_2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn_l_2 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_l_2.frame= CGRectMake(0, 0, 24, 24);
     [btn_l_2 setImage:[UIImage imageNamed:@"section_time_0"] forState:UIControlStateNormal];
-    btn_l_2.imageEdgeInsets = UIEdgeInsetsMake(2, 10, 2, 0);
+    btn_l_2.imageEdgeInsets = UIEdgeInsetsMake(2, 4, 2, 0);
     [btn_l_2 addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
 //    UIButton *btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
 //    btn_r.frame= CGRectMake(0, 0, 32, 32);
@@ -118,10 +119,10 @@
     
     
     btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_r.frame= CGRectMake(0, 0, 30, 30);
-    [btn_r setImage:[UIImage imageNamed:@"member"] forState:UIControlStateNormal];
-    btn_r.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    [btn_r addTarget:self action:@selector(gotoMemberView:) forControlEvents:UIControlEventTouchUpInside];
+    btn_r.frame= CGRectMake(0, 0, 36, 36);
+    [btn_r setImage:[UIImage imageNamed:@"yonghu"] forState:UIControlStateNormal];
+    btn_r.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 4, 0);
+    [btn_r addTarget:self action:@selector(gotoMemberView) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:btn_r];
     self.navigationItem.rightBarButtonItem =btn_right;
@@ -945,7 +946,7 @@
     if(showSections>2){
         showSections=0;
     }
-    [btn_r setImage:[UIImage imageNamed:[NSString stringWithFormat:@"section_time_%d",showSections]] forState:UIControlStateNormal];
+    [btn_l_2 setImage:[UIImage imageNamed:[NSString stringWithFormat:@"section_time_%d",showSections]] forState:UIControlStateNormal];
     
     if(showSections<2){//分时段模式开启
         [self setSectionButtonState:1];//设置时间段为亮起

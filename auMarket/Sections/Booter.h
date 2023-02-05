@@ -51,8 +51,6 @@
 // 初始化启动广告页
 -(UIViewController*)bootStartPage;
 -(void)registRemoteNotification;
-//初始化UMeng统计
--(void)bootUMeng;
 //初始化极光推送
 -(void)bootJPush:(NSDictionary *)launchOptions;
 //处理工作状态

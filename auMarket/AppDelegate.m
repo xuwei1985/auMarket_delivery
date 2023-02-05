@@ -40,7 +40,6 @@
     [self.booter loadTaskList];
     [self.booter loadParkingList];
 //    [self.booter bootJPush:launchOptions];
-//    [self.booter bootUMeng];
     
     // 当前版本第一次启动开启引导页
 //    NSString* introVer = [USER_DEFAULT stringForKey:APP_INTRO_VER];
