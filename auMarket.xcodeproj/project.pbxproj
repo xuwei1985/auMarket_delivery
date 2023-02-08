@@ -48,6 +48,7 @@
 		A9297F18298FA6DC006DE3AC /* PickFoodOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9297F16298FA6DC006DE3AC /* PickFoodOrderViewController.m */; };
 		A9297F1A298FA9B2006DE3AC /* ssssh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9297F19298FA9B2006DE3AC /* ssssh@2x.png */; };
 		A9297F1C298FF0F7006DE3AC /* ssssh_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9297F1B298FF0F7006DE3AC /* ssssh_on@2x.png */; };
+		A9372AC129929CE1007C2E05 /* c_food@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9372AC029929CE1007C2E05 /* c_food@2x.png */; };
 		A93D98EA22F5CCCD004D5AEB /* ReturnProofViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A93D98E922F5CCCD004D5AEB /* ReturnProofViewController.m */; };
 		A940EE5F1F7127BC00A1BD4A /* OrderGoodsEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A940EE5C1F71217400A1BD4A /* OrderGoodsEntity.m */; };
 		A942999A1F72BB840078A9AE /* MemberChargeEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A94299991F72BB840078A9AE /* MemberChargeEntity.m */; };
@@ -309,6 +310,7 @@
 		A9297F17298FA6DC006DE3AC /* PickFoodOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickFoodOrderViewController.h; sourceTree = "<group>"; };
 		A9297F19298FA9B2006DE3AC /* ssssh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ssssh@2x.png"; sourceTree = "<group>"; };
 		A9297F1B298FF0F7006DE3AC /* ssssh_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ssssh_on@2x.png"; sourceTree = "<group>"; };
+		A9372AC029929CE1007C2E05 /* c_food@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c_food@2x.png"; sourceTree = "<group>"; };
 		A93D98E822F5CCCC004D5AEB /* ReturnProofViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnProofViewController.h; sourceTree = "<group>"; };
 		A93D98E922F5CCCD004D5AEB /* ReturnProofViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnProofViewController.m; sourceTree = "<group>"; };
 		A940EE5C1F71217400A1BD4A /* OrderGoodsEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderGoodsEntity.m; sourceTree = "<group>"; };
@@ -1159,6 +1161,7 @@
 		A9FBC1C61DF93838005ECDDE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A9372AC029929CE1007C2E05 /* c_food@2x.png */,
 				A9297F19298FA9B2006DE3AC /* ssssh@2x.png */,
 				A9297F14298FA2EB006DE3AC /* yonghu@2x.png */,
 				A992D87B2445EF5E003C8DFA /* sssh_on@2x.png */,
@@ -1379,6 +1382,7 @@
 			files = (
 				A9D354661E0976CB006D265D /* icon_user@2x.png in Resources */,
 				A9BAD9D52230EC02009E1311 /* 1_29_color_1_down@2x.png in Resources */,
+				A9372AC129929CE1007C2E05 /* c_food@2x.png in Resources */,
 				A9FBC1E11DF94973005ECDDE /* category_s@2x.png in Resources */,
 				A9F4DA911F658AFE00D71774 /* 1_53@2x.png in Resources */,
 				A9A5B42C212C0ED60000A738 /* 1_29_blue_down@2x.png in Resources */,

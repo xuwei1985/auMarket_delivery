@@ -36,7 +36,7 @@
 }
 
 -(void)setNavigation{
-    self.title=@"生鲜上货";
+    self.title=@"冷冻上货";
     
     doneBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
     [doneBtn addTarget:self action:@selector(finishPicking) forControlEvents:UIControlEventTouchUpInside];

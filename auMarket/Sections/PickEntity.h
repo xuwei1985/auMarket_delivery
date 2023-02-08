@@ -30,6 +30,7 @@
 
 @property (nonatomic,retain) NSString *default_package;
 @property (nonatomic,retain) NSString *box_package;
+@property (nonatomic,retain) NSString *food_package;
 @property (nonatomic,retain) NSString *freeze_package;
 @property (nonatomic,retain) NSString *refrigerate_package;
 @property (nonatomic,retain) NSString *meat_package;
@@ -39,9 +40,11 @@
 @property (nonatomic,retain) NSString *freeze_number;
 @property (nonatomic,retain) NSString *refrigerate_number;
 @property (nonatomic,retain) NSString *meat_number;
+@property (nonatomic,retain) NSString *food_number;
 
 @property (nonatomic,retain) NSString *default_package_pick;
 @property (nonatomic,retain) NSString *box_package_pick;
+@property (nonatomic,retain) NSString *food_package_pick;
 @property (nonatomic,retain) NSString *freeze_package_pick;
 @property (nonatomic,retain) NSString *refrigerate_package_pick;
 @property (nonatomic,retain) NSString *meat_package_pick;
@@ -52,6 +55,7 @@
 @property (nonatomic,retain) NSString *package_note;
 @property (nonatomic,retain) NSString *service_note;
 @property (nonatomic,retain) NSString *package_freeze_note;
+@property (nonatomic,retain) NSString *package_food_note;
 @property (nonatomic,retain) NSArray<DeliveryInfoEntity*> *delivery_info;
 
 @end

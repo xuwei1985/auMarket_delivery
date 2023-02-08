@@ -55,7 +55,7 @@
 //上货列表点击订单详情的信息板
 -(void)createOrderInfoView2{
     ////////////////blockView_21///////////////
-    blockView_21=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 160)];
+    blockView_21=[[UIView alloc] initWithFrame:CGRectMake(0, 12, WIDTH_SCREEN, 220)];
     blockView_21.backgroundColor=COLOR_WHITE;
     
     lbl_service_title=[[UILabel alloc] init];
@@ -104,7 +104,7 @@
     lbl_freeze_package_title=[[UILabel alloc] init];
     lbl_freeze_package_title.textColor=COLOR_BLACK;
     lbl_freeze_package_title.font=FONT_SIZE_MIDDLE;
-    lbl_freeze_package_title.text=@"生鲜打包留言:";
+    lbl_freeze_package_title.text=@"冷冻打包留言:";
     lbl_freeze_package_title.textAlignment=NSTextAlignmentLeft;
     [blockView_21 addSubview:lbl_freeze_package_title];
     
@@ -121,6 +121,27 @@
     lbl_freeze_packagenote.text=@"暂无留言";
     lbl_freeze_packagenote.textAlignment=NSTextAlignmentLeft;
     [blockView_21 addSubview:lbl_freeze_packagenote];
+    
+    lbl_food_package_title=[[UILabel alloc] init];
+    lbl_food_package_title.textColor=COLOR_BLACK;
+    lbl_food_package_title.font=FONT_SIZE_MIDDLE;
+    lbl_food_package_title.text=@"熟食打包留言:";
+    lbl_food_package_title.textAlignment=NSTextAlignmentLeft;
+    [blockView_21 addSubview:lbl_food_package_title];
+    
+    [lbl_food_package_title mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_freeze_packagenote.mas_bottom).offset(5);
+        make.size.mas_equalTo(CGSizeMake(120, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_food_packagenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 178, WIDTH_SCREEN-20, 20)];
+    lbl_food_packagenote.textColor=COLOR_GRAY;
+    lbl_food_packagenote.font=FONT_SIZE_MIDDLE;
+    lbl_food_packagenote.numberOfLines=0;
+    lbl_food_packagenote.text=@"暂无留言";
+    lbl_food_packagenote.textAlignment=NSTextAlignmentLeft;
+    [blockView_21 addSubview:lbl_food_packagenote];
     
     blockView_22=[[UIView alloc] initWithFrame:CGRectMake(0, blockView_21.frame.size.height+12+12, WIDTH_SCREEN, 200)];
     blockView_22.backgroundColor=COLOR_WHITE;
@@ -421,6 +442,8 @@
             lbl_package_item.backgroundColor=[UIColor colorWithString:@"#4251FF"];
         }else if([[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"冷藏包裹"]){
             lbl_package_item.backgroundColor=[UIColor colorWithString:@"#04ABFF"];
+        }else if([[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"熟食包裹"]){
+            lbl_package_item.backgroundColor=[UIColor colorWithString:@"#ff6400"];
         }else{
             lbl_package_item.backgroundColor=[UIColor colorWithString:@"#E94132"];
         }
@@ -478,7 +501,7 @@
     lbl_freeze_package_title=[[UILabel alloc] init];
     lbl_freeze_package_title.textColor=COLOR_BLACK;
     lbl_freeze_package_title.font=FONT_SIZE_MIDDLE;
-    lbl_freeze_package_title.text=@"生鲜打包留言:";
+    lbl_freeze_package_title.text=@"冷冻打包留言:";
     lbl_freeze_package_title.textAlignment=NSTextAlignmentLeft;
     [blockView_5 addSubview:lbl_freeze_package_title];
     
@@ -497,6 +520,27 @@
     lbl_freeze_packagenote.textAlignment=NSTextAlignmentLeft;
     [blockView_5 addSubview:lbl_freeze_packagenote];
     
+    
+    lbl_food_package_title=[[UILabel alloc] init];
+    lbl_food_package_title.textColor=COLOR_BLACK;
+    lbl_food_package_title.font=FONT_SIZE_MIDDLE;
+    lbl_food_package_title.text=@"熟食打包留言:";
+    lbl_food_package_title.textAlignment=NSTextAlignmentLeft;
+    [blockView_5 addSubview:lbl_food_package_title];
+    
+    [lbl_food_package_title mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(lbl_freeze_packagenote.mas_bottom).offset(5);
+        make.size.mas_equalTo(CGSizeMake(120, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_food_packagenote=[[UILabel alloc] initWithFrame:CGRectMake(10, 216, WIDTH_SCREEN-20, 20)];
+    lbl_food_packagenote.textColor=COLOR_GRAY;
+    lbl_food_packagenote.font=FONT_SIZE_MIDDLE;
+    lbl_food_packagenote.numberOfLines=0;
+    lbl_food_packagenote.text=@"暂无留言";
+    lbl_food_packagenote.textAlignment=NSTextAlignmentLeft;
+    [blockView_5 addSubview:lbl_food_packagenote];
     
     ////////////////blockView_1///////////////
     UILabel *lbl_tip_1=[[UILabel alloc] init];
@@ -1123,13 +1167,20 @@
     lbl_freeze_packagenote.frame=CGRectMake(10, (lbl_packagenote.frame.origin.y+lbl_packagenote.frame.size.height+25+5), WIDTH_SCREEN-20, 20);
     [lbl_freeze_packagenote sizeToFit];
     
+    if(self.task_entity.package_food_note.length>0){
+        lbl_food_packagenote.textColor=[Common hexColor:@"#E4484A"];
+        lbl_food_packagenote.text=[NSString stringWithFormat:@"%@",self.task_entity.package_food_note];
+    }
+    lbl_food_packagenote.frame=CGRectMake(10, (lbl_freeze_packagenote.frame.origin.y+lbl_freeze_packagenote.frame.size.height+25+5), WIDTH_SCREEN-20, 20);
+    [lbl_food_packagenote sizeToFit];
+    
     if(self.order_id!=nil&&[self.order_id length]>0){
-        blockView_21.frame= CGRectMake(0, 12, WIDTH_SCREEN,(lbl_freeze_packagenote.frame.origin.y+lbl_freeze_packagenote.frame.size.height+12));
+        blockView_21.frame= CGRectMake(0, 12, WIDTH_SCREEN,(lbl_food_packagenote.frame.origin.y+lbl_food_packagenote.frame.size.height+12));
         blockView_22.frame= CGRectMake(0, (blockView_21.frame.origin.y+blockView_21.size.height+12), WIDTH_SCREEN, 200);
         blockView_23.frame= CGRectMake(0, (blockView_22.frame.origin.y+blockView_22.size.height+12), WIDTH_SCREEN, (self.task_entity.delivery_info.count*25+35)+12);
         orderInfoView.frame=CGRectMake(0, 0, WIDTH_SCREEN, blockView_23.frame.origin.y+blockView_23.frame.size.height);
     }else{
-        blockView_5.frame= CGRectMake(0, 99, WIDTH_SCREEN,(lbl_freeze_packagenote.frame.origin.y+lbl_freeze_packagenote.frame.size.height+12));
+        blockView_5.frame= CGRectMake(0, 99, WIDTH_SCREEN,(lbl_food_packagenote.frame.origin.y+lbl_food_packagenote.frame.size.height+12));
         blockView_1.frame= CGRectMake(0, (blockView_5.frame.origin.y+blockView_5.size.height+12), WIDTH_SCREEN, 75);
         blockView_2.frame= CGRectMake(0, (blockView_1.frame.origin.y+blockView_1.size.height+12), WIDTH_SCREEN, 130);
         blockView_3.frame= CGRectMake(0, (blockView_2.frame.origin.y+blockView_2.size.height+12), WIDTH_SCREEN, 210);

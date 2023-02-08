@@ -19,7 +19,7 @@
 }
 
 /**加载待拣货的订单列表
- goodsModel   0：普通商品上货 1：普通商品上货 2：生鲜商品（即冷冻）上货
+ goodsModel   0：普通商品上货 1：普通商品上货 2：冷冻上货
  */
 -(void)loadPickOrderWithListType:(int)list_type andModel:(NSString *)goodsModel{
     self.parseDataClassType = [PickEntity class];
@@ -63,6 +63,10 @@
             NSMutableDictionary *dic;
             if([[entity.list objectAtIndex:i].default_package intValue]>0){
                 dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].default_package,@"number",[entity.list objectAtIndex:i].default_package_pick,@"picked",@"普通包裹",@"category",@"c_default",@"icon",nil];
+                [mArr addObject:dic];
+            }
+            if([[entity.list objectAtIndex:i].food_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].food_package,@"number",[entity.list objectAtIndex:i].food_package_pick,@"picked",@"熟食包裹",@"category",@"c_food",@"icon",nil];
                 [mArr addObject:dic];
             }
             if([[entity.list objectAtIndex:i].freeze_package intValue]>0){

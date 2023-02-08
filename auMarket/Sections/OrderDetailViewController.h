@@ -35,9 +35,11 @@
     UILabel *lbl_packagenote;
     UILabel *lbl_servicenote;
     UILabel *lbl_freeze_packagenote;
+    UILabel *lbl_food_packagenote;
     UILabel *lbl_service_title;
     UILabel *lbl_package_title;
     UILabel *lbl_freeze_package_title;
+    UILabel *lbl_food_package_title;
     UILabel *lbl_upstairs;
     UILabel *lbl_state;
     UILabel *lbl_box;
