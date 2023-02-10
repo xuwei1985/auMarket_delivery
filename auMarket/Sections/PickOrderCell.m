@@ -80,6 +80,8 @@
         }
         else if([[dic objectForKey:@"category"] isEqualToString:@"冷藏包裹"]){
             lbl_package_title.text=[NSString stringWithFormat:@"%@(X%@)",[dic objectForKey:@"category"],self.entity.refrigerate_number];
+        }else if([[dic objectForKey:@"category"] isEqualToString:@"熟食包裹"]){
+            lbl_package_title.text=[NSString stringWithFormat:@"%@(Z%@)",[dic objectForKey:@"category"],self.entity.food_number];
         }
         else{
             lbl_package_title.text=[NSString stringWithFormat:@"%@",[dic objectForKey:@"category"]];

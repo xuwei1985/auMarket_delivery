@@ -31,8 +31,8 @@ return __singleton__; \
     #define SERVER_HTTP_ADDRESS   @"http://api_test.bigau.com"
 
 #else//正式
-    #define SERVER_ADDRESS          @"https://api_test.bigau.com"
-    #define SERVER_HTTP_ADDRESS     @"https://api_test.bigau.com"
+    #define SERVER_ADDRESS          @"https://api.bigau.com"
+    #define SERVER_HTTP_ADDRESS     @"https://api.bigau.com"
 
 #endif
 

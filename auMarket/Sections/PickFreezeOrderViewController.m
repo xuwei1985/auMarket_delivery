@@ -540,7 +540,7 @@
     else if(model==self.model&&self.model.requestTag==1002){
         if(isSuccess){
             if([self isLastestPackage:[self.model.entity.list objectAtIndex:current_confirm_path.section]]){
-                [self showToastWithText:@"拣货完成"];
+                [self showToastWithText:@"上货完成"];
                 [self loadPickOrderList];
             }
             else{
@@ -550,7 +550,7 @@
     }
     else if(model==self.model&&self.model.requestTag==1003){
         if(isSuccess){
-            [self showToastWithText:@"拣货完成"];
+            [self showToastWithText:@"上货完成"];
             
             [self.model.entity.list removeAllObjects];
             [self.tableView reloadData];
