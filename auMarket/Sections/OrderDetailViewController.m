@@ -430,19 +430,19 @@
     //创建动态包裹标签
     //NSArray *p_color= [[NSArray alloc]initWithObjects:@"#7437F5",@"#F1A46E",@"#3696FF",@"#AAA3FF",@"#FF6DD2",nil];
     for (int i=0; i<self.task_entity.package_arr.count; i++) {
-        UILabel *lbl_package_item=[[UILabel alloc] initWithFrame:CGRectMake(i*(9+82)+9, 42, 82, 22)];
+        UILabel *lbl_package_item=[[UILabel alloc] initWithFrame:CGRectMake(i*(9+54)+9, 42, 54, 22)];
         lbl_package_item.textColor=COLOR_WHITE;
         lbl_package_item.font=[UIFont boldSystemFontOfSize:12.0];
         lbl_package_item.text=[NSString stringWithFormat:@"%@(%@)",[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"],[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"number"]];
-        if([[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"普通包裹"]){
+        if([[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"] containsString:@"普通"]){
             lbl_package_item.backgroundColor=[UIColor colorWithString:@"#E4484A"];
-        }else if([[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"整箱包裹"]){
+        }else if([[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"] containsString:@"整箱"]){
             lbl_package_item.backgroundColor=[UIColor colorWithString:@"#49B554"];
-        }else if([[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"冷冻包裹"]){
+        }else if([[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"] containsString:@"冷冻"]){
             lbl_package_item.backgroundColor=[UIColor colorWithString:@"#4251FF"];
-        }else if([[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"冷藏包裹"]){
+        }else if([[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"] containsString:@"冷藏"]){
             lbl_package_item.backgroundColor=[UIColor colorWithString:@"#04ABFF"];
-        }else if([[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"熟食包裹"]){
+        }else if([[[self.task_entity.package_arr objectAtIndex:i] objectForKey:@"category"] containsString:@"熟食"]){
             lbl_package_item.backgroundColor=[UIColor colorWithString:@"#ff6400"];
         }else{
             lbl_package_item.backgroundColor=[UIColor colorWithString:@"#E94132"];
