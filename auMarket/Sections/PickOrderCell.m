@@ -72,15 +72,15 @@
     if(self.entity.package_arr&&self.entity.package_arr.count>0){
         NSDictionary *dic=[self.entity.package_arr objectAtIndex:self.row_index];
         lbl_package_number.text=[NSString stringWithFormat:@"x%@",[dic objectForKey:@"number"]];
-        if([[dic objectForKey:@"category"] isEqualToString:@"普通包裹"]){
+        if([[dic objectForKey:@"category"] containsString:@"普通"]){
             lbl_package_title.text=[NSString stringWithFormat:@"%@(%@%@)",[dic objectForKey:@"category"],self.entity.default_code,self.entity.default_number];
         }
-        else if([[dic objectForKey:@"category"] isEqualToString:@"冷冻包裹"]){
+        else if([[dic objectForKey:@"category"] containsString:@"冷冻"]){
             lbl_package_title.text=[NSString stringWithFormat:@"%@(Y%@)",[dic objectForKey:@"category"],self.entity.freeze_number];
         }
-        else if([[dic objectForKey:@"category"] isEqualToString:@"冷藏包裹"]){
+        else if([[dic objectForKey:@"category"] containsString:@"冷藏"]){
             lbl_package_title.text=[NSString stringWithFormat:@"%@(X%@)",[dic objectForKey:@"category"],self.entity.refrigerate_number];
-        }else if([[dic objectForKey:@"category"] isEqualToString:@"熟食包裹"]){
+        }else if([[dic objectForKey:@"category"] containsString:@"熟食"]){
             lbl_package_title.text=[NSString stringWithFormat:@"%@(Z%@)",[dic objectForKey:@"category"],self.entity.food_number];
         }
         else{
