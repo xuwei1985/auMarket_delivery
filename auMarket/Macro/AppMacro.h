@@ -24,17 +24,18 @@ dispatch_once( &once, ^{ __singleton__ = [[__class alloc] init]; } ); \
 return __singleton__; \
 }
 
-
+#define SERVER_ADDRESS        @"http://api_test.bigau.com"
+#define SERVER_HTTP_ADDRESS   @"http://api_test.bigau.com"
 //接口相关
-#ifdef DEBUG//测试
-    #define SERVER_ADDRESS        @"http://api.bigau.com"
-    #define SERVER_HTTP_ADDRESS   @"http://api.bigau.com"
-
-#else//正式
-    #define SERVER_ADDRESS          @"https://api.bigau.com"
-    #define SERVER_HTTP_ADDRESS     @"https://api.bigau.com"
-
-#endif
+//#ifdef DEBUG//测试
+//    #define SERVER_ADDRESS        @"http://api_test.bigau.com"
+//    #define SERVER_HTTP_ADDRESS   @"http://api_test.bigau.com"
+//
+//#else//正式
+//    #define SERVER_ADDRESS          @"https://api.bigau.com"
+//    #define SERVER_HTTP_ADDRESS     @"https://api.bigau.com"
+//
+//#endif
 
 //系统相关
 #define APP_NAME @"墨尔本超市配送"
