@@ -66,7 +66,6 @@ DEF_SINGLETON(AccountManager)
 
 -(void)registerLoginUser:(SPAccount*)user
 {
-    [APP_DELEGATE.booter handlerWorkingState:NO];
     
     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_IDENTIFIER];
     NSMutableData *data = [[NSMutableData alloc] init];
@@ -102,7 +101,6 @@ DEF_SINGLETON(AccountManager)
 
 -(void)unRegisterLoginUser
 {
-    [APP_DELEGATE.booter handlerWorkingState:NO];
     
     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_IDENTIFIER];
     [keychain removeItemForKey:KEY_CHAIN_USR_KEY];

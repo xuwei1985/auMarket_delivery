@@ -40,7 +40,6 @@
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_failed;//配送失败的订单
 @property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_unknown;//没有配送坐标的订单
 @property (nonatomic,strong) NSArray *sectionArr;//配送时间段数组
-@property (nonatomic,strong) NSArray<ParkingItemEntity *> *parkinglist;
 @property (nonatomic,strong) LineEntity *lineEntity;//线路数据
 @property(nonatomic,assign) Boolean hasNetWork;
 
@@ -53,8 +52,7 @@
 -(void)registRemoteNotification;
 //初始化极光推送
 -(void)bootJPush:(NSDictionary *)launchOptions;
-//处理工作状态
--(void)handlerWorkingState:(BOOL)isWorking;
+
 //sync接口
 -(void)sync;
 //外部回调

@@ -52,19 +52,6 @@
 }
 
 -(void)setNavigation{
-    btn_workState = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_workState.frame= CGRectMake(0, 0, 95, 29);
-    [btn_workState setBackgroundImage:[UIImage imageNamed:@"1_04"] forState:UIControlStateNormal];
-    [btn_workState setBackgroundImage:[UIImage imageNamed:@"1_03"] forState:UIControlStateSelected];
-    [btn_workState setTitle:@"休息中" forState:UIControlStateNormal];
-    [btn_workState setTitle:@"正在接单" forState:UIControlStateSelected];
-    btn_workState.titleLabel.font=FONT_SIZE_MIDDLE;
-    [btn_workState setTitleColor:COLOR_GRAY forState:UIControlStateNormal];
-    [btn_workState setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
-    [btn_workState addTarget:self action:@selector(toggleWorkState:) forControlEvents:UIControlEventTouchUpInside];
-    btn_workState.selected=APP_DELEGATE.isWorking;
-    self.navigationItem.titleView=btn_workState;
-    
     btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_r.frame= CGRectMake(0, 0, 26, 22);
     [btn_r setImage:[UIImage imageNamed:@"list_model_0"] forState:UIControlStateNormal];
@@ -776,10 +763,6 @@
     });
 }
 
--(void)toggleWorkState:(UIButton *)sender{
-    sender.selected=!sender.selected;
-    [APP_DELEGATE.booter handlerWorkingState:sender.selected];
-}
 
 -(void)gotoOrderDetailView:(id)sender{
     TaskItemEntity *entity;
@@ -808,7 +791,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    btn_workState.selected=APP_DELEGATE.isWorking;
+
     if(!self.taskArr){
         [APP_DELEGATE.booter loadTaskList];
     }

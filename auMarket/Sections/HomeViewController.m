@@ -35,6 +35,7 @@
     [self generatePredictTime];
 }
 
+//MARK: 构造预计送达时间范围的基础数据
 -(void)generatePredictTime{
     int start_hour=9;
     int end_hour=22;
@@ -80,44 +81,108 @@
     }
 }
 
+//MARK: 预计送达时间视图创建
+-(void)createPredictTimeView{
+    _txt_predict=[[UITextField alloc] initWithFrame:CGRectZero];
+    _txt_predict.delegate=self;
+    [self.view addSubview:_txt_predict];
+    
+    predictTimePicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, HEIGHT_SCREEN-64, WIDTH_SCREEN, PREDICT_PICKER_HEIGHT)];
+    predictTimePicker.backgroundColor=COLOR_WHITE;
+    //设置阴影的颜色
+    predictTimePicker.layer.shadowColor=[UIColor blackColor].CGColor;
+    //设置阴影的偏移量，如果为正数，则代表为往右边偏移
+    predictTimePicker.layer.shadowOffset=CGSizeMake(0, -5);
+    //设置阴影的透明度(0~1之间，0表示完全透明)
+    predictTimePicker.layer.shadowOpacity=0.4;
+    predictTimePicker.showsSelectionIndicator = YES;
+    predictTimePicker.backgroundColor=COLOR_BG_WHITE;
+    predictTimePicker.delegate=self;
+    predictTimePicker.dataSource=self;
+    predictTimePicker.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    _txt_predict.inputView=predictTimePicker;
+    
+    UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
+    keyboardDoneButtonView.barStyle = UIBarStyleBlackTranslucent;
+    keyboardDoneButtonView.translucent = YES;
+    keyboardDoneButtonView.barTintColor=COLOR_BG_WHITE;
+    keyboardDoneButtonView.tintColor = COLOR_MAIN;
+    [keyboardDoneButtonView sizeToFit];
+    
+    UIView  *line=[[UIView alloc] initWithFrame:CGRectMake(0, keyboardDoneButtonView.frame.size.height-0.5, keyboardDoneButtonView.frame.size.width, 0.5)];
+    line.backgroundColor=COLOR_BG_VIEW;
+    [keyboardDoneButtonView addSubview:line];
+    
+    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消"
+                                                                     style:UIBarButtonItemStylePlain target:self
+                                                                    action:@selector(closePredictTimeView)];
+    cancelButton.tintColor=COLOR_DARKGRAY;
+    UIBarButtonItem *fixedButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"确定"
+                                                                   style:UIBarButtonItemStylePlain target:self
+                                                                  action:@selector(pickerDoneClicked:)];
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:cancelButton,fixedButton,doneButton, nil]];
+    _txt_predict.inputAccessoryView = keyboardDoneButtonView;
+    
+}
+
+//MARK: 地图视图创建
+-(void)createMapView{
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-37.8274851
+                                                            longitude:144.9527565
+                                                                 zoom:13];
+    mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
+    mapView.myLocationEnabled = NO;
+    mapView.delegate=self;
+    [[mapView settings] setMyLocationButton:YES];
+    self.view = mapView;
+    
+    //地图上添加刷新数据的按钮
+    [self.view addSubview:btn_refresh];
+}
+
+//MARK: 创建地图上的刷新按钮
+-(void)createRefreshBtn{
+    btn_refresh = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn_refresh.frame= CGRectMake(WIDTH_SCREEN-12, HEIGHT_SCREEN-110, 52, 52);
+    btn_refresh.backgroundColor = [UIColor whiteColor];
+    btn_refresh.layer.cornerRadius=26;
+    [btn_refresh addTarget:self action:@selector(clickRefresh:) forControlEvents:UIControlEventTouchUpInside];
+    btn_refresh.layer.shadowOpacity = 0.3;
+    btn_refresh.layer.shadowColor = [UIColor blackColor].CGColor;
+    btn_refresh.layer.shadowOffset = CGSizeMake(2, 3);
+
+    [btn_refresh setBackgroundImage:[UIImage imageNamed:@"shauxin"] forState:UIControlStateNormal];
+    
+}
+
 -(void)initUI{
     [self setNavigation];
     [self createMapView];
-    [self createParkingMask];
     [self createPredictTimeView];
 }
 
 -(void)setNavigation{
+    // 前往送达时间提醒按钮
     btn_l_1 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_l_1.frame= CGRectMake(0, 0, 24, 24);
     btn_l_2.imageEdgeInsets = UIEdgeInsetsMake(0, -2, 4, 0);
     [btn_l_1 setImage:[UIImage imageNamed:@"task"] forState:UIControlStateNormal];
     [btn_l_1 addTarget:self action:@selector(gotoSmsTaskView) forControlEvents:UIControlEventTouchUpInside];
     
-    
+    // 数据状态切换按钮
     btn_l_2 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_l_2.frame= CGRectMake(0, 0, 24, 24);
     [btn_l_2 setImage:[UIImage imageNamed:@"section_time_0"] forState:UIControlStateNormal];
     btn_l_2.imageEdgeInsets = UIEdgeInsetsMake(2, 4, 2, 0);
     [btn_l_2 addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
-//    UIButton *btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btn_r.frame= CGRectMake(0, 0, 32, 32);
-//    [btn_r setImage:[UIImage imageNamed:@"1_09"] forState:UIControlStateNormal];
-//    [btn_r setImage:[UIImage imageNamed:@"1_21"] forState:UIControlStateSelected];
-//    [btn_r addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *btn_left_1 = [[UIBarButtonItem alloc] initWithCustomView:btn_l_1];
     UIBarButtonItem *btn_left_2 = [[UIBarButtonItem alloc] initWithCustomView:btn_l_2];
     NSArray *leftButtonItems = @[btn_left_1, btn_left_2];
     self.navigationItem.leftBarButtonItems =leftButtonItems;
     
-//    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:nil];
-//    UIBarButtonItem *cameraItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:nil];
-//
-//    NSArray *actionButtonItems = @[shareItem, cameraItem];
-//    self.navigationItem.rightBarButtonItems = actionButtonItems;
-    
-    
+    // 前往个人中心按钮
     btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_r.frame= CGRectMake(0, 0, 36, 36);
     [btn_r setImage:[UIImage imageNamed:@"yonghu"] forState:UIControlStateNormal];
@@ -126,30 +191,16 @@
     
     UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:btn_r];
     self.navigationItem.rightBarButtonItem =btn_right;
-    
-    btn_workState = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_workState.frame= CGRectMake(0, 0, 100, 29);
-    [btn_workState setBackgroundImage:[UIImage imageNamed:@"1_04"] forState:UIControlStateNormal];
-    [btn_workState setBackgroundImage:[UIImage imageNamed:@"1_03"] forState:UIControlStateSelected];
-//    [btn_workState setTitle:@"休息中" forState:UIControlStateNormal];
-//    [btn_workState setTitle:@"正在接单" forState:UIControlStateSelected];
-    [btn_workState setTitle:@"全部订单" forState:UIControlStateNormal];
-    [btn_workState setTitle:@"未设置送达时间" forState:UIControlStateSelected];
-    btn_workState.titleLabel.font=FONT_SIZE_SMALL;
-    [btn_workState setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
-    [btn_workState setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
-//    [btn_workState setTitleColor:COLOR_GRAY forState:UIControlStateNormal];
-//    [btn_workState setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
-    [btn_workState addTarget:self action:@selector(toggleWorkState:) forControlEvents:UIControlEventTouchUpInside];
-    btn_workState.selected=APP_DELEGATE.isWorking;
-    self.navigationItem.titleView=btn_workState;
 }
 
+//MARK: 观察者通知注册
 -(void)addNotification{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppEnterBackground:) name:APP_DID_ENTER_BACKGROUND object:nil];
 }
 
+//MARK: 创建配送时间段选择视图
 -(void)createDeliveryTimeSection{
     //sectionArr
     float s_width=(WIDTH_SCREEN-20-10)/2;
@@ -196,6 +247,7 @@
     
 }
 
+//MARK: 设置配送时间段选择状态
 -(void)setSectionButtonState:(int)mode{
     NSArray *list=APP_DELEGATE.booter.sectionArr;
     if(mode==0){//设置时间段为熄灭
@@ -251,6 +303,7 @@
     }
 }
 
+//MARK: 时段视图点击事件
 -(void)timeSectionTap:(UIButton *)sender{
     if(showSections!=2){
         int tag=(int)sender.tag;
@@ -267,6 +320,7 @@
     }
 }
 
+//MARK: 时段视图时间格式化
 -(NSString *)formatSectionTime:(NSString *)sectionTime{
     NSString * str=sectionTime;
     if(str){
@@ -283,6 +337,7 @@
     }
 }
 
+//MARK: 时段视图颜色配值
 -(int)getSectionColorIndex:(NSString *)time{
     int color= -1;
     NSArray *list=APP_DELEGATE.booter.sectionArr;
@@ -294,67 +349,16 @@
     return color;
 }
 
--(void)createPredictTimeView{
-    _txt_predict=[[UITextField alloc] initWithFrame:CGRectZero];
-    _txt_predict.delegate=self;
-    [self.view addSubview:_txt_predict];
-    
-    predictTimePicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, HEIGHT_SCREEN-64, WIDTH_SCREEN, PREDICT_PICKER_HEIGHT)];
-    predictTimePicker.backgroundColor=COLOR_WHITE;
-    //设置阴影的颜色
-    predictTimePicker.layer.shadowColor=[UIColor blackColor].CGColor;
-    //设置阴影的偏移量，如果为正数，则代表为往右边偏移
-    predictTimePicker.layer.shadowOffset=CGSizeMake(0, -5);
-    //设置阴影的透明度(0~1之间，0表示完全透明)
-    predictTimePicker.layer.shadowOpacity=0.4;
-    predictTimePicker.showsSelectionIndicator = YES;
-    predictTimePicker.backgroundColor=COLOR_BG_WHITE;
-    predictTimePicker.delegate=self;
-    predictTimePicker.dataSource=self;
-    predictTimePicker.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    _txt_predict.inputView=predictTimePicker;
-    
-    UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
-    keyboardDoneButtonView.barStyle = UIBarStyleBlackTranslucent;
-    keyboardDoneButtonView.translucent = YES;
-    keyboardDoneButtonView.barTintColor=COLOR_BG_WHITE;
-    keyboardDoneButtonView.tintColor = COLOR_MAIN;
-    [keyboardDoneButtonView sizeToFit];
-    
-    UIView  *line=[[UIView alloc] initWithFrame:CGRectMake(0, keyboardDoneButtonView.frame.size.height-0.5, keyboardDoneButtonView.frame.size.width, 0.5)];
-    line.backgroundColor=COLOR_BG_VIEW;
-    [keyboardDoneButtonView addSubview:line];
-    
-    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消"
-                                                                   style:UIBarButtonItemStylePlain target:self
-                                                                  action:@selector(closePredictTimeView)];
-    cancelButton.tintColor=COLOR_DARKGRAY;
-    UIBarButtonItem *fixedButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
-    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"确定"
-                                                                   style:UIBarButtonItemStylePlain target:self
-                                                                  action:@selector(pickerDoneClicked:)];
-    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:cancelButton,fixedButton,doneButton, nil]];
-    _txt_predict.inputAccessoryView = keyboardDoneButtonView;
-
-}
-
--(void)createMapView{
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-37.8274851
-                                                            longitude:144.9527565
-                                                                 zoom:12];
-    mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-    mapView.myLocationEnabled = YES;
-    mapView.delegate=self;
-    [[mapView settings] setMyLocationButton:YES];
-    self.view = mapView;
-}
-
+//MARK: 加载配送任务地图上的Mask
+/**
+ model:  0:全部显示订单  1 只显示未设置预计配送到达时间的订单
+ **/
 -(void)loadTaskMask:(int)model{
     CLLocationCoordinate2D coordinate;
     TaskItemEntity *itemEntity;
     GMSMarker *marker;
     NSString *location_icon=@"";
-    BOOL only_unset_predict_order=(model==1);//model:0:全部显示  1 只显示未设置预计配送到达时间的订单
+    BOOL only_unset_predict_order=(model==1);
     
     if(markerArr){
         for(int i=0;i<markerArr.count;i++){
@@ -553,6 +557,7 @@
     isExchangeModel=NO;
 }
 
+//MARK: 计算任务队列中是否有多个配送时段
 -(BOOL)hasMutiTimeSection:(NSMutableArray<TaskItemEntity *> *)arr{
     NSString *str=@"";
     if(arr&&arr.count>0){
@@ -567,7 +572,7 @@
     return NO;
 }
     
-//判断某个时间段的按钮是否开启
+//MARK: 判断某个时间段的按钮是否开启
 -(BOOL)isSectionEnable:(NSString *)timeStr{
     NSArray *list=APP_DELEGATE.booter.sectionArr;
     for(int i=0;i<list.count;i++){
@@ -582,44 +587,22 @@
     return NO;
 }
 
-//创建停车场的Marker
--(void)createParkingMask{
-    CLLocationCoordinate2D coordinate;
-    ParkingItemEntity *itemEntity;
-    GMSMarker *marker;
-    
-    if(parkingMarkerArr){
-        [parkingMarkerArr removeAllObjects];
-    }
-    else{
-        parkingMarkerArr=[[NSMutableArray alloc] init];
-    }
 
-    for(int i=0;i<[APP_DELEGATE.booter.parkinglist count];i++){
-        itemEntity=[APP_DELEGATE.booter.parkinglist objectAtIndex:i];
-        coordinate=CLLocationCoordinate2DMake([self reviseDoubleValue:[itemEntity.latitude doubleValue]], [self reviseDoubleValue:[itemEntity.longitude doubleValue]]);
-        marker = [[GMSMarker alloc] init];
-        marker.position = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude);
-        marker.appearAnimation = kGMSMarkerAnimationPop;
-        marker.icon=[UIImage imageNamed:@"1_32"];
-        marker.map = nil;
-        
-        [parkingMarkerArr addObject:marker];
-    }
-}
-
+//MARK: 显示停车场的Makers
 -(void)showParkingMarkers{
     for (GMSMarker *mk in parkingMarkerArr) {
         mk.map=mapView;
     }
 }
 
+//MARK: 隐藏停车场的Makers
 -(void)hideParkingMarkers{
     for (GMSMarker *mk in parkingMarkerArr) {
         mk.map= nil;
     }
 }
 
+//MARK: 判断是否存在某个Maker
 -(GMSMarker *)isExistMarker:(CLLocationCoordinate2D)coordinate andAddress:(NSString *)addr{
     GMSMarker *mArr=nil;
     if(markerArr){
@@ -657,6 +640,7 @@
     return d;
 }
 
+//MARK: 选择的预计送达时间的点击事件
 -(void)pickerDoneClicked:(id)sender{
     NSInteger row=[predictTimePicker selectedRowInComponent:0];
     predict_select_index=(int)row;
@@ -665,7 +649,7 @@
     [_txt_predict resignFirstResponder];
 }
 
-//设置配送任务的预计送达时间数据到坐标点对象上
+//MARK: 设置配送任务的预计送达时间数据到坐标点对象上
 -(void)setTaskItemPredictTime:(NSString *)t{
     NSMutableString *ids=[NSMutableString string];
     if(selectedMarker&&selectedMarker.taskArr){
@@ -680,11 +664,10 @@
     }
     
     [self loadTaskMask:0];
-    
-//    NSLog(@"ids:%@",ids);
     [self savePredictTime:ids andPredictTime:t];
 }
 
+//MARK: 批量提交订单的预计送达时间的
 -(void)savePredictTime:(NSString *)ids andPredictTime:(NSString *)predict_time{
     [self startLoadingActivityIndicatorWithText:@"提交数据"];
     [self.model savePredictTime:ids andPredictTime:predict_time];
@@ -698,8 +681,8 @@
         }
     }
 }
-#pragma mark UIGestureRecognizerClick
 
+#pragma mark UIGestureRecognizerClick
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return YES;
@@ -707,7 +690,6 @@
 }
 
 #pragma mark - picker view delegate
-
 /* return column of pickerview*/
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -759,7 +741,6 @@
 
 
 #pragma mark - GMSMapViewDelegate
-
 - (void)mapView:(GMSMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
     NSLog(@"You tapped at %f,%f", coordinate.latitude, coordinate.longitude);
 }
@@ -800,10 +781,40 @@
     }
 }
 
+//MARK: 显示Maker的点击菜单项
 - (void)showMaskMenu:(GMSMarker *)marker
 {
     selectedMarker=marker;
-    UIActionSheet *actionsheet;
+
+    UIAlertController *alert_sheet = [UIAlertController alertControllerWithTitle:@"选择操作" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *action_nav = [UIAlertAction actionWithTitle:@"Google导航" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"点击了项目1");
+    }];
+    
+    UIAlertAction *action_order = [UIAlertAction actionWithTitle:@"查看订单" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"点击了项目1");
+    }];
+    
+    UIAlertAction *action_mobile = [UIAlertAction actionWithTitle:@"拨打电话" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"点击了项目1");
+    }];
+    
+    UIAlertAction *action_order_muti = [UIAlertAction actionWithTitle:@"查看多订单" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"点击了项目1");
+    }];
+    
+    UIAlertAction *action_address = [UIAlertAction actionWithTitle:@"复制地址" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"点击了项目1");
+    }];
+    
+    UIAlertAction *action_sort = [UIAlertAction actionWithTitle:@"配送排序" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"点击了项目1");
+    }];
+    
+    
+    UIAlertAction *action_cancel = [UIAlertAction actionWithTitle:@"配送排序" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"点击了项目1");
+    }];
     
     TaskItemEntity *item= (TaskItemEntity *)[selectedMarker.taskArr firstObject];
     BOOL show_predict_menu=true;//是否显示预计配送时间菜单
@@ -816,52 +827,68 @@
     
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
         
-        if(marker.appearAnimation==kGMSMarkerAnimationNone){
-            if(marker.taskArr.count<=1){
-                if(show_predict_menu){
-                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单",@"拨打电话",@"复制地址", @"预计送达时间", nil,nil];
-                }
-                else{
-                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单",@"拨打电话",@"复制地址", nil,nil];
-                }
+        if(marker.taskArr.count<=1){
+            if(show_predict_menu){
+                [alert_sheet addAction:action_nav];
+                [alert_sheet addAction:action_order];
+                [alert_sheet addAction:action_mobile];
+                [alert_sheet addAction:action_address];
+                [alert_sheet addAction:action_sort];
+                //actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单",@"拨打电话",@"复制地址", @"预计送达时间", nil,nil];
             }
             else{
-                if(show_predict_menu){
-                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看多个订单",@"复制地址", @"预计送达时间", nil,nil];
-                }
-                else{
-                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看多个订单",@"复制地址", nil,nil];
-                }
+                [alert_sheet addAction:action_nav];
+                [alert_sheet addAction:action_order];
+                [alert_sheet addAction:action_mobile];
+                [alert_sheet addAction:action_address];
             }
         }
-        else{//停车点
-            actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", nil,nil];
+        else{
+            if(show_predict_menu){
+                [alert_sheet addAction:action_nav];
+                [alert_sheet addAction:action_order_muti];
+                [alert_sheet addAction:action_address];
+                [alert_sheet addAction:action_sort];
+            }
+            else{
+                [alert_sheet addAction:action_nav];
+                [alert_sheet addAction:action_order_muti];
+                [alert_sheet addAction:action_address];
+            }
         }
+        
     }
     else{
-        if(marker.appearAnimation==kGMSMarkerAnimationNone){
-            if(marker.taskArr.count<=1){
-                if(show_predict_menu){
-                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看订单",@"拨打电话",@"复制地址", @"预计送达时间",nil,nil];
-                }
-                else{
-                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看订单",@"拨打电话",@"复制地址",nil,nil];
-                }
+        if(marker.taskArr.count<=1){
+            if(show_predict_menu){
+                [alert_sheet addAction:action_order];
+                [alert_sheet addAction:action_mobile];
+                [alert_sheet addAction:action_address];
+                [alert_sheet addAction:action_sort];
             }
             else{
-                if(show_predict_menu){
-                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看多个订单",@"复制地址", @"预计送达时间", nil,nil];
-                }
-                else{
-                    actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: @"查看多个订单",@"复制地址", nil,nil];
-                }
+                [alert_sheet addAction:action_order];
+                [alert_sheet addAction:action_mobile];
+                [alert_sheet addAction:action_address];
             }
         }
+        else{
+            if(show_predict_menu){
+                [alert_sheet addAction:action_order_muti];
+                [alert_sheet addAction:action_address];
+                [alert_sheet addAction:action_sort];
+            }
+            else{
+                [alert_sheet addAction:action_order_muti];
+                [alert_sheet addAction:action_address];
+                
+            }
     }
     
-    [actionsheet showInView:self.view];
+    [self presentViewController:alert_sheet animated:YES completion:nil];
 }
 
+//MARK: Maker菜单项的点击事件处理
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"Google导航"])
@@ -895,15 +922,17 @@
     }
 }
 
+//MARK: 显示预计送达时间的选择视图
 -(void)showPredictTimeView{
     [_txt_predict becomeFirstResponder];
 }
 
+//MARK: 关闭预计送达时间的选择视图
 -(void)closePredictTimeView{
     [_txt_predict resignFirstResponder];
 }
 
-
+//MARK: 前往Google地址导航
 -(void)runNavigationByGoogle{
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
         NSString *urlString = [[NSString stringWithFormat:@"comgooglemaps://?x-source=%@&x-success=%@&saddr=&daddr=%@&directionsmode=driving",APP_NAME,APP_SCHEME,selectedMarker.snippet] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -914,6 +943,7 @@
     }
 }
 
+//MARK: 查看订单详情
 -(void)gotoOrderDetail{
     if(selectedMarker.taskArr.count>1){
         TaskListViewController *tvc=[[TaskListViewController alloc] init];
@@ -927,20 +957,12 @@
     }
 }
 
--(void)unusualList:(UIButton *)sender{
+-(void)clickRefresh:(UIButton *)sender{
     
 }
 
+//MARK: 控制时段的订单
 -(void)toggleParkMaker:(UIButton *)sender{
-//    sender.selected=!sender.selected;
-//    if(sender.selected){
-//        [self showParkingMarkers];
-//    }
-//    else{
-//        [self hideParkingMarkers];
-//    }
-    
-    //控制时间分段的订单
     //showSections=0:分时图标不管预计送达的状态 1:分时图标带预计送达的图标 2:关闭分时图标状态
     showSections++;
     if(showSections>2){
@@ -953,7 +975,6 @@
         
         if(!isExchangeModel){
             btn_workState.selected=NO;
-            [APP_DELEGATE.booter handlerWorkingState:btn_workState.selected];
         }
     }
     else{//分时段模式关闭
@@ -963,13 +984,6 @@
     [self handlerWorkState];
 }
 
--(void)toggleWorkState:(UIButton *)sender{
-    if(!isExchangeModel&&showSections==2){
-        btn_workState.selected=!btn_workState.selected;
-        [APP_DELEGATE.booter handlerWorkingState:btn_workState.selected];
-        [self handlerWorkState];
-    }
-}
 
 -(void)handlerWorkState{
     if(btn_workState.selected){
@@ -982,7 +996,7 @@
     }
 }
 
-//配送数据更新
+//MARK: 配送数据更新
 - (void)onTaskUpdate:(NSNotification*)aNotitification{
     if(isShowing){
         [self createDeliveryTimeSection];
@@ -990,10 +1004,12 @@
     }
 }
 
+//MARK: App进入后台事件响应
 - (void)onAppEnterBackground:(NSNotification*)aNotitification{
     [self cacheDeliveryData];
 }
 
+//MARK: 拨打电话
 -(void)callPhone:(NSString *)phone{
     if(phone!=nil&&phone.length>0){
         NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"tel:%@",phone];
@@ -1006,17 +1022,19 @@
     }
 }
 
+//MARK: 前往预计送达时间短信批量发送界面
 -(void)gotoSmsTaskView{
     SmsTaskViewController *svc=[[SmsTaskViewController alloc] init];
     [self.navigationController pushViewController:svc animated:YES];
 }
 
+//MARK: 前往用户个人中心
 -(void)gotoMemberView{
     UserCenterViewController *svc=[[UserCenterViewController alloc] init];
     [self.navigationController pushViewController:svc animated:YES];
 }
 
-
+//MARK: 缓存当前选择的时间段数据
 -(void)cacheDeliveryData{
     NSUserDefaults *cache=USER_DEFAULT;
     
@@ -1028,10 +1046,14 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
     isShowing=YES;
-    btn_workState.selected=APP_DELEGATE.isWorking;
-    [APP_DELEGATE.booter loadTaskList];
-    [self checkLoginStatus];
+    
+    //加载配送任务数据
+    if([self checkLoginStatus] == YES){
+        [APP_DELEGATE.booter loadTaskList];
+    }
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

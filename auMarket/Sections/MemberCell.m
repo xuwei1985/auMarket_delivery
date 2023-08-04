@@ -47,7 +47,6 @@
     if(self.itemPrice==nil||self.itemPrice.length<=0){
         _itemLbl.hidden=YES;
         _mySwitch.hidden=NO;
-        [_mySwitch setOn:APP_DELEGATE.isWorking animated:YES];
     }
     else{
         _itemLbl.hidden=NO;
@@ -60,8 +59,6 @@
     UISwitch* control = (UISwitch*)sender;
     if(control == _mySwitch){
         BOOL on = control.on;
-        //添加自己要处理的事情代码
-        [APP_DELEGATE.booter handlerWorkingState:on];
     }
 }
 

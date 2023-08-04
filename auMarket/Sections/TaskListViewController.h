@@ -13,7 +13,6 @@
 #import "GoodsListItemCell.h"
 
 @interface TaskListViewController : SPBaseViewController{
-    UIButton *btn_workState;
     NSArray *taskCategory;
     UIButton *btn_r;
     UIButton *btn_waitDelivery;

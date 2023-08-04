@@ -546,6 +546,7 @@
     
 }
 
+#pragma mark 检查登录状态
 - (BOOL)checkLoginStatus{
     if (![[AccountManager sharedInstance] isLogin]) {
         [self onUserNotLogin];
@@ -554,6 +555,7 @@
     return YES;
 }
 
+#pragma mark 前往登录界面
 -(void)onUserNotLogin
 {
     [APP_DELEGATE.window setRootViewController:[[SPNavigationController alloc] initWithRootViewController:[[UserLoginViewController alloc] init]]];
