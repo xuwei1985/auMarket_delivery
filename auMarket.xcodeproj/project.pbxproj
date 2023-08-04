@@ -130,6 +130,13 @@
 		A992D87D2445EF5F003C8DFA /* sssh_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A992D87B2445EF5E003C8DFA /* sssh_on@2x.png */; };
 		A992D87E2445EF5F003C8DFA /* sssh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A992D87C2445EF5E003C8DFA /* sssh@2x.png */; };
 		A99632EB21A851CC0023F539 /* c_meat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99632EA21A851CC0023F539 /* c_meat@2x.png */; };
+		A999A0082A7CA2130012BEB4 /* StateIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = A999A0072A7CA2130012BEB4 /* StateIndicator.m */; };
+		A999A00F2A7CCF4F0012BEB4 /* state_time_off@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A999A0092A7CCF4F0012BEB4 /* state_time_off@3x.png */; };
+		A999A0102A7CCF4F0012BEB4 /* state_box_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A999A00A2A7CCF4F0012BEB4 /* state_box_on@3x.png */; };
+		A999A0112A7CCF4F0012BEB4 /* state_gps_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A999A00B2A7CCF4F0012BEB4 /* state_gps_on@3x.png */; };
+		A999A0122A7CCF4F0012BEB4 /* state_gps_off@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A999A00C2A7CCF4F0012BEB4 /* state_gps_off@3x.png */; };
+		A999A0132A7CCF4F0012BEB4 /* state_box_off@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A999A00D2A7CCF4F0012BEB4 /* state_box_off@3x.png */; };
+		A999A0142A7CCF4F0012BEB4 /* state_time_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A999A00E2A7CCF4F0012BEB4 /* state_time_on@3x.png */; };
 		A99FD1BB2119654200AC4BC1 /* sh_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FD1B92119654100AC4BC1 /* sh_on@2x.png */; };
 		A99FD1BC2119654200AC4BC1 /* sh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FD1BA2119654100AC4BC1 /* sh@2x.png */; };
 		A9A5B42C212C0ED60000A738 /* 1_29_blue_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9A5B426212C0ED40000A738 /* 1_29_blue_down@2x.png */; };
@@ -456,6 +463,14 @@
 		A992D87B2445EF5E003C8DFA /* sssh_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sssh_on@2x.png"; sourceTree = "<group>"; };
 		A992D87C2445EF5E003C8DFA /* sssh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sssh@2x.png"; sourceTree = "<group>"; };
 		A99632EA21A851CC0023F539 /* c_meat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c_meat@2x.png"; sourceTree = "<group>"; };
+		A999A0062A7CA2130012BEB4 /* StateIndicator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StateIndicator.h; sourceTree = "<group>"; };
+		A999A0072A7CA2130012BEB4 /* StateIndicator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StateIndicator.m; sourceTree = "<group>"; };
+		A999A0092A7CCF4F0012BEB4 /* state_time_off@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "state_time_off@3x.png"; sourceTree = "<group>"; };
+		A999A00A2A7CCF4F0012BEB4 /* state_box_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "state_box_on@3x.png"; sourceTree = "<group>"; };
+		A999A00B2A7CCF4F0012BEB4 /* state_gps_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "state_gps_on@3x.png"; sourceTree = "<group>"; };
+		A999A00C2A7CCF4F0012BEB4 /* state_gps_off@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "state_gps_off@3x.png"; sourceTree = "<group>"; };
+		A999A00D2A7CCF4F0012BEB4 /* state_box_off@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "state_box_off@3x.png"; sourceTree = "<group>"; };
+		A999A00E2A7CCF4F0012BEB4 /* state_time_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "state_time_on@3x.png"; sourceTree = "<group>"; };
 		A99FD1B92119654100AC4BC1 /* sh_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sh_on@2x.png"; sourceTree = "<group>"; };
 		A99FD1BA2119654100AC4BC1 /* sh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sh@2x.png"; sourceTree = "<group>"; };
 		A9A5B426212C0ED40000A738 /* 1_29_blue_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_29_blue_down@2x.png"; sourceTree = "<group>"; };
@@ -674,6 +689,8 @@
 				A9F4DA981F65965200D71774 /* MapMaker.m */,
 				A9A85E301F6A84EB00443E6F /* GMSMarker+MyGMSMarker.h */,
 				A9A85E311F6A84EB00443E6F /* GMSMarker+MyGMSMarker.m */,
+				A999A0062A7CA2130012BEB4 /* StateIndicator.h */,
+				A999A0072A7CA2130012BEB4 /* StateIndicator.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1163,6 +1180,12 @@
 		A9FBC1C61DF93838005ECDDE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A999A00D2A7CCF4F0012BEB4 /* state_box_off@3x.png */,
+				A999A00A2A7CCF4F0012BEB4 /* state_box_on@3x.png */,
+				A999A00C2A7CCF4F0012BEB4 /* state_gps_off@3x.png */,
+				A999A00B2A7CCF4F0012BEB4 /* state_gps_on@3x.png */,
+				A999A0092A7CCF4F0012BEB4 /* state_time_off@3x.png */,
+				A999A00E2A7CCF4F0012BEB4 /* state_time_on@3x.png */,
 				A9CA74FC2A7B4E8400C5B6BE /* shuaxin@3x.png */,
 				A9372AC029929CE1007C2E05 /* c_food@2x.png */,
 				A9297F19298FA9B2006DE3AC /* ssssh@2x.png */,
@@ -1383,6 +1406,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A999A0102A7CCF4F0012BEB4 /* state_box_on@3x.png in Resources */,
 				A9D354661E0976CB006D265D /* icon_user@2x.png in Resources */,
 				A9BAD9D52230EC02009E1311 /* 1_29_color_1_down@2x.png in Resources */,
 				A9372AC129929CE1007C2E05 /* c_food@2x.png in Resources */,
@@ -1407,6 +1431,7 @@
 				A9BAD9E72230ED9F009E1311 /* 1_29_color_5_up@2x.png in Resources */,
 				A9FBC1CD1DF93871005ECDDE /* btn_back_white@3x.png in Resources */,
 				A9FBC1D21DF941F5005ECDDE /* wifi@3x.png in Resources */,
+				A999A0122A7CCF4F0012BEB4 /* state_gps_off@3x.png in Resources */,
 				A900772C20EB6D4000F269D7 /* c_freeze@2x.png in Resources */,
 				A9F54F07222BCCC6005C7247 /* 1_29_color_2@2x.png in Resources */,
 				A9FBC1E31DF94973005ECDDE /* member_s@2x.png in Resources */,
@@ -1419,7 +1444,9 @@
 				A91AEDE22412A79E00988A87 /* 01_12.png in Resources */,
 				A964742A1E1117DB00A5A39B /* mark@2x.png in Resources */,
 				A95E109C1DF80ED000660E42 /* Assets.xcassets in Resources */,
+				A999A00F2A7CCF4F0012BEB4 /* state_time_off@3x.png in Resources */,
 				A9F4DA8B1F658AFE00D71774 /* 1_24@2x.png in Resources */,
+				A999A0142A7CCF4F0012BEB4 /* state_time_on@3x.png in Resources */,
 				A9FBC1DD1DF94973005ECDDE /* category@2x.png in Resources */,
 				A9187C2F1DF9B6B900A3E902 /* category@3x.png in Resources */,
 				A9187C2E1DF9B6B900A3E902 /* member_s@3x.png in Resources */,
@@ -1429,6 +1456,7 @@
 				A9BAD9DD2230ECE0009E1311 /* 1_29_color_2_up@2x.png in Resources */,
 				A967B2F020E67A3000D50C46 /* done_on@2x.png in Resources */,
 				A91357781F6783EF000186B0 /* defaut_list@2x.png in Resources */,
+				A999A0132A7CCF4F0012BEB4 /* state_box_off@3x.png in Resources */,
 				A9FBC1E61DF94A91005ECDDE /* noContent@3x.png in Resources */,
 				A992D87E2445EF5F003C8DFA /* sssh@2x.png in Resources */,
 				A9D354681E0976CB006D265D /* icon_comment@2x.png in Resources */,
@@ -1452,6 +1480,7 @@
 				A9A5B42F212C0ED60000A738 /* 1_29_up@2x.png in Resources */,
 				A900772B20EB6D4000F269D7 /* c_box@2x.png in Resources */,
 				A9BAD9EA2230ED9F009E1311 /* 1_29_color_4_up@2x.png in Resources */,
+				A999A0112A7CCF4F0012BEB4 /* state_gps_on@3x.png in Resources */,
 				A9D3546A1E0976CB006D265D /* icon_cache@2x.png in Resources */,
 				A9BAD9E82230ED9F009E1311 /* 1_29_color_4_down@2x.png in Resources */,
 				A9F54F0C222BCCC6005C7247 /* 1_29_color_4@2x.png in Resources */,
@@ -1591,6 +1620,7 @@
 				A96474251E1111F000A5A39B /* UserRegistViewController.m in Sources */,
 				A95E10F21DF8104800660E42 /* SPUploadFileEntity.m in Sources */,
 				A976B7151F697EBC00B85C1C /* TaskModel.m in Sources */,
+				A999A0082A7CA2130012BEB4 /* StateIndicator.m in Sources */,
 				A9D354451E08FD6C006D265D /* MemberCell.m in Sources */,
 				A93D98EA22F5CCCD004D5AEB /* ReturnProofViewController.m in Sources */,
 				A952A9A32552F8DA0055D604 /* LineViewController.m in Sources */,
