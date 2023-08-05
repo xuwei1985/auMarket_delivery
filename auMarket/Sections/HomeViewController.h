@@ -14,6 +14,7 @@
 #import "TaskModel.h"
 #import "SmsTaskViewController.h"
 #import "UserCenterViewController.h"
+#import "StateIndicator.h"
 
 @interface HomeViewController : SPBaseViewController<GMSMapViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate>
 {
@@ -28,6 +29,7 @@
     Boolean isLoadedMaker;
     GMSMarker *selectedMarker;
     UIPickerView *predictTimePicker;
+    StateIndicator *stateIndicator;
     Boolean isShowing; //当前界面是否显示中，是否活跃
     UIButton *btn_l_1;
     UIButton *btn_l_2;

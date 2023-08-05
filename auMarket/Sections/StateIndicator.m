@@ -41,24 +41,30 @@
     [self addSubview:btn_predict];
     
     btn_pick=[UIButton buttonWithType:UIButtonTypeCustom];
-    btn_pick.tag=10110;
+    btn_pick.tag=10112;
     btn_pick.selected=NO;
     [btn_pick setImage:[UIImage imageNamed:@"state_box_off"] forState:UIControlStateNormal];
     [btn_pick setImage:[UIImage imageNamed:@"state_box_on"] forState:UIControlStateSelected];
     [btn_pick addTarget:self action:@selector(toggleState:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:btn_pick];
     
+    [btn_gps mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.top.mas_equalTo(0);
+        make.size.mas_equalTo(CGSizeMake(self.width/3, self.height));
+    }];
+    
     [btn_pick mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.size.mas_equalTo(CGSizeMake(self.width/3, 38));
+        make.size.mas_equalTo(CGSizeMake(self.width/3, self.height));
     }];
     
     [btn_predict mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
-        make.left.mas_equalTo(btn_predict.mas_right);
+        make.left.mas_equalTo(btn_gps.mas_right);
         make.right.mas_equalTo(btn_pick.mas_left);
-        make.height.mas_equalTo(38);
+        make.height.mas_equalTo(self.height);
     }];
 }
 

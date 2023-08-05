@@ -154,7 +154,13 @@
     [btn_refresh setImage:[UIImage imageNamed:@"shuaxin.png"] forState:UIControlStateNormal];
 }
 
+//MARK: 创建工作状态指示器
+-(void)createStateIndicator{
+    stateIndicator = [[StateIndicator alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
+}
+
 -(void)initUI{
+    [self createStateIndicator];
     [self setNavigation];
     [self createRefreshBtn];
     [self createMapView];
@@ -190,6 +196,8 @@
     
     UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:btn_r];
     self.navigationItem.rightBarButtonItem =btn_right;
+    
+    self.navigationItem.titleView=stateIndicator;
 }
 
 //MARK: 观察者通知注册
