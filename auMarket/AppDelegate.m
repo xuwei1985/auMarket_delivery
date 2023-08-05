@@ -38,7 +38,7 @@
     [self.booter bootReachability];
     [self.booter bootGoogleMap];
     [self.booter loadTaskList];
-    [self.booter loadParkingList];
+    //[self.booter loadParkingList];
 //    [self.booter bootJPush:launchOptions];
     
     // 当前版本第一次启动开启引导页

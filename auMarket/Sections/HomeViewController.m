@@ -23,7 +23,6 @@
 }
 
 -(void)initData{
-    isExchangeModel=NO;
     isLoadedMaker=NO;
     showSections=0;
     markerArr=[[NSMutableArray alloc] init];
@@ -132,32 +131,32 @@
                                                             longitude:144.9527565
                                                                  zoom:13];
     mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-    mapView.myLocationEnabled = NO;
+    mapView.myLocationEnabled=NO;
     mapView.delegate=self;
-    [[mapView settings] setMyLocationButton:YES];
+    [[mapView settings] setMyLocationButton:NO];
     self.view = mapView;
     
     //地图上添加刷新数据的按钮
-    [self.view addSubview:btn_refresh];
+    [mapView addSubview:btn_refresh];
+    [mapView bringSubviewToFront:btn_refresh];
 }
 
 //MARK: 创建地图上的刷新按钮
 -(void)createRefreshBtn{
     btn_refresh = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_refresh.frame= CGRectMake(WIDTH_SCREEN-12, HEIGHT_SCREEN-110, 52, 52);
+    btn_refresh.frame= CGRectMake(WIDTH_SCREEN-64, HEIGHT_SCREEN-HEIGHT_TAB_BAR-HEIGHT_STATUS_AND_NAVIGATION_BAR-90, 52, 52);
     btn_refresh.backgroundColor = [UIColor whiteColor];
     btn_refresh.layer.cornerRadius=26;
     [btn_refresh addTarget:self action:@selector(clickRefresh:) forControlEvents:UIControlEventTouchUpInside];
     btn_refresh.layer.shadowOpacity = 0.3;
     btn_refresh.layer.shadowColor = [UIColor blackColor].CGColor;
     btn_refresh.layer.shadowOffset = CGSizeMake(2, 3);
-
-    [btn_refresh setBackgroundImage:[UIImage imageNamed:@"shauxin"] forState:UIControlStateNormal];
-    
+    [btn_refresh setImage:[UIImage imageNamed:@"shuaxin.png"] forState:UIControlStateNormal];
 }
 
 -(void)initUI{
     [self setNavigation];
+    [self createRefreshBtn];
     [self createMapView];
     [self createPredictTimeView];
 }
@@ -358,7 +357,7 @@
     TaskItemEntity *itemEntity;
     GMSMarker *marker;
     NSString *location_icon=@"";
-    BOOL only_unset_predict_order=(model==1);
+    BOOL only_unset_predict_order=(model==1); //是否只显示未设置配送排序的订单
     
     if(markerArr){
         for(int i=0;i<markerArr.count;i++){
@@ -554,7 +553,6 @@
             }
         }
     }
-    isExchangeModel=NO;
 }
 
 //MARK: 计算任务队列中是否有多个配送时段
@@ -788,31 +786,40 @@
 
     UIAlertController *alert_sheet = [UIAlertController alertControllerWithTitle:@"选择操作" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *action_nav = [UIAlertAction actionWithTitle:@"Google导航" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"点击了项目1");
+        [self runNavigationByGoogle];
     }];
     
     UIAlertAction *action_order = [UIAlertAction actionWithTitle:@"查看订单" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"点击了项目1");
+        [self gotoOrderDetail];
     }];
     
     UIAlertAction *action_mobile = [UIAlertAction actionWithTitle:@"拨打电话" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"点击了项目1");
+        TaskItemEntity *item= (TaskItemEntity *)[selectedMarker.taskArr firstObject];
+        [self callPhone:item.mobile];
     }];
     
     UIAlertAction *action_order_muti = [UIAlertAction actionWithTitle:@"查看多订单" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"点击了项目1");
+        [self gotoOrderDetail];
     }];
     
     UIAlertAction *action_address = [UIAlertAction actionWithTitle:@"复制地址" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"点击了项目1");
+        TaskItemEntity *item= (TaskItemEntity *)[selectedMarker.taskArr firstObject];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+            pasteboard.string = item.address;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self showToastWithText:@"复制成功"];
+            });
+        });
     }];
     
     UIAlertAction *action_sort = [UIAlertAction actionWithTitle:@"配送排序" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"点击了项目1");
+        [self showPredictTimeView];
     }];
     
     
-    UIAlertAction *action_cancel = [UIAlertAction actionWithTitle:@"配送排序" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action_cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"点击了项目1");
     }];
     
@@ -826,101 +833,37 @@
     }
     
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
-        
-        if(marker.taskArr.count<=1){
-            if(show_predict_menu){
-                [alert_sheet addAction:action_nav];
-                [alert_sheet addAction:action_order];
-                [alert_sheet addAction:action_mobile];
-                [alert_sheet addAction:action_address];
-                [alert_sheet addAction:action_sort];
-                //actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"Google导航", @"查看订单",@"拨打电话",@"复制地址", @"预计送达时间", nil,nil];
-            }
-            else{
-                [alert_sheet addAction:action_nav];
-                [alert_sheet addAction:action_order];
-                [alert_sheet addAction:action_mobile];
-                [alert_sheet addAction:action_address];
-            }
+        [alert_sheet addAction:action_nav];
+    }
+    
+    if(marker.taskArr.count<=1){
+        if(show_predict_menu){
+            [alert_sheet addAction:action_order];
+            [alert_sheet addAction:action_mobile];
+            [alert_sheet addAction:action_address];
+            [alert_sheet addAction:action_sort];
         }
         else{
-            if(show_predict_menu){
-                [alert_sheet addAction:action_nav];
-                [alert_sheet addAction:action_order_muti];
-                [alert_sheet addAction:action_address];
-                [alert_sheet addAction:action_sort];
-            }
-            else{
-                [alert_sheet addAction:action_nav];
-                [alert_sheet addAction:action_order_muti];
-                [alert_sheet addAction:action_address];
-            }
+            [alert_sheet addAction:action_order];
+            [alert_sheet addAction:action_mobile];
+            [alert_sheet addAction:action_address];
         }
-        
     }
     else{
-        if(marker.taskArr.count<=1){
-            if(show_predict_menu){
-                [alert_sheet addAction:action_order];
-                [alert_sheet addAction:action_mobile];
-                [alert_sheet addAction:action_address];
-                [alert_sheet addAction:action_sort];
-            }
-            else{
-                [alert_sheet addAction:action_order];
-                [alert_sheet addAction:action_mobile];
-                [alert_sheet addAction:action_address];
-            }
+        if(show_predict_menu){
+            [alert_sheet addAction:action_order_muti];
+            [alert_sheet addAction:action_address];
+            [alert_sheet addAction:action_sort];
         }
         else{
-            if(show_predict_menu){
-                [alert_sheet addAction:action_order_muti];
-                [alert_sheet addAction:action_address];
-                [alert_sheet addAction:action_sort];
-            }
-            else{
-                [alert_sheet addAction:action_order_muti];
-                [alert_sheet addAction:action_address];
-                
-            }
+            [alert_sheet addAction:action_order_muti];
+            [alert_sheet addAction:action_address];
+        }
     }
     
     [self presentViewController:alert_sheet animated:YES completion:nil];
 }
 
-//MARK: Maker菜单项的点击事件处理
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"Google导航"])
-    {
-        [self runNavigationByGoogle];
-    }
-    else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"查看订单"]||[[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"查看多个订单"])
-    {
-        [self gotoOrderDetail];
-    }
-    else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"拨打电话"])
-    {
-        TaskItemEntity *item= (TaskItemEntity *)[selectedMarker.taskArr firstObject];
-        [self callPhone:item.mobile];
-    }
-    else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"复制地址"])
-    {
-        TaskItemEntity *item= (TaskItemEntity *)[selectedMarker.taskArr firstObject];
-
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-            pasteboard.string = item.address;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self showToastWithText:@"复制成功"];
-            });
-        });
-    }
-    else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"预计送达时间"])
-    {
-        [self showPredictTimeView];
-    }
-}
 
 //MARK: 显示预计送达时间的选择视图
 -(void)showPredictTimeView{
@@ -972,10 +915,6 @@
     
     if(showSections<2){//分时段模式开启
         [self setSectionButtonState:1];//设置时间段为亮起
-        
-        if(!isExchangeModel){
-            btn_workState.selected=NO;
-        }
     }
     else{//分时段模式关闭
         [self setSectionButtonState:0];//设置时间段为熄灭
@@ -986,14 +925,13 @@
 
 
 -(void)handlerWorkState{
-    if(btn_workState.selected){
-        isExchangeModel=YES;
-        [self loadTaskMask:1];
-    }
-    else{
-        isExchangeModel=YES;
-        [self loadTaskMask:0];
-    }
+    [self loadTaskMask:0];
+//    if(btn_workState.selected){
+//
+//    }
+//    else{
+//        [self loadTaskMask:0];
+//    }
 }
 
 //MARK: 配送数据更新

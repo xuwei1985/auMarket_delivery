@@ -24,7 +24,7 @@
     [super viewDidLoad];
     [self initData];
     [self initUI];
-    //[self addNotification];
+    [self addNotification];
 }
 
 
@@ -48,10 +48,13 @@
 }
 
 -(void)addNotification{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
 }
 
 -(void)setNavigation{
+    self.title=@"配送列表";
+    
     btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_r.frame= CGRectMake(0, 0, 26, 22);
     [btn_r setImage:[UIImage imageNamed:@"list_model_0"] forState:UIControlStateNormal];
@@ -143,11 +146,21 @@
     [self.tableView setTableFooterView:view];
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, CGFLOAT_MIN)];
     
-   
     [self.tableView setEstimatedRowHeight: 0.0];
     [self.tableView setEstimatedSectionHeaderHeight:0.0];
     [self.tableView setEstimatedSectionFooterHeight:0.0];
     [self.view addSubview:self.tableView];
+    
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(reloadTaskList)];
+    
+    //    [header setTitle:@"加载中..." forState:MJRefreshStateRefreshing]; // 松手刷新
+    header.stateLabel.font = FONT_SIZE_SMALL;
+    header.stateLabel.textColor = COLOR_DARKGRAY;
+    header.automaticallyChangeAlpha = YES;
+    header.lastUpdatedTimeLabel.hidden=YES;
+    //    [header beginRefreshing];
+    
+    self.tableView.mj_header=header;
 }
 
 
@@ -444,6 +457,10 @@
         }
     }
     [self.tableView reloadData];
+}
+
+-(void)reloadTaskList{
+    [APP_DELEGATE.booter loadTaskList];
 }
 
 -(void)loadTaskList{
@@ -761,6 +778,7 @@
             [btn_failedDelivery sendActionsForControlEvents:UIControlEventTouchUpInside];
         }
     });
+    [self.tableView.mj_header endRefreshing];
 }
 
 

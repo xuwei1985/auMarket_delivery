@@ -29,7 +29,6 @@
     GMSMarker *selectedMarker;
     UIPickerView *predictTimePicker;
     Boolean isShowing; //当前界面是否显示中，是否活跃
-    Boolean isExchangeModel;
     UIButton *btn_l_1;
     UIButton *btn_l_2;
     UIButton *btn_r;
