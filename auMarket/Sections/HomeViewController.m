@@ -156,7 +156,7 @@
 
 //MARK: 创建工作状态指示器
 -(void)createStateIndicator{
-    stateIndicator = [[StateIndicator alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
+    stateIndicator = [[StateIndicator alloc] initWithFrame:CGRectMake(0, 0, 150, 32)];
 }
 
 -(void)initUI{
