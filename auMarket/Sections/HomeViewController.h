@@ -15,6 +15,7 @@
 #import "SmsTaskViewController.h"
 #import "UserCenterViewController.h"
 #import "StateIndicator.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface HomeViewController : SPBaseViewController<GMSMapViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate>
 {

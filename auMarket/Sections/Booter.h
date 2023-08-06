@@ -26,6 +26,8 @@
 #import "BooterModel.h"
 #import "MemberLoginModel.h"
 
+
+
 @interface Booter : NSObject<UIGestureRecognizerDelegate,UITabBarControllerDelegate,SPBaseModelProtocol>{
     int last_location_update;
 }

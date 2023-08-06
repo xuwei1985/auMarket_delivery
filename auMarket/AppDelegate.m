@@ -79,9 +79,9 @@
     // 设置定位精确度到米
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     // 设置距离筛选器,表示设备至少移动n米,才通知委托更新
-    _locationManager.distanceFilter = 5;
+    _locationManager.distanceFilter = 12;
     //设置iOS设备是否可暂停定位来节省电池的电量
-    _locationManager.pausesLocationUpdatesAutomatically = NO;
+    _locationManager.pausesLocationUpdatesAutomatically = YES;
     // 取得定位权限，有两个方法，取决于你的定位使用情况
     
     // 一个是requestAlwaysAuthorization，一个是requestWhenInUseAuthorization
@@ -103,6 +103,20 @@
     CLLocationCoordinate2D coordinate=  newLocation.coordinate;
     [self.booter postLocation:coordinate];
 //    NSLog(@"%lf %lf", coordinate.latitude, coordinate.longitude) ;
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    if (status == kCLAuthorizationStatusDenied || status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusNotDetermined) {
+        // The user denied authorization
+        self.isLocationAuthorized=NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:APP_CHANGED_LOCATION_AUTHORIZATION object:nil];
+    }
+    else if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        // The user accepted authorization
+        self.isLocationAuthorized=YES;
+        [[NSNotificationCenter defaultCenter] postNotificationName:APP_CHANGED_LOCATION_AUTHORIZATION object:nil];
+    }
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

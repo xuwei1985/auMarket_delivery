@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign) NSInteger state_gps;
 @property(nonatomic,assign) NSInteger state_pick;
 @property(nonatomic,assign) NSInteger state_predict;
+
+-(void)refreshState;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -20,7 +20,7 @@
 }
 
 -(void)initData{
-    
+    [self loadData];
 }
 
 -(void)initUI{
@@ -69,8 +69,15 @@
 }
 
 -(void)loadData{
-    
+    [self refreshState];
 }
+
+-(void)refreshState{
+    btn_gps.selected=(self.state_gps==1);
+    btn_predict.selected=(self.state_predict==1);
+    btn_pick.selected=(self.state_pick==1);
+}
+
 
 -(void)toggleState:(UIButton *)sender{
     sender.selected=!sender.selected;

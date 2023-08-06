@@ -156,7 +156,10 @@
 
 //MARK: 创建工作状态指示器
 -(void)createStateIndicator{
-    stateIndicator = [[StateIndicator alloc] initWithFrame:CGRectMake(0, 0, 150, 32)];
+    stateIndicator = [[StateIndicator alloc] initWithFrame:CGRectMake((WIDTH_SCREEN-140-40)/2-70, 5, 140, 32)];
+    stateIndicator.backgroundColor = COLOR_BG_WHITE;
+    stateIndicator.layer.cornerRadius =16;
+    stateIndicator.clipsToBounds =YES;
 }
 
 -(void)initUI{
@@ -197,7 +200,15 @@
     UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:btn_r];
     self.navigationItem.rightBarButtonItem =btn_right;
     
-    self.navigationItem.titleView=stateIndicator;
+    
+    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 140, 40)];
+    view.backgroundColor = UIColor.clearColor;
+    [view addSubview:stateIndicator];
+
+    self.navigationItem.titleView=view;
+    
+    
+   
 }
 
 //MARK: 观察者通知注册
@@ -205,6 +216,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppEnterBackground:) name:APP_DID_ENTER_BACKGROUND object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppChangesLocationAuthorization:) name:APP_CHANGED_LOCATION_AUTHORIZATION object:nil];
 }
 
 //MARK: 创建配送时间段选择视图
@@ -955,6 +967,12 @@
     [self cacheDeliveryData];
 }
 
+//MARK: App进定位授权发生变化事件
+- (void)onAppChangesLocationAuthorization:(NSNotification*)aNotitification{
+    stateIndicator.state_gps = APP_DELEGATE.isLocationAuthorized;
+    [stateIndicator refreshState];
+}
+
 //MARK: 拨打电话
 -(void)callPhone:(NSString *)phone{
     if(phone!=nil&&phone.length>0){
@@ -990,6 +1008,7 @@
     [cache synchronize];
 }
 
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
@@ -1000,6 +1019,10 @@
         [APP_DELEGATE.booter loadTaskList];
     }
     
+    if (stateIndicator != nil) {
+        stateIndicator.state_gps = APP_DELEGATE.isLocationAuthorized;
+        [stateIndicator refreshState];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
