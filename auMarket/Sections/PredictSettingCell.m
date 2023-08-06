@@ -20,7 +20,6 @@
 
 -(void)initUI{
     @weakify(self);
-    self.backgroundColor=COLOR_WHITE;
     
     if (beginTxt==nil){
         beginTxt = [[UITextField alloc] init];
@@ -32,13 +31,17 @@
         beginTxt.keyboardType= UIKeyboardTypeDefault;
         beginTxt.contentVerticalAlignment= UIControlContentVerticalAlignmentCenter;
         beginTxt.autocapitalizationType=UITextAutocapitalizationTypeNone;
+        beginTxt.layer.cornerRadius=3;
+        beginTxt.clipsToBounds=YES;
+        [beginTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingLeft"];
+        [beginTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingRight"];
         [self.contentView addSubview:beginTxt];
         
         @strongify(self);
         [beginTxt mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(12);
             make.centerY.mas_equalTo(self.mas_centerY);
-            make.width.mas_equalTo((self.frame.size.width-30-50)/2);
+            make.width.mas_equalTo((self.frame.size.width-30-40)/2);
             make.height.mas_equalTo(36);
         }];
     }
@@ -49,7 +52,7 @@
         
         @strongify(self);
         [beginArrow mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(-10);
+            make.right.mas_equalTo(-12);
             make.centerY.mas_equalTo(beginTxt.mas_centerY);
             make.width.mas_equalTo(16);
             make.height.mas_equalTo(16);
@@ -82,13 +85,17 @@
         endTxt.keyboardType= UIKeyboardTypeDefault;
         endTxt.contentVerticalAlignment= UIControlContentVerticalAlignmentCenter;
         endTxt.autocapitalizationType=UITextAutocapitalizationTypeNone;
+        endTxt.layer.cornerRadius=3;
+        endTxt.clipsToBounds=YES;
+        [endTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingLeft"];
+        [endTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingRight"];
         [self.contentView addSubview:endTxt];
         
         @strongify(self);
         [endTxt mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(-12);
             make.centerY.mas_equalTo(self.mas_centerY);
-            make.width.mas_equalTo((self.frame.size.width-30-50)/2);
+            make.width.mas_equalTo((self.frame.size.width-30-40)/2);
             make.height.mas_equalTo(36);
         }];
     }
@@ -110,6 +117,11 @@
 -(void)layoutSubviews{
     [super layoutSubviews];
     
+    [self initUI];
+    [self showData];
+}
+
+-(void)showData{
     beginTxt.text=self.begin_time;
     endTxt.text=self.end_time;
 }

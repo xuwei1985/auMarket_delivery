@@ -19,4 +19,5 @@
 
 @property(nonatomic,assign) NSString* begin_time;
 @property(nonatomic,assign) NSString* end_time;
+-(void)showData;
 @end

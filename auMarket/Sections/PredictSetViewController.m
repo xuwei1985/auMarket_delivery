@@ -46,6 +46,8 @@
     
     [self.tableView setTableFooterView:view];
     [self.view addSubview:self.tableView];
+    
+    [self.tableView reloadData];
 }
 
 -(void)doPostPredictSetting{
@@ -104,25 +106,23 @@
         cell = [[PredictSettingCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
         cell.showsReorderControl = NO;
         cell.accessoryType=UITableViewCellAccessoryNone;
-        cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
+        cell.backgroundColor= [UIColor clearColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     cell.begin_time=@"11:00";
     cell.end_time=@"18:00";
+    [cell showData];
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 40;
+    return 52;
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
-//    predictSmsTaskCell *cell=[tv cellForRowAtIndexPath:indexPath];
-//    if(self.list_type==0){
-//        [cell toggleDataSel];
-//    }
+    PredictSettingCell *cell=[tv cellForRowAtIndexPath:indexPath];
     
 }
 
@@ -135,8 +135,9 @@
     editingStyle = UITableViewCellEditingStyleDelete;
 }
 
+//MARK: 加载配送员今天的配送时间段
 -(void)loadShippingTime{
-    [self.model predict_task_listWithListType:self.list_type];
+    [self.model loadDeliveryTimeSection];
 }
 
 
