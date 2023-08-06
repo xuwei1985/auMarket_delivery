@@ -156,7 +156,7 @@
 
 //MARK: 创建工作状态指示器
 -(void)createStateIndicator{
-    stateIndicator = [[StateIndicator alloc] initWithFrame:CGRectMake((WIDTH_SCREEN-140-40)/2-70, 5, 140, 32)];
+    stateIndicator = [[StateIndicator alloc] initWithFrame:CGRectMake((WIDTH_SCREEN-140-42)/2-70, 5, 140, 32)];
     stateIndicator.backgroundColor = COLOR_BG_WHITE;
     stateIndicator.layer.cornerRadius =16;
     stateIndicator.clipsToBounds =YES;
@@ -192,9 +192,9 @@
     
     // 前往个人中心按钮
     btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_r.frame= CGRectMake(0, 0, 36, 36);
+    btn_r.frame= CGRectMake(0, 0, 24, 24);
     [btn_r setImage:[UIImage imageNamed:@"yonghu"] forState:UIControlStateNormal];
-    btn_r.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 4, 0);
+    btn_r.imageEdgeInsets = UIEdgeInsetsMake(2, 2, 2, 2);
     [btn_r addTarget:self action:@selector(gotoMemberView) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:btn_r];

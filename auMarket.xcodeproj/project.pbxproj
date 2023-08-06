@@ -19,6 +19,8 @@
 		A91357731F668BB4000186B0 /* TaskItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A91357721F668BB4000186B0 /* TaskItemCell.m */; };
 		A91357761F668BFF000186B0 /* TaskEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A91357751F668BFF000186B0 /* TaskEntity.m */; };
 		A91357781F6783EF000186B0 /* defaut_list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A91357771F6783EF000186B0 /* defaut_list@2x.png */; };
+		A917D83C2A7F7549005721FC /* PredictSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A917D83B2A7F7549005721FC /* PredictSetViewController.m */; };
+		A917D83F2A7F7D5C005721FC /* PredictSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A917D83D2A7F7D5C005721FC /* PredictSettingCell.m */; };
 		A9187C111DF9ABB200A3E902 /* UserCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9187C101DF9ABB200A3E902 /* UserCenterViewController.m */; };
 		A9187C1C1DF9B42400A3E902 /* home_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9187C181DF9B42400A3E902 /* home_s@2x.png */; };
 		A9187C1D1DF9B42400A3E902 /* home_s@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9187C191DF9B42400A3E902 /* home_s@3x.png */; };
@@ -281,6 +283,10 @@
 		A91357741F668BFF000186B0 /* TaskEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskEntity.h; sourceTree = "<group>"; };
 		A91357751F668BFF000186B0 /* TaskEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskEntity.m; sourceTree = "<group>"; };
 		A91357771F6783EF000186B0 /* defaut_list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "defaut_list@2x.png"; sourceTree = "<group>"; };
+		A917D83A2A7F7549005721FC /* PredictSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PredictSetViewController.h; sourceTree = "<group>"; };
+		A917D83B2A7F7549005721FC /* PredictSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PredictSetViewController.m; sourceTree = "<group>"; };
+		A917D83D2A7F7D5C005721FC /* PredictSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PredictSettingCell.m; sourceTree = "<group>"; };
+		A917D83E2A7F7D5C005721FC /* PredictSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PredictSettingCell.h; sourceTree = "<group>"; };
 		A9187C101DF9ABB200A3E902 /* UserCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCenterViewController.m; sourceTree = "<group>"; };
 		A9187C181DF9B42400A3E902 /* home_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_s@2x.png"; sourceTree = "<group>"; };
 		A9187C191DF9B42400A3E902 /* home_s@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_s@3x.png"; sourceTree = "<group>"; };
@@ -728,6 +734,8 @@
 		A9187C041DF9AB4900A3E902 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A917D83E2A7F7D5C005721FC /* PredictSettingCell.h */,
+				A917D83D2A7F7D5C005721FC /* PredictSettingCell.m */,
 				A91AEDD824115DC100988A87 /* BankCell.h */,
 				A91AEDD924115DC100988A87 /* BankCell.m */,
 				A9F4DAB61F66D4A800D71774 /* OrderDetailCell.h */,
@@ -743,6 +751,8 @@
 		A9187C051DF9AB4D00A3E902 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A917D83A2A7F7549005721FC /* PredictSetViewController.h */,
+				A917D83B2A7F7549005721FC /* PredictSetViewController.m */,
 				A93D98E822F5CCCC004D5AEB /* ReturnProofViewController.h */,
 				A93D98E922F5CCCD004D5AEB /* ReturnProofViewController.m */,
 				A90F0DAD22CB6171006D6F1C /* OrderPriceChangeViewController.h */,
@@ -1645,6 +1655,7 @@
 				A9FBC1F71DF97192005ECDDE /* HomeViewController.m in Sources */,
 				A96474221E1111E500A5A39B /* MemberLoginModel.m in Sources */,
 				A95E113E1DF8491600660E42 /* NSArray+IDPExtension.m in Sources */,
+				A917D83C2A7F7549005721FC /* PredictSetViewController.m in Sources */,
 				A9F4DAD51F68390F00D71774 /* SDWebImageManager+MJ.m in Sources */,
 				A91D539D1DFE99E600A6BB37 /* AdPageViewController.m in Sources */,
 				A942999A1F72BB840078A9AE /* MemberChargeEntity.m in Sources */,
@@ -1691,6 +1702,7 @@
 				A95E10911DF80ED000660E42 /* main.m in Sources */,
 				A9F4DAB71F66D4A800D71774 /* OrderDetailCell.m in Sources */,
 				A9DDB8192213C63B00D65020 /* PayCodeViewController.m in Sources */,
+				A917D83F2A7F7D5C005721FC /* PredictSettingCell.m in Sources */,
 				A9E0C20520E9D61A00874609 /* PickOrderCell.m in Sources */,
 				A95E11401DF8491600660E42 /* NSDate+IDPExtension.m in Sources */,
 				A98C7B07243C52F40084543A /* PickFreezeOrderViewController.m in Sources */,
