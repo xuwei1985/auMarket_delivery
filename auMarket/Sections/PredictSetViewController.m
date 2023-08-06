@@ -136,7 +136,7 @@
 }
 
 -(void)loadShippingTime{
-    //[self.model predict_task_listWithListType:self.list_type];
+    [self.model predict_task_listWithListType:self.list_type];
 }
 
 

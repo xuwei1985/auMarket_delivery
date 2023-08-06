@@ -148,7 +148,7 @@
         item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_back_black"] style:UIBarButtonItemStylePlain target:target action:action];
         
     }
-    item.imageInsets = UIEdgeInsetsMake(0, -12, 0, 0);
+    item.imageInsets = UIEdgeInsetsMake(0, -6, 0, 0);
     item.tintColor = COLOR_BG_TABLEVIEW;
     self.navigationItem.leftBarButtonItem = item;
 }

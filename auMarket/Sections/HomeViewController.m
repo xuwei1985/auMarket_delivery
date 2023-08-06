@@ -178,13 +178,12 @@
     [btn_l_1 setImage:[UIImage imageNamed:@"task"] forState:UIControlStateNormal];
     [btn_l_1 addTarget:self action:@selector(gotoSmsTaskView) forControlEvents:UIControlEventTouchUpInside];
     
-//    section_time_1@2x
     // 设置预计送达时间
     btn_l_2 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_l_2.frame= CGRectMake(0, 0, 24, 24);
     [btn_l_2 setImage:[UIImage imageNamed:@"predict_set"] forState:UIControlStateNormal];
     btn_l_2.imageEdgeInsets = UIEdgeInsetsMake(2, 4, 2, 0);
-    [btn_l_2 addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
+    [btn_l_2 addTarget:self action:@selector(gotoPredictSetting) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *btn_left_1 = [[UIBarButtonItem alloc] initWithCustomView:btn_l_1];
     UIBarButtonItem *btn_left_2 = [[UIBarButtonItem alloc] initWithCustomView:btn_l_2];
@@ -196,7 +195,7 @@
     btn_r_1 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_r_1.frame= CGRectMake(0, 0, 24, 24);
     [btn_r_1 setImage:[UIImage imageNamed:@"yonghu"] forState:UIControlStateNormal];
-    btn_r_1.imageEdgeInsets = UIEdgeInsetsMake(2, 2, 2, 2);
+    btn_r_1.imageEdgeInsets = UIEdgeInsetsMake(1, 1, 1, 1);
     [btn_r_1 addTarget:self action:@selector(gotoMemberView) forControlEvents:UIControlEventTouchUpInside];
     
     // 数据状态切换按钮

@@ -103,3 +103,10 @@
 @property (nonatomic,retain) NSString *add_time;
 @property (nonatomic,retain) NSString *staff;
 @end
+
+
+@interface ShippingTimeEntity : SPBaseEntity
+@property (nonatomic,assign) NSInteger id;
+@property (nonatomic,retain) NSString *begin_time;
+@property (nonatomic,retain) NSString *end_time;
+@end
