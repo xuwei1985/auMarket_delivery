@@ -175,7 +175,7 @@
         int now=[[Common getNowTimeTimestamp] intValue];
         if((now-last_location_update)>10){//最短10秒提交一次位置信息
             last_location_update=now;
-            [self.model postLocation:coordinate andUserId:user.user_id];
+            [self.model postLocation:coordinate andUserId:user.user_id andGPS:(APP_DELEGATE.isLocationAuthorized==YES ? 1 :0)];
         }
     }
 }

@@ -16,6 +16,7 @@
 #import "UserCenterViewController.h"
 #import "StateIndicator.h"
 #import <CoreLocation/CoreLocation.h>
+#import "PredictSetViewController.h"
 
 @interface HomeViewController : SPBaseViewController<GMSMapViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate>
 {
@@ -34,7 +35,8 @@
     Boolean isShowing; //当前界面是否显示中，是否活跃
     UIButton *btn_l_1;
     UIButton *btn_l_2;
-    UIButton *btn_r;
+    UIButton *btn_r_1;
+    UIButton *btn_r_2;
     UITextField *_txt_predict;
     int predict_select_index;
     NSMutableArray<PredictTimeEntity *>*predict_time_arr; 

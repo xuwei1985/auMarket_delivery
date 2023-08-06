@@ -19,7 +19,7 @@
 @property(nonatomic,retain) LineEntity *lineEntity;
 
 -(void)loadParkingList;
--(void)postLocation:(CLLocationCoordinate2D)coordinate andUserId:(NSString *)user_id;
+-(void)postLocation:(CLLocationCoordinate2D)coordinate andUserId:(NSString *)user_id andGPS:(NSInteger)state;
 -(void)getTokenAsync;
 -(void)getTokenSync;
 -(void)getDataLines;

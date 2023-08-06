@@ -178,10 +178,11 @@
     [btn_l_1 setImage:[UIImage imageNamed:@"task"] forState:UIControlStateNormal];
     [btn_l_1 addTarget:self action:@selector(gotoSmsTaskView) forControlEvents:UIControlEventTouchUpInside];
     
-    // 数据状态切换按钮
+//    section_time_1@2x
+    // 设置预计送达时间
     btn_l_2 = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_l_2.frame= CGRectMake(0, 0, 24, 24);
-    [btn_l_2 setImage:[UIImage imageNamed:@"section_time_0"] forState:UIControlStateNormal];
+    [btn_l_2 setImage:[UIImage imageNamed:@"predict_set"] forState:UIControlStateNormal];
     btn_l_2.imageEdgeInsets = UIEdgeInsetsMake(2, 4, 2, 0);
     [btn_l_2 addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -190,24 +191,32 @@
     NSArray *leftButtonItems = @[btn_left_1, btn_left_2];
     self.navigationItem.leftBarButtonItems =leftButtonItems;
     
+   
     // 前往个人中心按钮
-    btn_r = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_r.frame= CGRectMake(0, 0, 24, 24);
-    [btn_r setImage:[UIImage imageNamed:@"yonghu"] forState:UIControlStateNormal];
-    btn_r.imageEdgeInsets = UIEdgeInsetsMake(2, 2, 2, 2);
-    [btn_r addTarget:self action:@selector(gotoMemberView) forControlEvents:UIControlEventTouchUpInside];
+    btn_r_1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn_r_1.frame= CGRectMake(0, 0, 24, 24);
+    [btn_r_1 setImage:[UIImage imageNamed:@"yonghu"] forState:UIControlStateNormal];
+    btn_r_1.imageEdgeInsets = UIEdgeInsetsMake(2, 2, 2, 2);
+    [btn_r_1 addTarget:self action:@selector(gotoMemberView) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:btn_r];
-    self.navigationItem.rightBarButtonItem =btn_right;
+    // 数据状态切换按钮
+    btn_r_2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn_r_2.frame= CGRectMake(0, 0, 24, 24);
+    [btn_r_2 setImage:[UIImage imageNamed:@"section_time_0"] forState:UIControlStateNormal];
+    btn_r_2.imageEdgeInsets = UIEdgeInsetsMake(2, 4, 2, 0);
+    [btn_r_2 addTarget:self action:@selector(toggleParkMaker:) forControlEvents:UIControlEventTouchUpInside];
     
+    
+    UIBarButtonItem *btn_right_1 = [[UIBarButtonItem alloc] initWithCustomView:btn_r_1];
+    UIBarButtonItem *btn_right_2 = [[UIBarButtonItem alloc] initWithCustomView:btn_r_2];
+    NSArray *rightButtonItems = @[btn_right_1, btn_right_2];
+    self.navigationItem.rightBarButtonItems = rightButtonItems;
     
     UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 140, 40)];
     view.backgroundColor = UIColor.clearColor;
     [view addSubview:stateIndicator];
 
     self.navigationItem.titleView=view;
-    
-    
    
 }
 
@@ -881,6 +890,8 @@
         }
     }
     
+    [alert_sheet addAction:action_cancel];
+    
     [self presentViewController:alert_sheet animated:YES completion:nil];
 }
 
@@ -920,6 +931,12 @@
     }
 }
 
+//MARK: 前往预计送达时间设置界面
+-(void)gotoPredictSetting{
+    PredictSetViewController *pvc=[[PredictSetViewController alloc] init];
+    [self.navigationController pushViewController:pvc animated:YES];
+}
+
 -(void)clickRefresh:(UIButton *)sender{
     
 }
@@ -931,7 +948,7 @@
     if(showSections>2){
         showSections=0;
     }
-    [btn_l_2 setImage:[UIImage imageNamed:[NSString stringWithFormat:@"section_time_%d",showSections]] forState:UIControlStateNormal];
+    [btn_r_2 setImage:[UIImage imageNamed:[NSString stringWithFormat:@"section_time_%d",showSections]] forState:UIControlStateNormal];
     
     if(showSections<2){//分时段模式开启
         [self setSectionButtonState:1];//设置时间段为亮起

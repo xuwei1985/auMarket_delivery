@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PredictSettingCell : UITableViewCell
+@interface PredictSettingCell : UITableViewCell<UITextFieldDelegate>
 {
-    UIImageView *_iconImageView;
-    UILabel *_itemLbl;
+    UITextField *beginTxt;
+    UITextField *endTxt;
+    UILabel *linkLbl;
+    UIImageView *beginArrow;
+    UIImageView *endArrow;
 }
 
-@property(nonatomic,retain) UIImage *iconImage;
-@property(nonatomic,retain) NSString *itemName;
+@property(nonatomic,assign) NSString* begin_time;
+@property(nonatomic,assign) NSString* end_time;
 @end

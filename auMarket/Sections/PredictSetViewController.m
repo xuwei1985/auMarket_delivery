@@ -22,7 +22,7 @@
 }
 
 -(void)initData{
-    [self loadOrders];
+    [self loadShippingTime];
 }
 
 -(void)initUI{
@@ -84,7 +84,7 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return 3;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -107,28 +107,22 @@
         cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    TaskItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
-    cell.entity=entity;
-    cell.list_model=self.list_type;
-    [cell selDataId:^(NSString *order_id,int action) {
-        [self handlerOrdersSelect];
-    }];
+    cell.begin_time=@"11:00";
+    cell.end_time=@"18:00";
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    TaskItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
-    float h=[Common HeightOfLabel:entity.address ForFont:FONT_SIZE_MIDDLE withWidth:(WIDTH_SCREEN-145)];
-    return 185+h;
+    return 40;
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
-    predictSmsTaskCell *cell=[tv cellForRowAtIndexPath:indexPath];
-    if(self.list_type==0){
-        [cell toggleDataSel];
-    }
+//    predictSmsTaskCell *cell=[tv cellForRowAtIndexPath:indexPath];
+//    if(self.list_type==0){
+//        [cell toggleDataSel];
+//    }
     
 }
 
@@ -141,60 +135,53 @@
     editingStyle = UITableViewCellEditingStyleDelete;
 }
 
--(void)loadOrders{
-    if(!self.tableView.mj_header.isRefreshing){
-        [self startLoadingActivityIndicator];
-    }
-    [self.model predict_task_listWithListType:self.list_type];
+-(void)loadShippingTime{
+    //[self.model predict_task_listWithListType:self.list_type];
 }
 
--(void)deletePredictSms{
-    [self startLoadingActivityIndicator];
-    [self.model delete_predict_sms:[self getSelectedOrdersId]];
-}
 
 -(void)postPredictSetting{
     [self startLoadingActivityIndicator];
-    [self.model send_predict_sms:[self getSelectedOrdersId]];
+    //[self.model send_predict_sms:[self getSelectedOrdersId]];
 }
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
     
-    if(model==self.model){
-        if(model.requestTag==1001){
-            if(isSuccess){
-                if(self.model.entity.list!=nil){
-                    [self.tableView reloadData];
-                    if([self.model.entity.list count]<=0){
-                        _selectAllBtn.selected=NO;
-                        [_sumBtn setTitle:[NSString stringWithFormat:@"发送"] forState:UIControlStateNormal];
-                        [self showNoContentView];
-                    }else{
-                        [self hideNoContentView];
-                    }
-                }
-            }
-        }
-        else if(model.requestTag==1002){
-            if(isSuccess){
-                [self showToastWithText:@"删除成功"];
-                [self loadOrders];
-            }
-        }
-        else if(model.requestTag==1003){
-            if(isSuccess){
-                [self showToastWithText:@"发送成功"];
-                [self loadOrders];
-            }
-        }
-    }
+//    if(model==self.model){
+//        if(model.requestTag==1001){
+//            if(isSuccess){
+//                if(self.model.entity.list!=nil){
+//                    [self.tableView reloadData];
+//                    if([self.model.entity.list count]<=0){
+//                        _selectAllBtn.selected=NO;
+//                        [_sumBtn setTitle:[NSString stringWithFormat:@"发送"] forState:UIControlStateNormal];
+//                        [self showNoContentView];
+//                    }else{
+//                        [self hideNoContentView];
+//                    }
+//                }
+//            }
+//        }
+//        else if(model.requestTag==1002){
+//            if(isSuccess){
+//                [self showToastWithText:@"删除成功"];
+//                [self loadOrders];
+//            }
+//        }
+//        else if(model.requestTag==1003){
+//            if(isSuccess){
+//                [self showToastWithText:@"发送成功"];
+//                [self loadOrders];
+//            }
+//        }
+//    }
 }
 
 
--(PredictTaskModel *)model{
+-(TaskModel *)model{
     if(!_model){
-        _model=[[PredictTaskModel alloc] init];
+        _model=[[TaskModel alloc] init];
         _model.delegate=self;
     }
     return _model;
