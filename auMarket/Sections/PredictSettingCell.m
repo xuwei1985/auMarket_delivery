@@ -41,7 +41,7 @@
         [beginTxt mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(12);
             make.centerY.mas_equalTo(self.mas_centerY);
-            make.width.mas_equalTo((self.frame.size.width-30-40)/2);
+            make.width.mas_equalTo((self.frame.size.width-24-40)/2);
             make.height.mas_equalTo(36);
         }];
     }
@@ -50,7 +50,6 @@
         beginArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_down"]];
         [beginTxt addSubview:beginArrow];
         
-        @strongify(self);
         [beginArrow mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(-12);
             make.centerY.mas_equalTo(beginTxt.mas_centerY);
@@ -95,7 +94,7 @@
         [endTxt mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(-12);
             make.centerY.mas_equalTo(self.mas_centerY);
-            make.width.mas_equalTo((self.frame.size.width-30-40)/2);
+            make.width.mas_equalTo((self.frame.size.width-24-40)/2);
             make.height.mas_equalTo(36);
         }];
     }
@@ -104,7 +103,6 @@
         endArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_down"]];
         [endTxt addSubview:endArrow];
         
-        @strongify(self);
         [endArrow mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(-10);
             make.centerY.mas_equalTo(endTxt.mas_centerY);

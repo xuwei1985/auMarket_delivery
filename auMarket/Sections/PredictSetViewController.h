@@ -8,10 +8,13 @@
 
 #import "SPBaseViewController.h"
 #import "PredictSettingCell.h"
+#import "PredictTimeSectionView.h"
 
 @interface PredictSetViewController : SPBaseViewController<UITextFieldDelegate>
 {
-
+    PredictTimeSectionView *headerView;
+    UIView *footerView;
+    
 }
 @property(nonatomic,retain) TaskModel *model;
 @end

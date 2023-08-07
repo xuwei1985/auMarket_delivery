@@ -244,6 +244,7 @@
 		A9F54F0C222BCCC6005C7247 /* 1_29_color_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F54F06222BCCC6005C7247 /* 1_29_color_4@2x.png */; };
 		A9F5603B1FFBCC8900EA8116 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F560391FFBCC8900EA8116 /* WebViewController.m */; };
 		A9F5603D1FFD104400EA8116 /* memberBg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A9F5603C1FFD104300EA8116 /* memberBg@2x.jpg */; };
+		A9F883FF2A80D30C0004B63C /* PredictTimeSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F883FE2A80D30C0004B63C /* PredictTimeSectionView.m */; };
 		A9FBC1BD1DF868F4005ECDDE /* CommonCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FBC1BC1DF868F4005ECDDE /* CommonCache.m */; };
 		A9FBC1C91DF93854005ECDDE /* btn_back_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FBC1C71DF93854005ECDDE /* btn_back_black@3x.png */; };
 		A9FBC1CA1DF93854005ECDDE /* btn_back_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FBC1C81DF93854005ECDDE /* btn_back_black@2x.png */; };
@@ -608,6 +609,8 @@
 		A9F5603A1FFBCC8900EA8116 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		A9F5603C1FFD104300EA8116 /* memberBg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "memberBg@2x.jpg"; sourceTree = "<group>"; };
 		A9F71FF31F734664007624E1 /* deliveryIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deliveryIcon@2x.png"; sourceTree = "<group>"; };
+		A9F883FD2A80D30C0004B63C /* PredictTimeSectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PredictTimeSectionView.h; sourceTree = "<group>"; };
+		A9F883FE2A80D30C0004B63C /* PredictTimeSectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PredictTimeSectionView.m; sourceTree = "<group>"; };
 		A9FBC1BB1DF868F4005ECDDE /* CommonCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonCache.h; sourceTree = "<group>"; };
 		A9FBC1BC1DF868F4005ECDDE /* CommonCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonCache.m; sourceTree = "<group>"; };
 		A9FBC1BE1DF9023D005ECDDE /* SizeMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SizeMacro.h; sourceTree = "<group>"; };
@@ -693,8 +696,8 @@
 			children = (
 				A967B2FF20E6818000D50C46 /* predictSmsTaskCell.h */,
 				A967B2FE20E6818000D50C46 /* predictSmsTaskCell.m */,
-				A9AD42AF1E1364D800A4B131 /* ScrollImageView.m */,
 				A9AD42B01E1364D800A4B131 /* ScrollImageView.h */,
+				A9AD42AF1E1364D800A4B131 /* ScrollImageView.m */,
 				A9F4DA971F65965200D71774 /* MapMaker.h */,
 				A9F4DA981F65965200D71774 /* MapMaker.m */,
 				A9A85E301F6A84EB00443E6F /* GMSMarker+MyGMSMarker.h */,
@@ -748,6 +751,8 @@
 				A91357721F668BB4000186B0 /* TaskItemCell.m */,
 				A9807F5C2301361B003FB76C /* TaskConciseItemCell.h */,
 				A9807F5D2301361C003FB76C /* TaskConciseItemCell.m */,
+				A9F883FD2A80D30C0004B63C /* PredictTimeSectionView.h */,
+				A9F883FE2A80D30C0004B63C /* PredictTimeSectionView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1663,6 +1668,7 @@
 				A9FBC1F71DF97192005ECDDE /* HomeViewController.m in Sources */,
 				A96474221E1111E500A5A39B /* MemberLoginModel.m in Sources */,
 				A95E113E1DF8491600660E42 /* NSArray+IDPExtension.m in Sources */,
+				A9F883FF2A80D30C0004B63C /* PredictTimeSectionView.m in Sources */,
 				A917D83C2A7F7549005721FC /* PredictSetViewController.m in Sources */,
 				A9F4DAD51F68390F00D71774 /* SDWebImageManager+MJ.m in Sources */,
 				A91D539D1DFE99E600A6BB37 /* AdPageViewController.m in Sources */,

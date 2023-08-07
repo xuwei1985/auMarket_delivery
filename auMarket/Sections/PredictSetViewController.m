@@ -34,12 +34,15 @@
     self.title=@"送达时间设置";
 }
 
+//MARK: 创建列表视图
 -(void)setUpTableView{
     float table_height=HEIGHT_SCREEN-HEIGHT_STATUS_AND_NAVIGATION_BAR-HEIGHT_TAB_BAR;
-    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
-    self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
+    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,table_height) style:UITableViewStyleGrouped];
+    self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
     self.tableView.backgroundColor=COLOR_BG_TABLEVIEW;
+    self.tableView.tableHeaderView=headerView;
+    self.tableView.footerView=footerView;
     
     UIView *view = [UIView new];
     view.backgroundColor = COLOR_CLEAR;
@@ -48,6 +51,14 @@
     [self.view addSubview:self.tableView];
     
     [self.tableView reloadData];
+}
+
+//MARK: 列表头尾视图
+-(void)createHeaderAndFooter{
+    headerView=[[PredictTimeSectionView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 80)];
+    footerView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 60)];
+    
+    
 }
 
 -(void)doPostPredictSetting{
@@ -81,21 +92,27 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 1;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 0;
+    return 30;
 }
 
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    return nil;
+    UIView *sectionView=[UIView new];
+    UILabel *sectionLbl=[[UILabel alloc] initWithFrame:CGRectMake(10, 0, 180, 30)];
+    sectionLbl.font=[UIFont boldSystemFontOfSize:14.0];
+    sectionLbl.textColor=COLOR_BLACK;
+    sectionLbl.text=@"10-20";
+    [sectionView addSubview:sectionLbl];
+    return sectionView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -116,7 +133,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 52;
+    return 58;
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
