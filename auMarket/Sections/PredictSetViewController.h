@@ -10,7 +10,7 @@
 #import "PredictSettingCell.h"
 #import "PredictTimeSectionView.h"
 
-@interface PredictSetViewController : SPBaseViewController<UITextFieldDelegate>
+@interface PredictSetViewController : SPBaseViewController<UITextFieldDelegate,PredictTimeSectionViewDelegate>
 {
     PredictTimeSectionView *headerView;
     UIView *footerView;

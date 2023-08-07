@@ -27,6 +27,7 @@
 
 -(void)initUI{
     [self setNavigation];
+    [self createHeaderAndFooter];
     [self setUpTableView];
 }
 
@@ -44,10 +45,8 @@
     self.tableView.tableHeaderView=headerView;
     self.tableView.footerView=footerView;
     
-    UIView *view = [UIView new];
-    view.backgroundColor = COLOR_CLEAR;
-    
-    [self.tableView setTableFooterView:view];
+    [self.tableView setTableHeaderView: headerView];
+    [self.tableView setTableFooterView: footerView];
     [self.view addSubview:self.tableView];
     
     [self.tableView reloadData];
@@ -56,8 +55,8 @@
 //MARK: 列表头尾视图
 -(void)createHeaderAndFooter{
     headerView=[[PredictTimeSectionView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 80)];
+    headerView.delegate=self;
     footerView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 60)];
-    
     
 }
 
@@ -203,6 +202,19 @@
         _model.delegate=self;
     }
     return _model;
+}
+
+-(void)timeSectionClick{
+    NSLog(@"timeSectionClick");
+}
+
+-(void)requestNumClick{
+    NSLog(@"requestNumClick");
+}
+
+-(void)confirmClick{
+    
+    NSLog(@"confirmClick");
 }
 
 -(void)viewWillAppear:(BOOL)animated{
