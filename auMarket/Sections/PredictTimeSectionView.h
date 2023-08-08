@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 // set the delegate
-@property (nonatomic, assign) NSObject<PredictTimeSectionViewDelegate>* delegate;
+@property (nonatomic, retain) NSObject<PredictTimeSectionViewDelegate>* delegate;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -33,6 +33,7 @@
         beginTxt.autocapitalizationType=UITextAutocapitalizationTypeNone;
         beginTxt.layer.cornerRadius=3;
         beginTxt.clipsToBounds=YES;
+        beginTxt.tag=3001;
         [beginTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingLeft"];
         [beginTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingRight"];
         [self.contentView addSubview:beginTxt];
@@ -86,6 +87,7 @@
         endTxt.autocapitalizationType=UITextAutocapitalizationTypeNone;
         endTxt.layer.cornerRadius=3;
         endTxt.clipsToBounds=YES;
+        endTxt.tag=3002;
         [endTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingLeft"];
         [endTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingRight"];
         [self.contentView addSubview:endTxt];
@@ -124,12 +126,17 @@
     endTxt.text=self.end_time;
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    return NO;
-}
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    if(textField.tag==3001){
+        if(self.delegate&&[self.delegate respondsToSelector:@selector(startTimeClick:)]){
+            [self.delegate startTimeClick:self.row_index];
+        }
+    }else if(textField.tag==3002){
+        if(self.delegate&&[self.delegate respondsToSelector:@selector(endTimeClick:)]){
+            [self.delegate endTimeClick:self.row_index];
+        }
+    }
     return NO;
 }
 

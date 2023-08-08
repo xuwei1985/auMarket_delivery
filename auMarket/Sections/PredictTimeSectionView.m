@@ -36,6 +36,7 @@
     timeSectionTxt.layer.cornerRadius=3;
     timeSectionTxt.clipsToBounds=YES;
     timeSectionTxt.tag=5001;
+    timeSectionTxt.text=@"时间段";
     [timeSectionTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingLeft"];
     [timeSectionTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingRight"];
     [self addSubview:timeSectionTxt];
@@ -80,6 +81,7 @@
     requestNumTxt.layer.cornerRadius=3;
     requestNumTxt.clipsToBounds=YES;
     requestNumTxt.tag=5002;
+    requestNumTxt.text=@"20";
     [requestNumTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingLeft"];
     [requestNumTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingRight"];
     [self addSubview:requestNumTxt];

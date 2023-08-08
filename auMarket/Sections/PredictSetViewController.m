@@ -56,8 +56,28 @@
 -(void)createHeaderAndFooter{
     headerView=[[PredictTimeSectionView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 80)];
     headerView.delegate=self;
-    footerView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 60)];
     
+    
+    footerView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 60)];
+    postBtn = [[UIButton alloc] init];
+    [postBtn addTarget:self action:@selector(doPostPredictSetting) forControlEvents:UIControlEventTouchUpInside];
+    [postBtn setTitle:@"提交设置" forState:UIControlStateNormal];
+    [postBtn setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+    [postBtn setTitleColor:COLOR_WHITE forState:UIControlStateHighlighted];
+    postBtn.backgroundColor = COLOR_MAIN;
+    postBtn.layer.cornerRadius=4;
+    postBtn.clipsToBounds=YES;
+    postBtn.titleLabel.font=[UIFont boldSystemFontOfSize:16];
+    postBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
+    
+    [footerView addSubview:postBtn];
+    
+    [postBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(footerView);
+        make.centerY.mas_equalTo(footerView);
+        make.width.mas_equalTo(WIDTH_SCREEN-24);
+        make.height.mas_equalTo(48);
+    }];
 }
 
 -(void)doPostPredictSetting{
@@ -127,6 +147,8 @@
     }
     cell.begin_time=@"11:00";
     cell.end_time=@"18:00";
+    cell.delegate=self;
+    cell.row_index=(int)indexPath.section;
     [cell showData];
     return cell;
 }
@@ -195,6 +217,13 @@
 //    }
 }
 
+//MARK: 选择的预计送达时间的点击事件
+-(void)pickerDoneClicked:(id)sender{
+    NSInteger row=[predictTimePicker selectedRowInComponent:0];
+    predict_select_index=(int)row;
+    NSString *valueStr=[predict_time_arr objectAtIndex:row].time_range;
+    [self setTaskItemPredictTime:valueStr];
+}
 
 -(TaskModel *)model{
     if(!_model){
@@ -215,6 +244,14 @@
 -(void)confirmClick{
     
     NSLog(@"confirmClick");
+}
+
+-(void)startTimeClick:(int)row_index{
+    NSLog(@"startTimeClick:%d",row_index);
+}
+
+-(void)endTimeClick:(int)row_index{
+    NSLog(@"endTimeClick:%d",row_index);
 }
 
 -(void)viewWillAppear:(BOOL)animated{

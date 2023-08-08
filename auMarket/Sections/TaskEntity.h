@@ -110,3 +110,4 @@
 @property (nonatomic,retain) NSString *begin_time;
 @property (nonatomic,retain) NSString *end_time;
 @end
+
