@@ -51,10 +51,10 @@
         [beginTxt addSubview:beginArrow];
         
         [beginArrow mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(-12);
+            make.right.mas_equalTo(-6);
             make.centerY.mas_equalTo(beginTxt.mas_centerY);
-            make.width.mas_equalTo(16);
-            make.height.mas_equalTo(16);
+            make.width.mas_equalTo(22);
+            make.height.mas_equalTo(22);
         }];
     }
     
@@ -92,7 +92,7 @@
         
         @strongify(self);
         [endTxt mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(-12);
+            make.right.mas_equalTo(-6);
             make.centerY.mas_equalTo(self.mas_centerY);
             make.width.mas_equalTo((self.frame.size.width-24-40)/2);
             make.height.mas_equalTo(36);
@@ -104,10 +104,10 @@
         [endTxt addSubview:endArrow];
         
         [endArrow mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(-10);
+            make.right.mas_equalTo(-6);
             make.centerY.mas_equalTo(endTxt.mas_centerY);
-            make.width.mas_equalTo(16);
-            make.height.mas_equalTo(16);
+            make.width.mas_equalTo(22);
+            make.height.mas_equalTo(22);
         }];
     }
 }

@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
     UITextField *requestNumTxt;
     UILabel *requestNumLbl;
     UIButton *confirmBtm;
+    
+    UIImageView *timeSectionArrow;
+    UIImageView *requestNumArrow;
 }
 
 // set the delegate

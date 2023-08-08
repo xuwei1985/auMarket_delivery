@@ -104,6 +104,25 @@
         make.size.mas_equalTo(CGSizeMake(50, 30));
     }];
     
+    timeSectionArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_down"]];
+    [timeSectionTxt addSubview:timeSectionArrow];
+    
+    [timeSectionArrow mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-6);
+        make.centerY.mas_equalTo(timeSectionTxt.mas_centerY);
+        make.width.mas_equalTo(22);
+        make.height.mas_equalTo(22);
+    }];
+    
+    requestNumArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_down"]];
+    [requestNumTxt addSubview:requestNumArrow];
+    
+    [requestNumArrow mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-6);
+        make.centerY.mas_equalTo(requestNumTxt.mas_centerY);
+        make.width.mas_equalTo(22);
+        make.height.mas_equalTo(22);
+    }];
 }
 
 -(void)loadData{
