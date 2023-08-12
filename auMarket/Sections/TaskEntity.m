@@ -44,3 +44,7 @@
 
 @end
 
+@implementation PredictOrderDataEntity : SPBaseEntity
+
+@end
+

@@ -133,15 +133,15 @@
 
 //MARK: 时间段文本框点击事件
 -(void)timeSectionTaped{
-    if(self.delegate&&[self.delegate respondsToSelector:@selector(timeSectionClick)]){
-        [self.delegate timeSectionClick];
+    if(self.delegate&&[self.delegate respondsToSelector:@selector(timeSectionClick:)]){
+        [self.delegate timeSectionClick:timeSectionTxt];
     }
 }
 
 //MARK: 批量设置分段数的文本框点击事件
 -(void)requestNumTaped{
-    if(self.delegate&&[self.delegate respondsToSelector:@selector(requestNumClick)]){
-        [self.delegate requestNumClick];
+    if(self.delegate&&[self.delegate respondsToSelector:@selector(requestNumClick:)]){
+        [self.delegate requestNumClick:requestNumTxt];
     }
 }
 

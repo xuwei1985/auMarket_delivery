@@ -129,12 +129,12 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     if(textField.tag==3001){
-        if(self.delegate&&[self.delegate respondsToSelector:@selector(startTimeClick:)]){
-            [self.delegate startTimeClick:self.row_index];
+        if(self.delegate&&[self.delegate respondsToSelector:@selector(startTimeClick:fromTextField:)]){
+            [self.delegate startTimeClick:self.row_index fromTextField:beginTxt];
         }
     }else if(textField.tag==3002){
-        if(self.delegate&&[self.delegate respondsToSelector:@selector(endTimeClick:)]){
-            [self.delegate endTimeClick:self.row_index];
+        if(self.delegate&&[self.delegate respondsToSelector:@selector(endTimeClick:fromTextField:)]){
+            [self.delegate endTimeClick:self.row_index fromTextField:endTxt];
         }
     }
     return NO;

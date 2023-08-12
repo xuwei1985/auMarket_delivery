@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol PredictTimeSectionViewDelegate
 
 @optional
--(void)timeSectionClick;
--(void)requestNumClick;
+-(void)timeSectionClick:(UITextField *)sender;
+-(void)requestNumClick:(UITextField *)sender;
 -(void)confirmClick;
 @end
 

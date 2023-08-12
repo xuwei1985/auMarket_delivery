@@ -11,8 +11,8 @@
 @protocol PredictSettingCellDelegate
 
 @optional
--(void)startTimeClick:(int)row_index;
--(void)endTimeClick:(int)row_index;
+-(void)startTimeClick:(int)row_index fromTextField:(UITextField *)sender;
+-(void)endTimeClick:(int)row_index fromTextField:(UITextField *)sender;
 @end
 
 @interface PredictSettingCell : UITableViewCell<UITextFieldDelegate>

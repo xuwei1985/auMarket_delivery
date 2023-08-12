@@ -24,6 +24,8 @@ typedef enum {
 @property (nonatomic,retain) OrderGoodsEntity *goods_entity;
 @property (nonatomic,retain) TimeSectionEntity *time_entity;
 @property (nonatomic,retain) OrderFlowEntity *flow_entity;
+@property (nonatomic,retain) PredictOrderDataEntity *predict_order_entity;
+
 -(void)loadTaskList;
 -(void)loadDeliveryTimeSection;
 -(void)loadGoodsListForOrder:(NSString *)order_id;
@@ -35,4 +37,5 @@ typedef enum {
 -(void)saveOrderReturnInfo:(NSString *)order_id andReturnPrice:(int)price andProof:(NSString *)proof_path andMsg:(NSString *)msg;
 -(void)saveOrderChangePrice:(NSString *)order_id andChagePrice:(float)price andProof:(NSString *)proof_path andMsg:(NSString *)msg;
 -(void)loadOrderFlowInfo:(NSString *)order_id;
+-(void)loadPredictOrderData:(int)shipping_date_id;
 @end

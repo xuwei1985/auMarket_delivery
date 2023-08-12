@@ -12,4 +12,5 @@
 @property (nonatomic,retain) NSString *start_time;
 @property (nonatomic,retain) NSString *end_time;
 @property (nonatomic,retain) NSString *time_range;
+@property (nonatomic,retain) NSString *section_range; //所属订单分段区间
 @end

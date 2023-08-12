@@ -111,3 +111,11 @@
 @property (nonatomic,retain) NSString *end_time;
 @end
 
+
+@interface PredictOrderDataEntity : SPBaseEntity
+@property (nonatomic,retain) NSString *total_count; // 时间段内分配给该配送员的订单数
+@property (nonatomic,retain) NSString *error_count; //error_count > 0 未处理predict_time的订单数
+@end
+
+
+

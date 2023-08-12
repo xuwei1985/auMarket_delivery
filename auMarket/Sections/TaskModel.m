@@ -34,6 +34,16 @@
     [self loadInner];
 }
 
+//MARK:  获取需要配置预计送达时间的订单总数
+-(void)loadPredictOrderData:(int)shipping_date_id{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=deliver_order_count&deliver_id=%@&shipping_date_id=%d",user.user_id,shipping_date_id];
+    self.parseDataClassType = [PredictOrderDataEntity class];
+    self.params = @{};
+    self.requestTag=3010;
+    [self loadInner];
+}
+
 -(void)savePredictTime:(NSString *)ids andPredictTime:(NSString *)predict_time{
     self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderPredictTime&ids=%@&predict_time=%@",ids,[Common encodeToPercentEscapeString:predict_time]];
     self.parseDataClassType = [SPBaseEntity class];
@@ -67,7 +77,7 @@
     [self loadInner];
 }
 
-
+//MARK: 获取配送员的配送时间段
 -(void)loadDeliveryTimeSection{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
     self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=getDeliveryTimeSection&delivery_id=%@",user.user_id];
@@ -86,7 +96,7 @@
     self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=order_delivery_done&delivery_id=%@&status=%@&pay_type=%d&user_id=%@&img_path=%@&order_sn=%@&msg=%@&bank=%@",delivery_id,status,pay_type,user.user_id,img_path,order_sn,[Common encodeToPercentEscapeString:msg],bank_id];
     self.parseDataClassType = [TaskEntity class];
     self.params = @{};
-    self.requestTag=3003;
+    self.requestTag=3008;
     [self loadInner];
 }
 
@@ -103,6 +113,10 @@
     else if ([parsedData isKindOfClass:[OrderFlowEntity class]]) {
         self.flow_entity = (OrderFlowEntity*)parsedData;
     }
+    else if ([parsedData isKindOfClass:[PredictOrderDataEntity class]]) {
+        self.predict_order_entity = (PredictOrderDataEntity*)parsedData;
+    }
+    
 }
 
 
