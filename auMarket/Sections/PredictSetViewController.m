@@ -493,12 +493,12 @@
                 int start_t=[[[entity.start_time stringByReplacingOccurrencesOfString:@":" withString:@""] stringByReplacingOccurrencesOfString:@"选择时间" withString:@""] intValue];
                 int end_t=[[[entity.end_time stringByReplacingOccurrencesOfString:@":" withString:@""] stringByReplacingOccurrencesOfString:@"选择时间" withString:@""] intValue];;
                 
-                if(start_t>=end_t){
+                if(start_t>=end_t && start_t!=0 && end_t!=0){
                     if(current_time_mode==1){
-                        entity.start_time=@"";
+                        entity.start_time=@"选择时间";
                         [self showToastWithText:@"开始时间要小于结束时间"];
                     }else if(current_time_mode==2){
-                        entity.end_time=@"";
+                        entity.end_time=@"选择时间";
                         [self showToastWithText:@"结束时间要大于开始时间"];
                     }
                 }
