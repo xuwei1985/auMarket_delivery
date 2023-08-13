@@ -541,6 +541,8 @@
             if([self isLastestPackage:[self.model.entity.list objectAtIndex:current_confirm_path.section]]){
                 [self showToastWithText:@"上货完成"];
                 [self loadPickOrderList];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
             }
             else{
                 [self showToastWithText:@"保存成功"];
@@ -549,7 +551,7 @@
     }
     else if(model==self.model&&self.model.requestTag==1003){
         if(isSuccess){
-            [self showToastWithText:@"上货完成"];
+            [self showToastWithText:@"批量上货完成"];
             
             [self.model.entity.list removeAllObjects];
             [self.tableView reloadData];
@@ -560,6 +562,8 @@
             doneBtn.hidden=YES;
 
             [self loadPickOrderList];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
         }
     }
 }

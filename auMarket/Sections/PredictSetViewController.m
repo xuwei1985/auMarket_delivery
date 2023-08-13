@@ -36,7 +36,7 @@
 -(void)initData{
     predict_time_arr=[[NSMutableArray alloc] init];
     predict_section_arr=[[NSMutableArray<TimeItemEntity *> alloc] init];
-    predict_data_arr=[[NSMutableArray<TimeItemEntity *> alloc] init];
+    predict_data_arr=[[NSMutableArray<PredictTimeEntity *> alloc] init];
     request_num_arr=@[@"10",@"20",@"30",@"40",@"50"];
     request_num=20;
     [self loadShippingTime];
@@ -418,6 +418,8 @@
         else if(model.requestTag==3011){
             if(isSuccess){
                 [self showSuccesWithText:@"设置成功"];
+                [self.navigationController popViewControllerAnimated:YES];
+                [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
             }
         }
     }

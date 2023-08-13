@@ -80,12 +80,12 @@
 
 
 -(void)toggleState:(UIButton *)sender{
-    sender.selected=!sender.selected;
-    
-    //处理代理事件
-    if(self.delegate!=nil&&[self.delegate respondsToSelector:@selector(toogleState:)]){
-        [self.delegate toogleState:sender.selected];
-    }
+//    sender.selected=!sender.selected;
+//    
+//    //处理代理事件
+//    if(self.delegate!=nil&&[self.delegate respondsToSelector:@selector(toogleState:)]){
+//        [self.delegate toogleState:sender.selected];
+//    }
 }
 /*
 // Only override drawRect: if you perform custom drawing.

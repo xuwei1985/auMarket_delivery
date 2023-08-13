@@ -225,6 +225,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppEnterBackground:) name:APP_DID_ENTER_BACKGROUND object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppChangesLocationAuthorization:) name:APP_CHANGED_LOCATION_AUTHORIZATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppEnterBackground:) name:APP_DID_ENTER_BACKGROUND object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getDeliveryState) name:DELIVERY_STATE_UPDATE_NOTIFICATION object:nil];
 }
 
 //MARK: 创建配送时间段选择视图
@@ -699,11 +701,25 @@
     [self.model savePredictTime:ids andPredictTime:predict_time];
 }
 
+//MARK: 获取配送状态指示器数据（设置预计送单时间、上货完成的统计数据）
+-(void)getDeliveryState{
+    [self.model getDeliveryStates];
+}
+
 -(void)onResponse:(TaskModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
     if(model.requestTag==3001){
         if(isSuccess){
             [self showToastWithText:@"保存成功"];
+        }
+    }else if(model.requestTag==3012){
+        if(isSuccess){
+           //处理配送状态指示器
+            if (stateIndicator != nil && self.model.deliver_state_entity != nil) {
+                stateIndicator.state_predict = [self.model.deliver_state_entity.predict_num intValue]>=[self.model.deliver_state_entity.total_num intValue];
+                stateIndicator.state_pick = [self.model.deliver_state_entity.picked_num intValue]>=[self.model.deliver_state_entity.total_num intValue];
+                [stateIndicator refreshState];
+            }
         }
     }
 }
@@ -1029,10 +1045,11 @@
     [super viewWillAppear:animated];
     
     isShowing=YES;
-    
+
     //加载配送任务数据
     if([self checkLoginStatus] == YES){
         [APP_DELEGATE.booter loadTaskList];
+        [self getDeliveryState];
     }
     
     if (stateIndicator != nil) {
@@ -1044,6 +1061,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self cacheDeliveryData];
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated{

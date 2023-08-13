@@ -99,6 +99,17 @@
 }
 
 
+
+//获取配送员的预计送达时间设置统计数据和上货统计数据
+-(void)getDeliveryStates{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.parseDataClassType = [DeliveryStateEntity class];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=getDeliveryStates&delivery_id=%@",user.user_id];
+    self.params = @{};
+    self.requestTag=3012;
+    [self loadInner];
+}
+
 //MARK: 请求订单配送完成操作
 -(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(int)pay_type andImgPath:(NSString *)img_path andOrderSn:(NSString *)order_sn andMsg:(NSString *)msg andBank:(NSString *)bank_id{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
@@ -126,7 +137,9 @@
     else if ([parsedData isKindOfClass:[PredictOrderDataEntity class]]) {
         self.predict_order_entity = (PredictOrderDataEntity*)parsedData;
     }
-    
+    else if ([parsedData isKindOfClass:[DeliveryStateEntity class]]) {
+        self.deliver_state_entity = (DeliveryStateEntity*)parsedData;
+    }
 }
 
 

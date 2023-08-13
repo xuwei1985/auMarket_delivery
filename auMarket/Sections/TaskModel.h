@@ -10,6 +10,7 @@
 #import "TaskEntity.h"
 #import "TimeSectionEntity.h"
 #import "OrderGoodsEntity.h"
+#import "StatisticsEntity.h"
 
 typedef enum {
     Delivery_Status_Delivering = 0,
@@ -25,6 +26,7 @@ typedef enum {
 @property (nonatomic,retain) TimeSectionEntity *time_entity;
 @property (nonatomic,retain) OrderFlowEntity *flow_entity;
 @property (nonatomic,retain) PredictOrderDataEntity *predict_order_entity;
+@property (nonatomic,retain) DeliveryStateEntity *deliver_state_entity;
 
 -(void)loadTaskList;
 -(void)loadDeliveryTimeSection;
@@ -39,4 +41,5 @@ typedef enum {
 -(void)loadOrderFlowInfo:(NSString *)order_id;
 -(void)loadPredictOrderData:(int)shipping_date_id;
 -(void)predictOrderSet:(NSString *)shipping_date_id andSize:(NSString *)size_num andList:(NSString *)list;
+-(void)getDeliveryStates;
 @end
