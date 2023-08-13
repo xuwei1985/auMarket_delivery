@@ -38,4 +38,5 @@ typedef enum {
 -(void)saveOrderChangePrice:(NSString *)order_id andChagePrice:(float)price andProof:(NSString *)proof_path andMsg:(NSString *)msg;
 -(void)loadOrderFlowInfo:(NSString *)order_id;
 -(void)loadPredictOrderData:(int)shipping_date_id;
+-(void)predictOrderSet:(NSString *)shipping_date_id andSize:(NSString *)size_num andList:(NSString *)list;
 @end

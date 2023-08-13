@@ -34,6 +34,16 @@
     [self loadInner];
 }
 
+//MARK: 获取配送员的配送时间段
+-(void)loadDeliveryTimeSection{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=getDeliveryTimeSection&delivery_id=%@",user.user_id];
+    self.parseDataClassType = [TimeSectionEntity class];
+    self.params = @{};
+    self.requestTag=3007;
+    [self loadInner];
+}
+
 //MARK:  获取需要配置预计送达时间的订单总数
 -(void)loadPredictOrderData:(int)shipping_date_id{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
@@ -41,6 +51,17 @@
     self.parseDataClassType = [PredictOrderDataEntity class];
     self.params = @{};
     self.requestTag=3010;
+    [self loadInner];
+}
+
+//MARK: 请求预计送达批量设置
+-(void)predictOrderSet:(NSString *)shipping_date_id andSize:(NSString *)size_num andList:(NSString *)list{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=deliver_order_sort"];
+    self.parseDataClassType = [TaskEntity class];
+    self.params = @{@"deliver_id":user.user_id,@"shipping_date_id":shipping_date_id,@"size":size_num,@"list":list};
+    self.requestTag=3011;
     [self loadInner];
 }
 
@@ -77,19 +98,8 @@
     [self loadInner];
 }
 
-//MARK: 获取配送员的配送时间段
--(void)loadDeliveryTimeSection{
-    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=getDeliveryTimeSection&delivery_id=%@",user.user_id];
-    self.parseDataClassType = [TimeSectionEntity class];
-    self.params = @{};
-    self.requestTag=3007;
-    [self loadInner];
-}
 
-/**
- 请求订单配送完成操作
- */
+//MARK: 请求订单配送完成操作
 -(void)order_delivery_done:(NSString *)delivery_id andStatus:(NSString *)status andPayType:(int)pay_type andImgPath:(NSString *)img_path andOrderSn:(NSString *)order_sn andMsg:(NSString *)msg andBank:(NSString *)bank_id{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
 

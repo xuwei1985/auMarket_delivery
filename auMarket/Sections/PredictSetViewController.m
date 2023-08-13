@@ -354,6 +354,7 @@
 
 //MARK: 加载配送员今天的配送时间段
 -(void)loadShippingTime{
+    [self startLoadingActivityIndicator];
     [self.model loadDeliveryTimeSection];
 }
 
@@ -365,8 +366,22 @@
 
 //MARK: 提交配送员的订单预计送达时间的配置
 -(void)postPredictSetting{
-    [self startLoadingActivityIndicator];
-    //[self.model send_predict_sms:[self getSelectedOrdersId]];
+    if([self checkPredictSetData]){
+        [self startLoadingActivityIndicator];
+        
+        NSString *jsonStr=@"";
+        if(predict_data_arr!=nil&& predict_data_arr.count>0){
+            for (PredictTimeEntity *obj in predict_data_arr) {
+                jsonStr=[NSString stringWithFormat:@"%@{\"begin\":\"%@\",\"end\":\"%@\"}",jsonStr,obj.start_time,obj.end_time];
+            }
+        }
+        
+        jsonStr=[NSString stringWithFormat:@"[%@]",jsonStr];
+        [self.model predictOrderSet:[NSString stringWithFormat:@"%d",shipping_date_id] andSize:[NSString stringWithFormat:@"%d",request_num] andList:jsonStr];
+    }else{
+        [self showToastWithText:@"请先设置好预计送达时间"];
+    }
+    
 }
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
@@ -385,9 +400,9 @@
         else if(model.requestTag==3010){
             if(isSuccess){
                 if([self.model.predict_order_entity.error_count intValue]>0){
-                    [self showToastWithText:@"时间段内任务中有未设置配送顺序的订单"];
+                    [self showFailWithText:@"时间段内任务中有未设置配送顺序的订单"];
                 }else if([self.model.predict_order_entity.total_count intValue]<=0){
-                    [self showToastWithText:@"时间段内没有任务订单"];
+                    [self showFailWithText:@"时间段内没有任务订单"];
                 }else{
                     //组织分段数据
                     [self handlerPredict:[self.model.predict_order_entity.total_count intValue]];
@@ -400,12 +415,11 @@
                 }
             }
         }
-//        else if(model.requestTag==1003){
-//            if(isSuccess){
-//                [self showToastWithText:@"发送成功"];
-//                [self loadOrders];
-//            }
-//        }
+        else if(model.requestTag==3011){
+            if(isSuccess){
+                [self showSuccesWithText:@"设置成功"];
+            }
+        }
     }
 }
 
@@ -430,8 +444,8 @@
         }
         PredictTimeEntity *entity=[[PredictTimeEntity alloc] init];
         entity.section_range=[NSString stringWithFormat:@"%d-%d",current_num,end_num];
-        entity.start_time=@"";
-        entity.end_time=@"";
+        entity.start_time=@"选择时间";
+        entity.end_time=@"选择时间";
         entity.time_range=@"";
         [predict_data_arr addObject:entity];
         
@@ -467,23 +481,24 @@
 -(void)setTaskItemPredictTime:(NSString *)str{
     if(predict_model==3){
         if(predict_data_arr.count>current_row_index){
+            PredictTimeEntity *entity = [predict_data_arr objectAtIndex:current_row_index];
             if(current_time_mode==1){
-                [predict_data_arr objectAtIndex:current_row_index].start_time=str;
+                entity.start_time=str;
             }else if(current_time_mode==2){
-                [predict_data_arr objectAtIndex:current_row_index].end_time=str;
+                entity.end_time=str;
             }
             
             //判断时间的合法性
-            if([predict_data_arr objectAtIndex:current_row_index].start_time.length>0 && [predict_data_arr objectAtIndex:current_row_index].end_time.length>0){
-                int start_t=[[[predict_data_arr objectAtIndex:current_row_index].start_time stringByReplacingOccurrencesOfString:@":" withString:@""] intValue];
-                int end_t=[[[predict_data_arr objectAtIndex:current_row_index].end_time stringByReplacingOccurrencesOfString:@":" withString:@""] intValue];
+            if(entity.start_time.length>0 && entity.end_time.length>0){
+                int start_t=[[[entity.start_time stringByReplacingOccurrencesOfString:@":" withString:@""] stringByReplacingOccurrencesOfString:@"选择时间" withString:@""] intValue];
+                int end_t=[[[entity.end_time stringByReplacingOccurrencesOfString:@":" withString:@""] stringByReplacingOccurrencesOfString:@"选择时间" withString:@""] intValue];;
                 
                 if(start_t>=end_t){
                     if(current_time_mode==1){
-                        [predict_data_arr objectAtIndex:current_row_index].start_time=@"";
+                        entity.start_time=@"";
                         [self showToastWithText:@"开始时间要小于结束时间"];
                     }else if(current_time_mode==2){
-                        [predict_data_arr objectAtIndex:current_row_index].end_time=@"";
+                        entity.end_time=@"";
                         [self showToastWithText:@"结束时间要大于开始时间"];
                     }
                 }
@@ -498,6 +513,17 @@
             [self showToastWithText:@"目标对象无效"];
         }
     }
+}
+
+//MARK: 检查请求发送预计送达时间的批量设置数据
+-(Boolean)checkPredictSetData{
+    for (PredictTimeEntity *obj in predict_data_arr) {
+        if([obj.start_time stringByReplacingOccurrencesOfString:@"选择时间" withString:@""].length<=0 || [obj.end_time stringByReplacingOccurrencesOfString:@"选择时间" withString:@""].length<=0){
+            return NO;
+            break;
+        }
+    }
+    return YES;
 }
 
 //MARK: 检查请求配送员时间段的配送任务分段数据
