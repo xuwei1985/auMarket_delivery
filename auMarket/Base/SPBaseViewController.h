@@ -18,7 +18,6 @@
 @interface SPBaseViewController : UIViewController <SPBaseModelProtocol,UITableViewDataSource,UITableViewDelegate>
 {
     CALayer *_maskLayer;
-    int lastLocationTipTime;
 }
 
 @property (strong,nonatomic) KMActivityIndicator *loadingIndicator;

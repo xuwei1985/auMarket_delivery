@@ -21,6 +21,7 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSString *hotLine;//当前选择的数据线路
 @property (nonatomic,assign) BOOL isLocationAuthorized; //是否开启定位授权
+@property (nonatomic,assign) int lastLocationTipTime;
 
 + (UINavigationController *)getNavigationController;
 + (UITabBarController *)getTabbarController;

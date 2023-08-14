@@ -72,7 +72,7 @@
     
     
     int now=[[Common getNowTimeTimestamp] intValue];
-    if(!APP_DELEGATE.isLocationAuthorized && (now-lastLocationTipTime)>1*60){
+    if(!APP_DELEGATE.isLocationAuthorized && (now-APP_DELEGATE.lastLocationTipTime)>1*60){
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self showLocationTip];
         });
@@ -520,11 +520,11 @@
                  [[UIApplication sharedApplication] openURL:settingsURL options:@{}  completionHandler:nil];
              }
          }
-         lastLocationTipTime=[[Common getNowTimeTimestamp] intValue];
+         APP_DELEGATE.lastLocationTipTime=[[Common getNowTimeTimestamp] intValue];
     }];
     
     UIAlertAction *cancelBtn =[UIAlertAction actionWithTitle:@"稍后" style:UIAlertActionStyleCancel handler:^(UIAlertAction *_Nonnull action) {
-        lastLocationTipTime=[[Common getNowTimeTimestamp] intValue];
+        APP_DELEGATE.lastLocationTipTime=[[Common getNowTimeTimestamp] intValue];
     }];
     //添加按钮到弹出上
     [alert addAction:okBtn];
