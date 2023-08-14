@@ -419,7 +419,7 @@
             if(isSuccess){
                 [self showSuccesWithText:@"设置成功"];
                 [self.navigationController popViewControllerAnimated:YES];
-                [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:DELIVERY_STATE_UPDATE_NOTIFICATION object:nil];
             }
         }
     }

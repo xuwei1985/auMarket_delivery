@@ -19,7 +19,12 @@
 
 -(void)loadTaskList{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delivery_list&delivery_id=%@&tid=%@",user.user_id,@""];//
+    
+    NSString *nextpage=@"1";
+    if(self.entity!=nil&&self.entity.nextpage.length>0){
+        nextpage=self.entity.nextpage;
+    }
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delivery_list&delivery_id=%@&nextpage=%@",user.user_id,nextpage];
     self.parseDataClassType = [TaskEntity class];
     self.params = @{};
     self.requestTag=3001;
@@ -123,7 +128,17 @@
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[TaskEntity class]]) {
-        self.entity=[self convertDeliverydata:(TaskEntity*)parsedData];
+        TaskEntity *responseEntity=[self convertDeliverydata:(TaskEntity*)parsedData];
+        if(self.entity!=nil && self.entity.list!=nil && self.entity.list.count>0&&[self.entity.nextpage intValue]>1){
+            [self.entity.list addObjectsFromArray:responseEntity.list];
+            self.entity.nextpage=responseEntity.nextpage;
+        }else{
+            self.entity=responseEntity;
+        }
+            
+        if([self.entity.nextpage intValue]>0){
+            [self loadTaskList];
+        }
     }
     else if ([parsedData isKindOfClass:[OrderGoodsEntity class]]) {
         self.goods_entity = (OrderGoodsEntity*)parsedData;
@@ -143,41 +158,40 @@
 }
 
 
--(TaskEntity *)convertDeliverydata:(TaskEntity *)entity{
+-(TaskEntity *)convertDeliverydata:(TaskEntity *)obj{
     NSMutableArray *mArr;
-    if(entity&&entity.list){
-        
-        for(int i=0;i<entity.list.count;i++){
+    if(obj&&obj.list){
+        for(int i=0;i<obj.list.count;i++){
             mArr=[[NSMutableArray alloc] init];
             NSMutableDictionary *dic;
-            if([[entity.list objectAtIndex:i].default_package intValue]>0){
-                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].default_package,@"number",[entity.list objectAtIndex:i].default_package_pick,@"picked",@"普通",@"category",@"c_default",@"icon",nil];
+            if([[obj.list objectAtIndex:i].default_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[obj.list objectAtIndex:i].default_package,@"number",[obj.list objectAtIndex:i].default_package_pick,@"picked",@"普通",@"category",@"c_default",@"icon",nil];
                 [mArr addObject:dic];
             }
-            if([[entity.list objectAtIndex:i].freeze_package intValue]>0){
-                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].freeze_package,@"number",[entity.list objectAtIndex:i].freeze_package_pick,@"picked",@"冷冻",@"category",@"c_freeze",@"icon",nil];
+            if([[obj.list objectAtIndex:i].freeze_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[obj.list objectAtIndex:i].freeze_package,@"number",[obj.list objectAtIndex:i].freeze_package_pick,@"picked",@"冷冻",@"category",@"c_freeze",@"icon",nil];
                 [mArr addObject:dic];
             }
-            if([[entity.list objectAtIndex:i].food_package intValue]>0){
-                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].food_package,@"number",[entity.list objectAtIndex:i].food_package_pick,@"picked",@"熟食",@"category",@"c_food",@"icon",nil];
+            if([[obj.list objectAtIndex:i].food_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[obj.list objectAtIndex:i].food_package,@"number",[obj.list objectAtIndex:i].food_package_pick,@"picked",@"熟食",@"category",@"c_food",@"icon",nil];
                 [mArr addObject:dic];
             }
-            if([[entity.list objectAtIndex:i].refrigerate_package intValue]>0){
-                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].refrigerate_package,@"number",[entity.list objectAtIndex:i].refrigerate_package_pick,@"picked",@"冷藏",@"category",@"c_refrigerate",@"icon",nil];
+            if([[obj.list objectAtIndex:i].refrigerate_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[obj.list objectAtIndex:i].refrigerate_package,@"number",[obj.list objectAtIndex:i].refrigerate_package_pick,@"picked",@"冷藏",@"category",@"c_refrigerate",@"icon",nil];
                 [mArr addObject:dic];
             }
-            if([[entity.list objectAtIndex:i].box_package intValue]>0){
-                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].box_package,@"number",[entity.list objectAtIndex:i].box_package_pick,@"picked",@"整箱",@"category",@"c_box",@"icon",nil];
+            if([[obj.list objectAtIndex:i].box_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[obj.list objectAtIndex:i].box_package,@"number",[obj.list objectAtIndex:i].box_package_pick,@"picked",@"整箱",@"category",@"c_box",@"icon",nil];
                 [mArr addObject:dic];
             }
-            if([[entity.list objectAtIndex:i].meat_package intValue]>0){
-                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[entity.list objectAtIndex:i].meat_package,@"number",[entity.list objectAtIndex:i].box_package_pick,@"picked",@"纸箱",@"category",@"c_meat",@"icon",nil];
+            if([[obj.list objectAtIndex:i].meat_package intValue]>0){
+                dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[obj.list objectAtIndex:i].meat_package,@"number",[obj.list objectAtIndex:i].box_package_pick,@"picked",@"纸箱",@"category",@"c_meat",@"icon",nil];
                 [mArr addObject:dic];
             }
-            [entity.list objectAtIndex:i].package_arr=[NSArray arrayWithArray:mArr];
+            [obj.list objectAtIndex:i].package_arr=[NSArray arrayWithArray:mArr];
         }
     }
-    return entity;
+    return obj;
 }
 
 /**

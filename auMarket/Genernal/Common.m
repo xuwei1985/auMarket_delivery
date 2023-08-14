@@ -784,4 +784,12 @@
     return YES;
 }
 
++(double)reviseDoubleValue:(double)conversionValue{
+    /* 直接传入精度丢失有问题的Double类型*/
+    NSString *doubleString        = [NSString stringWithFormat:@"%lf", conversionValue];
+    NSDecimalNumber *decNumber    = [NSDecimalNumber decimalNumberWithString:doubleString];
+    double d=[decNumber doubleValue];
+    return d;
+}
+
 @end

@@ -460,6 +460,7 @@
 }
 
 -(void)reloadTaskList{
+    APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
     [APP_DELEGATE.booter loadTaskList];
 }
 
@@ -811,6 +812,7 @@
     [super viewWillAppear:animated];
 
     if(!self.taskArr){
+        APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
         [APP_DELEGATE.booter loadTaskList];
     }
     [self checkLoginStatus];

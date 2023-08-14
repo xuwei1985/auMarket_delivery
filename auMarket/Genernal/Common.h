@@ -61,4 +61,5 @@
 + (NSString *)encodeToPercentEscapeString: (NSString *) input;
 + (NSString *)decodeFromPercentEscapeString: (NSString *) input;
 +(BOOL)isMobileForAU:(NSString *)mobile;
++(double)reviseDoubleValue:(double)conversionValue;
 @end

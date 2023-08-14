@@ -313,22 +313,24 @@
 }
 
 -(void)onResponse:(SPBaseModel*)model isSuccess:(BOOL)isSuccess{
-    if(model==self.taskModel){
-        if(isSuccess){
-            //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                self.tasklist_delivering= [self.taskModel getTasksByStatus:Delivery_Status_Delivering];
-                self.tasklist_finished= [self.taskModel getTasksByStatus:Delivery_Status_Finished];
-                self.tasklist_failed= [self.taskModel getTasksByStatus:Delivery_Status_Failed];
-                self.tasklist_unknown= [self.taskModel getTasksByStatus:Delivery_Status_Unknow];
-                self.sectionArr=[self.taskModel getSectionTimes];
-            //});
+    if(model==self.taskModel){//配送任务数据
+        if([self.taskModel.entity.nextpage intValue]<=0){
+            if(isSuccess){
+                //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    self.tasklist_delivering= [self.taskModel getTasksByStatus:Delivery_Status_Delivering];
+                    self.tasklist_finished= [self.taskModel getTasksByStatus:Delivery_Status_Finished];
+                    self.tasklist_failed= [self.taskModel getTasksByStatus:Delivery_Status_Failed];
+                    self.tasklist_unknown= [self.taskModel getTasksByStatus:Delivery_Status_Unknow];
+                    self.sectionArr=[self.taskModel getSectionTimes];
+                //});
+            }
+            else{
+                self.tasklist_delivering= [[NSArray alloc] init];
+                self.tasklist_finished= [[NSArray alloc] init];
+                self.tasklist_failed= [[NSArray alloc] init];
+            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
         }
-        else{
-            self.tasklist_delivering= [[NSArray alloc] init];
-            self.tasklist_finished= [[NSArray alloc] init];
-            self.tasklist_failed= [[NSArray alloc] init];
-        }
-        [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
     }
 //    else if(model==self.model&&self.model.requestTag==1002){
 //        if(isSuccess){

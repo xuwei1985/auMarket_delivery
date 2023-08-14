@@ -22,7 +22,6 @@
     [self addNotification];
 }
 
-
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
@@ -30,6 +29,7 @@
 
     //加载配送任务数据
     if([self checkLoginStatus] == YES){
+        APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
         [APP_DELEGATE.booter loadTaskList];
         [self getDeliveryState];
     }
@@ -50,6 +50,7 @@
     isShowing=NO;
 }
 
+//MARK: 数据初始化
 -(void)initData{
     isLoadedMaker=NO;
     showSections=0;
@@ -60,6 +61,15 @@
     defaultSectionColor=@"#B4B4B4";
     sectionColorArr=[[NSArray alloc] initWithObjects:@"#743EF4",@"#4A856C",@"#4468F6",@"#E27CB0",@"#92D568",@"#E94D64", nil];
     [self generatePredictTime];
+}
+
+//MARK: UI初始化
+-(void)initUI{
+    [self createStateIndicator];
+    [self setNavigation];
+    [self createRefreshBtn];
+    [self createMapView];
+    [self createPredictTimeView];
 }
 
 //MARK: 构造预计送达时间范围的基础数据
@@ -190,14 +200,7 @@
     stateIndicator.clipsToBounds =YES;
 }
 
--(void)initUI{
-    [self createStateIndicator];
-    [self setNavigation];
-    [self createRefreshBtn];
-    [self createMapView];
-    [self createPredictTimeView];
-}
-
+//MARK: 导航配置
 -(void)setNavigation{
     // 前往送达时间提醒按钮
     btn_l_1 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -437,7 +440,7 @@
             break;
         }
         
-        coordinate=CLLocationCoordinate2DMake([self reviseDoubleValue:[itemEntity.latitude doubleValue]], [self reviseDoubleValue:[itemEntity.longitude doubleValue]]);
+        coordinate=CLLocationCoordinate2DMake([Common reviseDoubleValue:[itemEntity.latitude doubleValue]], [Common reviseDoubleValue:[itemEntity.longitude doubleValue]]);
         itemEntity.coordinate=coordinate;//设置配送项目的坐标
         
         if([self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]]){
@@ -464,8 +467,8 @@
                 marker.appearAnimation = kGMSMarkerAnimationNone;
                 marker.iconView=mapMaker;
                 marker.map = mapView;
-                marker.latitude=[self reviseDoubleValue:itemEntity.coordinate.latitude];
-                marker.longitude=[self reviseDoubleValue:itemEntity.coordinate.longitude];
+                marker.latitude=[Common reviseDoubleValue:itemEntity.coordinate.latitude];
+                marker.longitude=[Common reviseDoubleValue:itemEntity.coordinate.longitude];
                 marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithObjects:itemEntity, nil];
                 
                 [markerArr addObject:marker];
@@ -497,7 +500,7 @@
             }
         }
         
-        coordinate=CLLocationCoordinate2DMake([self reviseDoubleValue:[itemEntity.latitude doubleValue]], [self reviseDoubleValue:[itemEntity.longitude doubleValue]]);
+        coordinate=CLLocationCoordinate2DMake([Common reviseDoubleValue:[itemEntity.latitude doubleValue]], [Common reviseDoubleValue:[itemEntity.longitude doubleValue]]);
         itemEntity.coordinate=coordinate;//设置配送项目的坐标
         
         //判断某个coordinate的marker是否存在
@@ -563,8 +566,8 @@
                 marker.appearAnimation = kGMSMarkerAnimationNone;
                 marker.iconView=mapMaker;
                 marker.map = mapView;
-                marker.latitude=[self reviseDoubleValue:itemEntity.coordinate.latitude];
-                marker.longitude=[self reviseDoubleValue:itemEntity.coordinate.longitude];
+                marker.latitude=[Common reviseDoubleValue:itemEntity.coordinate.latitude];
+                marker.longitude=[Common reviseDoubleValue:itemEntity.coordinate.longitude];
                 marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithObjects:itemEntity, nil];
 
                 [markerArr addObject:marker];
@@ -643,7 +646,6 @@
     return NO;
 }
 
-
 //MARK: 显示停车场的Makers
 -(void)showParkingMarkers{
     for (GMSMarker *mk in parkingMarkerArr) {
@@ -688,14 +690,6 @@
     return nil;
 }
 
--(double)reviseDoubleValue:(double)conversionValue{
-    /* 直接传入精度丢失有问题的Double类型*/
-    NSString *doubleString        = [NSString stringWithFormat:@"%lf", conversionValue];
-    NSDecimalNumber *decNumber    = [NSDecimalNumber decimalNumberWithString:doubleString];
-    double d=[decNumber doubleValue];
-    return d;
-}
-
 //MARK: 选择的预计送达时间的点击事件
 -(void)pickerDoneClicked:(id)sender{
     NSInteger row=[predictTimePicker selectedRowInComponent:0];
@@ -734,15 +728,15 @@
     [self.model getDeliveryStates];
 }
 
+//MARK: 数据请求的响应处理
 -(void)onResponse:(TaskModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
-    if(model.requestTag==3001){
+    if(model.requestTag==3001){ //设置配送排序
         if(isSuccess){
             [self showToastWithText:@"保存成功"];
         }
-    }else if(model.requestTag==3012){
+    }else if(model.requestTag==3012){ //处理配送状态指示器
         if(isSuccess){
-           //处理配送状态指示器
             if (stateIndicator != nil && self.model.deliver_state_entity != nil) {
                 stateIndicator.state_predict = [self.model.deliver_state_entity.predict_num intValue]>=[self.model.deliver_state_entity.total_num intValue];
                 stateIndicator.state_pick = [self.model.deliver_state_entity.picked_num intValue]>=[self.model.deliver_state_entity.total_num intValue];
@@ -938,7 +932,6 @@
     [self presentViewController:alert_sheet animated:YES completion:nil];
 }
 
-
 //MARK: 显示预计送达时间的选择视图
 -(void)showPredictTimeView{
     [_txt_predict becomeFirstResponder];
@@ -981,7 +974,12 @@
 }
 
 -(void)clickRefresh:(UIButton *)sender{
-    
+    //加载配送任务数据
+    if([self checkLoginStatus] == YES){
+        APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
+        [APP_DELEGATE.booter loadTaskList];
+        [self getDeliveryState];
+    }
 }
 
 //MARK: 控制时段的订单
@@ -1003,7 +1001,6 @@
     [self handlerWorkState];
 }
 
-
 -(void)handlerWorkState{
     [self loadTaskMask:0];
 //    if(btn_workState.selected){
@@ -1014,7 +1011,7 @@
 //    }
 }
 
-//MARK: 配送数据更新
+//MARK: 配送任务数据更新通知事件
 - (void)onTaskUpdate:(NSNotification*)aNotitification{
     if(isShowing){
         [self createDeliveryTimeSection];
@@ -1076,20 +1073,9 @@
     return _model;
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

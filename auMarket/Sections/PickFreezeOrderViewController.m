@@ -543,7 +543,7 @@
                 [self showToastWithText:@"上货完成"];
                 [self loadPickOrderList];
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:DELIVERY_STATE_UPDATE_NOTIFICATION object:nil];
             }
             else{
                 [self showToastWithText:@"保存成功"];
@@ -564,7 +564,7 @@
 
             [self loadPickOrderList];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:DELIVERY_STATE_UPDATE_NOTIFICATION object:nil];
         }
     }
 }
