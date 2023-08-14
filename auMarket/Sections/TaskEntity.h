@@ -13,6 +13,7 @@
 
 @interface TaskEntity : SPBaseEntity
 @property(nonatomic,retain)NSMutableArray <TaskItemEntity*> *list;
+@property (nonatomic,retain) NSString *nextpage;
 @end
 
 @interface TaskItemEntity : SPBaseEntity

@@ -19,7 +19,7 @@
 
 -(void)loadTaskList{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delivery_list&delivery_id=%@",user.user_id];//
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=delivery_list&delivery_id=%@&tid=%@",user.user_id,@""];//
     self.parseDataClassType = [TaskEntity class];
     self.params = @{};
     self.requestTag=3001;

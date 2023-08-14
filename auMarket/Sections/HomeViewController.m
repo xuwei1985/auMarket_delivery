@@ -22,6 +22,34 @@
     [self addNotification];
 }
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    isShowing=YES;
+
+    //加载配送任务数据
+    if([self checkLoginStatus] == YES){
+        [APP_DELEGATE.booter loadTaskList];
+        [self getDeliveryState];
+    }
+    
+    if (stateIndicator != nil) {
+        stateIndicator.state_gps = APP_DELEGATE.isLocationAuthorized;
+        [stateIndicator refreshState];
+    }
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self cacheDeliveryData];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    isShowing=NO;
+}
+
 -(void)initData{
     isLoadedMaker=NO;
     showSections=0;
@@ -1039,36 +1067,6 @@
     [cache setObject:APP_DELEGATE.booter.sectionArr forKey:@"sectionArr"];
     [cache synchronize];
 }
-
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-    isShowing=YES;
-
-    //加载配送任务数据
-    if([self checkLoginStatus] == YES){
-        [APP_DELEGATE.booter loadTaskList];
-        [self getDeliveryState];
-    }
-    
-    if (stateIndicator != nil) {
-        stateIndicator.state_gps = APP_DELEGATE.isLocationAuthorized;
-        [stateIndicator refreshState];
-    }
-}
-
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [self cacheDeliveryData];
-    
-}
-
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    isShowing=NO;
-}
-
 
 -(TaskModel *)model{
     if(!_model){
