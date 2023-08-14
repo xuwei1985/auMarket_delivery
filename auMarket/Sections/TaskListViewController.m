@@ -198,7 +198,7 @@
     [section_view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoOrderDetailView:)]];
     
     if([entity.is_ready intValue]==0){//订单未准备好
-        section_view.backgroundColor=COLOR_BG_IMAGEVIEW;
+        section_view.backgroundColor=[UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.00];
     }
     else{
         section_view.backgroundColor=COLOR_BG_WHITE;
@@ -379,8 +379,6 @@
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-146, 20));
     }];
     
-    
-    
     UILabel *lbl_delivery_info=[[UILabel alloc] init];
     lbl_delivery_info.textColor=COLOR_GRAY;
     lbl_delivery_info.font=FONT_SIZE_SMALL;
@@ -413,6 +411,28 @@
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-142, 20));
     }];
     
+    UILabel *lbl_serial_num=[[UILabel alloc] init];
+    lbl_serial_num.textColor=COLOR_DARKGRAY;
+    lbl_serial_num.font=FONT_SIZE_SMALL;
+    lbl_serial_num.text=[NSString stringWithFormat:@"%d",section+1];
+    lbl_serial_num.textAlignment = NSTextAlignmentCenter;
+    if([entity.is_ready intValue]==0){//订单未准备好
+        lbl_serial_num.backgroundColor = [UIColor colorWithRed:255/255. green:255/255. blue:255/255. alpha:1];
+    }
+    else{
+        lbl_serial_num.backgroundColor = [UIColor colorWithRed:242/255. green:242/255. blue:242/255. alpha:1];
+    }
+    
+    lbl_serial_num.clipsToBounds=YES;
+    lbl_serial_num.layer.cornerRadius=14;
+    [section_view addSubview:lbl_serial_num];
+    
+    [lbl_serial_num mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(section_view.mas_bottom).offset(-15);
+        make.centerX.mas_equalTo(iconView.mas_centerX).offset(0);
+        make.size.mas_equalTo(CGSizeMake(28, 28));
+    }];
+    
     return section_view;
 }
 
@@ -424,7 +444,7 @@
     
     list_status_modal=(int)sender.tag-1000;
     if(list_status_modal==Delivery_Status_Delivering){
-        NSLog(@"tasklist_delivering=>%@",APP_DELEGATE.booter.tasklist_delivering);
+        //NSLog(@"tasklist_delivering=>%@",APP_DELEGATE.booter.tasklist_delivering);
         if([APP_DELEGATE.booter.tasklist_delivering count]<=0){
             [self showNoContentView];
         }
@@ -768,6 +788,7 @@
 
 //配送数据更新
 - (void)onTaskUpdate:(NSNotification*)aNotitification{
+    [self stopLoadingActivityIndicator];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self refreshCategoryBtn];
         [self.tableView reloadData];
@@ -811,11 +832,15 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 
-    if(!self.taskArr){
-        APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
-        [APP_DELEGATE.booter loadTaskList];
+    if([self checkLoginStatus] == YES){
+        if(!self.taskArr){//不是从首页的一个坐标多个订单过来的
+            if(APP_DELEGATE.booter.taskModel.entity.list.count<=0){
+                [self startLoadingActivityIndicator];
+                APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
+                [APP_DELEGATE.booter loadTaskList];
+            }
+        }
     }
-    [self checkLoginStatus];
 }
 
 - (void)didReceiveMemoryWarning {

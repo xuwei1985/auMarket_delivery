@@ -24,7 +24,7 @@
 -(void)loadPickOrderWithListType:(int)list_type andModel:(NSString *)goodsModel{
     self.parseDataClassType = [PickEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress= [NSString stringWithFormat:@"apiv1.php?act=pick_list&page=%@&list_type=%d&delivery_id=%@&goods_model=%@",(self.entity.next==nil?@"1":self.entity.next),list_type,user.user_id,goodsModel];
+    self.shortRequestAddress= [NSString stringWithFormat:@"apiv1.php?act=pick_list&page=%@&list_type=%d&delivery_id=%@&goods_model=%@",(self.entity.next.length==0?@"1":self.entity.next),list_type,user.user_id,goodsModel];
     self.params = @{};
     self.requestTag=1001;
     [self loadInner];

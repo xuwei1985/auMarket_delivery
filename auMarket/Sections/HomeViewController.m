@@ -29,8 +29,12 @@
 
     //加载配送任务数据
     if([self checkLoginStatus] == YES){
-        APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
-        [APP_DELEGATE.booter loadTaskList];
+        if(APP_DELEGATE.booter.taskModel.entity.list.count<=0){
+            [self startLoadingActivityIndicator];
+            APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
+            [APP_DELEGATE.booter loadTaskList];
+        }
+        
         [self getDeliveryState];
     }
     
@@ -973,12 +977,18 @@
     [self.navigationController pushViewController:pvc animated:YES];
 }
 
+//MARK: 重新加载事件
 -(void)clickRefresh:(UIButton *)sender{
     //加载配送任务数据
     if([self checkLoginStatus] == YES){
+        [self startLoadingActivityIndicator];
         APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
         [APP_DELEGATE.booter loadTaskList];
-        [self getDeliveryState];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self getDeliveryState];
+        });
+        
     }
 }
 
@@ -1013,6 +1023,7 @@
 
 //MARK: 配送任务数据更新通知事件
 - (void)onTaskUpdate:(NSNotification*)aNotitification{
+    [self stopLoadingActivityIndicator];
     if(isShowing){
         [self createDeliveryTimeSection];
         [self loadTaskMask:0];
