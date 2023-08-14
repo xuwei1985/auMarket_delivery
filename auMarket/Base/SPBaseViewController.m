@@ -72,7 +72,7 @@
     
     
     int now=[[Common getNowTimeTimestamp] intValue];
-    if(!APP_DELEGATE.isLocationAuthorized && (now-APP_DELEGATE.lastLocationTipTime)>1*60){
+    if(!APP_DELEGATE.isLocationAuthorized && (now-APP_DELEGATE.lastLocationTipTime)>2*60){
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self showLocationTip];
         });

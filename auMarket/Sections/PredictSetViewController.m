@@ -38,9 +38,9 @@
     predict_section_arr=[[NSMutableArray<TimeItemEntity *> alloc] init];
     predict_data_arr=[[NSMutableArray<PredictTimeEntity *> alloc] init];
     request_num_arr=@[@"10",@"20",@"30",@"40",@"50"];
-    request_num=20;
-    [self loadShippingTime];
+    request_num=20; //默认的批处理订单预计送达时间的分割数量（即20单为一段批量设置）
     
+    [self loadShippingTime];
     [self generatePredictTime];
 }
 
