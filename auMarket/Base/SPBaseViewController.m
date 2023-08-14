@@ -69,6 +69,14 @@
         self.navigationController.navigationBar.scrollEdgeAppearance = appperance;
  
     }
+    
+    
+    int now=[[Common getNowTimeTimestamp] intValue];
+    if(!APP_DELEGATE.isLocationAuthorized && (now-lastLocationTipTime)>1*60){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self showLocationTip];
+        });
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -88,12 +96,6 @@
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
     self.view.backgroundColor = COLOR_BG_TABLEVIEW;
     
-    int now=[[Common getNowTimeTimestamp] intValue];
-    if(!APP_DELEGATE.isLocationAuthorized && (now-lastLocationTipTime)>3*60){
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self showLocationTip];
-        });
-    }
 }
 
 - (void)didReceiveMemoryWarning {
