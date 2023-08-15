@@ -81,7 +81,7 @@
     requestNumTxt.layer.cornerRadius=3;
     requestNumTxt.clipsToBounds=YES;
     requestNumTxt.tag=5002;
-    requestNumTxt.text=@"20";
+    requestNumTxt.text=self.request_num>0 ? [NSString stringWithFormat:@"%d",self.request_num] : @"10";
     [requestNumTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingLeft"];
     [requestNumTxt setValue:[NSNumber numberWithInt:10] forKey:@"paddingRight"];
     [self addSubview:requestNumTxt];

@@ -37,8 +37,8 @@
     predict_time_arr=[[NSMutableArray alloc] init];
     predict_section_arr=[[NSMutableArray<TimeItemEntity *> alloc] init];
     predict_data_arr=[[NSMutableArray<PredictTimeEntity *> alloc] init];
-    request_num_arr=@[@"10",@"20",@"30",@"40",@"50"];
-    request_num=20; //默认的批处理订单预计送达时间的分割数量（即20单为一段批量设置）
+    request_num_arr=@[@"5",@"10",@"20",@"30",@"40",@"50"];
+    request_num=10; //默认的批处理订单预计送达时间的分割数量（即20单为一段批量设置）
     
     [self loadShippingTime];
     [self generatePredictTime];
@@ -78,7 +78,7 @@
 -(void)createHeaderAndFooter{
     headerView=[[PredictTimeSectionView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 80)];
     headerView.delegate=self;
-    
+    headerView.request_num=request_num;
     
     footerView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 60)];
     postBtn = [[UIButton alloc] init];

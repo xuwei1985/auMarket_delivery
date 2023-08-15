@@ -30,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 // set the delegate
 @property (nonatomic, retain) NSObject<PredictTimeSectionViewDelegate>* delegate;
+@property (nonatomic, assign) int request_num;
+
 @end
 
 NS_ASSUME_NONNULL_END
