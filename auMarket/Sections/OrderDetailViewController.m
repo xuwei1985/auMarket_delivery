@@ -1084,6 +1084,7 @@
 }
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
+    [self stopLoadingActivityIndicator];
     
     if(model==self.model&&self.model.requestTag==3002){
         if(isSuccess){
@@ -1096,15 +1097,13 @@
             }
         }
     }
-    else if(model==self.model&&self.model.requestTag==3003){
-        [self stopLoadingActivityIndicator];
+    else if(model==self.model&&self.model.requestTag==3008){
         if(isSuccess){
             [self showSuccesWithText:@"操作成功"];
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
     else if(model==self.model&&self.model.requestTag==3006){
-        [self stopLoadingActivityIndicator];
         if(isSuccess){
             [self loadOrderFlowData:self.model.flow_entity];
         }
