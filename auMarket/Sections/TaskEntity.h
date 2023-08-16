@@ -44,6 +44,7 @@
 @property(nonatomic,retain) NSString *put_type;//签收方式 1：放门口 0：面签
 @property (nonatomic,retain) NSMutableArray<pGoodsEntity*> *box_goods;
 @property (nonatomic,retain) NSString *predict_time;//预计配送时间
+@property (nonatomic,retain) NSString *predict_add_time;//设置配送顺序的时间（时间大小作为排序）
 @property (nonatomic,retain) NSString *block_name;
 @property (nonatomic,retain) NSString *consignee;
 @property (nonatomic,retain) NSString *address;
