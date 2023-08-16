@@ -28,7 +28,7 @@
 @property(nonatomic,retain) NSString *package_note;
 @property(nonatomic,retain) NSString *package_freeze_note;
 @property(nonatomic,retain) NSString *package_food_note;
-@property(nonatomic,retain) NSString *add_time;
+//@property(nonatomic,retain) NSString *add_time;
 @property(nonatomic,retain) NSString *longitude;
 @property(nonatomic,retain) NSString *latitude;
 @property (nonatomic,retain) NSString *return_price;
@@ -37,7 +37,6 @@
 @property (nonatomic,retain) NSString *shipping_fee;
 @property(nonatomic,assign) CLLocationCoordinate2D coordinate;
 @property(nonatomic,retain) NSString *status;
-@property(nonatomic,retain) NSString *predict_sms_send;
 @property(nonatomic,assign) Boolean selected;
 @property(nonatomic,retain) NSString *is_ready;//是否打包完成
 @property(nonatomic,retain) NSString *option_title;//送货方式选项标题（送货上楼、下楼自取）

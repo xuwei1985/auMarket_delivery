@@ -462,11 +462,15 @@
     NSString *valueStr=@"";
     
     if(predict_model==1){
-        shipping_date_id=[[predict_section_arr objectAtIndex:row].shipping_date_id intValue];
-        valueStr=[predict_section_arr objectAtIndex:row].receiving_time;
-        NSArray *array = [valueStr componentsSeparatedByString:@" "];
-        if(array.count==2){
-            valueStr=[array lastObject];
+        if(predict_section_arr!=nil && predict_section_arr.count>row){
+            shipping_date_id=[[predict_section_arr objectAtIndex:row].shipping_date_id intValue];
+            valueStr=[predict_section_arr objectAtIndex:row].receiving_time;
+            NSArray *array = [valueStr componentsSeparatedByString:@" "];
+            if(array.count==2){
+                valueStr=[array lastObject];
+            }
+        }else{
+            [self showFailWithText:@"数据源异常"];
         }
     }else if(predict_model==2){
         request_num=[[request_num_arr objectAtIndex:row] intValue];
@@ -549,8 +553,12 @@
 -(void)timeSectionClick:(UITextField *)sender{
     predict_model=1;
     _focus_predict=sender;
-    [self showPredictTimeView];
-    //[self getPredictOrderData];
+    
+    if(predict_section_arr != nil && predict_data_arr.count>0){
+        [self showPredictTimeView];
+    }else{
+        [self showToastWithText:@"没有获取到数据"];
+    }
     NSLog(@"timeSectionClick");
 }
 

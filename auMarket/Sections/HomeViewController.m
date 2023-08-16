@@ -895,7 +895,7 @@
     
     TaskItemEntity *item= (TaskItemEntity *)[selectedMarker.taskArr firstObject];
     BOOL show_predict_menu=true;//是否显示预计配送时间菜单
-    if([item.predict_sms_send intValue]>0||[item.status intValue]==2){
+    if([item.status intValue]==2){
         show_predict_menu=false;
     }
     else{
