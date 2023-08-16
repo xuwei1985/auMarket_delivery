@@ -263,6 +263,7 @@
             [SVProgressHUD showErrorWithStatus:@"请求失败"];
         }
     }
+    
     [self onNetError];
     if (self.delegate&&!isIgnore) {
         [self.delegate onResponse:self isSuccess:NO];

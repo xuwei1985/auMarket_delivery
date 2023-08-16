@@ -329,8 +329,9 @@
                 self.tasklist_finished= [[NSArray alloc] init];
                 self.tasklist_failed= [[NSArray alloc] init];
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
         }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:TASK_UPDATE_NOTIFICATION object:nil];
     }
 //    else if(model==self.model&&self.model.requestTag==1002){
 //        if(isSuccess){
