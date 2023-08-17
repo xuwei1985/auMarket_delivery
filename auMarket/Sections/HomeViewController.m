@@ -347,7 +347,7 @@
     for(int i=0;i<[APP_DELEGATE.booter.tasklist_failed count];i++){
         itemEntity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i];
         
-        if(only_unset_predict_order&&itemEntity.predict_time.length>0){//只显示未设置配送时间的订单
+        if(only_unset_predict_order&&itemEntity.predict_add_time.length>0){//只显示未设置配送时间的订单
             break;
         }
         
@@ -406,7 +406,7 @@
         
         itemEntity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i];
         if(only_unset_predict_order){//只显示未设置配送时间的订单
-            if(itemEntity.predict_time.length>0){
+            if(itemEntity.predict_add_time.length>0){
                 break;
             }
         }
@@ -427,12 +427,12 @@
                     if(n>-1){
                         location_icon=[NSString stringWithFormat:@"1_29_color_%d",n];
                         
-                        if([itemEntity.predict_time length]<=0||showSections==0){//未设置预计送达时间
+                        if([itemEntity.predict_add_time length]<=0||showSections==0){//未设置预计送达时间
                             if(![itemEntity.upstairs_mark isEqualToString:@"default"]){
                                 location_icon=[NSString stringWithFormat:@"%@_%@",location_icon,itemEntity.upstairs_mark];
                             }
                         }
-                        else if([itemEntity.predict_time length]>0&&showSections==1){//设置了预计送达时间
+                        else if([itemEntity.predict_add_time length]>0&&showSections==1){//设置了预计送达时间
                             if([itemEntity.upstairs_mark isEqualToString:@"default"]){//非送货上楼
                                 location_icon=@"1_29";
                             }
@@ -448,7 +448,7 @@
                 }
             }
             else{//非时段模式
-                if([itemEntity.predict_time length]<=0){//未设置预计送达时间
+                if([itemEntity.predict_add_time length]<=0){//未设置预计送达时间
                     if([itemEntity.upstairs_mark isEqualToString:@"default"]){
                         mapMaker.image=[UIImage imageNamed:@"1_29_blue"];
                     }
@@ -502,7 +502,7 @@
                 if(showSections==2){//非时间段模式
                     Boolean has_unPredict=NO;
                     for (TaskItemEntity *enity in marker.taskArr) {
-                        if([enity.predict_time length]<=0){
+                        if([enity.predict_add_time length]<=0){
                             has_unPredict=YES;
                         }
                     }
@@ -606,25 +606,20 @@
     NSMutableString *ids=[NSMutableString string];
     if(selectedMarker&&selectedMarker.taskArr){
         for (int i=0; i<selectedMarker.taskArr.count; i++) {
-            [ids appendFormat:@"%@,",[selectedMarker.taskArr objectAtIndex:i].sid];
-            //[selectedMarker.taskArr objectAtIndex:i].predict_time=t;
+            [ids appendFormat:@"%@,",[selectedMarker.taskArr objectAtIndex:i].order_id];
         }
     }
     
     if(ids.length>0){
         ids=[NSMutableString stringWithString:[ids substringToIndex:ids.length-1]];
-        [self savePredictTime:ids];
+        [self savePredictSerial:ids];
     }
-    
-    //[self loadTaskMask:0];
-
-    
 }
 
-//MARK: 批量提交订单的预计送达时间的
--(void)savePredictTime:(NSString *)ids{
+//MARK: 批量提交订单的预计送达顺序
+-(void)savePredictSerial:(NSString *)ids{
     [self startLoadingActivityIndicatorWithText:@"请求中..."];
-    [self.model savePredictTime:ids];
+    [self.model savePredictSerial:ids];
 }
 
 //MARK: 获取配送状态指示器数据（设置预计送单时间、上货完成的统计数据）
@@ -635,9 +630,17 @@
 //MARK: 数据请求的响应处理
 -(void)onResponse:(TaskModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
-    if(model.requestTag==3001){ //设置配送排序
+    
+    if(model.requestTag==3003){ //设置配送排序
         if(isSuccess){
-            [self showToastWithText:@"保存成功"];
+            [self showToastWithText:@"设置成功"];
+            if(selectedMarker&&selectedMarker.taskArr){
+                for (int i=0; i<selectedMarker.taskArr.count; i++) {
+                    [selectedMarker.taskArr objectAtIndex:i].predict_add_time=self.model.predict_num_entity.predict_add_time;
+                }
+            }
+            
+            [self loadTaskMask:0];
         }
     }else if(model.requestTag==3012){ //处理配送状态指示器
         if(isSuccess){
@@ -655,56 +658,6 @@
 {
     return YES;
     
-}
-
-#pragma mark - picker view delegate
-/* return column of pickerview*/
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-/*return row number*/
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return predict_time_arr.count;
-}
-
-/*return component row str*/
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return [predict_time_arr objectAtIndex:row].time_range;
-}
-
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
-    UILabel* pickerLabel = (UILabel*)view;
-    if (!pickerLabel){
-        pickerLabel = [[UILabel alloc] init];
-        pickerLabel.minimumScaleFactor=16.0;
-        pickerLabel.adjustsFontSizeToFitWidth = YES;
-        [pickerLabel setTextAlignment:NSTextAlignmentCenter];
-        [pickerLabel setBackgroundColor:[UIColor clearColor]];
-        [pickerLabel setFont:DEFAULT_FONT(18)];
-    }
-    // Fill the label text here
-    pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
-    return pickerLabel;
-}
-
-//返回指定列的宽度
-- (CGFloat) pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component{
-    return WIDTH_SCREEN;
-}
-
--(CGFloat) pickerView:(UIPickerView*)pickerView rowHeightForComponent:(NSInteger)component{
-    return 48;
-}
-
-/*choose com is component,row's function*/
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-//    predict_select_index=(int)row;//保存区域类型
-//    NSString *valueStr=[predict_time_arr objectAtIndex:row].time_range;
 }
 
 
@@ -785,7 +738,7 @@
     }];
     
     UIAlertAction *action_sort = [UIAlertAction actionWithTitle:@"配送排序" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self showPredictTimeView];
+        [self setTaskPredictSerialNumber];
     }];
     
     

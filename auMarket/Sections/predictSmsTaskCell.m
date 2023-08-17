@@ -212,10 +212,10 @@
     sender.selected=!sender.selected;
     self.entity.selected=sender.selected;
     if(self.entity.selected){
-        self.selDataBlock(self.entity.sid,1);//选中
+        self.selDataBlock(self.entity.order_id,1);//选中
     }
     else{
-        self.selDataBlock(self.entity.sid,0);//取消
+        self.selDataBlock(self.entity.order_id,0);//取消
     }
    
 }
@@ -228,10 +228,10 @@
 -(void)toggleDataSel{
     self.entity.selected=!self.entity.selected;
     if(self.entity.selected){
-        self.selDataBlock(self.entity.sid,1);//选中
+        self.selDataBlock(self.entity.order_id,1);//选中
     }
     else{
-        self.selDataBlock(self.entity.sid,0);//取消
+        self.selDataBlock(self.entity.order_id,0);//取消
     }
 }
 

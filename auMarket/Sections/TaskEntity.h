@@ -17,7 +17,6 @@
 @end
 
 @interface TaskItemEntity : SPBaseEntity
-@property (nonatomic,retain) NSString *sid;//配送id
 @property (nonatomic,retain) NSString *order_sn;
 @property (nonatomic,retain) NSString *order_id;
 @property(nonatomic,retain) NSString *pay_name;

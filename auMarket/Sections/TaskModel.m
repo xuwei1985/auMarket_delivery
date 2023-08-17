@@ -70,9 +70,10 @@
     [self loadInner];
 }
 
--(void)savePredictTime:(NSString *)ids{
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderPredictTime&ids=%@",ids];
-    self.parseDataClassType = [SPBaseEntity class];
+-(void)savePredictSerial:(NSString *)ids{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=savePredictSerial&ids=%@&deliver_id=%@",ids,user.user_id];
+    self.parseDataClassType = [TaskItemEntity class];
     self.params = @{};
     self.requestTag=3003;
     [self loadInner];
@@ -154,7 +155,11 @@
     }
     else if ([parsedData isKindOfClass:[DeliveryStateEntity class]]) {
         self.deliver_state_entity = (DeliveryStateEntity*)parsedData;
+    }else if ([parsedData isKindOfClass:[TaskItemEntity class]]) {
+        self.predict_num_entity = (TaskItemEntity*)parsedData;
     }
+    
+    
 }
 
 

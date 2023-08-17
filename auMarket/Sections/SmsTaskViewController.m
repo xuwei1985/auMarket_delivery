@@ -249,7 +249,7 @@
     NSString *order_ids=@"";
     for(int i=0;i<self.model.entity.list.count;i++){
         if([self.model.entity.list objectAtIndex:i].selected){
-            order_ids=[NSString stringWithFormat:@"%@%@,",order_ids,[self.model.entity.list objectAtIndex:i].sid];
+            order_ids=[NSString stringWithFormat:@"%@%@,",order_ids,[self.model.entity.list objectAtIndex:i].order_id];
         }
     }
     if(order_ids.length>0){

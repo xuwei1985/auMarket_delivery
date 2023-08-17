@@ -27,6 +27,7 @@ typedef enum {
 @property (nonatomic,retain) OrderFlowEntity *flow_entity;
 @property (nonatomic,retain) PredictOrderDataEntity *predict_order_entity;
 @property (nonatomic,retain) DeliveryStateEntity *deliver_state_entity;
+@property (nonatomic,retain) TaskItemEntity *predict_num_entity;
 
 -(void)loadTaskList;
 -(void)loadDeliveryTimeSection;
@@ -35,7 +36,7 @@ typedef enum {
 //根据配送状态抽取配送列表
 -(NSArray<TaskItemEntity *> *)getTasksByStatus:(Delivery_Status)status;
 -(NSArray *)getSectionTimes;
--(void)savePredictTime:(NSString *)ids;
+-(void)savePredictSerial:(NSString *)ids;
 -(void)saveOrderReturnInfo:(NSString *)order_id andReturnPrice:(int)price andProof:(NSString *)proof_path andMsg:(NSString *)msg;
 -(void)saveOrderChangePrice:(NSString *)order_id andChagePrice:(float)price andProof:(NSString *)proof_path andMsg:(NSString *)msg;
 -(void)loadOrderFlowInfo:(NSString *)order_id;
