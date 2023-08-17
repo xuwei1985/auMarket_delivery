@@ -642,8 +642,8 @@
     }else if(model.requestTag==3012){ //处理配送状态指示器
         if(isSuccess){
             if (stateIndicator != nil && self.model.deliver_state_entity != nil) {
-                stateIndicator.state_predict = [self.model.deliver_state_entity.predict_num intValue]>=[self.model.deliver_state_entity.total_num intValue];
-                stateIndicator.state_pick = [self.model.deliver_state_entity.picked_num intValue]>=[self.model.deliver_state_entity.total_num intValue];
+                stateIndicator.state_predict = [self.model.deliver_state_entity.total_num intValue]>0 && [self.model.deliver_state_entity.predict_num intValue]>=[self.model.deliver_state_entity.total_num intValue];
+                stateIndicator.state_pick = [self.model.deliver_state_entity.total_num intValue]>0 && [self.model.deliver_state_entity.picked_num intValue]>=[self.model.deliver_state_entity.total_num intValue];
                 [stateIndicator refreshState];
             }
         }
