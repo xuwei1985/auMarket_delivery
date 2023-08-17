@@ -35,7 +35,7 @@ typedef enum {
 //根据配送状态抽取配送列表
 -(NSArray<TaskItemEntity *> *)getTasksByStatus:(Delivery_Status)status;
 -(NSArray *)getSectionTimes;
--(void)savePredictTime:(NSString *)ids andPredictTime:(NSString *)predict_time;
+-(void)savePredictTime:(NSString *)ids;
 -(void)saveOrderReturnInfo:(NSString *)order_id andReturnPrice:(int)price andProof:(NSString *)proof_path andMsg:(NSString *)msg;
 -(void)saveOrderChangePrice:(NSString *)order_id andChagePrice:(float)price andProof:(NSString *)proof_path andMsg:(NSString *)msg;
 -(void)loadOrderFlowInfo:(NSString *)order_id;

@@ -60,11 +60,9 @@
     showSections=0;
     markerArr=[[NSMutableArray alloc] init];
     parkingMarkerArr=[[NSMutableArray alloc] init];
-    predict_time_arr=[[NSMutableArray alloc] init];
     sectionSelArr=[[NSMutableArray alloc] init];
     defaultSectionColor=@"#B4B4B4";
     sectionColorArr=[[NSArray alloc] initWithObjects:@"#743EF4",@"#4A856C",@"#4468F6",@"#E27CB0",@"#92D568",@"#E94D64", nil];
-    [self generatePredictTime];
 }
 
 //MARK: UI初始化
@@ -73,99 +71,8 @@
     [self setNavigation];
     [self createRefreshBtn];
     [self createMapView];
-    [self createPredictTimeView];
 }
 
-//MARK: 构造预计送达时间范围的基础数据
--(void)generatePredictTime{
-    int start_hour=9;
-    int end_hour=22;
-    int step=90;//结束时间的步进分钟数
-    int interval=30;//开始时间的间隔分钟数（2:00-3:30  然后是 2:30-4:00）
-    int start_minite=0;
-    int end_minite=0;
-    int current_start_hour=start_hour;
-    int current_end_hour=start_hour;
-    
-    while ((current_start_hour+step/60)<=end_hour) {
-        NSString *minite_str=@"";
-        PredictTimeEntity *entity=[[PredictTimeEntity alloc] init];
-        if(start_minite<10){
-            minite_str=[NSString stringWithFormat:@"0%d",start_minite];
-        }
-        else{
-            minite_str=[NSString stringWithFormat:@"%d",start_minite];
-        }
-        entity.start_time=[NSString stringWithFormat:@"%d:%@",current_start_hour,minite_str];
-        
-        end_minite=start_minite+step;
-        if(end_minite>=60){
-            current_end_hour+=end_minite/60;
-            end_minite=end_minite%60;
-        }
-        if(end_minite<10){
-            minite_str=[NSString stringWithFormat:@"0%d",end_minite];
-        }
-        else{
-            minite_str=[NSString stringWithFormat:@"%d",end_minite];
-        }
-        entity.end_time=[NSString stringWithFormat:@"%d:%@",current_end_hour,minite_str];
-        entity.time_range=[NSString stringWithFormat:@"%@ — %@",entity.start_time,entity.end_time];
-        [predict_time_arr addObject:entity];
-        
-        start_minite+=interval;
-        if(start_minite>=60){
-            current_start_hour+=start_minite/60;
-            start_minite=start_minite%60;
-        }
-        current_end_hour=current_start_hour;
-    }
-}
-
-//MARK: 预计送达时间视图创建
--(void)createPredictTimeView{
-    _txt_predict=[[UITextField alloc] initWithFrame:CGRectZero];
-    _txt_predict.delegate=self;
-    [self.view addSubview:_txt_predict];
-    
-    predictTimePicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, HEIGHT_SCREEN-64, WIDTH_SCREEN, PREDICT_PICKER_HEIGHT)];
-    predictTimePicker.backgroundColor=COLOR_WHITE;
-    //设置阴影的颜色
-    predictTimePicker.layer.shadowColor=[UIColor blackColor].CGColor;
-    //设置阴影的偏移量，如果为正数，则代表为往右边偏移
-    predictTimePicker.layer.shadowOffset=CGSizeMake(0, -5);
-    //设置阴影的透明度(0~1之间，0表示完全透明)
-    predictTimePicker.layer.shadowOpacity=0.4;
-    predictTimePicker.showsSelectionIndicator = YES;
-    predictTimePicker.backgroundColor=COLOR_BG_WHITE;
-    predictTimePicker.delegate=self;
-    predictTimePicker.dataSource=self;
-    predictTimePicker.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    _txt_predict.inputView=predictTimePicker;
-    
-    UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
-    keyboardDoneButtonView.barStyle = UIBarStyleBlackTranslucent;
-    keyboardDoneButtonView.translucent = YES;
-    keyboardDoneButtonView.barTintColor=COLOR_BG_WHITE;
-    keyboardDoneButtonView.tintColor = COLOR_MAIN;
-    [keyboardDoneButtonView sizeToFit];
-    
-    UIView  *line=[[UIView alloc] initWithFrame:CGRectMake(0, keyboardDoneButtonView.frame.size.height-0.5, keyboardDoneButtonView.frame.size.width, 0.5)];
-    line.backgroundColor=COLOR_BG_VIEW;
-    [keyboardDoneButtonView addSubview:line];
-    
-    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消"
-                                                                     style:UIBarButtonItemStylePlain target:self
-                                                                    action:@selector(closePredictTimeView)];
-    cancelButton.tintColor=COLOR_DARKGRAY;
-    UIBarButtonItem *fixedButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
-    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"确定"
-                                                                   style:UIBarButtonItemStylePlain target:self
-                                                                  action:@selector(pickerDoneClicked:)];
-    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:cancelButton,fixedButton,doneButton, nil]];
-    _txt_predict.inputAccessoryView = keyboardDoneButtonView;
-    
-}
 
 //MARK: 地图视图创建
 -(void)createMapView{
@@ -694,37 +601,30 @@
     return nil;
 }
 
-//MARK: 选择的预计送达时间的点击事件
--(void)pickerDoneClicked:(id)sender{
-    NSInteger row=[predictTimePicker selectedRowInComponent:0];
-    predict_select_index=(int)row;
-    NSString *valueStr=[predict_time_arr objectAtIndex:row].time_range;
-    [self setTaskItemPredictTime:valueStr];
-    [_txt_predict resignFirstResponder];
-}
-
-//MARK: 设置配送任务的预计送达时间数据到坐标点对象上
--(void)setTaskItemPredictTime:(NSString *)t{
+//MARK: 设置配送任务的排序
+-(void)setTaskPredictSerialNumber{
     NSMutableString *ids=[NSMutableString string];
     if(selectedMarker&&selectedMarker.taskArr){
         for (int i=0; i<selectedMarker.taskArr.count; i++) {
             [ids appendFormat:@"%@,",[selectedMarker.taskArr objectAtIndex:i].sid];
-            [selectedMarker.taskArr objectAtIndex:i].predict_time=t;
+            //[selectedMarker.taskArr objectAtIndex:i].predict_time=t;
         }
     }
     
     if(ids.length>0){
         ids=[NSMutableString stringWithString:[ids substringToIndex:ids.length-1]];
+        [self savePredictTime:ids];
     }
     
-    [self loadTaskMask:0];
-    [self savePredictTime:ids andPredictTime:t];
+    //[self loadTaskMask:0];
+
+    
 }
 
 //MARK: 批量提交订单的预计送达时间的
--(void)savePredictTime:(NSString *)ids andPredictTime:(NSString *)predict_time{
-    [self startLoadingActivityIndicatorWithText:@"提交数据"];
-    [self.model savePredictTime:ids andPredictTime:predict_time];
+-(void)savePredictTime:(NSString *)ids{
+    [self startLoadingActivityIndicatorWithText:@"请求中..."];
+    [self.model savePredictTime:ids];
 }
 
 //MARK: 获取配送状态指示器数据（设置预计送单时间、上货完成的统计数据）
@@ -934,16 +834,6 @@
     [alert_sheet addAction:action_cancel];
     
     [self presentViewController:alert_sheet animated:YES completion:nil];
-}
-
-//MARK: 显示预计送达时间的选择视图
--(void)showPredictTimeView{
-    [_txt_predict becomeFirstResponder];
-}
-
-//MARK: 关闭预计送达时间的选择视图
--(void)closePredictTimeView{
-    [_txt_predict resignFirstResponder];
 }
 
 //MARK: 前往Google地址导航

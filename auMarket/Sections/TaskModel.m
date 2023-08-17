@@ -70,8 +70,8 @@
     [self loadInner];
 }
 
--(void)savePredictTime:(NSString *)ids andPredictTime:(NSString *)predict_time{
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderPredictTime&ids=%@&predict_time=%@",ids,[Common encodeToPercentEscapeString:predict_time]];
+-(void)savePredictTime:(NSString *)ids{
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=saveOrderPredictTime&ids=%@",ids];
     self.parseDataClassType = [SPBaseEntity class];
     self.params = @{};
     self.requestTag=3003;

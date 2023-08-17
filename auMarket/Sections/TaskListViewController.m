@@ -420,7 +420,7 @@
         if(first_serial_row==0){
             first_serial_row=section;
         }
-        lbl_serial_num.text=[NSString stringWithFormat:@"%d",(first_serial_row-section+1)];
+        lbl_serial_num.text=[NSString stringWithFormat:@"%d",(section-first_serial_row+1)];
     }
     lbl_serial_num.textAlignment = NSTextAlignmentCenter;
     if([entity.is_ready intValue]==0){//订单未准备好的情况下颜色控制
