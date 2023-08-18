@@ -513,7 +513,7 @@
     // 初始化对话框
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您尚未开启实时配送定位" preferredStyle:UIAlertControllerStyleAlert];
     // 确定按钮监听
-     UIAlertAction *okBtn = [UIAlertAction actionWithTitle:@"去开启" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
+     UIAlertAction *okBtn = [UIAlertAction actionWithTitle:@"去开启" style:UIAlertActionStyleCancel handler:^(UIAlertAction *_Nonnull action) {
          NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
          if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0) {
              if([[UIApplication sharedApplication] canOpenURL:settingsURL]) {
@@ -523,7 +523,7 @@
          APP_DELEGATE.lastLocationTipTime=[[Common getNowTimeTimestamp] intValue];
     }];
     
-    UIAlertAction *cancelBtn =[UIAlertAction actionWithTitle:@"稍后" style:UIAlertActionStyleCancel handler:^(UIAlertAction *_Nonnull action) {
+    UIAlertAction *cancelBtn =[UIAlertAction actionWithTitle:@"稍后" style:UIAlertActionStyle handler:^(UIAlertAction *_Nonnull action) {
         APP_DELEGATE.lastLocationTipTime=[[Common getNowTimeTimestamp] intValue];
     }];
     //添加按钮到弹出上

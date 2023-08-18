@@ -347,7 +347,7 @@
     for(int i=0;i<[APP_DELEGATE.booter.tasklist_failed count];i++){
         itemEntity=[APP_DELEGATE.booter.tasklist_failed objectAtIndex:i];
         
-        if(only_unset_predict_order&&itemEntity.predict_add_time.length>0){//只显示未设置配送时间的订单
+        if(only_unset_predict_order&&[itemEntity.predict_add_time intValue]>0){//只显示未设置配送时间的订单
             break;
         }
         
@@ -406,7 +406,7 @@
         
         itemEntity=[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i];
         if(only_unset_predict_order){//只显示未设置配送时间的订单
-            if(itemEntity.predict_add_time.length>0){
+            if([itemEntity.predict_add_time intValue]>0){
                 break;
             }
         }
@@ -427,12 +427,12 @@
                     if(n>-1){
                         location_icon=[NSString stringWithFormat:@"1_29_color_%d",n];
                         
-                        if([itemEntity.predict_add_time length]<=0||showSections==0){//未设置预计送达时间
+                        if([itemEntity.predict_add_time intValue]<=0||showSections==0){//未设置预计送达时间
                             if(![itemEntity.upstairs_mark isEqualToString:@"default"]){
                                 location_icon=[NSString stringWithFormat:@"%@_%@",location_icon,itemEntity.upstairs_mark];
                             }
                         }
-                        else if([itemEntity.predict_add_time length]>0&&showSections==1){//设置了预计送达时间
+                        else if([itemEntity.predict_add_time intValue]>0&&showSections==1){//设置了预计送达时间
                             if([itemEntity.upstairs_mark isEqualToString:@"default"]){//非送货上楼
                                 location_icon=@"1_29";
                             }
@@ -448,7 +448,7 @@
                 }
             }
             else{//非时段模式
-                if([itemEntity.predict_add_time length]<=0){//未设置预计送达时间
+                if([itemEntity.predict_add_time intValue]<=0){//未设置预计送达时间
                     if([itemEntity.upstairs_mark isEqualToString:@"default"]){
                         mapMaker.image=[UIImage imageNamed:@"1_29_blue"];
                     }
@@ -502,7 +502,7 @@
                 if(showSections==2){//非时间段模式
                     Boolean has_unPredict=NO;
                     for (TaskItemEntity *enity in marker.taskArr) {
-                        if([enity.predict_add_time length]<=0){
+                        if([enity.predict_add_time intValue]<=0){
                             has_unPredict=YES;
                         }
                     }
@@ -737,7 +737,7 @@
         });
     }];
     
-    UIAlertAction *action_sort = [UIAlertAction actionWithTitle:@"配送排序" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action_sort = [UIAlertAction actionWithTitle:@"设置配送排序" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self setTaskPredictSerialNumber];
     }];
     
