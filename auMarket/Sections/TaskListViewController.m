@@ -414,14 +414,7 @@
     UILabel *lbl_serial_num=[[UILabel alloc] init];
     lbl_serial_num.textColor=COLOR_DARKGRAY;
     lbl_serial_num.font=FONT_SIZE_SMALL;
-    if([entity.predict_add_time intValue]==0){//未排序的订单
-        lbl_serial_num.text=[NSString stringWithFormat:@"%d",0];
-    }else{
-        if(first_serial_row==0){
-            first_serial_row=section;
-        }
-        lbl_serial_num.text=[NSString stringWithFormat:@"%d",(section-first_serial_row+1)];
-    }
+    lbl_serial_num.text=entity.predict_add_time;
     lbl_serial_num.textAlignment = NSTextAlignmentCenter;
     if([entity.is_ready intValue]==0){//订单未准备好的情况下颜色控制
         lbl_serial_num.backgroundColor = [UIColor colorWithRed:255/255. green:255/255. blue:255/255. alpha:1];

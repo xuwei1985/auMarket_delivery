@@ -78,7 +78,7 @@
 -(void)createMapView{
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-37.8274851
                                                             longitude:144.9527565
-                                                                 zoom:13];
+                                                                 zoom:12];
     mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     mapView.myLocationEnabled=NO;
     mapView.delegate=self;
@@ -368,7 +368,8 @@
                     mapMaker.image=[UIImage imageNamed:[NSString stringWithFormat:@"1_29_gray_%@",itemEntity.upstairs_mark]];
                 }
                 
-                mapMaker.markTip=@"";
+                mapMaker.markTip=[NSString stringWithFormat:@"%@",[itemEntity.predict_add_time intValue]>0 ? itemEntity.predict_add_time : @""];
+                
                 [mapMaker loadData];
                 
                 marker = [[GMSMarker alloc] init];
@@ -385,18 +386,25 @@
                 [markerArr addObject:marker];
             }
             else{
-                int n=[((MapMaker *)marker.iconView).markTip intValue];
-                if(n<=0){
-                    n=1;
-                }
-                ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%d",n+1];
-                [((MapMaker *)marker.iconView) loadData];
+                //int n=[((MapMaker *)marker.iconView).markTip intValue];
+                //if(n<=0){
+                //    n=1;
+                //}
+                //((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%d",n+1];
                 
                 NSMutableArray *arr=[NSMutableArray arrayWithArray:marker.taskArr];
                 [arr addObject:itemEntity];
                 marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithArray:arr];
+                if(marker.taskArr.count>1){
+                    ((MapMaker *)marker.iconView).show_dot=YES;
+                }else{
+                    ((MapMaker *)marker.iconView).show_dot=NO;
+                }
+                
+                ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%@",[itemEntity.predict_add_time intValue]>0 ? itemEntity.predict_add_time : @""];
                 
                 mapMaker.image=[UIImage imageNamed:@"1_29_gray"];
+                [((MapMaker *)marker.iconView) loadData];
             }
         }
     }
@@ -417,7 +425,7 @@
         //判断某个coordinate的marker是否存在
         MapMaker *mapMaker;
         marker=[self isExistMarker:itemEntity.coordinate andAddress:itemEntity.address];
-        
+    
         if(marker==nil){
             mapMaker=[[MapMaker alloc] initWithFrame:CGRectMake(0, 0, 34, 48.5)];
             
@@ -467,7 +475,7 @@
             }
             
             if(showSections==2||(showSections!=2&&[self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]])){//时段模式，并且该时段按钮点亮的情况
-                mapMaker.markTip=@"";
+                mapMaker.markTip=[NSString stringWithFormat:@"%@",[itemEntity.predict_add_time intValue]>0 ? itemEntity.predict_add_time : @""];
                 [mapMaker loadData];
                 
                 marker = [[GMSMarker alloc] init];
@@ -486,17 +494,23 @@
         }
         else{
             if(showSections==2||(showSections!=2&&[self isSectionEnable:[self formatSectionTime:itemEntity.delivery_time]])){//时段模式，并且该时段按钮点亮的情况
-                int n=[((MapMaker *)marker.iconView).markTip intValue];
-                if(n<=0){
-                    n=1;
-                }
+                //int n=[((MapMaker *)marker.iconView).markTip intValue];
+                //if(n<=0){
+                //    n=1;
+                //}
                 
-                ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%@",(n+1)>1?[NSString stringWithFormat:@"%d",(n+1)]:@""];
-                [((MapMaker *)marker.iconView) loadData];
+                //((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%@",(n+1)>1?[NSString stringWithFormat:@"%d",(n+1)]:@""];
                 
                 NSMutableArray *arr=[NSMutableArray arrayWithArray:marker.taskArr];
                 [arr addObject:itemEntity];
                 marker.taskArr=[[NSMutableArray<TaskItemEntity *> alloc] initWithArray:arr];
+                if(marker.taskArr.count>1){
+                    ((MapMaker *)marker.iconView).show_dot=YES;
+                }else{
+                    ((MapMaker *)marker.iconView).show_dot=NO;
+                }
+                
+                ((MapMaker *)marker.iconView).markTip=[NSString stringWithFormat:@"%@",[itemEntity.predict_add_time intValue]>0 ? itemEntity.predict_add_time : @""];
                 
                 //设置预计送达时间状态
                 if(showSections==2){//非时间段模式
@@ -522,6 +536,8 @@
                         ((MapMaker *)marker.iconView).is_muti=NO;
                     }
                 }
+                
+                [((MapMaker *)marker.iconView) loadData];
             }
         }
     }
@@ -634,9 +650,12 @@
     if(model.requestTag==3003){ //设置配送排序
         if(isSuccess){
             [self showToastWithText:@"设置成功"];
-            if(selectedMarker&&selectedMarker.taskArr){
-                for (int i=0; i<selectedMarker.taskArr.count; i++) {
-                    [selectedMarker.taskArr objectAtIndex:i].predict_add_time=self.model.predict_num_entity.predict_add_time;
+            if(APP_DELEGATE.booter.tasklist_delivering){
+                for (int i=0; i<APP_DELEGATE.booter.tasklist_delivering.count; i++) {
+                    if([APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].latitude==[selectedMarker.taskArr firstObject].latitude && [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].longitude==[selectedMarker.taskArr firstObject].longitude){
+                        [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].predict_add_time=self.model.predict_num_entity.predict_add_time;
+                        NSLog(@"aaa:%@",[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].predict_add_time);
+                    }
                 }
             }
             
@@ -748,7 +767,7 @@
     
     TaskItemEntity *item= (TaskItemEntity *)[selectedMarker.taskArr firstObject];
     BOOL show_predict_menu=true;//是否显示预计配送时间菜单
-    if([item.status intValue]==2){
+    if([item.status intValue]>=1 || [item.predict_add_time intValue]>0){//配送完成、配送失败，已设置过配送顺序、(时段订单显示模式 || showSections==0 )
         show_predict_menu=false;
     }
     else{

@@ -33,7 +33,7 @@
 }
 
 -(void)setNavigation{
-    self.title=@"送达时间提醒";
+    self.title=@"预设配送顺序";
     
 //    UIBarButtonItem *left_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"hs"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickedGoodsView)];
 //    self.navigationItem.leftBarButtonItem=left_Item;
@@ -60,7 +60,7 @@
     [self.view addSubview:blockView];
     
     btn_picking=[UIButton buttonWithType:UIButtonTypeCustom];
-    [btn_picking setTitle:@"待发送" forState:UIControlStateNormal];
+    [btn_picking setTitle:@"待确认" forState:UIControlStateNormal];
     [btn_picking setTitleColor:COLOR_DARKGRAY forState:UIControlStateNormal];
     [btn_picking setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_picking.titleLabel.textAlignment=NSTextAlignmentCenter;
@@ -78,7 +78,7 @@
     }];
     
     btn_picked=[UIButton buttonWithType:UIButtonTypeCustom];
-    [btn_picked setTitle:@"已发送" forState:UIControlStateNormal];
+    [btn_picked setTitle:@"已确认" forState:UIControlStateNormal];
     [btn_picked setTitleColor:COLOR_DARKGRAY forState:UIControlStateNormal];
     [btn_picked setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_picked.titleLabel.textAlignment=NSTextAlignmentCenter;
@@ -157,7 +157,7 @@
     
     _sumBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     _sumBtn.frame=CGRectMake(WIDTH_SCREEN-110, 0,110, 44);
-    [_sumBtn setTitle:@"发送" forState:UIControlStateNormal];
+    [_sumBtn setTitle:@"确认" forState:UIControlStateNormal];
     _sumBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
     _sumBtn.backgroundColor=COLOR_MAIN;
     _sumBtn.titleLabel.font=FONT_SIZE_BIG;
@@ -213,10 +213,10 @@
     sender.selected=!sender.selected;
     
     if(sender.selected){
-        [_sumBtn setTitle:[NSString stringWithFormat:@"发送(%ld)",self.model.entity.list.count] forState:UIControlStateNormal];
+        [_sumBtn setTitle:[NSString stringWithFormat:@"确认(%ld)",self.model.entity.list.count] forState:UIControlStateNormal];
     }
     else{
-         [_sumBtn setTitle:[NSString stringWithFormat:@"发送"] forState:UIControlStateNormal];
+         [_sumBtn setTitle:[NSString stringWithFormat:@"确认"] forState:UIControlStateNormal];
     }
     [self.tableView reloadData];
 }
@@ -237,10 +237,10 @@
     }
     
     if(sel_num>0){
-        [_sumBtn setTitle:[NSString stringWithFormat:@"发送(%d)",sel_num] forState:UIControlStateNormal];
+        [_sumBtn setTitle:[NSString stringWithFormat:@"确认(%d)",sel_num] forState:UIControlStateNormal];
     }
     else{
-        [_sumBtn setTitle:[NSString stringWithFormat:@"发送"] forState:UIControlStateNormal];
+        [_sumBtn setTitle:[NSString stringWithFormat:@"确认"] forState:UIControlStateNormal];
     }
     [self.tableView reloadData];
 }
@@ -267,7 +267,7 @@
         }
     }
     if(n>0){
-        NSString *tip_title=@"确认删除所选发送记录吗？";
+        NSString *tip_title=@"确认删除所选记录吗？";
         if (_inputAlertView==nil) {
             _inputAlertView = [[UIAlertView alloc] initWithTitle:tip_title message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         }
@@ -301,14 +301,14 @@
 
 -(void)doPredictSmsSending{
     if([[self getSelectedOrdersId] length]>0){
-        [[AlertBlockView sharedInstance] showChoiceAlert:@"确认发送配送信息吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
+        [[AlertBlockView sharedInstance] showChoiceAlert:@"确认该配送顺序吗？" button1Title:@"确定" button2Title:@"取消" completion:^(int index) {
             if(index==0){
                 [self sendPredictSms];
             }
         }];
     }
     else{
-        [self showToastWithText:@"没有选择需要发送的记录"];
+        [self showToastWithText:@"没有选择需要确认的记录"];
     }
 }
 
@@ -424,7 +424,7 @@
                     [self.tableView reloadData];
                     if([self.model.entity.list count]<=0){
                         _selectAllBtn.selected=NO;
-                        [_sumBtn setTitle:[NSString stringWithFormat:@"发送"] forState:UIControlStateNormal];
+                        [_sumBtn setTitle:[NSString stringWithFormat:@"确认"] forState:UIControlStateNormal];
                         [self showNoContentView];
                     }else{
                         [self hideNoContentView];
@@ -436,11 +436,12 @@
             if(isSuccess){
                 [self showToastWithText:@"删除成功"];
                 [self loadOrders];
+                needHomePagLoad=true;
             }
         }
         else if(model.requestTag==1003){
             if(isSuccess){
-                [self showToastWithText:@"发送成功"];
+                [self showToastWithText:@"请求成功"];
                 [self loadOrders];
             }
         }
@@ -460,11 +461,17 @@
     [super viewWillAppear:animated];
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+}
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
+    
+    [self startLoadingActivityIndicator];
+    APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
+    [APP_DELEGATE.booter loadTaskList];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

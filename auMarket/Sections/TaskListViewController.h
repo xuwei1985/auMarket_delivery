@@ -20,7 +20,6 @@
     UIButton *btn_successDelivery;
     Delivery_Status list_status_modal;//列表模式
     int list_show_model;//列表显示模式：0：详细视图 1：简洁视图
-    int first_serial_row;//第一条有订单排序值的列表行
 }
 @property(nonatomic,retain) NSMutableArray<TaskItemEntity *>* taskArr;
 @end

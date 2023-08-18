@@ -10,8 +10,10 @@
 
 @interface MapMaker : UIImageView{
     UILabel *lbl_markTip;
+    UILabel *lbl_mutiMark;
 }
 @property(nonatomic,assign) NSString *markTip;
 @property(nonatomic,assign) BOOL is_muti;
+@property(nonatomic,assign) BOOL show_dot;
 -(void)loadData;
 @end

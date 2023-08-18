@@ -42,7 +42,7 @@
             [lbl_predict_time mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(btn_select.mas_top).offset(0);
                 make.left.mas_equalTo(btn_select.mas_right).offset(18);
-                make.size.mas_equalTo(CGSizeMake(220, 28));
+                make.size.mas_equalTo(CGSizeMake(165, 28));
             }];
         }
         
@@ -254,7 +254,7 @@
     
     btn_select.selected=self.entity.selected;
     lbl_order_contact_value.text=self.entity.consignee;
-    lbl_predict_time.text=[NSString stringWithFormat:@"预计送达时间:%@",self.entity.predict_time];
+    lbl_predict_time.text=[NSString stringWithFormat:@"预设配送顺序:%@",self.entity.predict_add_time];
     lbl_order_sn_value.text=self.entity.order_sn;
     lbl_order_tel_value.text=self.entity.mobile;
     lbl_order_address_value.text=self.entity.address;

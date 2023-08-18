@@ -523,7 +523,7 @@
          APP_DELEGATE.lastLocationTipTime=[[Common getNowTimeTimestamp] intValue];
     }];
     
-    UIAlertAction *cancelBtn =[UIAlertAction actionWithTitle:@"稍后" style:UIAlertActionStyle handler:^(UIAlertAction *_Nonnull action) {
+    UIAlertAction *cancelBtn =[UIAlertAction actionWithTitle:@"稍后" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
         APP_DELEGATE.lastLocationTipTime=[[Common getNowTimeTimestamp] intValue];
     }];
     //添加按钮到弹出上
