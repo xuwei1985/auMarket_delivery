@@ -554,7 +554,7 @@
     predict_model=1;
     _focus_predict=sender;
     
-    if(predict_section_arr != nil && predict_data_arr.count>0){
+    if(predict_section_arr != nil && predict_section_arr.count>0){
         [self showPredictTimeView];
     }else{
         [self showToastWithText:@"没有获取到数据"];

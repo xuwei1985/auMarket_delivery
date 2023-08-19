@@ -463,14 +463,15 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    
+    [self startLoadingActivityIndicator];
+    APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
+    [APP_DELEGATE.booter loadTaskList];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     
-    [self startLoadingActivityIndicator];
-    APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
-    [APP_DELEGATE.booter loadTaskList];
 }
 
 - (void)didReceiveMemoryWarning {
