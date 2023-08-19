@@ -559,6 +559,7 @@
     else if(model==self.model&&self.model.requestTag==3003){
         [self stopLoadingActivityIndicator];
         if(isSuccess){
+            APP_DELEGATE.isTaskNeedLoad=YES;
             [self showSuccesWithText:@"操作成功"];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }

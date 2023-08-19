@@ -29,10 +29,9 @@
 
     //加载配送任务数据
     if([self checkLoginStatus] == YES){
-        if(APP_DELEGATE.booter.taskModel.entity.list.count<=0){
-            [self startLoadingActivityIndicator];
-            APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
-            [APP_DELEGATE.booter loadTaskList];
+        if((APP_DELEGATE.booter.taskModel.entity.list.count<=0 || APP_DELEGATE.isTaskNeedLoad) || ((markerArr== nil || markerArr.count==0) && APP_DELEGATE.booter.taskModel.entity.list.count>0)){
+
+            [self clickRefresh:nil];
         }
         
         [self getDeliveryState];
@@ -320,6 +319,19 @@
     return color;
 }
 
+-(void)clearMap{
+    if(markerArr){
+        for(int i=0;i<markerArr.count;i++){
+            [markerArr objectAtIndex:i].map=nil;
+        }
+        [markerArr removeAllObjects];
+    }
+    else{
+        markerArr=[[NSMutableArray alloc] init];
+    }
+    [mapView clear];
+}
+
 //MARK: 加载配送任务地图上的Mask
 /**
  model:  0:全部显示订单  1 只显示未设置预计配送到达时间的订单
@@ -331,17 +343,7 @@
     NSString *location_icon=@"";
     BOOL only_unset_predict_order=(model==1); //是否只显示未设置配送排序的订单
     
-    if(markerArr){
-        for(int i=0;i<markerArr.count;i++){
-            [markerArr objectAtIndex:i].map=nil;
-        }
-        [markerArr removeAllObjects];
-    }
-    else{
-        markerArr=[[NSMutableArray alloc] init];
-    }
-    [mapView clear];
-    
+    [self clearMap];
     
     //配送失败的
     for(int i=0;i<[APP_DELEGATE.booter.tasklist_failed count];i++){

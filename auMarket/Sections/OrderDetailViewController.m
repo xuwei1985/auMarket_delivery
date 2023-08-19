@@ -1100,6 +1100,8 @@
     else if(model==self.model&&self.model.requestTag==3008){
         if(isSuccess){
             [self showSuccesWithText:@"操作成功"];
+            APP_DELEGATE.isTaskNeedLoad=YES;
+            
             [self.navigationController popViewControllerAnimated:YES];
         }
     }

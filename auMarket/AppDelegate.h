@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString *hotLine;//当前选择的数据线路
 @property (nonatomic,assign) BOOL isLocationAuthorized; //是否开启定位授权
 @property (nonatomic,assign) int lastLocationTipTime;
+@property (nonatomic,assign) BOOL isTaskNeedLoad; //是否需要重新加载配送数据
 
 + (UINavigationController *)getNavigationController;
 + (UITabBarController *)getTabbarController;

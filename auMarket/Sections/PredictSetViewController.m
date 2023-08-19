@@ -372,12 +372,15 @@
         NSString *jsonStr=@"";
         if(predict_data_arr!=nil&& predict_data_arr.count>0){
             for (PredictTimeEntity *obj in predict_data_arr) {
-                jsonStr=[NSString stringWithFormat:@"%@{\"begin\":\"%@\",\"end\":\"%@\"}",jsonStr,obj.start_time,obj.end_time];
+                jsonStr=[NSString stringWithFormat:@"%@{\"begin\":\"%@\",\"end\":\"%@\"},",jsonStr,obj.start_time,obj.end_time];
+            }
+            if(jsonStr.length>0){
+                jsonStr=[jsonStr substringToIndex:jsonStr.length-1];
             }
         }
         
         jsonStr=[NSString stringWithFormat:@"[%@]",jsonStr];
-        [self.model predictOrderSet:[NSString stringWithFormat:@"%d",shipping_date_id] andSize:[NSString stringWithFormat:@"%d",request_num] andList:jsonStr];
+//        [self.model predictOrderSet:[NSString stringWithFormat:@"%d",shipping_date_id] andSize:[NSString stringWithFormat:@"%d",request_num] andList:jsonStr];
     }else{
         [self showToastWithText:@"请先设置好预计送达时间"];
     }

@@ -464,9 +464,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    [self startLoadingActivityIndicator];
-    APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
-    [APP_DELEGATE.booter loadTaskList];
+    APP_DELEGATE.isTaskNeedLoad=YES;
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
