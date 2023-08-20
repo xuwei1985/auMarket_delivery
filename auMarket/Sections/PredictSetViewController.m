@@ -380,7 +380,7 @@
         }
         
         jsonStr=[NSString stringWithFormat:@"[%@]",jsonStr];
-//        [self.model predictOrderSet:[NSString stringWithFormat:@"%d",shipping_date_id] andSize:[NSString stringWithFormat:@"%d",request_num] andList:jsonStr];
+        [self.model predictOrderSet:[NSString stringWithFormat:@"%d",shipping_date_id] andSize:[NSString stringWithFormat:@"%d",request_num] andList:jsonStr];
     }else{
         [self showToastWithText:@"请先设置好预计送达时间"];
     }
