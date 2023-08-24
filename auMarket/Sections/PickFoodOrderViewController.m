@@ -395,6 +395,28 @@
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-142, 20));
     }];
     
+    UILabel *lbl_serial_num=[[UILabel alloc] init];
+    lbl_serial_num.textColor=COLOR_DARKGRAY;
+    lbl_serial_num.font=FONT_SIZE_SMALL;
+    lbl_serial_num.text=entity.predict_add_time;
+    lbl_serial_num.textAlignment = NSTextAlignmentCenter;
+    if([entity.is_ready intValue]==0){//订单未准备好的情况下颜色控制
+        lbl_serial_num.backgroundColor = [UIColor colorWithRed:255/255. green:255/255. blue:255/255. alpha:1];
+    }
+    else{
+        lbl_serial_num.backgroundColor = [UIColor colorWithRed:242/255. green:242/255. blue:242/255. alpha:1];
+    }
+    
+    lbl_serial_num.clipsToBounds=YES;
+    lbl_serial_num.layer.cornerRadius=14;
+    [section_view addSubview:lbl_serial_num];
+    
+    [lbl_serial_num mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(section_view.mas_bottom).offset(-15);
+        make.centerX.mas_equalTo(iconView.mas_centerX).offset(0);
+        make.size.mas_equalTo(CGSizeMake(28, 28));
+    }];
+    
     return section_view;
 }
 

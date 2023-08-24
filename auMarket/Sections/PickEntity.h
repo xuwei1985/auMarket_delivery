@@ -19,6 +19,7 @@
 @property (nonatomic,retain) NSString *order_sn;
 @property (nonatomic,retain) NSString *order_id;
 @property (nonatomic,retain) NSString *predict_time;//预计配送时间
+@property (nonatomic,retain) NSString *predict_add_time;//预计配送排序
 @property (nonatomic,retain) NSString *block_name;
 @property (nonatomic,retain) NSString *consignee;
 @property (nonatomic,retain) NSMutableArray<PackageGoodsEntity*> *box_goods;
