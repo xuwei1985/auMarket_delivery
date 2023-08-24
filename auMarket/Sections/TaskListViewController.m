@@ -834,7 +834,7 @@
 
     if([self checkLoginStatus] == YES){
         if(!self.taskArr){//不是从首页的一个坐标多个订单过来的
-            if(APP_DELEGATE.booter.taskModel.entity.list.count<=0){
+            if(APP_DELEGATE.booter.taskModel.entity.list.count<=0 || APP_DELEGATE.isTaskNeedLoad){
                 [self startLoadingActivityIndicator];
                 APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
                 [APP_DELEGATE.booter loadTaskList];
