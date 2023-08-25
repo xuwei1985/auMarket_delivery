@@ -50,6 +50,7 @@
 -(void)addNotification{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTaskList) name:TASK_RELOAD_NOTIFICATION object:nil];
 }
 
 -(void)setNavigation{
@@ -829,18 +830,22 @@
     [self.navigationController pushViewController:ovc animated:YES];
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-
+-(void)updateTaskList{
     if([self checkLoginStatus] == YES){
         if(!self.taskArr){//不是从首页的一个坐标多个订单过来的
-            if(APP_DELEGATE.booter.taskModel.entity.list.count<=0 || APP_DELEGATE.isTaskNeedLoad){
+            if(APP_DELEGATE.booter.taskModel.entity.list.count<=0){
                 [self startLoadingActivityIndicator];
                 APP_DELEGATE.booter.taskModel.entity.nextpage=@"1";
                 [APP_DELEGATE.booter loadTaskList];
             }
         }
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+
+    [self updateTaskList];
 }
 
 - (void)didReceiveMemoryWarning {

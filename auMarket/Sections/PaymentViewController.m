@@ -559,7 +559,7 @@
     else if(model==self.model&&self.model.requestTag==3003){
         [self stopLoadingActivityIndicator];
         if(isSuccess){
-            APP_DELEGATE.isTaskNeedLoad=YES;
+            [[NSNotificationCenter defaultCenter] postNotificationName:TASK_RELOAD_NOTIFICATION object:nil];
             [self showSuccesWithText:@"操作成功"];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }

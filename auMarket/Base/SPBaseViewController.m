@@ -520,17 +520,18 @@
                  [[UIApplication sharedApplication] openURL:settingsURL options:@{}  completionHandler:nil];
              }
          }
-         APP_DELEGATE.lastLocationTipTime=[[Common getNowTimeTimestamp] intValue];
     }];
     
     UIAlertAction *cancelBtn =[UIAlertAction actionWithTitle:@"稍后" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
-        APP_DELEGATE.lastLocationTipTime=[[Common getNowTimeTimestamp] intValue];
+        
     }];
     //添加按钮到弹出上
     [alert addAction:okBtn];
     [alert addAction:cancelBtn];
     // 弹出对话框
     [self presentViewController:alert animated:true completion:nil];
+     
+    APP_DELEGATE.lastLocationTipTime=[[Common getNowTimeTimestamp] intValue];
 }
 
 #pragma mark - tableView dataSource & delegate

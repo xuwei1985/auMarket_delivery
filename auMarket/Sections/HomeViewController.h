@@ -18,7 +18,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "PredictSetViewController.h"
 
-@interface HomeViewController : SPBaseViewController<GMSMapViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate>
+@interface HomeViewController : SPBaseViewController<GMSMapViewDelegate,UIActionSheetDelegate,UITextFieldDelegate>
 {
     GMSMapView *mapView;
     CLLocationCoordinate2D sel_coordinate;

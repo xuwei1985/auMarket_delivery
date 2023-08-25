@@ -14,7 +14,7 @@
 
 @implementation HomeViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad { 
     [super viewDidLoad];
     
     [self initData];
@@ -29,12 +29,11 @@
 
     //加载配送任务数据
     if([self checkLoginStatus] == YES){
-        if((APP_DELEGATE.booter.taskModel.entity.list.count<=0 || APP_DELEGATE.isTaskNeedLoad) || ((markerArr== nil || markerArr.count==0) && APP_DELEGATE.booter.taskModel.entity.list.count>0)){
-
+        if(APP_DELEGATE.booter.taskModel.entity.list.count<=0 || ((markerArr== nil || markerArr.count==0) && APP_DELEGATE.booter.taskModel.entity.list.count>0)){
             [self clickRefresh:nil];
+        }else{
+            [self getDeliveryState];
         }
-        
-        [self getDeliveryState];
     }
     
     if (stateIndicator != nil) {
@@ -164,6 +163,7 @@
 -(void)addNotification{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clickRefresh:) name:TASK_RELOAD_NOTIFICATION object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppEnterBackground:) name:APP_DID_ENTER_BACKGROUND object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppChangesLocationAuthorization:) name:APP_CHANGED_LOCATION_AUTHORIZATION object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppEnterBackground:) name:APP_DID_ENTER_BACKGROUND object:nil];
@@ -172,6 +172,7 @@
 
 //MARK: 创建配送时间段选择视图
 -(void)createDeliveryTimeSection{
+    
     //sectionArr
     float s_width=(WIDTH_SCREEN-20-10)/2;
     float s_height=36.0f;
@@ -888,10 +889,8 @@
 //MARK: 配送任务数据更新通知事件
 - (void)onTaskUpdate:(NSNotification*)aNotitification{
     [self stopLoadingActivityIndicator];
-    if(isShowing){
-        [self createDeliveryTimeSection];
-        [self loadTaskMask:0];
-    }
+    [self createDeliveryTimeSection];
+    [self loadTaskMask:0];
 }
 
 //MARK: App进入后台事件响应

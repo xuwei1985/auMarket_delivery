@@ -32,6 +32,7 @@
     UILabel *lbl_address_replenish;//地址补充
     UILabel *lbl_deliverytime;
     UILabel *lbl_putType;
+    UILabel *lbl_deliveryBack;
     UILabel *lbl_packagenote;
     UILabel *lbl_servicenote;
     UILabel *lbl_freeze_packagenote;

@@ -41,6 +41,7 @@
 @property(nonatomic,retain) NSString *option_title;//送货方式选项标题（送货上楼、下楼自取）
 @property(nonatomic,retain) NSString *upstairs_mark;//送货方式标记（上楼up,下楼down）
 @property(nonatomic,retain) NSString *put_type;//签收方式 1：放门口 0：面签
+@property(nonatomic,retain) NSString *delivery_back;//配送失败处理方式：0:放门口或前台 1:重新配送
 @property (nonatomic,retain) NSMutableArray<pGoodsEntity*> *box_goods;
 @property (nonatomic,retain) NSString *predict_time;//预计配送时间
 @property (nonatomic,retain) NSString *predict_add_time;//设置配送顺序的时间（时间大小作为排序）

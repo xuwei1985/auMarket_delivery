@@ -464,7 +464,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    APP_DELEGATE.isTaskNeedLoad=YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:TASK_RELOAD_NOTIFICATION object:nil];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{

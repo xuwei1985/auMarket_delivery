@@ -376,7 +376,7 @@
    blockView_2.backgroundColor=COLOR_WHITE;
    blockView_2.userInteractionEnabled=YES;
    
-   blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 490, WIDTH_SCREEN, 210)];
+   blockView_3=[[UIView alloc] initWithFrame:CGRectMake(0, 490, WIDTH_SCREEN, 235)];
    blockView_3.backgroundColor=COLOR_WHITE;
    blockView_3.userInteractionEnabled=YES;
    
@@ -720,13 +720,13 @@
     lbl_orderNo.textColor=COLOR_DARKGRAY;
     lbl_orderNo.font=FONT_SIZE_SMALL;
     lbl_orderNo.text=@"";
-    lbl_orderNo.textAlignment=NSTextAlignmentLeft;
+    lbl_orderNo.textAlignment=NSTextAlignmentRight;
     [blockView_3 addSubview:lbl_orderNo];
     
     [lbl_orderNo mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_3.top).offset(10);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-70, 20));
-        make.left.mas_equalTo(lbl_tip_3.mas_left).offset(60);
+        make.right.mas_equalTo(blockView_3.mas_right).offset(-10);
     }];
     
     UILabel *lbl_tip_4=[[UILabel alloc] init];
@@ -746,13 +746,13 @@
     lbl_contact.textColor=COLOR_DARKGRAY;
     lbl_contact.font=FONT_SIZE_SMALL;
     lbl_contact.text=@"Wilson";
-    lbl_contact.textAlignment=NSTextAlignmentLeft;
+    lbl_contact.textAlignment=NSTextAlignmentRight;
     [blockView_3 addSubview:lbl_contact];
     
     [lbl_contact mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_3.top).offset(38);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-70, 20));
-        make.left.mas_equalTo(lbl_tip_4.mas_left).offset(60);
+        make.right.mas_equalTo(blockView_3.mas_right).offset(-10);
     }];
     
     UILabel *lbl_tip_5=[[UILabel alloc] init];
@@ -772,7 +772,7 @@
     lbl_mobile.textColor=RGBCOLOR(15, 34, 177);
     lbl_mobile.font=FONT_SIZE_SMALL;
     lbl_mobile.text=@"0488888888";
-    lbl_mobile.textAlignment=NSTextAlignmentLeft;
+    lbl_mobile.textAlignment=NSTextAlignmentRight;
     lbl_mobile.userInteractionEnabled=YES;
     [blockView_3 addSubview:lbl_mobile];
     [lbl_mobile addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(makeCall:)]];
@@ -780,7 +780,7 @@
     [lbl_mobile mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_3.top).offset(66);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-65, 20));
-        make.left.mas_equalTo(lbl_tip_5.mas_left).offset(45);
+        make.right.mas_equalTo(blockView_3.mas_right).offset(-10);
     }];
     
     UILabel *lbl_tip_6=[[UILabel alloc] init];
@@ -800,7 +800,7 @@
     lbl_address.textColor=COLOR_DARKGRAY;
     lbl_address.font=FONT_SIZE_SMALL;
     lbl_address.text=@"1/22 Oakleigh Road, Carnegie, Melbourne, Australia";
-    lbl_address.textAlignment=NSTextAlignmentLeft;
+    lbl_address.textAlignment=NSTextAlignmentRight;
     [blockView_3 addSubview:lbl_address];
     
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]]){
@@ -812,7 +812,7 @@
     [lbl_address mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_3.top).offset(94);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-65, 20));
-        make.left.mas_equalTo(lbl_tip_6.mas_left).offset(45);
+        make.right.mas_equalTo(blockView_3.mas_right).offset(-10);
     }];
     
     UILabel *lbl_tip_7=[[UILabel alloc] init];
@@ -832,13 +832,13 @@
     lbl_deliverytime.textColor=COLOR_DARKGRAY;
     lbl_deliverytime.font=FONT_SIZE_SMALL;
     lbl_deliverytime.text=@"--";
-    lbl_deliverytime.textAlignment=NSTextAlignmentLeft;
+    lbl_deliverytime.textAlignment=NSTextAlignmentRight;
     [blockView_3 addSubview:lbl_deliverytime];
     
     [lbl_deliverytime mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_3.top).offset(122);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-80, 20));
-        make.left.mas_equalTo(lbl_tip_6.mas_left).offset(70);
+        make.right.mas_equalTo(blockView_3.mas_right).offset(-10);
     }];
     
     UILabel *lbl_tip_111=[[UILabel alloc] init];
@@ -858,13 +858,39 @@
     lbl_putType.textColor=COLOR_MAIN;
     lbl_putType.font=FONT_SIZE_SMALL;
     lbl_putType.text=@"当面签收";
-    lbl_putType.textAlignment=NSTextAlignmentLeft;
+    lbl_putType.textAlignment=NSTextAlignmentRight;
     [blockView_3 addSubview:lbl_putType];
     
     [lbl_putType mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(blockView_3.top).offset(150);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-80, 20));
-        make.left.mas_equalTo(lbl_tip_7.mas_left).offset(70);
+        make.right.mas_equalTo(blockView_3.mas_right).offset(-10);
+    }];
+    
+    UILabel *lbl_tip_back=[[UILabel alloc] init];
+    lbl_tip_back.textColor=COLOR_BLACK;
+    lbl_tip_back.font=FONT_SIZE_MIDDLE;
+    lbl_tip_back.text=@"失败处理:";
+    lbl_tip_back.textAlignment=NSTextAlignmentLeft;
+    [blockView_3 addSubview:lbl_tip_back];
+    
+    [lbl_tip_back mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_3.top).offset(178);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+        make.left.mas_equalTo(10);
+    }];
+    
+    lbl_deliveryBack=[[UILabel alloc] init];
+    lbl_deliveryBack.textColor=COLOR_BLACK;
+    lbl_deliveryBack.font=FONT_SIZE_SMALL;
+    lbl_deliveryBack.text=@"默认";
+    lbl_deliveryBack.textAlignment=NSTextAlignmentRight;
+    [blockView_3 addSubview:lbl_deliveryBack];
+    
+    [lbl_deliveryBack mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockView_3.top).offset(178);
+        make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-100, 20));
+        make.right.mas_equalTo(blockView_3.mas_right).offset(-10);
     }];
     
     
@@ -876,7 +902,7 @@
     [blockView_3 addSubview:lbl_tip_8];
     
     [lbl_tip_8 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_3.top).offset(178);
+        make.top.mas_equalTo(blockView_3.top).offset(206);
         make.size.mas_equalTo(CGSizeMake(80, 20));
         make.left.mas_equalTo(10);
     }];
@@ -885,13 +911,13 @@
     lbl_address_replenish.textColor=COLOR_DARKGRAY;
     lbl_address_replenish.font=FONT_SIZE_SMALL;
     lbl_address_replenish.text=@"";
-    lbl_address_replenish.textAlignment=NSTextAlignmentLeft;
+    lbl_address_replenish.textAlignment=NSTextAlignmentRight;
     [blockView_3 addSubview:lbl_address_replenish];
     
     [lbl_address_replenish mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView_3.top).offset(178);
+        make.top.mas_equalTo(blockView_3.top).offset(206);
         make.size.mas_equalTo(CGSizeMake(WIDTH_SCREEN-80, 20));
-        make.left.mas_equalTo(lbl_tip_7.mas_left).offset(70);
+        make.right.mas_equalTo(blockView_3.mas_right).offset(-10);
     }];
 
     ////////////////blockView_4///////////////
@@ -1100,7 +1126,7 @@
     else if(model==self.model&&self.model.requestTag==3008){
         if(isSuccess){
             [self showSuccesWithText:@"操作成功"];
-            APP_DELEGATE.isTaskNeedLoad=YES;
+            [[NSNotificationCenter defaultCenter] postNotificationName:TASK_RELOAD_NOTIFICATION object:nil];
             
             [self.navigationController popViewControllerAnimated:YES];
         }
@@ -1136,6 +1162,7 @@
         else{
             lbl_putType.text=@"当面签收";
         }
+        lbl_deliveryBack.text=self.task_entity.delivery_back;
         
         lbl_address_replenish.text=self.task_entity.address_replenish;
         lbl_upstairs.text=self.task_entity.option_title;
@@ -1184,7 +1211,7 @@
         blockView_5.frame= CGRectMake(0, 99, WIDTH_SCREEN,(lbl_food_packagenote.frame.origin.y+lbl_food_packagenote.frame.size.height+12));
         blockView_1.frame= CGRectMake(0, (blockView_5.frame.origin.y+blockView_5.size.height+12), WIDTH_SCREEN, 75);
         blockView_2.frame= CGRectMake(0, (blockView_1.frame.origin.y+blockView_1.size.height+12), WIDTH_SCREEN, 130);
-        blockView_3.frame= CGRectMake(0, (blockView_2.frame.origin.y+blockView_2.size.height+12), WIDTH_SCREEN, 210);
+        blockView_3.frame= CGRectMake(0, (blockView_2.frame.origin.y+blockView_2.size.height+12), WIDTH_SCREEN, 235);
         blockView_4.frame= CGRectMake(0, (blockView_3.frame.origin.y+blockView_3.size.height+12), WIDTH_SCREEN, 45);
         orderInfoView.frame=CGRectMake(0, 0, WIDTH_SCREEN, blockView_4.frame.origin.y+blockView_4.frame.size.height);
     }
