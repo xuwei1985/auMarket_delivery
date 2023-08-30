@@ -556,7 +556,7 @@
             [self stopLoadingActivityIndicator];
         }
     }
-    else if(model==self.model&&self.model.requestTag==3003){
+    else if(model==self.model&&self.model.requestTag==3008){
         [self stopLoadingActivityIndicator];
         if(isSuccess){
             [[NSNotificationCenter defaultCenter] postNotificationName:TASK_RELOAD_NOTIFICATION object:nil];
