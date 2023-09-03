@@ -76,11 +76,11 @@
 -(void)createMapView{
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-37.8274851
                                                             longitude:144.9527565
-                                                                 zoom:12];
+                                                                 zoom:10];
     mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-    mapView.myLocationEnabled=NO;
+    mapView.myLocationEnabled=YES;
     mapView.delegate=self;
-    [[mapView settings] setMyLocationButton:NO];
+    [[mapView settings] setMyLocationButton:YES];
     self.view = mapView;
     
     //地图上添加刷新数据的按钮
@@ -91,9 +91,9 @@
 //MARK: 创建地图上的刷新按钮
 -(void)createRefreshBtn{
     btn_refresh = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_refresh.frame= CGRectMake(WIDTH_SCREEN-64, HEIGHT_SCREEN-HEIGHT_TAB_BAR-HEIGHT_STATUS_AND_NAVIGATION_BAR-90, 52, 52);
+    btn_refresh.frame= CGRectMake(12, HEIGHT_SCREEN-HEIGHT_TAB_BAR-HEIGHT_STATUS_AND_NAVIGATION_BAR-76, 54, 54);
     btn_refresh.backgroundColor = [UIColor whiteColor];
-    btn_refresh.layer.cornerRadius=26;
+    btn_refresh.layer.cornerRadius=27;
     [btn_refresh addTarget:self action:@selector(clickRefresh:) forControlEvents:UIControlEventTouchUpInside];
     btn_refresh.layer.shadowOpacity = 0.3;
     btn_refresh.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -760,6 +760,10 @@
     }];
     
     UIAlertAction *action_sort = [UIAlertAction actionWithTitle:@"设置配送排序" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self setTaskPredictSerialNumber];
+    }];
+    
+    UIAlertAction *action_sort_cancel = [UIAlertAction actionWithTitle:@"取消配送排序" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self setTaskPredictSerialNumber];
     }];
     
