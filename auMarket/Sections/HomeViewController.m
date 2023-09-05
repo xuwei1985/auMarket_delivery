@@ -621,7 +621,7 @@
 }
 
 //MARK: 设置配送任务的排序
--(void)setTaskPredictSerialNumber{
+-(void)setTaskPredictSerialNumber:(NSInteger)model{
     NSMutableString *ids=[NSMutableString string];
     if(selectedMarker&&selectedMarker.taskArr){
         for (int i=0; i<selectedMarker.taskArr.count; i++) {
@@ -631,14 +631,14 @@
     
     if(ids.length>0){
         ids=[NSMutableString stringWithString:[ids substringToIndex:ids.length-1]];
-        [self savePredictSerial:ids];
+        [self savePredictSerial:ids andModel:model];
     }
 }
 
 //MARK: 批量提交订单的预计送达顺序
--(void)savePredictSerial:(NSString *)ids{
+-(void)savePredictSerial:(NSString *)ids andModel:(NSInteger)model{
     [self startLoadingActivityIndicatorWithText:@"请求中..."];
-    [self.model savePredictSerial:ids];
+    [self.model savePredictSerial:ids andModel:model];
 }
 
 //MARK: 获取配送状态指示器数据（设置预计送单时间、上货完成的统计数据）
@@ -654,10 +654,9 @@
         if(isSuccess){
             [self showToastWithText:@"设置成功"];
             if(APP_DELEGATE.booter.tasklist_delivering){
-                for (int i=0; i<APP_DELEGATE.booter.tasklist_delivering.count; i++) {
+                for (int i=0; i<APP_DELEGATE.booter.tasklist_delivering.count; i++) {//寻找设置的那个坐标对象
                     if([APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].latitude==[selectedMarker.taskArr firstObject].latitude && [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].longitude==[selectedMarker.taskArr firstObject].longitude){
-                        [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].predict_add_time=self.model.predict_num_entity.predict_add_time;
-                        NSLog(@"aaa:%@",[APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].predict_add_time);
+                        [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].predict_add_time=(predict_model==1 ? self.model.predict_num_entity.predict_add_time : @"0");
                     }
                 }
             }
@@ -760,11 +759,13 @@
     }];
     
     UIAlertAction *action_sort = [UIAlertAction actionWithTitle:@"设置配送排序" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self setTaskPredictSerialNumber];
+        predict_model=1;
+        [self setTaskPredictSerialNumber:1];
     }];
     
     UIAlertAction *action_sort_cancel = [UIAlertAction actionWithTitle:@"取消配送排序" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self setTaskPredictSerialNumber];
+        predict_model=2;
+        [self setTaskPredictSerialNumber:2];
     }];
     
     

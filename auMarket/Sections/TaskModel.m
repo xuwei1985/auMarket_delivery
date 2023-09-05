@@ -70,9 +70,9 @@
     [self loadInner];
 }
 
--(void)savePredictSerial:(NSString *)ids{
+-(void)savePredictSerial:(NSString *)ids andModel:(NSInteger)model{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=savePredictSerial&ids=%@&deliver_id=%@",ids,user.user_id];
+    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=savePredictSerial&ids=%@&deliver_id=%@&model=%d",ids,user.user_id,(int)model];
     self.parseDataClassType = [TaskItemEntity class];
     self.params = @{};
     self.requestTag=3003;
