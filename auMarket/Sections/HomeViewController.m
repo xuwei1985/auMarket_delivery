@@ -653,10 +653,16 @@
     if(model.requestTag==3003){ //设置配送排序
         if(isSuccess){
             [self showToastWithText:@"设置成功"];
-            if(APP_DELEGATE.booter.tasklist_delivering){
-                for (int i=0; i<APP_DELEGATE.booter.tasklist_delivering.count; i++) {//寻找设置的那个坐标对象
-                    if([APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].latitude==[selectedMarker.taskArr firstObject].latitude && [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].longitude==[selectedMarker.taskArr firstObject].longitude){
-                        [APP_DELEGATE.booter.tasklist_delivering objectAtIndex:i].predict_add_time=(predict_model==1 ? self.model.predict_num_entity.predict_add_time : @"0");
+            
+            NSArray<TaskItemEntity *> *list=APP_DELEGATE.booter.tasklist_delivering;
+            if(list){
+                for (int i=0; i<list.count; i++) {//寻找设置的那个坐标对象
+                    if([list objectAtIndex:i].latitude==[selectedMarker.taskArr firstObject].latitude && [list objectAtIndex:i].longitude==[selectedMarker.taskArr firstObject].longitude){
+                        [list objectAtIndex:i].predict_add_time=(predict_model==1 ? self.model.predict_num_entity.predict_add_time : @"0");
+                    }else{
+                        if(predict_model==2 && [[list objectAtIndex:i].predict_add_time intValue]>[self.model.predict_num_entity.predict_add_time intValue]){
+                            [list objectAtIndex:i].predict_add_time=[NSString stringWithFormat:@"%d",[[list objectAtIndex:i].predict_add_time intValue]-1];
+                        }
                     }
                 }
             }
