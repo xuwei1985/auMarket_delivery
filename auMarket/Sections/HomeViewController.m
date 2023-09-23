@@ -815,6 +815,7 @@
         else{
             [alert_sheet addAction:action_order_muti];
             [alert_sheet addAction:action_address];
+            [alert_sheet addAction:action_sort_cancel];
         }
     }
     
