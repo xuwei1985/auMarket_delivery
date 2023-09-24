@@ -148,7 +148,7 @@
     _btn_exit.frame=CGRectMake(15, IPHONE6PLUS?24:28, WIDTH_SCREEN-30, 42);
     _btn_exit.titleLabel.font=FONT_SIZE_MIDDLE;
     [_btn_exit addTarget:self action:@selector(exitLogin:) forControlEvents:UIControlEventTouchUpInside];
-    [_btn_exit.layer setCornerRadius:4];
+    [_btn_exit.layer setCornerRadius:5];
     _btn_exit.hidden=isLogin;
     [exitView addSubview:_btn_exit];
     [self.tableView setTableFooterView:exitView];
