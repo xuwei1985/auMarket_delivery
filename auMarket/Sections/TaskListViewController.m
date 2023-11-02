@@ -663,7 +663,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(list_show_model==1){
+    if(list_show_model==1){ //简洁视图
         NSString *reuseIdetify = @"taskconciseItemCell";
         TaskConciseItemCell *cell = [tv dequeueReusableCellWithIdentifier:reuseIdetify];
         if (cell == nil) {
