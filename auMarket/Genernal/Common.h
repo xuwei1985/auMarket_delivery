@@ -62,4 +62,5 @@
 + (NSString *)decodeFromPercentEscapeString: (NSString *) input;
 +(BOOL)isMobileForAU:(NSString *)mobile;
 +(double)reviseDoubleValue:(double)conversionValue;
++ (NSString *)decryptPhoneNumber:(NSString *)encryptedNumber withOffset:(NSInteger)offset;
 @end

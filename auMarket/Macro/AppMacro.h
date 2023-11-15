@@ -27,12 +27,12 @@ return __singleton__; \
 
 //接口相关
 #ifdef DEBUG//测试
-    #define SERVER_ADDRESS        @"http://api.bigau.com"
-    #define SERVER_HTTP_ADDRESS   @"http://api.bigau.com"
+    #define SERVER_ADDRESS        @"http://api_test.bigau.com"
+    #define SERVER_HTTP_ADDRESS   @"http://api_test.bigau.com"
 
 #else//正式
-    #define SERVER_ADDRESS        @"https://api.bigau.com"
-    #define SERVER_HTTP_ADDRESS   @"https://api.bigau.com"
+    #define SERVER_ADDRESS        @"https://api_test.bigau.com"
+    #define SERVER_HTTP_ADDRESS   @"https://api_test.bigau.com"
 
 #endif
 

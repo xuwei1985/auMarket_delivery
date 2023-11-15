@@ -792,4 +792,27 @@
     return d;
 }
 
++ (NSString *)decryptPhoneNumber:(NSString *)encryptedNumber withOffset:(NSInteger)offset {
+    NSString *decryptedNumber = @"";
+    NSString *encryptedTempNumber = @"";
+    NSUInteger length = [encryptedNumber length];
+    offset = offset ?: 3;
+    
+    if (length > offset) {
+        encryptedTempNumber = [encryptedNumber substringWithRange:NSMakeRange(offset, length - offset)];
+        encryptedTempNumber = [encryptedTempNumber stringByAppendingString:[encryptedNumber substringToIndex:offset]];
+    }
+    
+    for (NSUInteger i = 0; i < length; i++) {
+        NSInteger encryptedDigit = [[encryptedTempNumber substringWithRange:NSMakeRange(i, 1)] intValue];
+        
+        // 解密数字
+        int decryptedDigit = (encryptedDigit - offset + 10) % 10;
+        
+        decryptedNumber = [decryptedNumber stringByAppendingFormat:@"%d", decryptedDigit];
+    }
+    
+    return decryptedNumber;
+}
+
 @end

@@ -1149,7 +1149,7 @@
         lbl_orderSum.text=[NSString stringWithFormat:@"$%@",self.task_entity.order_amount];
         lbl_orderNo.text=self.task_entity.order_sn;
         lbl_contact.text=self.task_entity.consignee;
-        lbl_mobile.text=self.task_entity.mobile;
+        lbl_mobile.text=[self.task_entity.mobile length]>10 ? [self.task_entity.mobile substringToIndex:self.task_entity.mobile.length-1] : self.task_entity.mobile;
         lbl_address.text=self.task_entity.address;
         lbl_deliverytime.text=self.task_entity.delivery_time;
         lbl_changePrice.text=[NSString stringWithFormat:@"$%@",self.task_entity.change_price];
@@ -1545,8 +1545,16 @@
 
 -(void)makeCall:(UIGestureRecognizer *)sender{
     UILabel *lbl_sender=(UILabel *)sender.view;
+    NSMutableString *str;
     if(lbl_sender){
-        NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"tel:%@",lbl_sender.text];
+        NSString *mobile=[self.task_entity.mobile length]>10 ? [self.task_entity.mobile substringToIndex:self.task_entity.mobile.length-1] : lbl_sender.text;
+        if([self.task_entity.mobile length]>10){
+            mobile=[Common decryptPhoneNumber:[self.task_entity.mobile substringToIndex:self.task_entity.mobile.length-1] withOffset:[[self.task_entity.mobile substringFromIndex:self.task_entity.mobile.length-1] intValue]];
+            str=[[NSMutableString alloc] initWithFormat:@"tel:%@",mobile];
+        }else{
+            str=[[NSMutableString alloc] initWithFormat:@"tel:%@",lbl_sender.text];
+        }
+        
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
     }
 }
