@@ -919,16 +919,25 @@
 
 //MARK: 拨打电话
 -(void)callPhone:(NSString *)phone{
+    NSString *mobile_str=@"";
     if(phone!=nil&&phone.length>0){
-        NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"tel:%@",phone];
+        NSString *mobile=[phone length]>10 ? [phone substringToIndex:phone.length-1] : phone;
+        if([phone length]>10){
+            mobile=[Common decryptPhoneNumber:[phone substringToIndex:phone.length-1] withOffset:[[phone substringFromIndex:phone.length-1] intValue]];
+            mobile_str=[[NSMutableString alloc] initWithFormat:@"tel:%@",mobile];
+        }else{
+            mobile_str=[[NSMutableString alloc] initWithFormat:@"tel:%@",phone];
+        }
+        
         UIWebView *callWebview = [[UIWebView alloc] init];
-        [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+        [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:mobile_str]]];
         [self.view addSubview:callWebview];
     }
     else{
         [self showToastWithText:@"无效的电话号码"];
     }
 }
+
 
 //MARK: 前往预计送达时间短信批量发送界面
 -(void)gotoSmsTaskView{
