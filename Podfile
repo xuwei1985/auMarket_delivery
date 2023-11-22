@@ -1,5 +1,5 @@
 platform :ios, '11.0'
-
+source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
 target "auMarket" do
 
 pod 'AFNetworking'
